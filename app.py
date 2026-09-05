@@ -42,12 +42,6 @@ if available_tables:
     
     filtered_df = df.copy()
     
-    # Apply Region Filter if Column Exists
-if 'Region' in df.columns:
-    # Ensure cleanup only processes the underlying master df once per rerun
-    df['Region'] = df['Region'].astype(str).str.strip()
-    
-    # Extract the static full list of all possible regions
 # ==========================================
 # PHASE 1: CLEAN RAW DATA ONCE (Top of script)
 # ==========================================
