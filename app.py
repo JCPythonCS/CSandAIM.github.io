@@ -47,7 +47,7 @@ if available_tables:
         df['Region'] = df['Region'].astype(str).str.strip()
         region_options = sorted(list(df['Region'].unique()))
         selected_region = st.sidebar.multiselect("Select Region", options=region_options, default=region_options)
-        filtered_df = filtered_df[filtered_df['Region'].isin(selected_region)]
+        filtered_df = df[df['Region'].isin(selected_region)]
         
     # Apply Retailer/Vendor Filter if Column Exists
     if 'Retailer' in df.columns:
