@@ -43,11 +43,41 @@ if available_tables:
     filtered_df = df.copy()
     
     # Apply Region Filter if Column Exists
-    if 'Region' in df.columns:
-        df['Region'] = df['Region'].astype(str).str.strip()
-        region_options = sorted(list(df['Region'].unique()))
-        selected_region = st.sidebar.multiselect("Select Region", options=region_options, default=region_options)
-        filtered_df = df[df['Region'].isin(selected_region)]
+if 'Region' in df.columns:
+    # Ensure cleanup only processes the underlying master df once per rerun
+    df['Region'] = df['Region'].astype(str).str.strip()
+    
+    # Extract the static full list of all possible regions
+# ==========================================
+# PHASE 1: CLEAN RAW DATA ONCE (Top of script)
+# ==========================================
+if 'Region' in df.columns:
+    # Ensure cleanup only processes the underlying master df once per rerun
+    df['Region'] = df['Region'].astype(str).str.strip()
+    
+    # Extract the static full list of all possible regions
+    ALL_REGIONS = sorted(list(df['Region'].unique()))
+else:
+    ALL_REGIONS = []
+
+
+# ==========================================
+# PHASE 2: UI GENERATION AND FILTERING
+# ==========================================
+if ALL_REGIONS:
+    # Notice: Use a hardcoded static string list for options & defaults to stop rendering loops
+    selected_region = st.sidebar.multiselect(
+        "Select Region", 
+        options=ALL_REGIONS, 
+        default=ALL_REGIONS
+    )
+    
+    # Explicit wildcard catch: if the user deletes all chips, reset to ALL data rows
+    if not selected_region:
+        filtered_df = df
+    else:
+        # Crucial: Filter against 'df' as the base, keeping your options pool clean
+        filtered_df = df[df['Region'].isin(selected_region)]
         
     # Apply Retailer/Vendor Filter if Column Exists
     if 'Retailer' in df.columns:
