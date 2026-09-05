@@ -15,31 +15,32 @@ all_files = [os.path.join(data_folder, f) for f in os.listdir(data_folder) if f.
 database = {}
 for file_path in all_files:
     file_name = os.path.basename(file_path)
-    # Correctly grab the clean file name string for the dictionary key
+    # Correctly store the exact string file name as the key
     table_name = os.path.splitext(file_name)[0]
     try:
         database[table_name] = pd.read_excel(file_path)
-    except:
+    except Exception as e:
         pass
 
 # 🚨 Verify Main Table is Loaded
 if 'enterprise_retail_dataT' in database:
     df = database['enterprise_retail_dataT']
     
-    # Clean up empty or missing spaces in text columns to prevent filter breaks
-    df['Region'] = df['Region'].fillna('Unknown').astype(str)
-    df['Retailer'] = df['Retailer'].fillna('Unknown').astype(str)
+    # Force clean strings and strip hidden tracking spaces to make buttons responsive
+    df['Region'] = df['Region'].fillna('USA').astype(str).str.strip()
+    df['Retailer'] = df['Retailer'].fillna('Unknown').astype(str).str.strip()
     
     # 🎛️ Interactive Sidebar Filters
     st.sidebar.header("🎯 Dashboard Control Filters")
     
-    # Region Filter (If it only contains USA, it will display USA cleanly)
-    selected_region = st.sidebar.multiselect("Select Region", options=sorted(df['Region'].unique()), default=df['Region'].unique())
+    # Dynamically extract available options from the spreadsheet data column rows
+    region_options = sorted(list(df['Region'].unique()))
+    retailer_options = sorted(list(df['Retailer'].unique()))
     
-    # Retailer Filter 
-    selected_retailer = st.sidebar.multiselect("Select Retailer", options=sorted(df['Retailer'].unique()), default=df['Retailer'].unique())
+    selected_region = st.sidebar.multiselect("Select Region", options=region_options, default=region_options)
+    selected_retailer = st.sidebar.multiselect("Select Retailer", options=retailer_options, default=retailer_options)
     
-    # FIX: Repaired the matching logic so the charts dynamically update when you click buttons
+    # Apply matching rules using precise Boolean intersections
     filtered_df = df[(df['Region'].isin(selected_region)) & (df['Retailer'].isin(selected_retailer))]
     
     # 📊 Top-Level Summary Cards (KPIs)
@@ -50,11 +51,11 @@ if 'enterprise_retail_dataT' in database:
     with col1:
         st.metric(label="💰 Total Combined Sales Volume", value=f"${total_vol:,.2f}")
     with col2:
-        st.metric(label="箱 Total Ingested Transactions", value=f"{total_txns:,}")
+        st.metric(label="📦 Total Ingested Transactions", value=f"{total_txns:,}")
         
     st.markdown("---")
     
-    # 📊 Layout Charts Columns (Only display if data is selected to prevent crashes)
+    # 📊 Layout Charts Columns 
     if not filtered_df.empty:
         chart_col1, chart_col2 = st.columns(2)
         
@@ -68,7 +69,7 @@ if 'enterprise_retail_dataT' in database:
             tier_sales = filtered_df.groupby('Market_Tier')['Volume_USD'].sum().sort_values(ascending=False)
             st.bar_chart(tier_sales)
     else:
-        st.warning("⚠️ No data matches your current filter selections. Please check a retailer box!")
+        st.warning("⚠️ No data matches your current filter selections. Please select at least one Retailer!")
         
     # 🗒️ Raw Data Audit Grid
     st.subheader("🔎 Ingested Database Record Stream")
