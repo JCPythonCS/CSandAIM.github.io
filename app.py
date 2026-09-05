@@ -15,32 +15,33 @@ all_files = [os.path.join(data_folder, f) for f in os.listdir(data_folder) if f.
 database = {}
 for file_path in all_files:
     file_name = os.path.basename(file_path)
-    # Correctly store the exact string file name as the key
-    table_name = os.path.splitext(file_name)[0]
+    
+    # FIX: Explicitly extract the clean file name as a string, NOT a tuple!
+    table_name = file_name.replace('.xlsx', '').replace('.xls', '')
+    
     try:
         database[table_name] = pd.read_excel(file_path)
-    except Exception as e:
+    except:
         pass
 
 # 🚨 Verify Main Table is Loaded
 if 'enterprise_retail_dataT' in database:
     df = database['enterprise_retail_dataT']
     
-    # Force clean strings and strip hidden tracking spaces to make buttons responsive
+    # Ensure text data is uniformly stripped of hidden whitespace strings
     df['Region'] = df['Region'].fillna('USA').astype(str).str.strip()
     df['Retailer'] = df['Retailer'].fillna('Unknown').astype(str).str.strip()
     
     # 🎛️ Interactive Sidebar Filters
     st.sidebar.header("🎯 Dashboard Control Filters")
     
-    # Dynamically extract available options from the spreadsheet data column rows
     region_options = sorted(list(df['Region'].unique()))
     retailer_options = sorted(list(df['Retailer'].unique()))
     
     selected_region = st.sidebar.multiselect("Select Region", options=region_options, default=region_options)
     selected_retailer = st.sidebar.multiselect("Select Retailer", options=retailer_options, default=retailer_options)
     
-    # Apply matching rules using precise Boolean intersections
+    # Clean dataframe filter intersection matching
     filtered_df = df[(df['Region'].isin(selected_region)) & (df['Retailer'].isin(selected_retailer))]
     
     # 📊 Top-Level Summary Cards (KPIs)
@@ -55,7 +56,7 @@ if 'enterprise_retail_dataT' in database:
         
     st.markdown("---")
     
-    # 📊 Layout Charts Columns 
+    # 📊 Layout Charts Columns
     if not filtered_df.empty:
         chart_col1, chart_col2 = st.columns(2)
         
@@ -69,7 +70,7 @@ if 'enterprise_retail_dataT' in database:
             tier_sales = filtered_df.groupby('Market_Tier')['Volume_USD'].sum().sort_values(ascending=False)
             st.bar_chart(tier_sales)
     else:
-        st.warning("⚠️ No data matches your current filter selections. Please select at least one Retailer!")
+        st.warning("⚠️ No data matches your current filter selections. Please select a retailer box!")
         
     # 🗒️ Raw Data Audit Grid
     st.subheader("🔎 Ingested Database Record Stream")
