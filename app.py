@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import os
 
 st.set_page_config(page_title="Computer Systems & AI Management", layout="wide")
 
@@ -8,29 +7,16 @@ st.set_page_config(page_title="Computer Systems & AI Management", layout="wide")
 st.title("🖥️ Computer Systems and AI Management Cockpit")
 st.markdown("---")
 
-# 📂 Load the Data Local to the Repository
-data_folder = '.'
-all_files = [os.path.join(data_folder, f) for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
+# 🚨 Direct File Ingestion 
+file_name = "enterprise_retail_dataT.xlsx"
 
-database = {}
-for file_path in all_files:
-    file_name = os.path.basename(file_path)
+try:
+    # Read the spreadsheet directly from the repository root
+    df = pd.read_excel(file_name)
     
-    # FIX: Explicitly extract the clean file name as a string, NOT a tuple!
-    table_name = file_name.replace('.xlsx', '').replace('.xls', '')
-    
-    try:
-        database[table_name] = pd.read_excel(file_path)
-    except:
-        pass
-
-# 🚨 Verify Main Table is Loaded
-if 'enterprise_retail_dataT' in database:
-    df = database['enterprise_retail_dataT']
-    
-    # Ensure text data is uniformly stripped of hidden whitespace strings
-    df['Region'] = df['Region'].fillna('USA').astype(str).str.strip()
-    df['Retailer'] = df['Retailer'].fillna('Unknown').astype(str).str.strip()
+    # FIX: Force Python to treat these columns as clean text strings to make buttons responsive
+    df['Region'] = df['Region'].astype(str).str.strip()
+    df['Retailer'] = df['Retailer'].astype(str).str.strip()
     
     # 🎛️ Interactive Sidebar Filters
     st.sidebar.header("🎯 Dashboard Control Filters")
@@ -41,7 +27,7 @@ if 'enterprise_retail_dataT' in database:
     selected_region = st.sidebar.multiselect("Select Region", options=region_options, default=region_options)
     selected_retailer = st.sidebar.multiselect("Select Retailer", options=retailer_options, default=retailer_options)
     
-    # Clean dataframe filter intersection matching
+    # Filter matching matrix using exact text strings
     filtered_df = df[(df['Region'].isin(selected_region)) & (df['Retailer'].isin(selected_retailer))]
     
     # 📊 Top-Level Summary Cards (KPIs)
@@ -56,7 +42,7 @@ if 'enterprise_retail_dataT' in database:
         
     st.markdown("---")
     
-    # 📊 Layout Charts Columns
+    # 📊 Layout Charts Columns 
     if not filtered_df.empty:
         chart_col1, chart_col2 = st.columns(2)
         
@@ -70,11 +56,11 @@ if 'enterprise_retail_dataT' in database:
             tier_sales = filtered_df.groupby('Market_Tier')['Volume_USD'].sum().sort_values(ascending=False)
             st.bar_chart(tier_sales)
     else:
-        st.warning("⚠️ No data matches your current filter selections. Please select a retailer box!")
+        st.warning("⚠️ No data matches your current filter selections. Please select at least one Retailer!")
         
     # 🗒️ Raw Data Audit Grid
     st.subheader("🔎 Ingested Database Record Stream")
     st.dataframe(filtered_df.head(100), use_container_width=True)
 
-else:
-    st.error("Critical Error: 'enterprise_retail_dataT' table not found in repository.")
+except Exception as e:
+    st.error(f"Critical Error: Could not load '{file_name}' directly from the repository. Diagnostic Details: {e}")
