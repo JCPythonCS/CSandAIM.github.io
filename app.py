@@ -9,7 +9,7 @@ st.title("🖥️ Computer Systems and AI Management Cockpit")
 st.markdown("---")
 
 # ====================================================================
-# PHASE 1: DATA INGESTION (Executed ONCE and cached in cloud memory)
+# PHASE 1: DATA INGESTION (Loads files into memory once)
 # ====================================================================
 @st.cache_data
 def load_all_enterprise_data():
@@ -29,7 +29,7 @@ def load_all_enterprise_data():
 database = load_all_enterprise_data()
 
 # ====================================================================
-# PHASE 2: DATA SELECTION (Using baseline df)
+# PHASE 2: DATA SELECTION
 # ====================================================================
 st.header("🗃️ Enterprise Data Vault Selector")
 available_tables = sorted(list(database.keys()))
@@ -44,7 +44,7 @@ if available_tables:
     # Extract a fresh copy of the baseline data
     df = database[selected_table_key].copy()
     
-    # Clean all text columns IMMEDIATELY to prevent character matching freezes
+    # INSTANT DATA CLEANING: Clean text columns BEFORE filtering
     for col in df.columns:
         if df[col].dtype == 'object':
             df[col] = df[col].astype(str).str.strip()
@@ -53,36 +53,34 @@ if available_tables:
     st.markdown("---")
     
     # ====================================================================
-    # PHASE 3: INTERACTIVE FILTERING LOGIC (Using filtered_df down below)
+    # PHASE 3: SIDEBAR FILTERS WITH EXPLICIT MEMORY KEYS
     # ====================================================================
     st.sidebar.header("🎯 Dashboard Control Filters")
-    
-    # Initialize the secondary dataframe that will be filtered step-by-step
     filtered_df = df.copy()
     
-    # Filter 1: Region (State-locked with a file-specific key)
+    # Filter 1: Region 
     if 'Region' in filtered_df.columns:
         region_options = sorted(list(filtered_df['Region'].unique()))
         selected_region = st.sidebar.multiselect(
             "Select Region", 
             options=region_options, 
             default=region_options,
-            key=f"widget_region_{selected_table_key}"  # <-- Key tells Streamlit to remember your clicks
+            key=f"widget_region_{selected_table_key}"
         )
         filtered_df = filtered_df[filtered_df['Region'].isin(selected_region)]
         
-    # Filter 2: Retailer / Vendor (State-locked with a file-specific key)
+    # Filter 2: Retailer / Vendor 
     if 'Retailer' in filtered_df.columns:
         retailer_options = sorted(list(filtered_df['Retailer'].unique()))
         selected_retailer = st.sidebar.multiselect(
             "Select Retailer", 
             options=retailer_options, 
             default=retailer_options,
-            key=f"widget_retailer_{selected_table_key}"  # <-- Key tells Streamlit to remember your clicks
+            key=f"widget_retailer_{selected_table_key}"
         )
         filtered_df = filtered_df[filtered_df['Retailer'].isin(selected_retailer)]
         
-    # 📊 Top-Level Summary Cards (KPIs) using the final filtered data
+    # 📊 Top-Level Summary Cards (KPIs)
     total_txns = len(filtered_df)
     
     col1, col2 = st.columns(2)
@@ -94,30 +92,60 @@ if available_tables:
     st.markdown("---")
     
     # ====================================================================
-    # PHASE 4: RENDER CHARTS AND TABLES
+    # PHASE 4: DYNAMIC MULTI-SHEET VISUALIZATION LOGIC
     # ====================================================================
     if not filtered_df.empty:
         chart_col1, chart_col2 = st.columns(2)
         
-        with chart_col1:
-            if 'Retailer' in filtered_df.columns and 'Volume_USD' in filtered_df.columns:
+        # 🟢 CASE 1: RETAIL DATA CHIPS
+        if selected_table_key == 'enterprise_retail_dataT':
+            with chart_col1:
                 st.subheader("🏆 Retailer Performance Rankings")
                 chart_data = filtered_df.groupby('Retailer')['Volume_USD'].sum().sort_values(ascending=False)
                 st.bar_chart(chart_data)
-            else:
-                st.subheader("🔎 Database Column Overview")
-                st.write(df.dtypes.astype(str))
-                
-        with chart_col2:
-            if 'Market_Tier' in filtered_df.columns and 'Volume_USD' in filtered_df.columns:
+            with chart_col2:
                 st.subheader("🔸 Revenue Vol by Market Sector")
                 chart_data = filtered_df.groupby('Market_Tier')['Volume_USD'].sum().sort_values(ascending=False)
                 st.bar_chart(chart_data)
-            else:
+                
+        # 🔵 CASE 2: AZURE REMEDIATION ARCHITECTURE
+        elif selected_table_key == 'Azure_Remediation_ReportT':
+            # Check the actual column names in your sheet and map dynamically
+            first_col = filtered_df.columns[0]
+            second_col = filtered_df.columns[1] if len(filtered_df.columns) > 1 else first_col
+            
+            with chart_col1:
+                st.subheader("🛡️ Azure Task Vol Distribution")
+                # Group by your first text column (e.g., Status, Resource, or Category)
+                chart_data = filtered_df.groupby(first_col).size().sort_values(ascending=False)
+                st.bar_chart(chart_data)
+            with chart_col2:
+                st.subheader("⚙️ System Metrics Profile Overview")
+                st.info("Azure remediation summary logs are loaded. Use the bottom audit grid to inspect live fix states.")
+                
+        # 🟡 CASE 3: SQL QUERY 8 STAGING
+        elif selected_table_key == 'SQLQry8T':
+            first_col = filtered_df.columns[0]
+            
+            with chart_col1:
+                st.subheader("💎 Query Metric Frequency")
+                chart_data = filtered_df.groupby(first_col).size().sort_values(ascending=False)
+                st.bar_chart(chart_data)
+            with chart_col2:
+                st.subheader("📊 Query Attribute Density")
+                st.info("Database records are compiled. Charts will dynamically adjust based on column structural constraints.")
+                
+        # ⚪ CASE 4: DEFAULT STANDARD GRID FOR OTHER 20 SHEETS
+        else:
+            with chart_col1:
+                st.subheader("🔎 Database Column Overview")
+                st.write(df.dtypes.astype(str))
+            with chart_col2:
                 st.subheader("💡 Analysis Insight Staging")
-                st.info("Select a data sheet from the dropdown above to map visual charts dynamically.")
+                st.info("Select a core metrics file from the top dropdown menu to map specialized visual summaries.")
+                
     else:
-        st.warning("⚠️ No data matches your current filter selections. Please re-check a store box!")
+        st.warning("⚠️ No data matches your current filter selections. Please re-check an option box!")
         
     # 🗒️ Live Interactive Grid Audit
     st.subheader("🔎 Ingested Database Record Stream")
