@@ -44,6 +44,10 @@ if available_tables:
     # Extract a fresh copy of the baseline data
     df = database[selected_table_key].copy()
     
+    # FIX: For the heavy 16,384-column risk file, clean out blank columns first to prevent memory overflows
+    if selected_table_key == 'Advanced_Military_Risk_AnalysisT':
+        df = df.dropna(axis=1, how='all')
+    
     # 🧼 INSTANT DATA CLEANING: Standardize all text columns BEFORE filtering
     for col in df.columns:
         if df[col].dtype == 'object':
@@ -53,40 +57,44 @@ if available_tables:
     st.markdown("---")
     
     # ====================================================================
-    # PHASE 3: SIDEBAR FILTERS (Fully Mapped to Enterprise Columns)
+    # PHASE 3: SIDEBAR FILTERS (Now Armed with Military Commands)
     # ====================================================================
     st.sidebar.header("🎯 Dashboard Control Filters")
     filtered_df = df.copy()
     
-    # FIX: Dynamically identify the geographic filter column based on your spreadsheet fields
+    # 🌍 1. Dynamic Geographic Region / Theater Filter
     geo_col = None
-    for alternative in ['Region', 'Regions', 'region', 'Global Theater', 'Command Tier']:
+    for alternative in ['Region', 'Regions', 'region', 'Global Theater', 'Command Tier', 'Strategic Command Sector']:
         if alternative in df.columns:
             geo_col = alternative
             break
     
     if geo_col:
-        # Pull and sort all global regions/theaters/tiers uniquely available in this file
         geo_options = sorted(list(df[geo_col].unique()))
-        
         selected_geo = st.sidebar.multiselect(
             f"Filter by {geo_col}", 
             options=geo_options, 
             default=geo_options,
-            key=f"widget_geo_{selected_table_key}"  # State-locked memory key
+            key=f"widget_geo_{selected_table_key}"
         )
-        filtered_df = filtered_df[filtered_df[geo_col].astype(str).str.strip().isin(selected_geo)]
+        filtered_df = filtered_df[filtered_df[geo_col].isin(selected_geo)]
         
-    # Handle Retailer / Vendor Filter if Column Exists
-    if 'Retailer' in filtered_df.columns:
-        retailer_options = sorted(list(filtered_df['Retailer'].unique()))
-        selected_retailer = st.sidebar.multiselect(
-            "Select Retailer", 
-            options=retailer_options, 
-            default=retailer_options,
-            key=f"widget_retailer_{selected_table_key}"
+    # 🛡️ 2. Dynamic Vendor / Active Combat Unit Filter
+    unit_col = None
+    for alternative in ['Retailer', 'Active Combat Unit Name']:
+        if alternative in df.columns:
+            unit_col = alternative
+            break
+            
+    if unit_col:
+        unit_options = sorted(list(df[unit_col].unique()))
+        selected_unit = st.sidebar.multiselect(
+            f"Filter by {unit_col}", 
+            options=unit_options, 
+            default=unit_options,
+            key=f"widget_unit_{selected_table_key}"
         )
-        filtered_df = filtered_df[filtered_df['Retailer'].isin(selected_retailer)]
+        filtered_df = filtered_df[filtered_df[unit_col].isin(selected_unit)]
         
     # 📊 Top-Level Summary Cards (KPIs)
     total_txns = len(filtered_df)
@@ -123,8 +131,6 @@ if available_tables:
                 if 'Command Tier' in filtered_df.columns:
                     chart_data = filtered_df.groupby('Command Tier').size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
-                else:
-                    st.write(df.dtypes.astype(str))
             with chart_col2:
                 st.subheader("⚙️ System Metrics Profile Overview")
                 st.info("Azure remediation summary logs are loaded. Use the bottom audit grid to inspect live fix states.")
@@ -136,13 +142,37 @@ if available_tables:
                 if 'Global Theater' in filtered_df.columns:
                     chart_data = filtered_df.groupby('Global Theater').size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
-                else:
-                    st.write(df.dtypes.astype(str))
             with chart_col2:
                 st.subheader("📊 Query Attribute Density")
                 st.info("Database records are compiled. Charts will dynamically adjust based on column structural constraints.")
                 
-        # ⚪ CASE 4: DEFAULT STANDARD GRID FOR OTHER 20 SHEETS
+        # ⚔️ CASE 4: MILITARY COMBAT FORCE REPORT
+        elif selected_table_key == 'Military_Combat_Force_ReportT':
+            with chart_col1:
+                st.subheader("🪖 Unit Volume Distribution")
+                if 'Active Combat Unit Name' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Active Combat Unit Name').size().sort_values(ascending=False)
+                    st.bar_chart(chart_data)
+            with chart_col2:
+                st.subheader("📡 Force Capacity by Command Sector")
+                if 'Strategic Command Sector' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Strategic Command Sector').size().sort_values(ascending=False)
+                    st.bar_chart(chart_data)
+                    
+        # 🚨 CASE 5: ADVANCED MILITARY RISK ANALYSIS
+        elif selected_table_key == 'Advanced_Military_Risk_AnalysisT':
+            with chart_col1:
+                st.subheader("⚡ Threat Density by Combat Unit")
+                if 'Active Combat Unit Name' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Active Combat Unit Name').size().sort_values(ascending=False)
+                    st.bar_chart(chart_data)
+            with chart_col2:
+                st.subheader("🎯 Strategic Risk Exposure Index")
+                if 'Strategic Command Sector' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Strategic Command Sector').size().sort_values(ascending=False)
+                    st.bar_chart(chart_data)
+                
+        # ⚪ CASE 6: DEFAULT STANDARD GRID FOR OTHER SHEETS
         else:
             with chart_col1:
                 st.subheader("🔎 Database Column Overview")
