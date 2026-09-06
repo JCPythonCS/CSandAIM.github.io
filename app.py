@@ -4,6 +4,7 @@ import os
 
 st.set_page_config(page_title="Computer Systems & AI Management", layout="wide")
 
+# 🏆 Professional Company Title Banner
 st.title("🖥️ Computer Systems and AI Management Cockpit")
 st.markdown("---")
 
@@ -19,11 +20,10 @@ def load_all_enterprise_data():
     for file_name in all_files:
         table_key = file_name.replace('.xlsx', '').replace('.xls', '')
         try:
-            # Open the workbook to inspect its internal tab sheet names
             xl = pd.ExcelFile(file_name)
-            
-            # Look for your exact tab name, or search till we find columns
             target_sheet = xl.sheet_names[0]
+            
+            # Explicitly search for your preferred worksheet tab phrase
             for sheet in xl.sheet_names:
                 if 'Advanced' in sheet or 'Risk' in sheet:
                     target_sheet = sheet
@@ -31,7 +31,6 @@ def load_all_enterprise_data():
             
             temp_df = pd.read_excel(file_name, sheet_name=target_sheet)
             
-            # If the first sheet found is blank, try reading the other tabs
             if temp_df.empty or len(temp_df.columns) <= 1:
                 for sheet in xl.sheet_names:
                     alt_df = pd.read_excel(file_name, sheet_name=sheet)
@@ -47,7 +46,7 @@ def load_all_enterprise_data():
 database = load_all_enterprise_data()
 
 # ====================================================================
-# PHASE 2: DATA SELECTION
+# PHASE 2: DATA SELECTION & FUZZY HEADER CLEANING
 # ====================================================================
 st.header("🗃️ Enterprise Data Vault Selector")
 available_tables = sorted(list(database.keys()))
@@ -61,9 +60,23 @@ if available_tables:
     
     df = database[selected_table_key].copy()
     
-    # Strip empty white-space column buffers instantly
+    # Drop completely blank trailing column fields to optimize parsing
     df = df.dropna(axis=1, how='all')
     
+    # 🧼 FIX: Clear out hidden white spaces, tracking chars, and casing errors in column headers
+    cleaned_columns = []
+    for col in df.columns:
+        col_str = str(col).strip()
+        # Explicitly map fuzzy column strings to your targeted names
+        if 'combat unit' in col_str.lower() or 'unit name' in col_str.lower():
+            cleaned_columns.append('Active Combat Unit Name')
+        elif 'command sector' in col_str.lower() or 'strategic' in col_str.lower():
+            cleaned_columns.append('Strategic Command Sector')
+        else:
+            cleaned_columns.append(col_str)
+    df.columns = cleaned_columns
+    
+    # Clean text data inside rows uniformly
     for col in df.columns:
         if df[col].dtype == 'object':
             df[col] = df[col].astype(str).str.strip()
@@ -72,12 +85,12 @@ if available_tables:
     st.markdown("---")
     
     # ====================================================================
-    # PHASE 3: SIDEBAR FILTERS
+    # PHASE 3: SIDEBAR FILTERS (Fully State-Locked)
     # ====================================================================
     st.sidebar.header("🎯 Dashboard Control Filters")
     filtered_df = df.copy()
     
-    # Locate Geographic Column
+    # 🌍 1. Dynamic Geographic Region / Theater Filter
     geo_col = None
     for alternative in ['Region', 'Regions', 'region', 'Global Theater', 'Command Tier', 'Strategic Command Sector']:
         if alternative in df.columns:
@@ -94,7 +107,7 @@ if available_tables:
         )
         filtered_df = filtered_df[filtered_df[geo_col].isin(selected_geo)]
         
-    # Locate Unit / Vendor Column
+    # 🛡️ 2. Dynamic Vendor / Active Combat Unit Filter
     unit_col = None
     for alternative in ['Retailer', 'Active Combat Unit Name']:
         if alternative in df.columns:
@@ -111,7 +124,7 @@ if available_tables:
         )
         filtered_df = filtered_df[filtered_df[unit_col].isin(selected_unit)]
         
-    # KPI Metrics cards
+    # KPI metrics cards
     total_txns = len(filtered_df)
     
     col1, col2 = st.columns(2)
@@ -174,7 +187,7 @@ if available_tables:
                     chart_data = filtered_df.groupby('Strategic Command Sector').size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
                     
-        # Advanced Military Risk Charts (Finds it regardless of tab overrides)
+        # Advanced Military Risk Charts (Now fully supported by the cleaning logic)
         elif 'Advanced_Military_Risk_Analysis' in selected_table_key:
             with chart_col1:
                 st.subheader("⚡ Threat Density by Combat Unit")
@@ -182,7 +195,7 @@ if available_tables:
                     chart_data = filtered_df.groupby('Active Combat Unit Name').size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
                 else:
-                    st.info("No matching 'Active Combat Unit Name' column column headers found on this tab layout.")
+                    st.info("Dynamic unit scanning failed to locate required data headers.")
             with chart_col2:
                 st.subheader("🎯 Strategic Risk Exposure Index")
                 if 'Strategic Command Sector' in filtered_df.columns:
