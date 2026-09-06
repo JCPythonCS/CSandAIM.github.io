@@ -9,7 +9,7 @@ st.title("🖥️ Computer Systems and AI Management Cockpit")
 st.markdown("---")
 
 # ====================================================================
-# PHASE 1: DATA INGESTION (Executed ONCE at the top and cached)
+# PHASE 1: DATA INGESTION (Loads files into memory once)
 # ====================================================================
 @st.cache_data
 def load_all_enterprise_data():
@@ -29,7 +29,7 @@ def load_all_enterprise_data():
 database = load_all_enterprise_data()
 
 # ====================================================================
-# PHASE 2: DATA SELECTION & EXTRACTION
+# PHASE 2: DATA SELECTION (Extracts the chosen baseline file)
 # ====================================================================
 st.header("🗃️ Enterprise Data Vault Selector")
 available_tables = sorted(list(database.keys()))
@@ -47,30 +47,34 @@ if available_tables:
     st.markdown("---")
     
     # ====================================================================
-    # PHASE 3: INTERACTIVE FILTERING LOGIC (Executed down below)
+    # PHASE 3: DYNAMIC SIDEBAR FILTERS (Fully Separated Logic)
     # ====================================================================
     st.sidebar.header("🎯 Dashboard Control Filters")
     
-    # Create a fresh copy to build your filtered views dynamically
+    # Initialize the secondary filtered DataFrame that sits down below
     filtered_df = df.copy()
     
-    # Handle Region Filter if Column Exists
+    # Filter 1: Region
     if 'Region' in df.columns:
+        # Standardize strings on the baseline layout
         df['Region'] = df['Region'].astype(str).str.strip()
         region_options = sorted(list(df['Region'].unique()))
+        
         selected_region = st.sidebar.multiselect("Select Region", options=region_options, default=region_options)
-        # Apply filter to the working filtered_df
+        # Apply specifically to your filtered_df mapping sequence
         filtered_df = filtered_df[filtered_df['Region'].astype(str).str.strip().isin(selected_region)]
         
-    # Handle Retailer Filter if Column Exists
+    # Filter 2: Retailer / Vendor
     if 'Retailer' in df.columns:
+        # Standardize strings on the baseline layout
         df['Retailer'] = df['Retailer'].astype(str).str.strip()
         retailer_options = sorted(list(df['Retailer'].unique()))
+        
         selected_retailer = st.sidebar.multiselect("Select Retailer", options=retailer_options, default=retailer_options)
-        # Apply filter to the working filtered_df
+        # Apply specifically to your filtered_df mapping sequence
         filtered_df = filtered_df[filtered_df['Retailer'].astype(str).str.strip().isin(selected_retailer)]
         
-    # 📊 Top-Level Summary Cards (KPIs)
+    # 📊 Top-Level Summary Cards (KPIs) using the final filtered_df
     total_txns = len(filtered_df)
     
     col1, col2 = st.columns(2)
@@ -105,7 +109,7 @@ if available_tables:
                 st.subheader("💡 Analysis Insight Staging")
                 st.info("Select a data sheet from the dropdown above to map visual charts dynamically.")
     else:
-        st.warning("⚠️ No data matches your current filter selections. Please select at least one filter!")
+        st.warning("⚠️ No data matches your current filter selections. Please re-select a box!")
         
     # 🗒️ Live Interactive Grid Audit
     st.subheader("🔎 Ingested Database Record Stream")
