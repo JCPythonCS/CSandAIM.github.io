@@ -53,26 +53,29 @@ if available_tables:
     st.markdown("---")
     
     # ====================================================================
-    # PHASE 3: SIDEBAR FILTERS (Now Case-Insensitive)
+    # PHASE 3: SIDEBAR FILTERS (Fully Mapped to Enterprise Columns)
     # ====================================================================
     st.sidebar.header("🎯 Dashboard Control Filters")
     filtered_df = df.copy()
     
-    # FIX: Scan all columns to find "Region" regardless of capitalization
-    region_col = next((c for c in df.columns if c.lower() == 'region' or c.lower() == 'regions'), None)
+    # FIX: Dynamically identify the geographic filter column based on your spreadsheet fields
+    geo_col = None
+    for alternative in ['Region', 'Regions', 'region', 'Global Theater', 'Command Tier']:
+        if alternative in df.columns:
+            geo_col = alternative
+            break
     
-    if region_col:
-        # Standardize the text inside the column
-        df[region_col] = df[region_col].astype(str).str.strip()
-        region_options = sorted(list(df[region_col].unique()))
+    if geo_col:
+        # Pull and sort all global regions/theaters/tiers uniquely available in this file
+        geo_options = sorted(list(df[geo_col].unique()))
         
-        selected_region = st.sidebar.multiselect(
-            f"Select Region ({region_col})", 
-            options=region_options, 
-            default=region_options,
-            key=f"widget_region_{selected_table_key}"
+        selected_geo = st.sidebar.multiselect(
+            f"Filter by {geo_col}", 
+            options=geo_options, 
+            default=geo_options,
+            key=f"widget_geo_{selected_table_key}"  # State-locked memory key
         )
-        filtered_df = filtered_df[filtered_df[region_col].astype(str).str.strip().isin(selected_region)]
+        filtered_df = filtered_df[filtered_df[geo_col].astype(str).str.strip().isin(selected_geo)]
         
     # Handle Retailer / Vendor Filter if Column Exists
     if 'Retailer' in filtered_df.columns:
@@ -115,22 +118,26 @@ if available_tables:
                 
         # 🔵 CASE 2: AZURE REMEDIATION ARCHITECTURE
         elif selected_table_key == 'Azure_Remediation_ReportT':
-            first_col = filtered_df.columns[0]
             with chart_col1:
-                st.subheader("🛡️ Azure Task Vol Distribution")
-                chart_data = filtered_df.groupby(first_col).size().sort_values(ascending=False)
-                st.bar_chart(chart_data)
+                st.subheader("🛡️ Azure Task Vol by Command Tier")
+                if 'Command Tier' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Command Tier').size().sort_values(ascending=False)
+                    st.bar_chart(chart_data)
+                else:
+                    st.write(df.dtypes.astype(str))
             with chart_col2:
                 st.subheader("⚙️ System Metrics Profile Overview")
                 st.info("Azure remediation summary logs are loaded. Use the bottom audit grid to inspect live fix states.")
                 
-        # 物件 CASE 3: SQL QUERY 8 STAGING
+        # 🟡 CASE 3: SQL QUERY 8 STAGING
         elif selected_table_key == 'SQLQry8T':
-            first_col = filtered_df.columns[0]
             with chart_col1:
-                st.subheader("💎 Query Metric Frequency")
-                chart_data = filtered_df.groupby(first_col).size().sort_values(ascending=False)
-                st.bar_chart(chart_data)
+                st.subheader("💎 Query Metric Vol by Global Theater")
+                if 'Global Theater' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Global Theater').size().sort_values(ascending=False)
+                    st.bar_chart(chart_data)
+                else:
+                    st.write(df.dtypes.astype(str))
             with chart_col2:
                 st.subheader("📊 Query Attribute Density")
                 st.info("Database records are compiled. Charts will dynamically adjust based on column structural constraints.")
