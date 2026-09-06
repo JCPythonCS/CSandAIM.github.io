@@ -9,7 +9,7 @@ st.title("🖥️ Computer Systems and AI Management Cockpit")
 st.markdown("---")
 
 # ====================================================================
-# PHASE 1: DATA INGESTION (Loads files into memory once)
+# PHASE 1: DATA INGESTION (Executed once and cached)
 # ====================================================================
 @st.cache_data
 def load_all_enterprise_data():
@@ -29,7 +29,7 @@ def load_all_enterprise_data():
 database = load_all_enterprise_data()
 
 # ====================================================================
-# PHASE 2: DATA SELECTION (Extracts the chosen baseline file)
+# PHASE 2: DATA SELECTION
 # ====================================================================
 st.header("🗃️ Enterprise Data Vault Selector")
 available_tables = sorted(list(database.keys()))
@@ -41,40 +41,48 @@ if available_tables:
         index=available_tables.index('enterprise_retail_dataT') if 'enterprise_retail_dataT' in available_tables else 0
     )
     
-    # Establish your stable baseline DataFrame (df)
+    # Extract a fresh copy of the baseline data
     df = database[selected_table_key].copy()
+    
+    # 🧼 INSTANT DATA CLEANING: Clean all text columns BEFORE filtering to prevent string bugs
+    for col in df.columns:
+        if df[col].dtype == 'object':
+            df[col] = df[col].astype(str).str.strip()
+            
     st.markdown(f"### 📊 Currently Active File: `{selected_table_key}.xlsx`")
     st.markdown("---")
     
     # ====================================================================
-    # PHASE 3: DYNAMIC SIDEBAR FILTERS (Fully Separated Logic)
+    # PHASE 3: SIDEBAR FILTERS WITH EXPLICIT MEMORY KEYS
     # ====================================================================
     st.sidebar.header("🎯 Dashboard Control Filters")
     
-    # Initialize the secondary filtered DataFrame that sits down below
+    # Initialize the secondary dataframe that will be filtered step-by-step
     filtered_df = df.copy()
     
-    # Filter 1: Region
-    if 'Region' in df.columns:
-        # Standardize strings on the baseline layout
-        df['Region'] = df['Region'].astype(str).str.strip()
-        region_options = sorted(list(df['Region'].unique()))
+    # Filter 1: Region (Locked with a unique file-specific key)
+    if 'Region' in filtered_df.columns:
+        region_options = sorted(list(filtered_df['Region'].unique()))
+        selected_region = st.sidebar.multiselect(
+            "Select Region", 
+            options=region_options, 
+            default=region_options,
+            key=f"widget_region_{selected_table_key}"  # <-- FIX: Forces Streamlit to remember your clicks
+        )
+        filtered_df = filtered_df[filtered_df['Region'].isin(selected_region)]
         
-        selected_region = st.sidebar.multiselect("Select Region", options=region_options, default=region_options)
-        # Apply specifically to your filtered_df mapping sequence
-        filtered_df = filtered_df[filtered_df['Region'].astype(str).str.strip().isin(selected_region)]
+    # Filter 2: Retailer / Vendor (Locked with a unique file-specific key)
+    if 'Retailer' in filtered_df.columns:
+        retailer_options = sorted(list(filtered_df['Retailer'].unique()))
+        selected_retailer = st.sidebar.multiselect(
+            "Select Retailer", 
+            options=retailer_options, 
+            default=retailer_options,
+            key=f"widget_retailer_{selected_table_key}"  # <-- FIX: Forces Streamlit to remember your clicks
+        )
+        filtered_df = filtered_df[filtered_df['Retailer'].isin(selected_retailer)]
         
-    # Filter 2: Retailer / Vendor
-    if 'Retailer' in df.columns:
-        # Standardize strings on the baseline layout
-        df['Retailer'] = df['Retailer'].astype(str).str.strip()
-        retailer_options = sorted(list(df['Retailer'].unique()))
-        
-        selected_retailer = st.sidebar.multiselect("Select Retailer", options=retailer_options, default=retailer_options)
-        # Apply specifically to your filtered_df mapping sequence
-        filtered_df = filtered_df[filtered_df['Retailer'].astype(str).str.strip().isin(selected_retailer)]
-        
-    # 📊 Top-Level Summary Cards (KPIs) using the final filtered_df
+    # 📊 Top-Level Summary Cards (KPIs)
     total_txns = len(filtered_df)
     
     col1, col2 = st.columns(2)
@@ -109,7 +117,7 @@ if available_tables:
                 st.subheader("💡 Analysis Insight Staging")
                 st.info("Select a data sheet from the dropdown above to map visual charts dynamically.")
     else:
-        st.warning("⚠️ No data matches your current filter selections. Please re-select a box!")
+        st.warning("⚠️ No data matches your current filter selections. Please re-check a store box!")
         
     # 🗒️ Live Interactive Grid Audit
     st.subheader("🔎 Ingested Database Record Stream")
