@@ -201,8 +201,7 @@ if available_tables:
                     chart_data = filtered_df.groupby(active_unit_label).size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
                 else:
-                    st.info("Insufficient text column indices to populate an operational unit chart layout.")
-                    
+                    st.info("Insufficient text column indices to populate an operational unit chart layout.")   
             with chart_col2:
                 st.subheader("🎯 Strategic Risk Capacity Exposure Index")
                 active_geo_label = 'Strategic Command Sector' if 'Strategic Command Sector' in filtered_df.columns else geo_col
@@ -220,13 +219,11 @@ if available_tables:
             with chart_col2:
                 st.subheader("💡 Analysis Insight Staging")
                 st.info("Select a core metrics file from the top dropdown menu to map specialized visual summaries.")
-                
     else:
         st.warning("⚠️ No data matches your current filter selections. Please re-check an option box!")
         
     # 🗒️ Live Interactive Grid Audit Stream
     st.subheader("🔎 Ingested Database Record Stream")
     st.dataframe(filtered_df.head(100), use_container_width=True)
-
 else:
     st.error("❌ Critical Error: No valid Excel spreadsheets found in your GitHub repository.")
