@@ -9,7 +9,7 @@ st.title("🖥️ Computer Systems and AI Management Cockpit")
 st.markdown("---")
 
 # ====================================================================
-# PHASE 1: DATA INGESTION (Loaded once and cached)
+# PHASE 1: DATA INGESTION (Targeting specific Excel Sheet Tabs)
 # ====================================================================
 @st.cache_data
 def load_all_enterprise_data():
@@ -20,8 +20,12 @@ def load_all_enterprise_data():
     for file_name in all_files:
         table_key = file_name.replace('.xlsx', '').replace('.xls', '')
         try:
-            vault[table_key] = pd.read_excel(file_name)
-        except:
+            # FIX: If it's your specific risk file, force Python to read the exact sheet tab name!
+            if 'Advanced_Military_Risk_Analysis' in table_key:
+                vault[table_key] = pd.read_excel(file_name, sheet_name='Advanced_Military_Risk_Analysis')
+            else:
+                vault[table_key] = pd.read_excel(file_name)
+        except Exception as e:
             pass
     return vault
 
@@ -44,11 +48,11 @@ if available_tables:
     # Extract a fresh copy of the baseline data
     df = database[selected_table_key].copy()
     
-    # FIX: Clean out blank columns for any version of the massive military risk sheet to save memory
+    # Clean out blank column headers to save memory
     if 'Advanced_Military_Risk_Analysis' in selected_table_key:
         df = df.dropna(axis=1, how='all')
     
-    # 🧼 INSTANT DATA CLEANING: Standardize all text columns BEFORE filtering
+    # 🧼 INSTANT DATA CLEANING: Standardize text columns BEFORE filtering
     for col in df.columns:
         if df[col].dtype == 'object':
             df[col] = df[col].astype(str).str.strip()
@@ -159,7 +163,7 @@ if available_tables:
                     chart_data = filtered_df.groupby('Strategic Command Sector').size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
                     
-        # 🚨 CASE 5: ADVANCED MILITARY RISK ANALYSIS (Supports BOTH naming conventions seamlessly)
+        # 🚨 CASE 5: ADVANCED MILITARY RISK ANALYSIS (Targeting the clean internal sheet rows)
         elif 'Advanced_Military_Risk_Analysis' in selected_table_key:
             with chart_col1:
                 st.subheader("⚡ Threat Density by Combat Unit")
@@ -167,7 +171,7 @@ if available_tables:
                     chart_data = filtered_df.groupby('Active Combat Unit Name').size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
                 else:
-                    st.info("Select a combat category to filter specific target rows.")
+                    st.info("Awaiting manual category validation inside the active data grid below.")
             with chart_col2:
                 st.subheader("🎯 Strategic Risk Exposure Index")
                 if 'Strategic Command Sector' in filtered_df.columns:
