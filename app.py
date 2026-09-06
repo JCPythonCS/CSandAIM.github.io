@@ -44,8 +44,8 @@ if available_tables:
     # Extract a fresh copy of the baseline data
     df = database[selected_table_key].copy()
     
-    # FIX: For the heavy 16,384-column risk file, clean out blank columns first to prevent memory overflows
-    if selected_table_key == 'Advanced_Military_Risk_AnalysisT':
+    # FIX: Clean out blank columns for any version of the massive military risk sheet to save memory
+    if 'Advanced_Military_Risk_Analysis' in selected_table_key:
         df = df.dropna(axis=1, how='all')
     
     # 🧼 INSTANT DATA CLEANING: Standardize all text columns BEFORE filtering
@@ -57,7 +57,7 @@ if available_tables:
     st.markdown("---")
     
     # ====================================================================
-    # PHASE 3: SIDEBAR FILTERS (Now Armed with Military Commands)
+    # PHASE 3: SIDEBAR FILTERS
     # ====================================================================
     st.sidebar.header("🎯 Dashboard Control Filters")
     filtered_df = df.copy()
@@ -159,13 +159,15 @@ if available_tables:
                     chart_data = filtered_df.groupby('Strategic Command Sector').size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
                     
-        # 🚨 CASE 5: ADVANCED MILITARY RISK ANALYSIS
-        elif selected_table_key == 'Advanced_Military_Risk_AnalysisT':
+        # 🚨 CASE 5: ADVANCED MILITARY RISK ANALYSIS (Supports BOTH naming conventions seamlessly)
+        elif 'Advanced_Military_Risk_Analysis' in selected_table_key:
             with chart_col1:
                 st.subheader("⚡ Threat Density by Combat Unit")
                 if 'Active Combat Unit Name' in filtered_df.columns:
                     chart_data = filtered_df.groupby('Active Combat Unit Name').size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
+                else:
+                    st.info("Select a combat category to filter specific target rows.")
             with chart_col2:
                 st.subheader("🎯 Strategic Risk Exposure Index")
                 if 'Strategic Command Sector' in filtered_df.columns:
