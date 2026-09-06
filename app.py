@@ -48,7 +48,7 @@ def load_all_enterprise_data():
 database = load_all_enterprise_data()
 
 # ====================================================================
-# PHASE 2: DATA SELECTION & BULLETPROOF COLUMN MAPPING
+# PHASE 2: DATA SELECTION & SMART COLUMN MAPPING
 # ====================================================================
 st.header("🗃️ Enterprise Data Vault Selector")
 available_tables = sorted(list(database.keys()))
@@ -65,34 +65,21 @@ if available_tables:
     # Drop completely blank trailing column fields to optimize memory allocation
     df = df.dropna(axis=1, how='all')
     
-    # 🧼 Clean tracking spaces from raw header strings immediately
+    # Clean tracking spaces from raw header strings immediately
     df.columns = [str(c).strip() for c in df.columns]
     
-    # 🤖 ABSOLUTE FIX: Automatic Index Fallback Logic for Advanced Defense Files
-    cleaned_columns = list(df.columns)
-    
-    # Dynamically extract all available string column headers
-    text_cols = [c for c in df.columns if df[c].dtype == 'object' or df[c].dtype == 'string']
-    
-    for i, col in enumerate(df.columns):
-        col_lower = col.lower()
-        # Map out Unit / Vendor Name Column
-        if 'combat unit' in col_lower or 'unit name' in col_lower or 'retailer' in col_lower:
-            cleaned_columns[i] = 'Active Combat Unit Name'
-        # Map out Geographic Region / Sector Column
-        elif 'command sector' in col_lower or 'strategic' in col_lower or 'region' in col_lower or 'theater' in col_lower or 'tier' in col_lower:
-            cleaned_columns[i] = 'Strategic Command Sector'
-            
-    # Apply the mapped labels back onto the DataFrame
+    # 🤖 SMART MAPPING: Search headers case-insensitively and apply uniform labels
+    cleaned_columns = []
+    for col in df.columns:
+        col_lower = str(col).lower()
+        if 'combat unit' in col_lower or 'unit name' in col_lower:
+            cleaned_columns.append('Active Combat Unit Name')
+        elif 'command sector' in col_lower or 'strategic' in col_lower:
+            cleaned_columns.append('Strategic Command Sector')
+        else:
+            cleaned_columns.append(col)
     df.columns = cleaned_columns
     
-    # 🚨 CRITICAL FALLBACK: If names are completely hidden or custom, map them by position index
-    if 'Advanced_Military_Risk_Analysis' in selected_table_key or 'Military_Combat_Force' in selected_table_key:
-        if 'Active Combat Unit Name' not in df.columns and len(text_cols) > 0:
-            df = df.rename(columns={text_cols[0]: 'Active Combat Unit Name'})
-        if 'Strategic Command Sector' not in df.columns and len(text_cols) > 1:
-            df = df.rename(columns={text_cols[1]: 'Strategic Command Sector'})
-            
     # Standardize data rows text spacing uniformly
     for col in df.columns:
         if df[col].dtype == 'object':
@@ -110,12 +97,12 @@ if available_tables:
     # 🌍 1. Dynamic Geographic Region / Theater Filter
     geo_col = None
     for alternative in ['Region', 'Regions', 'region', 'Global Theater', 'Command Tier', 'Strategic Command Sector']:
-        if alternative in df.columns:
+        if alternative in filtered_df.columns:
             geo_col = alternative
             break
     
     if geo_col:
-        geo_options = sorted(list(df[geo_col].unique()))
+        geo_options = sorted(list(filtered_df[geo_col].unique()))
         selected_geo = st.sidebar.multiselect(
             f"Filter by {geo_col}", 
             options=geo_options, 
@@ -127,12 +114,12 @@ if available_tables:
     # 🛡️ 2. Dynamic Vendor / Active Combat Unit Filter
     unit_col = None
     for alternative in ['Retailer', 'Active Combat Unit Name']:
-        if alternative in df.columns:
+        if alternative in filtered_df.columns:
             unit_col = alternative
             break
             
     if unit_col:
-        unit_options = sorted(list(df[unit_col].unique()))
+        unit_options = sorted(list(filtered_df[unit_col].unique()))
         selected_unit = st.sidebar.multiselect(
             f"Filter by {unit_col}", 
             options=unit_options, 
@@ -195,18 +182,16 @@ if available_tables:
         elif 'Combat_Force' in selected_table_key or 'Risk_Analysis' in selected_table_key:
             with chart_col1:
                 st.subheader("⚡ Operational Threat Density by Combat Unit")
-                # Look for whatever assigned label name is active to draw the graph
-                active_unit_label = 'Active Combat Unit Name' if 'Active Combat Unit Name' in filtered_df.columns else unit_col
-                if active_unit_label and active_unit_label in filtered_df.columns:
-                    chart_data = filtered_df.groupby(active_unit_label).size().sort_values(ascending=False)
+                if 'Active Combat Unit Name' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Active Combat Unit Name').size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
                 else:
-                    st.info("Insufficient text column indices to populate an operational unit chart layout.")   
+                    st.info("Insufficient text column indices to populate an operational unit chart layout.")
+                    
             with chart_col2:
                 st.subheader("🎯 Strategic Risk Capacity Exposure Index")
-                active_geo_label = 'Strategic Command Sector' if 'Strategic Command Sector' in filtered_df.columns else geo_col
-                if active_geo_label and active_geo_label in filtered_df.columns:
-                    chart_data = filtered_df.groupby(active_geo_label).size().sort_values(ascending=False)
+                if 'Strategic Command Sector' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Strategic Command Sector').size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
                 else:
                     st.info("Insufficient text column indices to populate a regional sector chart layout.")
@@ -219,11 +204,13 @@ if available_tables:
             with chart_col2:
                 st.subheader("💡 Analysis Insight Staging")
                 st.info("Select a core metrics file from the top dropdown menu to map specialized visual summaries.")
+                
     else:
         st.warning("⚠️ No data matches your current filter selections. Please re-check an option box!")
         
     # 🗒️ Live Interactive Grid Audit Stream
     st.subheader("🔎 Ingested Database Record Stream")
     st.dataframe(filtered_df.head(100), use_container_width=True)
+
 else:
     st.error("❌ Critical Error: No valid Excel spreadsheets found in your GitHub repository.")
