@@ -9,7 +9,7 @@ st.title("🖥️ Computer Systems and AI Management Cockpit")
 st.markdown("---")
 
 # ====================================================================
-# PHASE 1: DATA INGESTION (Executed once and cached)
+# PHASE 1: DATA INGESTION (Executed ONCE and cached in cloud memory)
 # ====================================================================
 @st.cache_data
 def load_all_enterprise_data():
@@ -29,7 +29,7 @@ def load_all_enterprise_data():
 database = load_all_enterprise_data()
 
 # ====================================================================
-# PHASE 2: DATA SELECTION
+# PHASE 2: DATA SELECTION (Using baseline df)
 # ====================================================================
 st.header("🗃️ Enterprise Data Vault Selector")
 available_tables = sorted(list(database.keys()))
@@ -44,7 +44,7 @@ if available_tables:
     # Extract a fresh copy of the baseline data
     df = database[selected_table_key].copy()
     
-    # 🧼 INSTANT DATA CLEANING: Clean all text columns BEFORE filtering to prevent string bugs
+    # Clean all text columns IMMEDIATELY to prevent character matching freezes
     for col in df.columns:
         if df[col].dtype == 'object':
             df[col] = df[col].astype(str).str.strip()
@@ -53,36 +53,36 @@ if available_tables:
     st.markdown("---")
     
     # ====================================================================
-    # PHASE 3: SIDEBAR FILTERS WITH EXPLICIT MEMORY KEYS
+    # PHASE 3: INTERACTIVE FILTERING LOGIC (Using filtered_df down below)
     # ====================================================================
     st.sidebar.header("🎯 Dashboard Control Filters")
     
     # Initialize the secondary dataframe that will be filtered step-by-step
     filtered_df = df.copy()
     
-    # Filter 1: Region (Locked with a unique file-specific key)
+    # Filter 1: Region (State-locked with a file-specific key)
     if 'Region' in filtered_df.columns:
         region_options = sorted(list(filtered_df['Region'].unique()))
         selected_region = st.sidebar.multiselect(
             "Select Region", 
             options=region_options, 
             default=region_options,
-            key=f"widget_region_{selected_table_key}"  # <-- FIX: Forces Streamlit to remember your clicks
+            key=f"widget_region_{selected_table_key}"  # <-- Key tells Streamlit to remember your clicks
         )
         filtered_df = filtered_df[filtered_df['Region'].isin(selected_region)]
         
-    # Filter 2: Retailer / Vendor (Locked with a unique file-specific key)
+    # Filter 2: Retailer / Vendor (State-locked with a file-specific key)
     if 'Retailer' in filtered_df.columns:
         retailer_options = sorted(list(filtered_df['Retailer'].unique()))
         selected_retailer = st.sidebar.multiselect(
             "Select Retailer", 
             options=retailer_options, 
             default=retailer_options,
-            key=f"widget_retailer_{selected_table_key}"  # <-- FIX: Forces Streamlit to remember your clicks
+            key=f"widget_retailer_{selected_table_key}"  # <-- Key tells Streamlit to remember your clicks
         )
         filtered_df = filtered_df[filtered_df['Retailer'].isin(selected_retailer)]
         
-    # 📊 Top-Level Summary Cards (KPIs)
+    # 📊 Top-Level Summary Cards (KPIs) using the final filtered data
     total_txns = len(filtered_df)
     
     col1, col2 = st.columns(2)
