@@ -4,12 +4,11 @@ import os
 
 st.set_page_config(page_title="Computer Systems & AI Management", layout="wide")
 
-# 🏆 Professional Company Title Banner
 st.title("🖥️ Computer Systems and AI Management Cockpit")
 st.markdown("---")
 
 # ====================================================================
-# PHASE 1: DATA INGESTION (Targeting specific Excel Sheet Tabs)
+# PHASE 1: DATA INGESTION (Scans ALL tabs inside every file)
 # ====================================================================
 @st.cache_data
 def load_all_enterprise_data():
@@ -20,16 +19,31 @@ def load_all_enterprise_data():
     for file_name in all_files:
         table_key = file_name.replace('.xlsx', '').replace('.xls', '')
         try:
-            # FIX: If it's your specific risk file, force Python to read the exact sheet tab name!
-            if 'Advanced_Military_Risk_Analysis' in table_key:
-                vault[table_key] = pd.read_excel(file_name, sheet_name='Advanced_Military_Risk_Analysis')
-            else:
-                vault[table_key] = pd.read_excel(file_name)
-        except Exception as e:
+            # Open the workbook to inspect its internal tab sheet names
+            xl = pd.ExcelFile(file_name)
+            
+            # Look for your exact tab name, or search till we find columns
+            target_sheet = xl.sheet_names[0]
+            for sheet in xl.sheet_names:
+                if 'Advanced' in sheet or 'Risk' in sheet:
+                    target_sheet = sheet
+                    break
+            
+            temp_df = pd.read_excel(file_name, sheet_name=target_sheet)
+            
+            # If the first sheet found is blank, try reading the other tabs
+            if temp_df.empty or len(temp_df.columns) <= 1:
+                for sheet in xl.sheet_names:
+                    alt_df = pd.read_excel(file_name, sheet_name=sheet)
+                    if not alt_df.empty and len(alt_df.columns) > 1:
+                        temp_df = alt_df
+                        break
+                        
+            vault[table_key] = temp_df
+        except:
             pass
     return vault
 
-# Initialize the global data vault database
 database = load_all_enterprise_data()
 
 # ====================================================================
@@ -45,14 +59,11 @@ if available_tables:
         index=available_tables.index('enterprise_retail_dataT') if 'enterprise_retail_dataT' in available_tables else 0
     )
     
-    # Extract a fresh copy of the baseline data
     df = database[selected_table_key].copy()
     
-    # Clean out blank column headers to save memory
-    if 'Advanced_Military_Risk_Analysis' in selected_table_key:
-        df = df.dropna(axis=1, how='all')
+    # Strip empty white-space column buffers instantly
+    df = df.dropna(axis=1, how='all')
     
-    # 🧼 INSTANT DATA CLEANING: Standardize text columns BEFORE filtering
     for col in df.columns:
         if df[col].dtype == 'object':
             df[col] = df[col].astype(str).str.strip()
@@ -66,7 +77,7 @@ if available_tables:
     st.sidebar.header("🎯 Dashboard Control Filters")
     filtered_df = df.copy()
     
-    # 🌍 1. Dynamic Geographic Region / Theater Filter
+    # Locate Geographic Column
     geo_col = None
     for alternative in ['Region', 'Regions', 'region', 'Global Theater', 'Command Tier', 'Strategic Command Sector']:
         if alternative in df.columns:
@@ -83,7 +94,7 @@ if available_tables:
         )
         filtered_df = filtered_df[filtered_df[geo_col].isin(selected_geo)]
         
-    # 🛡️ 2. Dynamic Vendor / Active Combat Unit Filter
+    # Locate Unit / Vendor Column
     unit_col = None
     for alternative in ['Retailer', 'Active Combat Unit Name']:
         if alternative in df.columns:
@@ -100,7 +111,7 @@ if available_tables:
         )
         filtered_df = filtered_df[filtered_df[unit_col].isin(selected_unit)]
         
-    # 📊 Top-Level Summary Cards (KPIs)
+    # KPI Metrics cards
     total_txns = len(filtered_df)
     
     col1, col2 = st.columns(2)
@@ -112,12 +123,12 @@ if available_tables:
     st.markdown("---")
     
     # ====================================================================
-    # PHASE 4: DYNAMIC MULTI-SHEET VISUALIZATION LOGIC
+    # PHASE 4: DYNAMIC MULTI-SHEET CHARTS
     # ====================================================================
     if not filtered_df.empty:
         chart_col1, chart_col2 = st.columns(2)
         
-        # 🟢 CASE 1: RETAIL DATA CHIPS
+        # Retail Charts
         if selected_table_key == 'enterprise_retail_dataT':
             with chart_col1:
                 st.subheader("🏆 Retailer Performance Rankings")
@@ -128,7 +139,7 @@ if available_tables:
                 chart_data = filtered_df.groupby('Market_Tier')['Volume_USD'].sum().sort_values(ascending=False)
                 st.bar_chart(chart_data)
                 
-        # 🔵 CASE 2: AZURE REMEDIATION ARCHITECTURE
+        # Azure Charts
         elif selected_table_key == 'Azure_Remediation_ReportT':
             with chart_col1:
                 st.subheader("🛡️ Azure Task Vol by Command Tier")
@@ -137,9 +148,9 @@ if available_tables:
                     st.bar_chart(chart_data)
             with chart_col2:
                 st.subheader("⚙️ System Metrics Profile Overview")
-                st.info("Azure remediation summary logs are loaded. Use the bottom audit grid to inspect live fix states.")
+                st.info("Azure remediation summary logs are loaded successfully.")
                 
-        # 🟡 CASE 3: SQL QUERY 8 STAGING
+        # SQL Charts
         elif selected_table_key == 'SQLQry8T':
             with chart_col1:
                 st.subheader("💎 Query Metric Vol by Global Theater")
@@ -148,9 +159,9 @@ if available_tables:
                     st.bar_chart(chart_data)
             with chart_col2:
                 st.subheader("📊 Query Attribute Density")
-                st.info("Database records are compiled. Charts will dynamically adjust based on column structural constraints.")
+                st.info("Database records are compiled seamlessly.")
                 
-        # ⚔️ CASE 4: MILITARY COMBAT FORCE REPORT
+        # Military Combat Force Charts
         elif selected_table_key == 'Military_Combat_Force_ReportT':
             with chart_col1:
                 st.subheader("🪖 Unit Volume Distribution")
@@ -163,7 +174,7 @@ if available_tables:
                     chart_data = filtered_df.groupby('Strategic Command Sector').size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
                     
-        # 🚨 CASE 5: ADVANCED MILITARY RISK ANALYSIS (Targeting the clean internal sheet rows)
+        # Advanced Military Risk Charts (Finds it regardless of tab overrides)
         elif 'Advanced_Military_Risk_Analysis' in selected_table_key:
             with chart_col1:
                 st.subheader("⚡ Threat Density by Combat Unit")
@@ -171,14 +182,14 @@ if available_tables:
                     chart_data = filtered_df.groupby('Active Combat Unit Name').size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
                 else:
-                    st.info("Awaiting manual category validation inside the active data grid below.")
+                    st.info("No matching 'Active Combat Unit Name' column column headers found on this tab layout.")
             with chart_col2:
                 st.subheader("🎯 Strategic Risk Exposure Index")
                 if 'Strategic Command Sector' in filtered_df.columns:
                     chart_data = filtered_df.groupby('Strategic Command Sector').size().sort_values(ascending=False)
                     st.bar_chart(chart_data)
                 
-        # ⚪ CASE 6: DEFAULT STANDARD GRID FOR OTHER SHEETS
+        # Default view
         else:
             with chart_col1:
                 st.subheader("🔎 Database Column Overview")
@@ -190,7 +201,6 @@ if available_tables:
     else:
         st.warning("⚠️ No data matches your current filter selections. Please re-check an option box!")
         
-    # 🗒️ Live Interactive Grid Audit
     st.subheader("🔎 Ingested Database Record Stream")
     st.dataframe(filtered_df.head(100), use_container_width=True)
 
