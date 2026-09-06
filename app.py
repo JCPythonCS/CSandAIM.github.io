@@ -9,7 +9,7 @@ st.title("🖥️ Computer Systems and AI Management Cockpit")
 st.markdown("---")
 
 # ====================================================================
-# PHASE 1: DATA INGESTION (Loads files into memory once)
+# PHASE 1: DATA INGESTION (Loaded once and cached)
 # ====================================================================
 @st.cache_data
 def load_all_enterprise_data():
@@ -44,7 +44,7 @@ if available_tables:
     # Extract a fresh copy of the baseline data
     df = database[selected_table_key].copy()
     
-    # INSTANT DATA CLEANING: Clean text columns BEFORE filtering
+    # 🧼 INSTANT DATA CLEANING: Standardize all text columns BEFORE filtering
     for col in df.columns:
         if df[col].dtype == 'object':
             df[col] = df[col].astype(str).str.strip()
@@ -53,23 +53,28 @@ if available_tables:
     st.markdown("---")
     
     # ====================================================================
-    # PHASE 3: SIDEBAR FILTERS WITH EXPLICIT MEMORY KEYS
+    # PHASE 3: SIDEBAR FILTERS (Now Case-Insensitive)
     # ====================================================================
     st.sidebar.header("🎯 Dashboard Control Filters")
     filtered_df = df.copy()
     
-    # Filter 1: Region 
-    if 'Region' in filtered_df.columns:
-        region_options = sorted(list(filtered_df['Region'].unique()))
+    # FIX: Scan all columns to find "Region" regardless of capitalization
+    region_col = next((c for c in df.columns if c.lower() == 'region' or c.lower() == 'regions'), None)
+    
+    if region_col:
+        # Standardize the text inside the column
+        df[region_col] = df[region_col].astype(str).str.strip()
+        region_options = sorted(list(df[region_col].unique()))
+        
         selected_region = st.sidebar.multiselect(
-            "Select Region", 
+            f"Select Region ({region_col})", 
             options=region_options, 
             default=region_options,
             key=f"widget_region_{selected_table_key}"
         )
-        filtered_df = filtered_df[filtered_df['Region'].isin(selected_region)]
+        filtered_df = filtered_df[filtered_df[region_col].astype(str).str.strip().isin(selected_region)]
         
-    # Filter 2: Retailer / Vendor 
+    # Handle Retailer / Vendor Filter if Column Exists
     if 'Retailer' in filtered_df.columns:
         retailer_options = sorted(list(filtered_df['Retailer'].unique()))
         selected_retailer = st.sidebar.multiselect(
@@ -110,23 +115,18 @@ if available_tables:
                 
         # 🔵 CASE 2: AZURE REMEDIATION ARCHITECTURE
         elif selected_table_key == 'Azure_Remediation_ReportT':
-            # Check the actual column names in your sheet and map dynamically
             first_col = filtered_df.columns[0]
-            second_col = filtered_df.columns[1] if len(filtered_df.columns) > 1 else first_col
-            
             with chart_col1:
                 st.subheader("🛡️ Azure Task Vol Distribution")
-                # Group by your first text column (e.g., Status, Resource, or Category)
                 chart_data = filtered_df.groupby(first_col).size().sort_values(ascending=False)
                 st.bar_chart(chart_data)
             with chart_col2:
                 st.subheader("⚙️ System Metrics Profile Overview")
                 st.info("Azure remediation summary logs are loaded. Use the bottom audit grid to inspect live fix states.")
                 
-        # 🟡 CASE 3: SQL QUERY 8 STAGING
+        # 物件 CASE 3: SQL QUERY 8 STAGING
         elif selected_table_key == 'SQLQry8T':
             first_col = filtered_df.columns[0]
-            
             with chart_col1:
                 st.subheader("💎 Query Metric Frequency")
                 chart_data = filtered_df.groupby(first_col).size().sort_values(ascending=False)
