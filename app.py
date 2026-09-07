@@ -5,24 +5,25 @@ import os
 st.set_page_config(page_title="Computer Systems & AI Management", layout="wide")
 
 # ====================================================================
-# 🏆 SYMMETRICAL CORPORATE BRANDING BANNER
+# 🏆 SYMMETRICAL HTML CORPORATE BRANDING BANNER (Bypasses st.image errors)
 # ====================================================================
-logo_left_col, title_center_col, logo_right_col = st.columns()
-
-with logo_left_col:
-    try:
-        st.image("LOGOB.png", use_container_width=True)
-    except:
-        st.caption("🔹 LOGOB Staging")
-
-with title_center_col:
-    st.markdown("<h1 style='text-align: center; margin-top: 10px;'>🖥️ Computer Systems and AI Management Cockpit</h1>", unsafe_html=True)
-
-with logo_right_col:
-    try:
-        st.image("LOGOG.png", use_container_width=True)
-    except:
-        st.caption("🔸 LOGOG Staging")
+# Using standard HTML layout blocks to completely step clear of metrics_util tracking loops
+st.markdown(
+    """
+    <div style="display: flex; justify-content: space-between; align-items: center; background-color: transparent; padding: 10px;">
+        <div style="flex: 1; text-align: left;">
+            <img src="https://githubusercontent.com" style="max-height: 90px; width: auto; border-radius: 4px;">
+        </div>
+        <div style="flex: 3; text-align: center;">
+            <h1 style="margin: 0; padding: 0; font-size: 2.2rem;">🖥️ Computer Systems and AI Management Cockpit</h1>
+        </div>
+        <div style="flex: 1; text-align: right;">
+            <img src="https://githubusercontent.com" style="max-height: 90px; width: auto; border-radius: 4px;">
+        </div>
+    </div>
+    """,
+    unsafe_html=True
+)
 
 st.markdown("---")
 
@@ -31,7 +32,6 @@ st.markdown("---")
 # ====================================================================
 @st.cache_data
 def load_baseline_file():
-    # Force the app to ONLY look at the one file we know is stable
     target_file = "enterprise_retail_dataT.xlsx"
     try:
         return pd.read_excel(target_file)
@@ -67,7 +67,7 @@ if not df_raw.empty:
         
     if 'Retailer' in filtered_df.columns:
         retailer_options = sorted(list(filtered_df['Retailer'].unique()))
-        selected_retailer = st.sidebar.multiselect("Select Retailer", options=retailer_options, default=retailer_options, key=f"ret_widget")
+        selected_retailer = st.sidebar.multiselect("Select Retailer", options=retailer_options, default=retailer_options, key="ret_widget")
         filtered_df = filtered_df[filtered_df['Retailer'].isin(selected_retailer)]
         
     total_txns = len(filtered_df)
