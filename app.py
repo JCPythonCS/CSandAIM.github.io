@@ -22,7 +22,7 @@ with logo_left_col:
             st.caption("🔹 LogoB Staging")
 
 with title_center_col:
-    st.markdown("<h1 style='text-align: center;'>🖥️ Computer Systems and AI Management Cockpit</h1>", unsafe_html=True)
+    st.markdown("<h1 style='text-align: center; margin-top: 10px;'>🖥️ Computer Systems and AI Management Cockpit</h1>", unsafe_html=True)
 
 with logo_right_col:
     try:
@@ -49,7 +49,7 @@ def load_all_enterprise_data():
         table_key = file_name.replace('.xlsx', '').replace('.xls', '')
         try:
             xl = pd.ExcelFile(file_name)
-            target_sheet = xl.sheet_names
+            target_sheet = xl.sheet_names[0]
             
             for sheet in xl.sheet_names:
                 if 'Advanced' in sheet or 'Risk' in sheet or 'Military' in sheet:
@@ -73,7 +73,7 @@ def load_all_enterprise_data():
 database = load_all_enterprise_data()
 
 # ====================================================================
-# WORKSTATION TAB ARCHITECTURE (The Separation Layer)
+# WORKSTATION TAB ARCHITECTURE (The Scalable Separation Layer)
 # ====================================================================
 tab_analytics, tab_utilities = st.tabs(["📊 Enterprise Command Analytics", "🛠️ Operations Utility Suite"])
 
@@ -208,4 +208,33 @@ with tab_utilities:
             "Target Operational Language:",
             ["Spanish (Español)", "German (Deutsch)", "Japanese (日本語)", "Chinese Simplified (简体中文)", "Chinese Traditional (繁體中文)", "Arabic (العربية)", "French (Français)"]
         )
+        input_text = st.text_area("📋 Source Script / Copy-Paste Ingestion Box:", height=150, placeholder="Paste data row text or operational telemetry logs here...", key="util_translator_input")
         
+        if st.button("🚀 Translate Operational Brief"):
+            if input_text:
+                st.success(f"**Mock Engine Localization Link Active to: {target_lang}**")
+                st.info(f"Staging Environment Operational: Next weekend we will connect this box to the active translation API logic lines!")
+            else:
+                st.warning("Please paste or type text into the box first.")
+
+    # 🧮 Operational Scientific Calculator
+    with util_col2:
+        st.subheader("🧮 Strategic Metrics Scientific Calculator")
+        st.caption("Execute on-the-fly math, variance tracking, or financial checks on raw statistics.")
+        
+        calc_mode = st.selectbox("Select Mathematical Operation:", ["Standard Variance Addition (+)", "Volume Multiplication (x)", "Logarithmic Scale (log10)", "Square Root (√)"])
+        
+        val1 = st.number_input("Enter Baseline Operational Metric Value A:", value=0.0, key="util_calc_val1")
+        val2 = st.number_input("Enter Target Comparative Value B (If Applicable):", value=0.0, key="util_calc_val2")
+        
+        if st.button("🧮 Compute Operations Metric"):
+            if calc_mode == "Standard Variance Addition (+)":
+                st.metric(label="Calculated Gross Metric Sum", value=f"{val1 + val2:,.2f}")
+            elif calc_mode == "Volume Multiplication (x)":
+                st.metric(label="Calculated Combined Volume Matrix", value=f"{val1 * val2:,.2f}")
+            elif calc_mode == "Logarithmic Scale (log10)":
+                if val1 > 0: st.metric(label="Logarithmic Base-10 Scale Output", value=f"{math.log10(val1):,.4f}")
+                else: st.error("Logarithmic evaluations require values greater than 0.")
+            elif calc_mode == "Square Root (√)":
+                if val1 >= 0: st.metric(label="Square Root Calculation Output", value=f"{math.sqrt(val1):,.4f}")
+                else: st.error("Square root evaluations require positive numbers.")
