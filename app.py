@@ -194,7 +194,7 @@ with tab_dashboard:
         st.warning("⚠️ No enterprise tracking records found in current workspace root.")
 
 # ====================================================================
-# TAB 2: MANAGEMENT TOOLS WORKSPACE (All 5 New Utilities)
+# TAB 2: MANAGEMENT TOOLS WORKSPACE (All 5 Utilities - Unified)
 # ====================================================================
 with tab_tools:
     st.header("🧰 Custom Operational Tools")
@@ -211,23 +211,18 @@ with tab_tools:
         st.subheader("🧮 Extended Scientific Calculation Node")
         st.write("Perform advanced trigs, logarithms, combinatorics, and multi-variable equations.")
 
-        # Initialize session state strings if not present
         if "calc_input" not in st.session_state:
             st.session_state.calc_input = ""
 
-        # Layout Split: Left for calculation string builder, Right for evaluation logs
-        c1, c2 = st.columns([3, 2])
-        
+        c1, c2 = st.columns(2)
         with c1:
-            # Interactive Master Expression Text Field Window
             expr = st.text_input("Formula Ingestion Buffer:", value=st.session_state.calc_input, key="calc_box")
             
-            # Inline helper function to cleanly append text strings safely
             def append_btn(chars):
                 st.session_state.calc_input += str(chars)
                 st.rerun()
 
-            # ROW 1: Standard Constants & Advanced Roots
+            # ROW 1: Constants & Roots
             r1_1, r1_2, r1_3, r1_4, r1_5 = st.columns(5)
             if r1_1.button("π", use_container_width=True): append_btn("math.pi")
             if r1_2.button("e", use_container_width=True): append_btn("math.e")
@@ -235,7 +230,7 @@ with tab_tools:
             if r1_4.button("³√x", use_container_width=True): append_btn("math.cbrt(")
             if r1_5.button("1/x", use_container_width=True): append_btn("1/(")
 
-            # ROW 2: Powers, Logs, and Factorials
+            # ROW 2: Powers, Logs, Factorials
             r2_1, r2_2, r2_3, r2_4, r2_5 = st.columns(5)
             if r2_1.button("x²", use_container_width=True): append_btn("**2")
             if r2_2.button("x³", use_container_width=True): append_btn("**3")
@@ -243,7 +238,7 @@ with tab_tools:
             if r2_4.button("log₁₀", use_container_width=True): append_btn("math.log10(")
             if r2_5.button("x!", use_container_width=True): append_btn("math.factorial(")
 
-            # ROW 3: Native Trigonometry Layout (Auto-converts input degrees to radians)
+            # ROW 3: Trigonometry (Auto-converts input degrees to radians)
             r3_1, r3_2, r3_3, r3_4, r3_5 = st.columns(5)
             if r3_1.button("sin", use_container_width=True): append_btn("math.sin(math.radians(")
             if r3_2.button("cos", use_container_width=True): append_btn("math.cos(math.radians(")
@@ -251,7 +246,7 @@ with tab_tools:
             if r3_4.button("sinh", use_container_width=True): append_btn("math.sinh(")
             if r3_5.button("cosh", use_container_width=True): append_btn("math.cosh(")
 
-            # ROW 4: Inverse/Hyperbolic Trigs & Advanced Combinatorics
+            # ROW 4: Inverse/Hyperbolic & Combinatorics
             r4_1, r4_2, r4_3, r4_4, r4_5 = st.columns(5)
             if r4_1.button("asin", use_container_width=True): append_btn("math.degrees(math.asin(")
             if r4_2.button("acos", use_container_width=True): append_btn("math.degrees(math.acos(")
@@ -263,13 +258,9 @@ with tab_tools:
             st.write("#### Live Calculation Output Panel")
             if expr:
                 try:
-                    # Clean syntax replacements for easier user text entries
                     sanitized = expr.replace("^", "**").replace("×", "*").replace("÷", "/")
-                    
-                    # Compute logic within the sandboxed math math module dictionary context
                     res = eval(sanitized, {"math": math})
                     
-                    # Render formatting optimizations
                     if isinstance(res, float) and res.is_integer():
                         res = int(res)
                     elif isinstance(res, float):
@@ -286,7 +277,6 @@ with tab_tools:
             if st.button("Clear Input Buffer", use_container_width=True):
                 st.session_state.calc_input = ""
                 st.rerun()
-
 
     # ---- 2. TRANSLATOR ----
     elif selected_tool == "Multi-Language Translator":
