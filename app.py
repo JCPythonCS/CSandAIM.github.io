@@ -8,12 +8,10 @@ st.set_page_config(page_title="Computer Systems & AI Management", layout="wide")
 # ====================================================================
 # 🏆 SYMMETRICAL CORPORATE BRANDING BANNER
 # ====================================================================
-# Establishes a 3-column split layout to house the left logo, centered title, and right logo
 logo_left_col, title_center_col, logo_right_col = st.columns([1, 4, 1])
 
 with logo_left_col:
     try:
-        # Pulls LogoB directly from the root of your GitHub repository
         st.image("LogoB.png", use_container_width=True)
     except:
         try:
@@ -26,7 +24,6 @@ with title_center_col:
 
 with logo_right_col:
     try:
-        # Pulls LogoG directly from the root of your GitHub repository
         st.image("LogoG.png", use_container_width=True)
     except:
         try:
@@ -37,7 +34,7 @@ with logo_right_col:
 st.markdown("---")
 
 # ====================================================================
-# PHASE 1: DATA INGESTION (Scans ALL tabs inside every repository file)
+# PHASE 1: DATA INGESTION
 # ====================================================================
 @st.cache_data
 def load_all_enterprise_data():
@@ -73,7 +70,7 @@ def load_all_enterprise_data():
 database = load_all_enterprise_data()
 
 # ====================================================================
-# WORKSTATION TAB ARCHITECTURE (The Scalable Separation Layer)
+# WORKSTATION TAB ARCHITECTURE
 # ====================================================================
 tab_analytics, tab_utilities = st.tabs(["📊 Enterprise Command Analytics", "🛠️ Operations Utility Suite"])
 
@@ -96,7 +93,6 @@ with tab_analytics:
         df = df.dropna(axis=1, how='all')
         df.columns = [str(c).strip() for c in df.columns]
         
-        # Smart Column Mapping Engine
         cleaned_columns = []
         for col in df.columns:
             col_lower = str(col).lower()
@@ -115,7 +111,6 @@ with tab_analytics:
         st.markdown(f"### 📊 Currently Active File: `{selected_table_key}.xlsx`")
         st.markdown("---")
         
-        # Sidebar Filters (State-Locked)
         st.sidebar.header("🎯 Dashboard Control Filters")
         filtered_df = df.copy()
         
@@ -140,7 +135,6 @@ with tab_analytics:
             
         st.markdown("---")
         
-        # Dynamic Charts
         if not filtered_df.empty:
             chart_col1, chart_col2 = st.columns(2)
             
@@ -199,7 +193,6 @@ with tab_utilities:
     
     util_col1, util_col2 = st.columns(2)
     
-    # 🌐 7-Language Global Translator
     with util_col1:
         st.subheader("🌐 Global Theater Document Translator")
         st.caption("Copy fields directly from the Database Stream and paste below for real-time localization.")
@@ -208,6 +201,7 @@ with tab_utilities:
             "Target Operational Language:",
             ["Spanish (Español)", "German (Deutsch)", "Japanese (日本語)", "Chinese Simplified (简体中文)", "Chinese Traditional (繁體中文)", "Arabic (العربية)", "French (Français)"]
         )
+        
         input_text = st.text_area("📋 Source Script / Copy-Paste Ingestion Box:", height=150, placeholder="Paste data row text or operational telemetry logs here...", key="util_translator_input")
         
         if st.button("🚀 Translate Operational Brief"):
