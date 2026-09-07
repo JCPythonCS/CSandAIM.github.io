@@ -4,91 +4,199 @@ import os
 
 st.set_page_config(page_title="Computer Systems & AI Management", layout="wide")
 
-# ====================================================================
-# 🏆 SYMMETRICAL HTML CORPORATE BRANDING BANNER (Bypasses st.image errors)
-# ====================================================================
-# Using standard HTML layout blocks to completely step clear of metrics_util tracking loops
-st.markdown(
-    """
-    <div style="display: flex; justify-content: space-between; align-items: center; background-color: transparent; padding: 10px;">
-        <div style="flex: 1; text-align: left;">
-            <img src="https://githubusercontent.com" style="max-height: 90px; width: auto; border-radius: 4px;">
-        </div>
-        <div style="flex: 3; text-align: center;">
-            <h1 style="margin: 0; padding: 0; font-size: 2.2rem;">🖥️ Computer Systems and AI Management Cockpit</h1>
-        </div>
-        <div style="flex: 1; text-align: right;">
-            <img src="https://githubusercontent.com" style="max-height: 90px; width: auto; border-radius: 4px;">
-        </div>
-    </div>
-    """,
-    unsafe_html=True
-)
-
+# 🏆 Professional Company Title Banner
+st.title("🖥️ Computer Systems and AI Management Cockpit")
 st.markdown("---")
 
 # ====================================================================
-# PHASE 1: SINGLE-FILE INGESTION (Bypasses broken directory caches)
+# PHASE 1: DATA INGESTION (Loads files into memory once)
 # ====================================================================
 @st.cache_data
-def load_baseline_file():
-    target_file = "enterprise_retail_dataT.xlsx"
-    try:
-        return pd.read_excel(target_file)
-    except Exception as e:
-        st.error(f"Could not open reference file: {e}")
-        return pd.DataFrame()
+def load_all_enterprise_data():
+    data_folder = '.'
+    all_files = [f for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
+    
+    vault = {}
+    for file_name in all_files:
+        table_key = file_name.replace('.xlsx', '').replace('.xls', '')
+        try:
+            xl = pd.ExcelFile(file_name)
+            target_sheet = xl.sheet_names
+            
+            # Fallback sequence ensures the sheet reads properly even with name mismatches
+            if 'Advanced_Military_Risk_Analysis' in table_key:
+                try:
+                    vault[table_key] = pd.read_excel(file_name, sheet_name='Advanced_Military_Risk_Analysis')
+                except:
+                    vault[table_key] = pd.read_excel(file_name, sheet_name=0)
+            else:
+                vault[table_key] = pd.read_excel(file_name, sheet_name=0)
+        except Exception as e:
+            pass
+    return vault
 
-df_raw = load_baseline_file()
+# Initialize the global data vault database
+database = load_all_enterprise_data()
 
 # ====================================================================
-# PHASE 2: DATA RENDERING
+# PHASE 2: DATA SELECTION
 # ====================================================================
 st.header("🗃️ Enterprise Data Vault Selector")
+available_tables = sorted(list(database.keys()))
 
-if not df_raw.empty:
-    df = df_raw.copy()
-    df.columns = [str(c).strip() for c in df.columns]
+if available_tables:
+    selected_table_key = st.selectbox(
+        "Choose an Enterprise Data Sheet to View:", 
+        options=available_tables,
+        index=available_tables.index('enterprise_retail_dataT') if 'enterprise_retail_dataT' in available_tables else 0
+    )
     
+    # Extract a fresh copy of the baseline data
+    df = database[selected_table_key].copy()
+    
+    # Clean out blank column headers for the massive risk matrix
+    if 'Advanced_Military_Risk_Analysis' in selected_table_key:
+        df = df.dropna(axis=1, how='all')
+    
+    # 🧼 INSTANT DATA CLEANING: Standardize text columns BEFORE filtering
     for col in df.columns:
         if df[col].dtype == 'object':
             df[col] = df[col].astype(str).str.strip()
             
-    st.markdown("### 📊 Currently Active File: `enterprise_retail_dataT.xlsx`")
+    st.markdown(f"### 📊 Currently Active File: `{selected_table_key}.xlsx`")
     st.markdown("---")
     
+    # ====================================================================
+    # PHASE 3: SIDEBAR FILTERS (Fully Mapped to Enterprise Columns)
+    # ====================================================================
     st.sidebar.header("🎯 Dashboard Control Filters")
     filtered_df = df.copy()
     
-    if 'Region' in filtered_df.columns:
-        region_options = sorted(list(filtered_df['Region'].unique()))
-        selected_region = st.sidebar.multiselect("Select Region", options=region_options, default=region_options, key="reg_widget")
-        filtered_df = filtered_df[filtered_df['Region'].isin(selected_region)]
+    # 🌍 1. Dynamic Geographic Region / Theater Filter
+    geo_col = None
+    for alternative in ['Region', 'Regions', 'region', 'Global Theater', 'Command Tier', 'Strategic Command Sector']:
+        if alternative in df.columns:
+            geo_col = alternative
+            break
+    
+    if geo_col:
+        geo_options = sorted(list(df[geo_col].unique()))
+        selected_geo = st.sidebar.multiselect(
+            f"Filter by {geo_col}", 
+            options=geo_options, 
+            default=geo_options,
+            key=f"widget_geo_{selected_table_key}"
+        )
+        filtered_df = filtered_df[filtered_df[geo_col].isin(selected_geo)]
         
-    if 'Retailer' in filtered_df.columns:
-        retailer_options = sorted(list(filtered_df['Retailer'].unique()))
-        selected_retailer = st.sidebar.multiselect("Select Retailer", options=retailer_options, default=retailer_options, key="ret_widget")
-        filtered_df = filtered_df[filtered_df['Retailer'].isin(selected_retailer)]
+    # 🛡️ 2. Dynamic Vendor / Active Combat Unit Filter
+    unit_col = None
+    for alternative in ['Retailer', 'Active Combat Unit Name']:
+        if alternative in df.columns:
+            unit_col = alternative
+            break
+            
+    if unit_col:
+        unit_options = sorted(list(df[unit_col].unique()))
+        selected_unit = st.sidebar.multiselect(
+            f"Filter by {unit_col}", 
+            options=unit_options, 
+            default=unit_options,
+            key=f"widget_unit_{selected_table_key}"
+        )
+        filtered_df = filtered_df[filtered_df[unit_col].isin(selected_unit)]
         
+    # 📊 Top-Level Summary Cards (KPIs)
     total_txns = len(filtered_df)
+    
     col1, col2 = st.columns(2)
     with col1:
         st.metric(label="📦 Total Ingested Record Rows", value=f"{total_txns:,}")
     with col2:
-        st.metric(label="📂 Total Linked Vault Files", value="1 (Isolated Mode)")
+        st.metric(label="📂 Total Linked Vault Files", value=f"{len(available_tables)}")
         
     st.markdown("---")
     
+    # ====================================================================
+    # PHASE 4: DYNAMIC MULTI-SHEET VISUALIZATION LOGIC
+    # ====================================================================
     if not filtered_df.empty:
         chart_col1, chart_col2 = st.columns(2)
-        with chart_col1:
-            st.subheader("🏆 Retailer Performance Rankings")
-            st.bar_chart(filtered_df.groupby('Retailer')['Volume_USD'].sum().sort_values(ascending=False))
-        with chart_col2:
-            st.subheader("🔸 Revenue Vol by Market Sector")
-            st.bar_chart(filtered_df.groupby('Market_Tier')['Volume_USD'].sum().sort_values(ascending=False))
-            
+        
+        # 🟢 CASE 1: RETAIL DATA CHIPS
+        if selected_table_key == 'enterprise_retail_dataT':
+            with chart_col1:
+                st.subheader("🏆 Retailer Performance Rankings")
+                chart_data = filtered_df.groupby('Retailer')['Volume_USD'].sum().sort_values(ascending=False)
+                st.bar_chart(chart_data)
+            with chart_col2:
+                st.subheader("🔸 Revenue Vol by Market Sector")
+                chart_data = filtered_df.groupby('Market_Tier')['Volume_USD'].sum().sort_values(ascending=False)
+                st.bar_chart(chart_data)
+                
+        # 🔵 CASE 2: AZURE REMEDIATION ARCHITECTURE
+        elif selected_table_key == 'Azure_Remediation_ReportT':
+            with chart_col1:
+                st.subheader("🛡️ Azure Task Vol by Command Tier")
+                if 'Command Tier' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Command Tier').size().sort_values(ascending=False)
+                    st.bar_chart(chart_data)
+            with chart_col2:
+                st.subheader("⚙️ System Metrics Profile Overview")
+                st.info("Azure remediation summary logs are loaded. Use the bottom audit grid to inspect live fix states.")
+                
+        # 🟡 CASE 3: SQL QUERY 8 STAGING
+        elif selected_table_key == 'SQLQry8T':
+            with chart_col1:
+                st.subheader("💎 Query Metric Vol by Global Theater")
+                if 'Global Theater' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Global Theater').size().sort_values(ascending=False)
+                    st.bar_chart(chart_data)
+            with chart_col2:
+                st.subheader("📊 Query Attribute Density")
+                st.info("Database records are compiled. Charts will dynamically adjust based on column structural constraints.")
+                
+        # ⚔️ CASE 4: MILITARY COMBAT FORCE REPORT
+        elif selected_table_key == 'Military_Combat_Force_ReportT':
+            with chart_col1:
+                st.subheader("🪖 Unit Volume Distribution")
+                if 'Active Combat Unit Name' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Active Combat Unit Name').size().sort_values(ascending=False)
+                    st.bar_chart(chart_data)
+            with chart_col2:
+                st.subheader("📡 Force Capacity by Command Sector")
+                if 'Strategic Command Sector' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Strategic Command Sector').size().sort_values(ascending=False)
+                    st.bar_chart(chart_data)
+                    
+        # 🚨 CASE 5: ADVANCED MILITARY RISK ANALYSIS
+        elif 'Advanced_Military_Risk_Analysis' in selected_table_key:
+            with chart_col1:
+                st.subheader("⚡ Threat Density by Combat Unit")
+                if 'Active Combat Unit Name' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Active Combat Unit Name').size().sort_values(ascending=False)
+                    st.bar_chart(chart_data)
+            with chart_col2:
+                st.subheader("🎯 Strategic Risk Exposure Index")
+                if 'Strategic Command Sector' in filtered_df.columns:
+                    chart_data = filtered_df.groupby('Strategic Command Sector').size().sort_values(ascending=False)
+                    st.bar_chart(chart_data)
+                
+        # ⚪ CASE 6: DEFAULT STANDARD GRID FOR OTHER SHEETS
+        else:
+            with chart_col1:
+                st.subheader("🔎 Database Column Overview")
+                st.write(df.dtypes.astype(str))
+            with chart_col2:
+                st.subheader("💡 Analysis Insight Staging")
+                st.info("Select a core metrics file from the top dropdown menu to map specialized visual summaries.")
+                
+    else:
+        st.warning("⚠️ No data matches your current filter selections. Please re-check an option box!")
+        
+    # 🗒️ Live Interactive Grid Audit
     st.subheader("🔎 Ingested Database Record Stream")
     st.dataframe(filtered_df.head(100), use_container_width=True)
+
 else:
-    st.error("❌ Isolated file could not be fetched from GitHub repository structure.")
+    st.error("❌ Critical Error: No valid Excel spreadsheets found in your GitHub repository.")
