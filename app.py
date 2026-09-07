@@ -1,4 +1,5 @@
-import streamlit as st
+# Copy and run this entire cell inside your Jupyter Notebook to generate a pristine file
+logo_script_clean = """import streamlit as st
 import pandas as pd
 import os
 
@@ -12,8 +13,8 @@ logo_left_col, title_center_col, logo_right_col = st.columns([1, 4, 1])
 with logo_left_col:
     try:
         st.image("LOGOB.png", use_container_width=True)
-    except:
-        st.caption("🔹 LOGOB Staging")
+    except Exception as e:
+        st.caption("🔹 LOGOB Local Buffer")
 
 with title_center_col:
     st.markdown("<h1 style='text-align: center; margin-top: 10px;'>🖥️ Computer Systems and AI Management Cockpit</h1>", unsafe_html=True)
@@ -21,13 +22,13 @@ with title_center_col:
 with logo_right_col:
     try:
         st.image("LOGOG.png", use_container_width=True)
-    except:
-        st.caption("🔸 LOGOG Staging")
+    except Exception as e:
+        st.caption("🔸 LOGOG Local Buffer")
 
 st.markdown("---")
 
 # ====================================================================
-# PHASE 1: DATA INGESTION
+# PHASE 1: DATA INGESTION (Scans ALL tabs inside every repository file)
 # ====================================================================
 @st.cache_data
 def load_all_enterprise_data():
@@ -39,7 +40,7 @@ def load_all_enterprise_data():
         table_key = file_name.replace('.xlsx', '').replace('.xls', '')
         try:
             xl = pd.ExcelFile(file_name)
-            target_sheet = xl.sheet_names
+            target_sheet = xl.sheet_names[0]
             
             for sheet in xl.sheet_names:
                 if 'Advanced' in sheet or 'Risk' in sheet or 'Military' in sheet:
@@ -63,7 +64,7 @@ def load_all_enterprise_data():
 database = load_all_enterprise_data()
 
 # ====================================================================
-# PHASE 2: DATA SELECTION
+# PHASE 2: DATA SELECTION & SMART COLUMN MAPPING
 # ====================================================================
 st.header("🗃️ Enterprise Data Vault Selector")
 available_tables = sorted(list(database.keys()))
@@ -97,6 +98,9 @@ if available_tables:
     st.markdown(f"### 📊 Currently Active File: `{selected_table_key}.xlsx`")
     st.markdown("---")
     
+    # ====================================================================
+    # PHASE 3: SIDEBAR FILTERS (Fully State-Locked)
+    # ====================================================================
     st.sidebar.header("🎯 Dashboard Control Filters")
     filtered_df = df.copy()
     
@@ -121,6 +125,9 @@ if available_tables:
         
     st.markdown("---")
     
+    # ====================================================================
+    # PHASE 4: DYNAMIC MULTI-SHEET CHARTS
+    # ====================================================================
     if not filtered_df.empty:
         chart_col1, chart_col2 = st.columns(2)
         
@@ -170,3 +177,8 @@ if available_tables:
     st.dataframe(filtered_df.head(100), use_container_width=True)
 else:
     st.error("❌ Critical Error: No valid Excel spreadsheets found in repository.")
+"""
+
+with open("app.py", "w", encoding="utf-8") as f:
+    f.write(logo_script_clean)
+print("✅ Desktop file created cleanly with zero formatting errors!")
