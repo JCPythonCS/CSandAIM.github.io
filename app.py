@@ -1,4 +1,4 @@
-logo_only_code = """import streamlit as st
+import streamlit as st
 import pandas as pd
 import os
 
@@ -11,29 +11,23 @@ logo_left_col, title_center_col, logo_right_col = st.columns([1, 4, 1])
 
 with logo_left_col:
     try:
-        st.image("LogoB.png", use_container_width=True)
+        st.image("LOGOB.png", use_container_width=True)
     except:
-        try:
-            st.image("LogoB.jpg", use_container_width=True)
-        except:
-            st.caption("🔹 LogoB Staging")
+        st.caption("🔹 LOGOB Staging")
 
 with title_center_col:
     st.markdown("<h1 style='text-align: center; margin-top: 10px;'>🖥️ Computer Systems and AI Management Cockpit</h1>", unsafe_html=True)
 
 with logo_right_col:
     try:
-        st.image("LogoG.png", use_container_width=True)
+        st.image("LOGOG.png", use_container_width=True)
     except:
-        try:
-            st.image("LogoG.jpg", use_container_width=True)
-        except:
-            st.caption("🔸 LogoG Staging")
+        st.caption("🔸 LOGOG Staging")
 
 st.markdown("---")
 
 # ====================================================================
-# PHASE 1: DATA INGESTION (Scans ALL tabs inside every repository file)
+# PHASE 1: DATA INGESTION
 # ====================================================================
 @st.cache_data
 def load_all_enterprise_data():
@@ -69,7 +63,7 @@ def load_all_enterprise_data():
 database = load_all_enterprise_data()
 
 # ====================================================================
-# PHASE 2: DATA SELECTION & SMART COLUMN MAPPING
+# PHASE 2: DATA SELECTION
 # ====================================================================
 st.header("🗃️ Enterprise Data Vault Selector")
 available_tables = sorted(list(database.keys()))
@@ -85,7 +79,6 @@ if available_tables:
     df = df.dropna(axis=1, how='all')
     df.columns = [str(c).strip() for c in df.columns]
     
-    # 🤖 SMART MAPPING: Search headers case-insensitively and apply uniform labels
     cleaned_columns = []
     for col in df.columns:
         col_lower = str(col).lower()
@@ -104,9 +97,6 @@ if available_tables:
     st.markdown(f"### 📊 Currently Active File: `{selected_table_key}.xlsx`")
     st.markdown("---")
     
-    # ====================================================================
-    # PHASE 3: SIDEBAR FILTERS (Fully State-Locked)
-    # ====================================================================
     st.sidebar.header("🎯 Dashboard Control Filters")
     filtered_df = df.copy()
     
@@ -131,13 +121,9 @@ if available_tables:
         
     st.markdown("---")
     
-    # ====================================================================
-    # PHASE 4: DYNAMIC MULTI-SHEET CHARTS
-    # ====================================================================
     if not filtered_df.empty:
         chart_col1, chart_col2 = st.columns(2)
         
-        # 🟢 CASE 1: RETAIL DATA LOGS
         if selected_table_key == 'enterprise_retail_dataT':
             with chart_col1:
                 st.subheader("🏆 Retailer Performance Rankings")
@@ -146,7 +132,6 @@ if available_tables:
                 st.subheader("🔸 Revenue Vol by Market Sector")
                 st.bar_chart(filtered_df.groupby('Market_Tier')['Volume_USD'].sum().sort_values(ascending=False))
                 
-        # 🔵 CASE 2: AZURE REMEDIATION ARCHITECTURE
         elif selected_table_key == 'Azure_Remediation_ReportT':
             with chart_col1:
                 st.subheader("🛡️ Azure Task Vol by Command Tier")
@@ -155,7 +140,6 @@ if available_tables:
                 st.subheader("⚙️ System Metrics Profile Overview")
                 st.info("Azure remediation summary logs are compiled successfully.")
                 
-        # 🟡 CASE 3: SQL QUERY 8 STAGING
         elif selected_table_key == 'SQLQry8T':
             with chart_col1:
                 st.subheader("💎 Query Metric Vol by Global Theater")
@@ -164,19 +148,13 @@ if available_tables:
                 st.subheader("📊 Query Attribute Density")
                 st.info("Database records are compiled seamlessly.")
                 
-        # ⚔️ CASE 4: MILITARY COMBAT FORCE REPORT & ADVANCED RISK ENGINES
         elif 'Combat_Force' in selected_table_key or 'Risk_Analysis' in selected_table_key:
             with chart_col1:
                 st.subheader("⚡ Operational Threat Density by Combat Unit")
                 if 'Active Combat Unit Name' in filtered_df.columns: st.bar_chart(filtered_df.groupby('Active Combat Unit Name').size().sort_values(ascending=False))
-                else: st.info("Insufficient text column indices to populate an operational unit chart layout.")
-                
             with chart_col2:
                 st.subheader("🎯 Strategic Risk Capacity Exposure Index")
                 if 'Strategic Command Sector' in filtered_df.columns: st.bar_chart(filtered_df.groupby('Strategic Command Sector').size().sort_values(ascending=False))
-                else: st.info("Insufficient text column indices to populate a regional sector chart layout.")
-                
-        # ⚪ CASE 5: DEFAULT ATTRIBUTE GRID FOR REMAINING FILES
         else:
             with chart_col1:
                 st.subheader("🔎 Database Column Overview")
@@ -186,15 +164,9 @@ if available_tables:
                 st.info("Select a core metrics file from the top dropdown menu to map specialized visual summaries.")
                 
     else:
-        st.warning("⚠️ No data matches your current filter selections. Please re-check an option box!")
+        st.warning("⚠️ No data matches your current filter selections.")
         
     st.subheader("🔎 Ingested Database Record Stream")
     st.dataframe(filtered_df.head(100), use_container_width=True)
-
 else:
-    st.error("❌ Critical Error: No valid Excel spreadsheets found in your GitHub repository.")
-"""
-
-with open("app.py", "w", encoding="utf-8") as f:
-    f.write(logo_only_code)
-print("✅ Local app.py generated perfectly with corporate logos embedded and zero calculator bloat!")
+    st.error("❌ Critical Error: No valid Excel spreadsheets found in repository.")
