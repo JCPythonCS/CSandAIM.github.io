@@ -41,7 +41,7 @@ with logog_col:
     else:
         st.write("🚀")
 
-st.markdown("---"
+st.markdown("---")
 
 # ====================================================================
 # PHASE 1: GLOBAL DATA INGESTION (Cached Framework Loops)
