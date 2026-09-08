@@ -13,9 +13,8 @@ st.set_page_config(
 # ====================================================================
 # HEADER BANNER: 🏆 SYMMETRICAL BRANDING MATRIX (PRODUCTION LOGOS MOUNTED)
 # ====================================================================
-# Passing the explicit sizing array [1, 4, 1] expands the middle title column,
-# forcing the text onto a single line without using breaking HTML tags.
-logob_col, title_col, logog_col = st.columns([1, 4, 1])
+# 1. Main outer grid splits screen to hold Left Logo, Center Area, Right Logo
+logob_col, center_area_col, logog_col = st.columns([1, 4, 1])
 
 with logob_col:
     if os.path.exists("LOGOB.png"):
@@ -23,9 +22,14 @@ with logob_col:
     else:
         st.write("✨")
 
-with title_col:
-    # Native Python 3.14 safe title element
-    st.title("🖥️ Computer Systems and AI Management Cockpit")
+with center_area_col:
+    # 2. Nested Sub-Grid splits the wide center area [Left Spacer, Center Title, Right Spacer]
+    # This natively forces the text box block to sit perfectly centered.
+    sub_spacer_L, sub_title_core, sub_spacer_R = st.columns([1, 6, 1])
+    
+    with sub_title_core:
+        # Native, safe title element safely aligned by the grid framework
+        st.title("🖥️ Computer Systems and AI Management Cockpit")
 
 with logog_col:
     if os.path.exists("LOGOG.png"):
