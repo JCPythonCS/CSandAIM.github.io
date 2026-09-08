@@ -13,6 +13,8 @@ st.set_page_config(
 # ====================================================================
 # HEADER BANNER: 🏆 SYMMETRICAL BRANDING MATRIX (PRODUCTION LOGOS MOUNTED)
 # ====================================================================
+# We expand the middle title column weight (1 part left, 4 parts center, 1 part right) 
+# to keep the title sitting beautifully on a single clean row.
 logob_col, title_col, logog_col = st.columns([1, 4, 1])
 
 with logob_col:
@@ -22,7 +24,8 @@ with logob_col:
         st.markdown("<p style='text-align: center; color: #94A3B8; font-size: 11px; padding-top: 15px;'>[ LOGOB.png LOADING ]</p>", unsafe_markdown=True)
 
 with title_col:
-    # Fixed Native Core Header Element to clear Python 3.14 Telemetry Error Crash Flags
+    # Adding vertical padding alignment to push the title down slightly so it lines up with the center of the logos
+    st.markdown("<div style='padding-top: 25px;'></div>", unsafe_markdown=True)
     st.title("🖥️ Computer Systems and AI Management Cockpit")
 
 with logog_col:
