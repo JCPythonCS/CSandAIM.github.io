@@ -13,9 +13,9 @@ st.set_page_config(
 # ====================================================================
 # HEADER BANNER: 🏆 SYMMETRICAL BRANDING MATRIX (PRODUCTION LOGOS MOUNTED)
 # ====================================================================
-# Passing integers sets strict ratio weights natively [1 part, 3 parts, 1 part]
-# This cleanly stops the text from wrapping without using any hidden HTML tags.
-logob_col, title_col, logog_col = st.columns([1, 3, 1])
+# Passing [1, 4, 1] natively grants the center column 4x the screen real estate,
+# pulling the corporate title onto a single, perfectly centered line.
+logob_col, title_col, logog_col = st.columns([1, 4, 1])
 
 with logob_col:
     if os.path.exists("LOGOB.png"):
@@ -24,7 +24,7 @@ with logob_col:
         st.write("✨")
 
 with title_col:
-    # Safe, built-in structural title widget
+    # Safe, native header element completely centered by the column matrix
     st.title("🖥️ Computer Systems and AI Management Cockpit")
 
 with logog_col:
