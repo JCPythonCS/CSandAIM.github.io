@@ -13,8 +13,12 @@ st.set_page_config(
 # ====================================================================
 # HEADER BANNER: 🏆 SYMMETRICAL BRANDING MATRIX (PRODUCTION LOGOS MOUNTED)
 # ====================================================================
-# 1. Main outer grid splits screen to hold Left Logo, Center Area, Right Logo
-logob_col, center_area_col, logog_col = st.columns([1, 4, 1])
+# 1. Full-Width Title Block: Guarantees text never wraps or gets squished
+st.title("🖥️ Computer Systems and AI Management Cockpit")
+
+# 2. Symmetrical Sub-Header Column Matrix for Branding Logos
+# We use a balanced 5-column layout to neatly space the logos below the title
+space_L, logob_col, center_space, logog_col, space_R = st.columns([1, 2, 2, 2, 1])
 
 with logob_col:
     if os.path.exists("LOGOB.png"):
@@ -22,14 +26,9 @@ with logob_col:
     else:
         st.write("✨")
 
-with center_area_col:
-    # 2. Nested Sub-Grid splits the wide center area [Left Spacer, Center Title, Right Spacer]
-    # This natively forces the text box block to sit perfectly centered.
-    sub_spacer_L, sub_title_core, sub_spacer_R = st.columns([1, 6, 1])
-    
-    with sub_title_core:
-        # Native, safe title element safely aligned by the grid framework
-        st.title("🖥️ Computer Systems and AI Management Cockpit")
+with center_space:
+    # Keeps a balanced, clean visual gap between the two distinct business nodes
+    st.write("") 
 
 with logog_col:
     if os.path.exists("LOGOG.png"):
