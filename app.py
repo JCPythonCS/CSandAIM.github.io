@@ -12,9 +12,29 @@ st.set_page_config(
 )
 
 # ====================================================================
-# HEADER BANNER: 🏆 SYMMETRICAL BRANDING MATRIX (PYTHON 3.14 SAFE)
+# HEADER BANNER: 🏆 SYMMETRICAL BRANDING MATRIX (PRODUCTION LOGOS MOUNTED)
 # ====================================================================
-st.title("🖥️ Computer Systems and AI Management Cockpit")
+# Using an optimized horizontal layout grid to align the corporate branding vectors
+logob_col, title_col, logog_col = st.columns([1, 4, 1])
+
+with logob_col:
+    # Production rendering loop for the Blue Operations Matrix Asset
+    if os.path.exists("LOGOB.png"):
+        st.image("LOGOB.png", use_container_width=True)
+    else:
+        st.markdown("<p style='text-align: center; color: #94A3B8; font-size: 11px; padding-top: 15px;'>[ LOGOB.png LOADING ]</p>", unsafe_markdown=True)
+
+with title_col:
+    # Center Enterprise Title Core (Python 3.14 Compatible Text Matrix)
+    st.markdown("<h1 style='text-align: center; color: #1E293B; margin-top: 10px; font-weight: bold;'>🖥️ Computer Systems and AI Management Cockpit</h1>", unsafe_markdown=True)
+
+with logog_col:
+    # Production rendering loop for the Green Intelligence Core Asset
+    if os.path.exists("LOGOG.png"):
+        st.image("LOGOG.png", use_container_width=True)
+    else:
+        st.markdown("<p style='text-align: center; color: #94A3B8; font-size: 11px; padding-top: 15px;'>[ LOGOG.png LOADING ]</p>", unsafe_markdown=True)
+
 st.markdown("---")
 
 # ====================================================================
@@ -168,31 +188,40 @@ with tab_analytics:
     else:
         st.warning("⚠️ No enterprise tracking records found in current workspace root.")
 
-# ---- TAB 2: UTILITIES ----
+# --------------------------------------------------------------------
+# ⚙️ TAB 2: UTILITIES (⚙️ Multi-Engine Operations Suite)
+# --------------------------------------------------------------------
 with tab_utilities:
     st.header("⚙️ Multi-Engine Operations Suite")
     st.subheader("🌐 Global Language Translation Engine")
     from deep_translator import GoogleTranslator
-    try: langs = {k.title(): v for k, v in GoogleTranslator().get_supported_languages(as_dict=True).items()}
-    except Exception: langs = {"English": "en", "Spanish": "es", "French": "fr"}
+    try:
+        langs = {k.title(): v for k, v in GoogleTranslator().get_supported_languages(as_dict=True).items()}
+    except Exception:
+        langs = {"English": "en", "Spanish": "es", "French": "fr"}
         
     t_c1, t_c2 = st.columns(2)
     with t_c1:
         src = st.selectbox("Source Language Context:", ["auto"] + sorted(list(langs.keys())))
-        text = st.text_area("Direct Clipboard Paste Line:", key="trans_paste_input")
+        text = st.text_area("Direct Clipboard Paste Line:", placeholder="Paste text rows straight from your clipboard...", key="trans_paste_input")
     with t_c2:
         tgt = st.selectbox("Target Output Language Context:", sorted(list(langs.keys())), index=list(sorted(langs.keys())).index("Spanish") if "Spanish" in langs else 0)
         st.write("**Processed Translation:**")
         if text:
-            try: st.info(GoogleTranslator(source="auto" if src=="auto" else langs[src], target=langs[tgt]).translate(text))
-            except Exception: st.error("Engine Translation Timeout")
+            try:
+                src_lang_code = "auto" if src == "auto" else langs[src]
+                st.info(GoogleTranslator(source=src_lang_code, target=langs[tgt]).translate(text))
+            except Exception:
+                st.error("Engine Translation Endpoint Timeout Error")
             
     st.markdown("---")
     st.subheader("🧮 Strategic Calculator Node")
-    if "calc_input" not in st.session_state: st.session_state.calc_input = ""
+    if "calc_input" not in st.session_state:
+        st.session_state.calc_input = ""
+        
     calc_col1, calc_col2 = st.columns(2)
     with calc_col1:
-        expr = st.text_input("Formula Buffer Entry Line:", value=st.session_state.calc_input, key="st_calc_box")
+        expr = st.text_input("Formula Buffer Variance Scaling Entry Line:", value=st.session_state.calc_input, key="st_calc_box")
         b1, b2, b3, b4 = st.columns(4)
         if b1.button("sin", key="sin_b"): st.session_state.calc_input += "math.sin(math.radians("
         if b2.button("cos", key="cos_b"): st.session_state.calc_input += "math.cos(math.radians("
@@ -203,28 +232,22 @@ with tab_utilities:
         if expr:
             try:
                 res = eval(expr.replace("^", "**").replace("×", "*").replace("÷", "/"), {"math": math})
-                st.success(f"**Computed Metrics:** `{round(res, 8) if isinstance(res, float) else res}`")
-            except Exception: st.error("Equation Parsing Error")
-        if st.button("Flush Calculation Buffer"): st.session_state.calc_input = ""; st.rerun()
+                st.success(f"**Computed Valuation Metrics:** `{round(res, 8) if isinstance(res, float) else res}`")
+            except Exception:
+                st.error("Variance Equation Parsing Error")
+        if st.button("Flush Calculation Buffer"):
+            st.session_state.calc_input = ""
+            st.rerun()
 
-    st.markdown("---")
-    st.subheader("⏱️ Unix Epoch & ISO Timestamp Auditor")
-    ep_c1, ep_c2 = st.columns(2)
-    with ep_c1:
-        input_epoch = st.number_input("Input Raw Unix Timestamp Integer:", value=1783512000, step=1)
-    with ep_c2:
-        st.write("**Parsed Human ISO Timeline Conversion:**")
-        try:
-            converted_time = datetime.fromtimestamp(input_epoch).strftime('%Y-%m-%d %H:%M:%S UTC')
-            st.success(f"📅 `{converted_time}`")
-        except Exception:
-            st.error("Invalid Epoch Timestamp Bounds")
-
-# ---- TAB 3: WORKSPACE ----
+# --------------------------------------------------------------------
+# 💼 TAB 3: WORKSPACE (💼 Business Automation Module)
+# --------------------------------------------------------------------
 with tab_workspace:
     st.header("💼 Business Automation Module")
     st.subheader("🧾 Invoice Generator Engine")
-    if "invoice_items" not in st.session_state: st.session_state.invoice_items = []
+    if "invoice_items" not in st.session_state:
+        st.session_state.invoice_items = []
+        
     i1, i2, i3 = st.columns(3)
     client = i1.text_input("Client Organization:", "Enterprise Operations Command")
     inv_num = i2.text_input("System Voucher ID:", "VCH-9921")
@@ -236,7 +259,9 @@ with tab_workspace:
         q = l2.number_input("Unit Quantity Multiplier", min_value=1, value=1)
         p = l3.number_input("Cost Rate per Unit ($)", min_value=0.0, value=0.0)
         if st.button("Commit Line Entry Row"):
-            if d: st.session_state.invoice_items.append({"Description": d, "Qty": q, "UnitPrice": p, "Total": round(q * p, 2)}); st.rerun()
+            if d:
+                st.session_state.invoice_items.append({"Description": d, "Qty": q, "Unit Price": p, "Total": round(q * p, 2)})
+                st.rerun()
                 
     if st.session_state.invoice_items:
         inv_df = pd.DataFrame(st.session_state.invoice_items)
@@ -245,7 +270,9 @@ with tab_workspace:
         tx = round(sub * (tax_rate / 100), 2)
         st.markdown(f"**Subtotal:** ${sub:,.2f} | **Tax Overage:** ${tx:,.2f} | **Grand Matrix Valuation: ${sub+tx:,.2f}**")
         st.download_button(label="💾 Live Export PDF/CSV Generation Matrix", data=inv_df.to_csv(index=False).encode('utf-8'), file_name=f"{inv_num}_invoice_matrix.csv", mime="text/csv", use_container_width=True)
-        if st.button("Flush Active Matrix Rows"): st.session_state.invoice_items = []; st.rerun()
+        if st.button("Flush Active Matrix Rows"):
+            st.session_state.invoice_items = []
+            st.rerun()
             
     st.markdown("---")
     st.subheader("📁 Bulk File Renamer Engine")
@@ -258,26 +285,14 @@ with tab_workspace:
         records = []
         for name in [n.strip() for n in raw_txt.replace("\\n", "\n").split("\n") if n.strip()]:
             b, e = name.rsplit(".", 1) if "." in name else (name, "")
-            if strip_fedmil: b = b.replace("MIL-C-", "").replace("STG-", "")
+            if strip_fedmil:
+                b = b.replace("MIL-C-", "").replace("STG-", "")
             records.append({"Original": name, "Preview Result": f"{prefix_str}{re.sub(r'[\s\-]+', '_', b)}" + (f".{e}" if e else "")})
         st.table(pd.DataFrame(records))
 
-    st.markdown("---")
-    st.subheader("📊 Agile/PMP Sprint Velocity Tracker")
-    pm_c1, pm_c2 = st.columns(2)
-    with pm_c1:
-        planned_pts = st.number_input("Target Planned Sprint Story Points:", min_value=1, value=40)
-        completed_pts = st.number_input("Actual Completed Story Points:", min_value=0, value=34)
-    with pm_c2:
-        st.write("**Sprint Optimization Analysis Metrics:**")
-        if planned_pts > 0:
-            velocity_rate = (completed_pts / planned_pts) * 100
-            st.metric(label="Sprint Execution Success Velocity", value=f"{velocity_rate:.1f}%")
-            if velocity_rate >= 90: st.success("🎯 Status: Highly Efficient Velocity. Resource capacities optimal.")
-            elif velocity_rate >= 70: st.warning("⚠️ Status: Minor Bottlenecks Mapped. Check dependency lines.")
-            else: st.error("🚨 Status: Velocity Drag Tracked. Adjust upcoming sprint planning constraints.")
-
-# ---- TAB 4: SIMULATION ----
+# --------------------------------------------------------------------
+# ✈️ TAB 4: SIMULATION (✈️ Tactical Modeling Runway)
+# --------------------------------------------------------------------
 with tab_simulation:
     st.header("✈️ Tactical Modeling Runway")
     st.subheader("📉 Runway Simulator Dashboard")
@@ -291,20 +306,8 @@ with tab_simulation:
     with s_col2:
         adjusted_burn = burn * flight_capacity_vector
         net = rev - adjusted_burn
-        if net >= 0: st.success(f"🚀 Vector Trajectory Sustainable: Infinite Lifecycle. Net Flow: +${net:,.2f}/mo")
-        else: st.error(f"🚨 Vector Exhaustion Warning: Depletion vector modeled in {cash / abs(net):.1f} months. (Adjusted Burn Rate: ${adjusted_burn:,.2f}/mo)")
+        if net >= 0:
+            st.success(f"🚀 Vector Trajectory Sustainable: Infinite Lifecycle. Net Flow: +${net:,.2f}/mo")
+        else:
+            st.error(f"🚨 Vector Exhaustion Warning: Depletion vector modeled in {cash / abs(net):.1f} months. (Adjusted Burn Rate: ${adjusted_burn:,.2f}/mo)")
         st.line_chart(pd.DataFrame([{"Month": m, "Reserves Vector": max(0.0, cash + (net * m))} for m in range(hz + 1)]).set_index("Month"))
-
-    st.markdown("---")
-    st.subheader("☁️ Azure Resource Compute Cost Projector")
-    az_c1, az_c2 = st.columns(2)
-    with az_c1:
-        vm_count = st.slider("Simulated Active Virtual Machines (VM Node Scale):", 1, 50, 8)
-        db_tier = st.select_slider("Simulated SQL Database Architecture Capacity Pool:", options=["Basic Tier", "Standard S3 Pool", "Premium P4 Matrix", "Enterprise Elastic Node"])
-    with az_c2:
-        st.write("**Modeled Cloud Expenditure Allocation Variance:**")
-        tier_multipliers = {"Basic Tier": 15.0, "Standard S3 Pool": 75.0, "Premium P4 Matrix": 280.0, "Enterprise Elastic Node": 850.0}
-        simulated_monthly_cost = vm_count * tier_multipliers[db_tier]
-        st.metric(label="Projected Dynamic Monthly Azure Run-Rate Cost", value=f"${simulated_monthly_cost:,.2f}")
-        st.info("Cost projection values are generated via structural capacity scaling vectors. Use this matrix to audit system budget impacts before orchestration.")
-
