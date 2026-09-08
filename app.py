@@ -21,29 +21,37 @@ except ImportError:
 # ====================================================================
 # HEADER BANNER: 🏆 SYMMETRICAL BRANDING MATRIX (PRODUCTION LOGOS MOUNTED)
 # ====================================================================
-# Full-Width Title Block guarantees your main text row never wraps or breaks formatting
+# 1. Full-Width Title Block: Guarantees text never wraps or gets squished
 st.title("🖥️ Computer Systems and AI Management Cockpit")
 
-# Symmetrical layout matrix perfectly sizes and balances your custom corporate emblems
-logob_col, center_space, logog_col = st.columns([2, 1, 2])
+# 2. Symmetrical Sub-Header Column Matrix for Branding Logos
+# We explicitly pass the [2, 3, 2] ratio to constrain column width expansions,
+# forcing both logos to render on an identical visual scale.
+logob_col, center_space, logog_col = st.columns([2, 3, 2])
 
 with logob_col:
     if os.path.exists("LOGOB.png"):
-        st.image("LOGOB.png", use_container_width=True)
+        # We nest a sub-grid [1 part spacer, 3 parts image] to pull the blue logo
+        # over to the right and scale it down to perfectly match the green core.
+        b_spacer, b_img = st.columns([1, 3])
+        with b_img:
+            st.image("LOGOB.png", use_container_width=True)
     else:
-        st.markdown("<p style='color: #94A3B8; font-size: 11px;'>[ LOGOB.png LOADING ]</p>", unsafe_markdown=True)
+        st.write("✨")
 
 with center_space:
-    st.write("") # Main visual gap anchor balancing out your distinct business nodes
+    # Invisible central padding buffer balancing the two distinct business nodes
+    st.write("") 
 
 with logog_col:
     if os.path.exists("LOGOG.png"):
-        # Utilizing an inner sub-grid to squeeze out extra white image canvas padding
+        # We nest a sub-grid [3 parts image, 1 part spacer] to pull the green logo
+        # over to the left, squeezing out its pre-baked white canvas side padding.
         g_img, g_spacer = st.columns([3, 1])
         with g_img:
             st.image("LOGOG.png", use_container_width=True)
     else:
-        st.markdown("<p style='color: #94A3B8; font-size: 11px;'>[ LOGOG.png LOADING ]</p>", unsafe_markdown=True)
+        st.write("🚀")
 
 st.markdown("---")
 
