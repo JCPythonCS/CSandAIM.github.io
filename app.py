@@ -17,22 +17,27 @@ st.set_page_config(
 st.title("🖥️ Computer Systems and AI Management Cockpit")
 
 # 2. Symmetrical Sub-Header Column Matrix for Branding Logos
-# We use a balanced 5-column layout to neatly space the logos below the title
-space_L, logob_col, center_space, logog_col, space_R = st.columns([1, 2, 2, 2, 1])
+# We use custom ratio weights [2 parts, 1 part, 2 parts] to format the header area
+logob_col, center_space, logog_col = st.columns([2, 1, 2])
 
 with logob_col:
     if os.path.exists("LOGOB.png"):
+        # Restored to standard full width
         st.image("LOGOB.png", use_container_width=True)
     else:
         st.write("✨")
 
 with center_space:
-    # Keeps a balanced, clean visual gap between the two distinct business nodes
+    # Invisible spacer block acting as our balance anchor
     st.write("") 
 
 with logog_col:
     if os.path.exists("LOGOG.png"):
-        st.image("LOGOG.png", use_container_width=True)
+        # Create an inner sub-grid [3 parts image, 1 part empty spacer] 
+        # This pushes the green logo cleanly to the left to balance the design
+        g_img, g_spacer = st.columns([3, 1])
+        with g_img:
+            st.image("LOGOG.png", use_container_width=True)
     else:
         st.write("🚀")
 
