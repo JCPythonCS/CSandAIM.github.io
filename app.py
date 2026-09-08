@@ -13,8 +13,8 @@ st.set_page_config(
 # ====================================================================
 # HEADER BANNER: 🏆 SYMMETRICAL BRANDING MATRIX (PRODUCTION LOGOS MOUNTED)
 # ====================================================================
-# Passing [1, 4, 1] natively grants the center column 4x the screen real estate,
-# pulling the corporate title onto a single, perfectly centered line.
+# Passing the explicit sizing array [1, 4, 1] expands the middle title column,
+# forcing the text onto a single line without using breaking HTML tags.
 logob_col, title_col, logog_col = st.columns([1, 4, 1])
 
 with logob_col:
@@ -24,7 +24,7 @@ with logob_col:
         st.write("✨")
 
 with title_col:
-    # Safe, native header element completely centered by the column matrix
+    # Native Python 3.14 safe title element
     st.title("🖥️ Computer Systems and AI Management Cockpit")
 
 with logog_col:
