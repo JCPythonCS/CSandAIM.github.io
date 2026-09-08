@@ -17,31 +17,31 @@ st.set_page_config(
 st.title("🖥️ Computer Systems and AI Management Cockpit")
 
 # 2. Symmetrical Sub-Header Column Matrix for Branding Logos
-# We use custom ratio weights [2 parts, 1 part, 2 parts] to format the header area
-logob_col, center_space, logog_col = st.columns([2, 1, 2])
+# We use explicit sizing ratios to force the logos into identical sizing matching scales
+logob_col, center_space, logog_col = st.columns([2, 1, 4])
 
 with logob_col:
     if os.path.exists("LOGOB.png"):
-        # Restored to standard full width
+        # The blue logo sits firmly anchored to the left margin wall
         st.image("LOGOB.png", use_container_width=True)
     else:
         st.write("✨")
 
 with center_space:
-    # Invisible spacer block acting as our balance anchor
+    # Anchor space block handling structural padding boundaries
     st.write("") 
 
 with logog_col:
     if os.path.exists("LOGOG.png"):
-        # Create an inner sub-grid [3 parts image, 1 part empty spacer] 
-        # This pushes the green logo cleanly to the left to balance the design
-        g_img, g_spacer = st.columns([3, 1])
+        # Nesting a tight inner sub-grid allows us to pull the green logo over to the left
+        # to match the blue emblem while squeezing out the excess white image padding.
+        g_img, g_spacer = st.columns([2, 2])
         with g_img:
             st.image("LOGOG.png", use_container_width=True)
     else:
         st.write("🚀")
 
-st.markdown("---")
+st.markdown("---"
 
 # ====================================================================
 # PHASE 1: GLOBAL DATA INGESTION (Cached Framework Loops)
