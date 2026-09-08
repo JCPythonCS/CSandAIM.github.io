@@ -168,42 +168,31 @@ with tab_analytics:
     else:
         st.warning("⚠️ No enterprise tracking records found in current workspace root.")
 
-# --------------------------------------------------------------------
-# ⚙️ TAB 2: UTILITIES (⚙️ Multi-Engine Operations Suite)
-# --------------------------------------------------------------------
+# ---- TAB 2: UTILITIES ----
 with tab_utilities:
     st.header("⚙️ Multi-Engine Operations Suite")
-    
     st.subheader("🌐 Global Language Translation Engine")
     from deep_translator import GoogleTranslator
-    try:
-        langs = {k.title(): v for k, v in GoogleTranslator().get_supported_languages(as_dict=True).items()}
-    except Exception:
-        langs = {"English": "en", "Spanish": "es", "French": "fr"}
+    try: langs = {k.title(): v for k, v in GoogleTranslator().get_supported_languages(as_dict=True).items()}
+    except Exception: langs = {"English": "en", "Spanish": "es", "French": "fr"}
         
     t_c1, t_c2 = st.columns(2)
     with t_c1:
         src = st.selectbox("Source Language Context:", ["auto"] + sorted(list(langs.keys())))
-        text = st.text_area("Direct Clipboard Paste Line:", placeholder="Paste text rows straight from your clipboard...", key="trans_paste_input")
+        text = st.text_area("Direct Clipboard Paste Line:", key="trans_paste_input")
     with t_c2:
         tgt = st.selectbox("Target Output Language Context:", sorted(list(langs.keys())), index=list(sorted(langs.keys())).index("Spanish") if "Spanish" in langs else 0)
         st.write("**Processed Translation:**")
         if text:
-            try:
-                src_lang_code = "auto" if src == "auto" else langs[src]
-                st.info(GoogleTranslator(source=src_lang_code, target=langs[tgt]).translate(text))
-            except Exception:
-                st.error("Engine Translation Endpoint Timeout Error")
+            try: st.info(GoogleTranslator(source="auto" if src=="auto" else langs[src], target=langs[tgt]).translate(text))
+            except Exception: st.error("Engine Translation Timeout")
             
     st.markdown("---")
-    
     st.subheader("🧮 Strategic Calculator Node")
-    if "calc_input" not in st.session_state:
-        st.session_state.calc_input = ""
-        
+    if "calc_input" not in st.session_state: st.session_state.calc_input = ""
     calc_col1, calc_col2 = st.columns(2)
     with calc_col1:
-        expr = st.text_input("Formula Buffer Variance Scaling Entry Line:", value=st.session_state.calc_input, key="st_calc_box")
+        expr = st.text_input("Formula Buffer Entry Line:", value=st.session_state.calc_input, key="st_calc_box")
         b1, b2, b3, b4 = st.columns(4)
         if b1.button("sin", key="sin_b"): st.session_state.calc_input += "math.sin(math.radians("
         if b2.button("cos", key="cos_b"): st.session_state.calc_input += "math.cos(math.radians("
@@ -214,12 +203,22 @@ with tab_utilities:
         if expr:
             try:
                 res = eval(expr.replace("^", "**").replace("×", "*").replace("÷", "/"), {"math": math})
-                st.success(f"**Computed Valuation Metrics:** `{round(res, 8) if isinstance(res, float) else res}`")
-            except Exception:
-                st.error("Variance Equation Parsing Error")
-        if st.button("Flush Calculation Buffer"):
-            st.session_state.calc_input = ""
-            st.rerun()
+                st.success(f"**Computed Metrics:** `{round(res, 8) if isinstance(res, float) else res}`")
+            except Exception: st.error("Equation Parsing Error")
+        if st.button("Flush Calculation Buffer"): st.session_state.calc_input = ""; st.rerun()
+
+    st.markdown("---")
+    st.subheader("⏱️ Unix Epoch & ISO Timestamp Auditor")
+    ep_c1, ep_c2 = st.columns(2)
+    with ep_c1:
+        input_epoch = st.number_input("Input Raw Unix Timestamp Integer:", value=1783512000, step=1)
+    with ep_c2:
+        st.write("**Parsed Human ISO Timeline Conversion:**")
+        try:
+            converted_time = datetime.fromtimestamp(input_epoch).strftime('%Y-%m-%d %H:%M:%S UTC')
+            st.success(f"📅 `{converted_time}`")
+        except Exception:
+            st.error("Invalid Epoch Timestamp Bounds")
 
 # --------------------------------------------------------------------
 # 💼 TAB 3: WORKSPACE (💼 Business Automation Module)
