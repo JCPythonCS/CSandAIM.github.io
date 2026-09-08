@@ -14,25 +14,25 @@ st.set_page_config(
 # ====================================================================
 # HEADER BANNER: 🏆 SYMMETRICAL BRANDING MATRIX (FAIL-SAFE IMAGE SECTOR)
 # ====================================================================
-logob_col, title_col, logog_col = st.columns([1, 4, 1])
+logob_col, title_col, logog_col = st.columns([1, 4, 1]) # Column sizing grid provides ideal title balance
 
 with logob_col:
     # Fail-safe check for exact case-sensitive filename matching
     if os.path.exists("LOGOB.png"):
-        st.image("LOGOB.png", use_container_width=True)
+        st.image("LOGOB.png", width=120)
     else:
-        st.markdown("<p style='text-align: center; color: #94A3B8; font-size: 12px; padding-top: 15px;'>[ LOGOB.png N/A ]</p>", unsafe_markdown=True)
+        st.markdown("<p style='text-align: center; color: #94A3B8; font-size: 11px; padding-top: 20px;'>[ LOGOB.png N/A ]</p>", unsafe_markdown=True)
 
 with title_col:
-    # Center Enterprise Title Banner
+    # Clean Python 3.14 layout configuration for the center Enterprise Title Banner
     st.markdown("<h1 style='text-align: center; color: #1E293B; margin-top: 0;'>🖥️ Computer Systems and AI Management Cockpit</h1>", unsafe_markdown=True)
 
 with logog_col:
     # Fail-safe check for exact case-sensitive filename matching
     if os.path.exists("LOGOG.png"):
-        st.image("LOGOG.png", use_container_width=True)
+        st.image("LOGOG.png", width=120)
     else:
-        st.markdown("<p style='text-align: center; color: #94A3B8; font-size: 12px; padding-top: 15px;'>[ LOGOG.png N/A ]</p>", unsafe_markdown=True)
+        st.markdown("<p style='text-align: center; color: #94A3B8; font-size: 11px; padding-top: 20px;'>[ LOGOG.png N/A ]</p>", unsafe_markdown=True)
 
 st.markdown("---")
 
@@ -52,7 +52,7 @@ def load_all_enterprise_data():
             if 'Advanced_Military_Risk_Analysis' in table_key:
                 try:
                     vault[table_key] = pd.read_excel(file_name, sheet_name='Advanced_Military_Risk_Analysis')
-                except:
+                except Exception:
                     vault[table_key] = pd.read_excel(file_name, sheet_name=0)
             else:
                 vault[table_key] = pd.read_excel(file_name, sheet_name=0)
@@ -185,7 +185,7 @@ with tab_analytics:
         st.subheader("📋 System Audit Trail Records")
         st.dataframe(filtered_df, use_container_width=True)
     else:
-        st.warning("Awaiting active record stream configuration selections.")
+        st.warning("⚠️ No enterprise tracking records found in current workspace root.")
 
 # --------------------------------------------------------------------
 # ⚙️ TAB 2: UTILITIES (⚙️ Multi-Engine Operations Suite)
@@ -193,12 +193,11 @@ with tab_analytics:
 with tab_utilities:
     st.header("⚙️ Multi-Engine Operations Suite")
     
-    # MODULE 1: 100+ Language Translator Box
     st.subheader("🌐 Global Language Translation Engine")
     from deep_translator import GoogleTranslator
     try:
         langs = {k.title(): v for k, v in GoogleTranslator().get_supported_languages(as_dict=True).items()}
-    except:
+    except Exception:
         langs = {"English": "en", "Spanish": "es", "French": "fr"}
         
     t_c1, t_c2 = st.columns(2)
@@ -211,7 +210,9 @@ with tab_utilities:
         if text:
             try:
                 src_lang_code = "auto" if src == "auto" else langs[src]
-            except: 
+                translated_text = GoogleTranslator(source=src_lang_code, target=langs[tgt]).translate(text)
+                st.info(translated_text)
+            except Exception:
                 st.error("Engine Translation Endpoint Timeout Error")
             
     st.markdown("---")
@@ -237,7 +238,7 @@ with tab_utilities:
                 if isinstance(res, float):
                     res = round(res, 8)
                 st.success(f"**Computed Valuation Metrics:** `{res}`")
-            except: 
+            except Exception:
                 st.error("Variance Equation Parsing Error")
         if st.button("Flush Calculation Buffer"):
             st.session_state.calc_input = ""
@@ -277,7 +278,7 @@ with tab_workspace:
         grand = sub + tx
         st.markdown(f"**Subtotal:** ${sub:,.2f} | **Tax Overage:** ${tx:,.2f} | **Grand Matrix Valuation: ${grand:,.2f}**")
         
-        # LIVE DATA GENERATION EXPORT MATRIX (Fulfill Blueprint requirement)
+        # LIVE DATA GENERATION EXPORT MATRIX
         csv_data = inv_df.to_csv(index=False).encode('utf-8')
         st.download_button(
             label="💾 Live Export PDF/CSV Generation Matrix",
@@ -294,13 +295,18 @@ with tab_workspace:
     
     # MODULE 4: Bulk File Renamer Engine with Specific FedMil Prefix Strippers
     st.subheader("📁 Bulk File Renamer Engine")
-    raw_txt = st.text_area("Target Asset Strings File Array (One file per row):", "MIL-C-CombatUnit_Draft.xlsx\nAzure_Report_STG-04.csv", key="renamer_txt_area")
+    
+    asset_list = ["MIL-C-CombatUnit_Draft.xlsx", "Azure_Report_STG-04.csv"]
+    asset_string_format = "\\n".join(asset_list)
+    
+    raw_txt = st.text_area("Target Asset Strings File Array (One file per row):", value=asset_string_format, key="renamer_txt_area")
     prefix_str = st.text_input("Inject Core Corporate Prefix Handle:", "2026_SecOps_")
     strip_fedmil = st.checkbox("Enable Specific FedMil Prefix Strippers (Removes 'MIL-C-' and 'STG-')", value=True)
     
     if raw_txt:
         records = []
-        for name in [n.strip() for n in raw_txt.split("\n") if n.strip()]:
+        clean_lines = raw_txt.replace("\\n", "\n").split("\n")
+        for name in [n.strip() for n in clean_lines if n.strip()]:
             b, e = name.rsplit(".", 1) if "." in name else (name, "")
             if strip_fedmil:
                 b = b.replace("MIL-C-", "").replace("STG-", "")
