@@ -13,26 +13,25 @@ st.set_page_config(
 # ====================================================================
 # HEADER BANNER: 🏆 SYMMETRICAL BRANDING MATRIX (PRODUCTION LOGOS MOUNTED)
 # ====================================================================
-# We expand the middle title column weight (1 part left, 4 parts center, 1 part right) 
-# to keep the title sitting beautifully on a single clean row.
-logob_col, title_col, logog_col = st.columns([1, 4, 1])
+# Passing integers sets strict ratio weights natively [1 part, 3 parts, 1 part]
+# This cleanly stops the text from wrapping without using any hidden HTML tags.
+logob_col, title_col, logog_col = st.columns([1, 3, 1])
 
 with logob_col:
     if os.path.exists("LOGOB.png"):
         st.image("LOGOB.png", use_container_width=True)
     else:
-        st.markdown("<p style='text-align: center; color: #94A3B8; font-size: 11px; padding-top: 15px;'>[ LOGOB.png LOADING ]</p>", unsafe_markdown=True)
+        st.write("✨")
 
 with title_col:
-    # Adding vertical padding alignment to push the title down slightly so it lines up with the center of the logos
-    st.markdown("<div style='padding-top: 25px;'></div>", unsafe_markdown=True)
+    # Safe, built-in structural title widget
     st.title("🖥️ Computer Systems and AI Management Cockpit")
 
 with logog_col:
     if os.path.exists("LOGOG.png"):
         st.image("LOGOG.png", use_container_width=True)
     else:
-        st.markdown("<p style='text-align: center; color: #94A3B8; font-size: 11px; padding-top: 15px;'>[ LOGOG.png LOADING ]</p>", unsafe_markdown=True)
+        st.write("🚀")
 
 st.markdown("---")
 
