@@ -26,29 +26,69 @@ def render_translator():
                 st.error("Engine Translation Endpoint Timeout Error")
 
 def render_calculator():
-    st.subheader("🧮 Strategic Calculator Node")
+    st.subheader("🧮 Extended Scientific Calculation Node")
+    st.write("Perform advanced trigs, logarithms, combinatorics, and multi-variable equations.")
+
     if "calc_input" not in st.session_state:
         st.session_state.calc_input = ""
-        
+
     calc_col1, calc_col2 = st.columns(2)
     with calc_col1:
-        expr = st.text_input("Formula Buffer Variance Scaling Entry Line:", value=st.session_state.calc_input, key="st_calc_box")
-        b1, b2, b3, b4 = st.columns(4)
-        if b1.button("sin", key="sin_b"): st.session_state.calc_input += "math.sin(math.radians("
-        if b2.button("cos", key="cos_b"): st.session_state.calc_input += "math.cos(math.radians("
-        if b3.button("log₁₀", key="log_b"): st.session_state.calc_input += "math.log10("
-        if b4.button("√x", key="sqrt_b"): st.session_state.calc_input += "math.sqrt("
+        expr = st.text_input("Formula Ingestion Buffer Scaling Entry Line:", value=st.session_state.calc_input, key="st_calc_box")
+        
+        def append_btn(chars):
+            st.session_state.calc_input += str(chars)
+            st.rerun()
+
+        # ROW 1: Constants & Basic Roots
+        r1_1, r1_2, r1_3, r1_4, r1_5 = st.columns(5)
+        if r1_1.button("π", use_container_width=True, key="pi_btn"): append_btn("math.pi")
+        if r1_2.button("e", use_container_width=True, key="e_btn"): append_btn("math.e")
+        if r1_3.button("√x", use_container_width=True, key="sqrt_btn"): append_btn("math.sqrt(")
+        if r1_4.button("³√x", use_container_width=True, key="cbrt_btn"): append_btn("math.cbrt(")
+        if r1_5.button("1/x", use_container_width=True, key="recip_btn"): append_btn("1/(")
+
+        # ROW 2: Powers, Logs, Factorials
+        r2_1, r2_2, r2_3, r2_4, r2_5 = st.columns(5)
+        if r2_1.button("x²", use_container_width=True, key="sq_btn"): append_btn("**2")
+        if r2_2.button("x³", use_container_width=True, key="cube_btn"): append_btn("**3")
+        if r2_3.button("ln", use_container_width=True, key="ln_btn"): append_btn("math.log(")
+        if r2_4.button("log₁₀", use_container_width=True, key="log_btn"): append_btn("math.log10(")
+        if r2_5.button("x!", use_container_width=True, key="fact_btn"): append_btn("math.factorial(")
+
+        # ROW 3: Trigonometry (Auto-converts input degrees to radians natively)
+        r3_1, r3_2, r3_3, r3_4, r3_5 = st.columns(5)
+        if r3_1.button("sin", use_container_width=True, key="sin_btn"): append_btn("math.sin(math.radians(")
+        if r3_2.button("cos", use_container_width=True, key="cos_btn"): append_btn("math.cos(math.radians(")
+        if r3_3.button("tan", use_container_width=True, key="tan_btn"): append_btn("math.tan(math.radians(")
+        if r3_4.button("sinh", use_container_width=True, key="sinh_btn"): append_btn("math.sinh(")
+        if r3_5.button("cosh", use_container_width=True, key="cosh_btn"): append_btn("math.cosh(")
+
+        # ROW 4: Inverse/Hyperbolic & Advanced PMP/Combinatorics
+        r4_1, r4_2, r4_3, r4_4, r4_5 = st.columns(5)
+        if r4_1.button("asin", use_container_width=True, key="asin_btn"): append_btn("math.degrees(math.asin(")
+        if r4_2.button("acos", use_container_width=True, key="acos_btn"): append_btn("math.degrees(math.acos(")
+        if r4_3.button("atan", use_container_width=True, key="atan_btn"): append_btn("math.degrees(math.atan(")
+        if r4_4.button("nPr", use_container_width=True, key="perm_btn"): append_btn("math.perm(")
+        if r4_5.button("nCr", use_container_width=True, key="comb_btn"): append_btn("math.comb(")
+
     with calc_col2:
         st.write("**Evaluation Output Node:**")
         if expr:
             try:
-                res = eval(expr.replace("^", "**").replace("×", "*").replace("÷", "/"), {"math": math})
+                # Clean mathematical mapping replacements for standard key notation string parsing
+                sanitized = expr.replace("^", "**").replace("×", "*").replace("÷", "/")
+                res = eval(sanitized, {"math": math})
                 st.success(f"**Computed Valuation Metrics:** `{round(res, 8) if isinstance(res, float) else res}`")
+            except ZeroDivisionError:
+                st.error("Mathematical Error: Division by Zero.")
             except Exception:
-                st.error("Variance Equation Parsing Error")
-        if st.button("Flush Calculation Buffer"):
+                st.error("Equation Parsing Error")
+                
+        if st.button("Flush Calculation Buffer", use_container_width=True, key="clear_calc_btn"):
             st.session_state.calc_input = ""
             st.rerun()
+
 
 def render_invoice():
     st.subheader("🧾 Invoice Generator Engine")
