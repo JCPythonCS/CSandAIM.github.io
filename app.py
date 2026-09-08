@@ -209,6 +209,8 @@ with tab_utilities:
         tgt = st.selectbox("Target Output Language Context:", sorted(list(langs.keys())), index=list(sorted(langs.keys())).index("Spanish") if "Spanish" in langs else 0)
         st.write("**Processed Translation:**")
         if text:
+            try:
+                src_lang_code = "auto" if src == "auto" else langs[src]
             except: 
                 st.error("Engine Translation Endpoint Timeout Error")
             
@@ -338,4 +340,3 @@ with tab_simulation:
             
         t_data = [{"Month": m, "Reserves Vector": max(0.0, cash + (net * m))} for m in range(hz + 1)]
         st.line_chart(pd.DataFrame(t_data).set_index("Month"))
-
