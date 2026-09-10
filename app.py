@@ -21,12 +21,10 @@ except ImportError:
 # ====================================================================
 # HEADER BANNER: 🏆 SYMMETRICAL BRANDING MATRIX (PRODUCTION LOGOS MOUNTED)
 # ====================================================================
-# 1. Full-Width Title Block: Guarantees text never wraps or gets squished
+# Full-Width Title Block guarantees your main text row never wraps or breaks formatting
 st.title("🖥️ Computer Systems and AI Management Cockpit")
 
-# 2. Symmetrical Sub-Header Column Matrix for Branding Logos
-# We explicitly pass the [2, 3, 2] ratio to constrain column width expansions,
-# forcing both logos to render on an identical visual scale.
+# Symmetrical layout matrix perfectly sizes and balances your custom corporate emblems
 logob_col, center_space, logog_col = st.columns([2, 3, 2])
 
 with logob_col:
@@ -37,11 +35,10 @@ with logob_col:
         with b_img:
             st.image("LOGOB.png", use_container_width=True)
     else:
-        st.write("✨")
+        st.markdown("<p style='color: #94A3B8; font-size: 11px;'>[ LOGOB.png LOADING ]</p>", unsafe_markdown=True)
 
 with center_space:
-    # Invisible central padding buffer balancing the two distinct business nodes
-    st.write("") 
+    st.write("") # Main visual gap anchor balancing out your distinct business nodes
 
 with logog_col:
     if os.path.exists("LOGOG.png"):
@@ -51,7 +48,7 @@ with logog_col:
         with g_img:
             st.image("LOGOG.png", use_container_width=True)
     else:
-        st.write("🚀")
+        st.markdown("<p style='color: #94A3B8; font-size: 11px;'>[ LOGOG.png LOADING ]</p>", unsafe_markdown=True)
 
 st.markdown("---")
 
@@ -129,13 +126,14 @@ if available_tables:
         filtered_df = filtered_df[filtered_df[unit_col].isin(selected_unit)]
 
 # ====================================================================
-# THE THEMATIC ARCHITECTURE GRID WORKSPACE TABS
+# THE THEMATIC ARCHITECTURE FIVE-TAB WORKSPACE MATRIX
 # ====================================================================
-tab_analytics, tab_utilities, tab_workspace, tab_simulation = st.tabs([
+tab_analytics, tab_utilities, tab_workspace, tab_simulation, tab_library = st.tabs([
     "📊 Tab 1: Analytics", 
     "⚙️ Tab 2: Utilities", 
     "💼 Tab 3: Workspace", 
-    "✈️ Tab 4: Simulation"
+    "✈️ Tab 4: Simulation",
+    "📚 Tab 5: Library"
 ])
 
 # --------------------------------------------------------------------
@@ -153,7 +151,7 @@ with tab_analytics:
         st.markdown("---")
         
         # ====================================================================
-        # COCKPIT V3.0: MASTER UNIVERSAL VISUALIZATION ENGINE (FUZZY MAPPING)
+        # COCKPIT V4.0: MASTER UNIVERSAL VISUALIZATION ENGINE (FUZZY MAPPING)
         # ====================================================================
         chart_col1, chart_col2 = st.columns(2)
         
@@ -247,34 +245,3 @@ with tab_analytics:
         st.dataframe(filtered_df, use_container_width=True)
     else:
         st.warning("⚠️ No enterprise tracking records found in current workspace root.")
-
-# --------------------------------------------------------------------
-# ⚙️ TAB 2: UTILITIES (⚙️ Multi-Engine Operations Suite)
-# --------------------------------------------------------------------
-with tab_utilities:
-    if 'wm' in locals():
-        wm.render_translator()
-        st.markdown("---")
-        wm.render_calculator()
-    else:
-        st.error("Module functions temporarily offline.")
-
-# --------------------------------------------------------------------
-# 💼 TAB 3: WORKSPACE (💼 Business Automation Module)
-# --------------------------------------------------------------------
-with tab_workspace:
-    if 'wm' in locals():
-        wm.render_invoice()
-        st.markdown("---")
-        wm.render_renamer()
-    else:
-        st.error("Module functions temporarily offline.")
-
-# --------------------------------------------------------------------
-# ✈️ TAB 4: SIMULATION (✈️ Tactical Modeling Runway)
-# --------------------------------------------------------------------
-with tab_simulation:
-    if 'wm' in locals():
-        wm.render_runway()
-    else:
-        st.error("Module functions temporarily offline.")
