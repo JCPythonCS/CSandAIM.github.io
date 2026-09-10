@@ -25,7 +25,7 @@ except ImportError:
 st.title("🖥️ Computer Systems and AI Management Cockpit")
 
 # Symmetrical layout matrix perfectly sizes and balances your custom corporate emblems
-logob_col, center_space, logog_col = st.columns([2, 3, 2])
+logob_col, center_space, logog_col = st.columns([3, 4, 3])
 
 with logob_col:
     if os.path.exists("LOGOB.png"):
@@ -245,3 +245,45 @@ with tab_analytics:
         st.dataframe(filtered_df, use_container_width=True)
     else:
         st.warning("⚠️ No enterprise tracking records found in current workspace root.")
+
+# --------------------------------------------------------------------
+# ⚙️ TAB 2: UTILITIES (⚙️ Multi-Engine Operations Suite)
+# --------------------------------------------------------------------
+with tab_utilities:
+    if 'wm' in locals():
+        wm.render_translator()
+        st.markdown("---")
+        wm.render_calculator()
+    else:
+        st.error("Module functions temporarily offline.")
+
+# --------------------------------------------------------------------
+# 💼 TAB 3: WORKSPACE (💼 Business Automation Module)
+# --------------------------------------------------------------------
+with tab_workspace:
+    if 'wm' in locals():
+        wm.render_invoice()
+        st.markdown("---")
+        wm.render_renamer()
+        st.markdown("---")
+        wm.render_repository_catalog()
+    else:
+        st.error("Module functions temporarily offline.")
+
+# --------------------------------------------------------------------
+# ✈️ TAB 4: SIMULATION (✈️ Tactical Modeling Runway)
+# --------------------------------------------------------------------
+with tab_simulation:
+    if 'wm' in locals():
+        wm.render_runway()
+    else:
+        st.error("Module functions temporarily offline.")
+
+# --------------------------------------------------------------------
+# 📚 TAB 5: LIBRARY (📚 Global System Asset Library & Multimedia Center)
+# --------------------------------------------------------------------
+with tab_library:
+    if 'wm' in locals():
+        wm.render_library_catalog()
+    else:
+        st.error("Module functions temporarily offline.")
