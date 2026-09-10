@@ -266,7 +266,6 @@ with tab_workspace:
         st.markdown("---")
         wm.render_renamer()
         st.markdown("---")
-        wm.render_repository_catalog()
     else:
         st.error("Module functions temporarily offline.")
 
