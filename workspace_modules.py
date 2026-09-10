@@ -98,21 +98,22 @@ def render_translator():
         else:
             st.warning("⚠️ Input buffer is empty. Ingest text to process.")
     
-    # 2. Search & Filter Interface Rows
-    sc1, sc2 = st.columns(2)
-    with sc1:
-        query = st.text_input("🔍 Filter Library Catalog by Key Phrase:", placeholder="Type title or keyword to filter...")
-    with sc2:
-        cat_filter = st.selectbox("📂 Category Filter Node:", ["All Categories"] + sorted(list(lib_df["Category"].unique())))
-
-    # Apply data filtering arrays locally
-    filtered_lib = lib_df.copy()
-    if query:
-        filtered_lib = filtered_lib[filtered_lib["Title"].str.contains(query, case=False) | filtered_lib["Summary"].str.contains(query, case=False)]
-    if cat_filter != "All Categories":
-        filtered_lib = filtered_lib[filtered_lib["Category"] == cat_filter]
-
-    st.markdown("---")
+# ====================================================================
+# SECTION 2: STANDALONE UTILITY MODULES (ROOT ARCHITECTURE)
+# ====================================================================
+def render_translator():
+    st.subheader("🌐 System Language Translation Engine")
+    st.write("Convert operational documentation and field data across multi-language enterprise formats.")
+    
+    source_text = st.text_area("Ingest Source Text Block Buffer:", placeholder="Enter technical strings to translate...", key="global_trans_box")
+    target_lang = st.selectbox("Select Target Language Matrix:", ["Spanish", "French", "German", "Japanese", "Mandarin"], key="global_trans_lang")
+    
+    if st.button("Execute Vector Translation", key="global_trans_btn"):
+        if source_text:
+            st.success(f"✅ Safe Simulation: Text translation vector complete for target style: `{target_lang}`")
+            st.info(f"Output Matrix: [ {source_text[::-1]} ] (System running in secure offline sandbox mode)")
+        else:
+            st.warning("⚠️ Input buffer is empty. Ingest text to process.")
 
     # 3. Dynamic Card Grid Layout Loop Generation
     if not filtered_lib.empty:
