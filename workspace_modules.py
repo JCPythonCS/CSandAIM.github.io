@@ -208,6 +208,6 @@ def render_library_catalog():
                     st.metric(label="Commercial Price", value=f"${row['Price']:.2f}")
                     if st.button("Simulate Schema Deployment", key=f"dep_btn_{row['ID']}"):
                         st.success(f"⚡ Card {row['ID']} verified safely inside testing buffer sandbox.")
-                st.markdown("<hr style='border: 0; border-top: 1px dashed #CBD5E1;' />", unsafe_markdown=True)
+                st.markdown("<hr style='border: 0; border-top: 1px dashed #CBD5E1;' />", unsafe_allow_html=True)  #  The correct keyword
     else:
         st.warning("⚠️ No premium document matrices match your filter metrics.")
