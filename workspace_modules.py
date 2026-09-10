@@ -193,7 +193,7 @@ def render_library_catalog():
     if not filtered_lib.empty:
         for idx, row in filtered_lib.iterrows():
             with st.container():
-                c_main, c_side = st.columns(2)
+                c_main, c_side = st.columns([3, 1])
                 with c_main:
                     st.markdown(f"### 📄 Card {row['ID']} - {row['Title']}")
                     st.write(f"*{row['Summary']}*")
