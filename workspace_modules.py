@@ -84,6 +84,20 @@ def render_library_catalog():
         "32": "https://google.com"
     }
 
+def render_translator():
+    st.subheader("🌐 System Language Translation Engine")
+    st.write("Convert operational documentation and field data across multi-language enterprise formats.")
+    
+    source_text = st.text_area("Ingest Source Text Block Buffer:", placeholder="Enter technical strings to translate...")
+    target_lang = st.selectbox("Select Target Language Matrix:", ["Spanish", "French", "German", "Japanese", "Mandarin"])
+    
+    if st.button("Execute Vector Translation"):
+        if source_text:
+            st.success(f"✅ Safe Simulation: Text translation vector complete for target style: `{target_lang}`")
+            st.info(f"Output Matrix: [ {source_text[::-1]} ] (System running in secure offline sandbox mode)")
+        else:
+            st.warning("⚠️ Input buffer is empty. Ingest text to process.")
+    
     # 2. Search & Filter Interface Rows
     sc1, sc2 = st.columns(2)
     with sc1:
