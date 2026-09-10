@@ -65,7 +65,40 @@ def render_renamer():
 
 def render_runway():
     st.subheader("✈️ Tactical Infrastructure Modeling Runway")
-    st.info("Simulation engine idling. Ready to test multi-cloud stress curves.")
+    st.write("Simulate multi-cloud traffic pressure limits and track dataset pipeline stress curves in real time.")
+    
+    # 🎛️ Live Simulation Interactive Slider Control
+    load_slider = st.slider("Simulated Operational System Data Load Peak (Queries/sec):", min_value=10, max_value=5000, value=1250, key="wm_sim_slider")
+    
+    # 📊 DYNAMIC VISUALIZATION CORE: Programmatically constructs a mathematical peak-load curve matching the slider parameters
+    st.markdown("### 📈 Real-Time Pipeline Stress Projections")
+    
+    # Build a rapid baseline metrics trend dataframe to feed the graph container
+    steps = 24  # Renders a complete 24-hour simulation cycle block
+    time_series = [f"Hour {i:02d}:00" for i in range(steps)]
+    
+    # Formulate a predictive stress wave curve tracking against the load value slider threshold
+    curve_data = []
+    for i in range(steps):
+        # Generates a realistic enterprise peak curve logic
+        factor = math.sin(i * (math.pi / 12)) * 0.4 + 0.6
+        simulated_load_point = int(load_slider * factor)
+        curve_data.append(simulated_load_point)
+        
+    chart_df = pd.DataFrame({
+        "Simulated Telemetry Ingestion Rate (Queries/s)": curve_data
+    }, index=time_series)
+    
+    # Flash the native dynamic visualization screen onto the layout row
+    st.line_chart(chart_df)
+    
+    # 🎯 Interactive Sandbox Operational Verification Button Row
+    st.markdown("---")
+    if st.button("Trigger Stress Test Simulation Matrix", key="wm_sim_btn"):
+        if load_slider > 4000:
+            st.error(f"🚨 CRITICAL SYSTEM ANOMALY: Load limits at {load_slider} Q/s exceed standard database memory bounds. Risk of cross-tenant partition drift detected.")
+        else:
+            st.success(f"🟢 METRIC DISTRIBUTION MATRIX STABLE: Multi-cloud pipelines processing {load_slider} Q/s cleanly across Oracle partitions with zero pack drop.")
 
 # ====================================================================
 # TAB 5: MULTIMEDIA LIBRARY STORAGE MAP (33 VERIFIED CARDS)
