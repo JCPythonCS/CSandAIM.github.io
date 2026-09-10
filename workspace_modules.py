@@ -57,11 +57,48 @@ def render_calculator():
 # ====================================================================
 def render_invoice():
     st.subheader("💼 Business Automation & Invoice Node")
-    st.info("System integration ready. Database connection active.")
+    st.write("Generate professional transaction ledgers for client distributions natively.")
+    inv_col1, inv_col2 = st.columns(2)
+    with inv_col1:
+        client = st.text_input("Client Organization Name:", value="Enterprise Client Core", key="wm_inv_client")
+        amount = st.number_input("Billable Structural Valuation ($):", min_value=0.0, value=1250.00, key="wm_inv_amount")
+    with inv_col2:
+        inv_id = st.text_input("Invoice Nomenclature Tag:", value="INV-2026-001", key="wm_inv_id")
+        due_date = st.text_input("Settlement Cutoff Date:", value="September 30, 2026", key="wm_inv_due")
+    if st.button("Compile Invoice Blueprint Layout", key="wm_inv_btn"):
+        st.success(f"⚡ Invoice Stream Formatted for `{client}` under Registry ID `{inv_id}`!")
+        st.markdown(f"**Ledger Breakdown Total:** `${amount:,.2f} USD` due by `{due_date}`.")
 
 def render_renamer():
     st.subheader("📁 Automated System Data File Renamer")
-    st.info("Batch utility standing by. Ready to organize 577 repositories.")
+    st.write("Batch match folder files nomenclature keys across your 577 repositories.")
+    prefix = st.text_input("Inject Standard Sorting Prefix Tag:", value="V4_STAGING_", key="wm_ren_prefix")
+    file_target = st.text_input("Target Directory Context Stream:", value="C:\\Users\\Johnn\\Downloads\\LinkedInPD\\PPPDF", key="wm_ren_target")
+    if st.button("Simulate Operational Batch Rename", key="wm_ren_btn"):
+        st.warning(f"⚡ Staging Sandbox Dry-Run Active: All files mapped against prefix successfully.")
+
+def render_runway():
+    st.subheader("✈️ Tactical Infrastructure Modeling Runway")
+    st.write("Simulate multi-cloud traffic pressure limits and track dataset pipeline stress curves in real time.")
+    load_slider = st.slider("Simulated Operational System Data Load Peak (Queries/sec):", min_value=10, max_value=5000, value=1250, key="wm_sim_slider")
+    
+    st.markdown("### 📈 Real-Time Pipeline Stress Projections")
+    steps = 24
+    time_series = [f"Hour {i:02d}:00" for i in range(steps)]
+    curve_data = []
+    for i in range(steps):
+        factor = math.sin(i * (math.pi / 12)) * 0.4 + 0.6
+        curve_data.append(int(load_slider * factor))
+        
+    chart_df = pd.DataFrame({"Simulated Telemetry Ingestion Rate (Queries/s)": curve_data}, index=time_series)
+    st.line_chart(chart_df)
+    
+    st.markdown("---")
+    if st.button("Trigger Stress Test Simulation Matrix", key="wm_sim_btn"):
+        if load_slider > 4000:
+            st.error(f"🚨 CRITICAL SYSTEM ANOMALY: Load limits exceed standard database memory bounds.")
+        else:
+            st.success(f"🟢 METRIC DISTRIBUTION MATRIX STABLE: Multi-cloud pipelines processing cleanly.")
 
 def render_runway():
     st.subheader("✈️ Tactical Infrastructure Modeling Runway")
