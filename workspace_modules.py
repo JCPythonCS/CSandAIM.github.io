@@ -121,6 +121,111 @@ def render_renamer():
     if st.button("Simulate Operational Batch Rename", key="wm_ren_btn"):
         st.warning(f"⚡ Staging Sandbox Dry-Run Active: All files mapped against prefix successfully.")
 
+    # ====================================================================
+    # 📦 ADDITION 1: THE SaaS PRICING & ROI CALCULATOR GRID
+    # ====================================================================
+    st.markdown("---")
+    st.subheader("📦 Enterprise SaaS Pricing & ROI Calculator")
+    st.write("Calculate immediate operational cost mitigation and project net financial returns on asset investments.")
+
+    roi_c1, roi_c2 = st.columns(2)
+    with roi_c1:
+        current_dev_overhead = st.slider("Current Monthly Cloud/Dev Overhead ($):", min_value=100, max_value=20000, value=2500, step=100, key="roi_overhead_slider")
+        blueprint_card_tier = st.selectbox("Target Blueprint Acquisition Tier ($):", [49.00, 89.00, 149.00, 399.00], index=2, key="roi_tier_select")
+    with roi_c2:
+        hours_saved = st.slider("Estimated Engineering Hours Saved Per Month:", min_value=5, max_value=120, value=40, key="roi_hours_slider")
+        hourly_dev_rate = st.number_input("Average Developer Hourly Rate ($/hr):", min_value=25, max_value=250, value=75, key="roi_rate_input")
+
+    # Math computation models handled natively in free server cache memory
+    gross_monthly_savings = hours_saved * hourly_dev_rate
+    net_first_month_roi = gross_monthly_savings - blueprint_card_tier
+    efficiency_multiplier = round((gross_monthly_savings / blueprint_card_tier), 1) if blueprint_card_tier > 0 else 0
+
+    rc1, rc2, rc3 = st.columns(3)
+    with rc1:
+        st.metric(label="💰 Gross Monthly Engineering Savings", value=f"${gross_monthly_savings:,.2f}")
+    with rc2:
+        st.metric(label="📈 Net Month-1 Return on Investment", value=f"${net_first_month_roi:,.2f}")
+    with rc3:
+        st.metric(label="🔥 Investment Efficiency Factor", value=f"{efficiency_multiplier}x Value")
+
+    # ====================================================================
+    # 🛡️ ADDITION 2: THE UNIVERSAL PRIVACY POLICY & TERMS BUILDER
+    # ====================================================================
+    st.markdown("---")
+    st.subheader("🛡️ Universal Digital Compliance & Privacy Scaffolding Node")
+    st.write("Generate clean, compliant placeholder text blocks for digital product launches instantly.")
+    
+    comp_c1, comp_c2 = st.columns(2)
+    with comp_c1:
+        target_org_name = st.text_input("Target Enterprise Company Name:", value="Apex Growth Systems LLC", key="comp_org_input")
+    with comp_c2:
+        jurisdiction_state = st.text_input("Corporate Legal Jurisdiction (State/Country):", value="South Carolina, USA", key="comp_state_input")
+
+    compliance_text_string = f"""========================================================================
+                  PRIVACY POLICY & TERMS OF DATA USE COMPLIANCE MEMO            
+========================================================================
+OPERATIONAL ENTITY:     {target_org_name}
+LEGAL JURISDICTION:     {jurisdiction_state}
+EFFECTIVE POLICY DATE:  September 11, 2026
+------------------------------------------------------------------------
+1. DATA INGESTION & BOUNDARY STORAGE LOGIC:
+{target_org_name} structures user information pipelines strictly inside localized server memory structures. No persistent data leaks are maintained.
+2. SYSTEM COMPLIANCE WAIVER PARAMETERS:
+All software assets, blueprints, schemas, and tracking metrics are utilized inside testing sandbox frameworks. Enterprise consumers maintain standard boundary validation protocols under local rules.
+========================================================================
+Generated via the Computer Systems & AI Management Cockpit Compliance Engine.
+========================================================================
+"""
+    
+    if st.button("📋 Compile Compliance Document Sandbox Layout", key="comp_generate_btn"):
+        st.info("📋 **Live Scaffolding Text Buffer Output:**")
+        st.text(compliance_text_string)
+        
+    st.download_button(
+        label="📥 Download Compliance Scaffolding Document (.txt)",
+        data=compliance_text_string,
+        file_name=f"Privacy_Policy_{target_org_name.replace(' ', '_')}.txt",
+        mime="text/plain",
+        key="comp_download_btn"
+    )
+
+    # ====================================================================
+    # 📈 ADDITION 3: THE MULTI-CHANNEL AD SPEND ROAS TRACKER
+    # ====================================================================
+    st.markdown("---")
+    st.subheader("📈 Multi-Channel Growth Marketing Spend & ROAS Tracker")
+    st.write("Audit acquisition budgets, capture conversion telemetry metrics, and calculate marketing return caps.")
+
+    ad_c1, ad_c2 = st.columns(2)
+    with ad_c1:
+        li_spend = st.number_input("LinkedIn Paid Advertising Budget ($):", min_value=0.0, value=500.00, step=50.0, key="ad_li_spend")
+        google_spend = st.number_input("Google Search Marketing Budget ($):", min_value=0.0, value=300.00, step=50.0, key="ad_gg_spend")
+    with ad_c2:
+        total_conversions = st.number_input("Total Closed Customer Purchases (Units):", min_value=1, value=15, key="ad_conv_units")
+        avg_basket_value = st.number_input("Average Cart Value per Purchase ($):", min_value=1.0, value=149.00, key="ad_basket_val")
+
+    # High-velocity marketing attribution algorithms
+    total_marketing_spend = li_spend + google_spend
+    gross_attributed_revenue = total_conversions * avg_basket_value
+    calculated_roas = round((gross_attributed_revenue / total_marketing_spend), 2) if total_marketing_spend > 0 else 0
+    calculated_cac = round((total_marketing_spend / total_conversions), 2) if total_conversions > 0 else 0
+
+    ac1, ac2, ac3 = st.columns(3)
+    with ac1:
+        st.metric(label="📊 Gross Attributed Ad Revenue", value=f"${gross_attributed_revenue:,.2f}")
+    with ac2:
+        st.metric(label="🎯 Return on Ad Spend (ROAS)", value=f"{calculated_roas}x ROAS Matrix")
+    with ac3:
+        st.metric(label="💸 Customer Acquisition Cost (CAC)", value=f"${calculated_cac:.2f} / User")
+
+    # Render a quick marketing attribution overview pie chart to visually display spending splits
+    st.markdown("#### 📊 Advertising Resource Allocation Matrix")
+    attribution_df = pd.DataFrame({
+        "Spend Component ($)": [li_spend, google_spend]
+    }, index=["LinkedIn Ads Channel", "Google Search Ads Channel"])
+    st.bar_chart(attribution_df)
+
 def render_runway():
     st.subheader("✈️ Tactical Infrastructure Modeling Runway")
     st.write("Simulate multi-cloud traffic pressure limits and track dataset pipeline stress curves in real time.")
