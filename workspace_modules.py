@@ -52,6 +52,31 @@ def render_calculator():
         except Exception:
             st.error("Equation Parsing Error")
 
+def render_codec():
+    st.markdown("---")
+    st.subheader("🌐 Universal Base64 System Codec Buffer")
+    st.write("Securely encode or decode operational documentation strings and API token blocks natively in local memory.")
+    
+    codec_mode = st.radio("Select Codec Operation Core:", ["Encode String to Base64", "Decode Base64 back to Plaintext"], key="wm_codec_mode_radio")
+    input_string = st.text_area("Ingest Operational Token Target Buffer:", placeholder="Enter alphanumeric text...", key="wm_codec_input_box")
+    
+    import base64
+    if st.button("Execute Codec Transformation", key="wm_codec_execute_btn"):
+        if input_string:
+            try:
+                if "Encode" in codec_mode:
+                    encoded_bytes = base64.b64encode(input_string.encode("utf-8"))
+                    st.success("✅ Alphanumeric String Encoded Successfully:")
+                    st.code(encoded_bytes.decode("utf-8"))
+                else:
+                    decoded_bytes = base64.b64decode(input_string.strip().encode("utf-8"))
+                    st.success("✅ Base64 String Decoded Successfully:")
+                    st.code(decoded_bytes.decode("utf-8"))
+            except Exception:
+                st.error("Transformation Error: Verify the input string matches base64 structure parameters.")
+        else:
+            st.warning("⚠️ Input buffer is empty. Ingest data to process.")
+
 # ====================================================================
 # TAB 3 & 4: WORKSPACE & RUNWAY MODULES
 # ====================================================================
@@ -285,6 +310,41 @@ def render_runway():
             st.error(f"🚨 CRITICAL SYSTEM ANOMALY: Load limits at {load_slider} Q/s exceed standard database memory bounds. Risk of cross-tenant partition drift detected.")
         else:
             st.success(f"🟢 METRIC DISTRIBUTION MATRIX STABLE: Multi-cloud pipelines processing {load_slider} Q/s cleanly across Oracle partitions with zero pack drop.")
+
+    # ✈️ MULTI-CLOUD INFRASTRUCTURE COST OPTIMIZATION SIMULATOR
+    st.markdown("---")
+    st.subheader("✈️ Multi-Cloud Infrastructure Cost Optimization Matrix")
+    st.write("Simulate virtual machine scaling bounds and automatically map out cost mitigation curves across AWS, Azure, and GCP.")
+    
+    cloud_c1, cloud_c2 = st.columns(2)
+    with cloud_c1:
+        aws_instances = st.slider("Active AWS EC2 Active Instances:", min_value=1, max_value=100, value=25, key="c_opt_aws")
+        azure_instances = st.slider("Active Azure VM Compute Nodes:", min_value=1, max_value=100, value=15, key="c_opt_az")
+    with cloud_c2:
+        gcp_instances = st.slider("Active Google Cloud Compute Engines:", min_value=1, max_value=100, value=10, key="c_opt_gcp")
+        wastage_factor = st.slider("Estimated Idle Server Resource Bloat (%):", min_value=5, max_value=75, value=35, key="c_opt_waste")
+        
+    # Math algorithms calculating cloud server cost baselines natively for free
+    total_compute_nodes = aws_instances + azure_instances + gcp_instances
+    estimated_monthly_spend = (aws_instances * 72) + (azure_instances * 85) + (gcp_instances * 68)
+    financial_leakage = estimated_monthly_spend * (wastage_factor / 100)
+    optimized_future_floor = estimated_monthly_spend - financial_leakage
+    
+    st.markdown("#### 📊 Multi-Cloud Workload Spend Matrix")
+    m_col1, m_col2, m_col3 = st.columns(3)
+    with m_col1:
+        st.metric(label="🖥️ Combined Tenant Active Nodes", value=f"{total_compute_nodes} Cores")
+    with m_col2:
+        st.metric(label="💸 Total Gross Monthly Infrastructure Baseline", value=f"${estimated_monthly_spend:,.2f}")
+    with m_col3:
+        st.metric(label="🛡️ Wasted Capacity Reclaim Yield", value=f"${financial_leakage:,.2f}", delta=f"-{wastage_factor}% Loss", delta_color="inverse")
+        
+    # Render a clean, high-impact vertical comparative bar chart showing current spend vs optimized floors
+    st.markdown("#### 📉 Optimized Infrastructure Cost Horizon")
+    comparison_df = pd.DataFrame({
+        "Financial Scale ($)": [estimated_monthly_spend, optimized_future_floor]
+    }, index=["Current Cloud Allocation", "Optimized Core Architecture"])
+    st.bar_chart(comparison_df)
 
 # ====================================================================
 # TAB 5: MULTIMEDIA LIBRARY STORAGE MAP (33 VERIFIED CARDS)
