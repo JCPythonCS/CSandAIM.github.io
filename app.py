@@ -254,6 +254,7 @@ with tab_utilities:
         wm.render_translator()
         st.markdown("---")
         wm.render_calculator()
+        wm.render_codec()
     else:
         st.error("Module functions temporarily offline.")
 
