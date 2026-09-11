@@ -210,7 +210,8 @@ def render_library_catalog():
     st.subheader("📚 Global System Asset Library & Multimedia Center")
     st.write("Stream live video briefings matching your live storefront repository.")
     
-    titles = [
+    # 🧠 THE DEFINITIVE SYMMETRICAL DATA MASTER LIST
+    library_master_list = [
         ("Agile Sprint Estimation & Cloud Cost PMP Toolkit", 49.00), ("Developer Onboarding Framework Base Ledger", 59.00),
         ("Smart City Traffic Matrix", 79.00), ("Edge Compute Grid Blueprint", 99.00), ("Enterprise Security Architecture", 149.00),
         ("Global Datacenter Architecture", 179.00), ("Municipal Smart Grid Layout", 199.00), ("Fault-Tolerant Corporate Network Topology", 219.00),
@@ -227,7 +228,7 @@ def render_library_catalog():
         ("Atomically Precise Graphene Circuit Matrix Ledger", 89.00)
     ]
     
-    # Converted Google Drive Streaming Mapping Tables (Web Viewport Compliant)
+    # Converted Google Drive Streaming Mapping Tables (Web Viewport Compliant Previews)
     video_streaming_urls = {
         "01": "https://google.com",
         "02": "https://google.com",
@@ -266,90 +267,30 @@ def render_library_catalog():
     query = st.text_input("🔍 Filter Catalog by Key Phrase:", placeholder="Type name...", key="wm_lib_s_b")
     st.markdown("---")
 
-    for idx, (name, price) in enumerate(titles, start=1):
+    # 🗺️ LINKED RENDERER ENGINE LOOP: Perfectly aligned with variable names
+    for idx, (name, price) in enumerate(library_master_list, start=1):
         str_id = f"{idx:02d}"
         if query and query.lower() not in name.lower():
             continue
             
-            url = video_streaming_urls.get(str_id, "")
-            if url:
-                # 🌐 Forces the browser to load Google's native web player cleanly
-                embed_html = f'''
-                <iframe src="{url}" 
-                        width="100%" 
-                        height="360" 
-                        allow="autoplay; encrypted-media" 
-                        allowfullscreen 
-                        style="border: none; border-radius: 8px;">
-                </iframe>
-                '''
-                st.components.v1.html(embed_html, height=380)
-            else:
-                st.caption("ℹ️ *[ Media Syncing / Blueprint Core Online ]*")
-
-def render_lead_sandbox():
-    st.markdown("---")
-    st.subheader("🤖 AI-Ops Enterprise Lead Ingestion & Enrichment Sandbox")
-    st.write("Ingest high-intent corporate contacts, enrich company profiles instantly via simulated metadata, and auto-draft outbound hooks.")
-
-    # Hardcoded raw enterprise lead records provided from your file stream
-    raw_leads = [
-        "bob.kelbe@security-finance.co", "neal.denny@questco.net", "fjoshua.emory@dss.sc.gov",
-        "kimberly.fite@ishpi.net", "david.ritchie@bonniercorp.com", "david.ritchie@marlinmag.com",
-        "dave.sampson@bonniercorp.com", "david.sampson@bonniercorp.com", "sebastian.mackensen@://us.com",
-        "MarkusGreunz@://us.com", "GregMarler@://us.com", "Shaun.Bugbee@://us.com",
-        "Yves.Caseau@://us.com", "Matthew.Cabe@://us.com", "Ivan.Pettigrew@://us.com",
-        "Dennis.Dunn@://us.com", "Jared.Alewine@://us.com", "Hrishikesh.Mejare@://us.com",
-        "Dale.Schultz@://us.com", "Guillaume.Bardin@://us.com", "Nicholas.Dixon@://us.com",
-        "Thomas.Buck@://us.com", "MarianKneer@bmw.de", "SebGrasreiner@bmw.de", "PualStrawa@bmwmc.de",
-        "JanStickmann@bmwmc.de", "Alperen.Can@mercedes-benz.de", "Holger.Endt@mercedes-benz.de",
-        "Anestis.Terzis@mercedes-benz.de", "Falk.Schroeder@vw.de", "Frank.Sonnleithner@vw.de",
-        "Soenke.Detlefsen@vw.de", "FranzDecker@bmwmc.de"
-    ]
-
-    if st.button("🚀 Ingest & Enrich Target Enterprise Matrix", key="wm_lead_ingest_btn"):
-        st.success(f"✅ AI-Ops Core: Successfully ingested {len(raw_leads)} premium automotive and industrial lead profiles!")
-        
-        enriched_data = []
-        for lead in raw_leads:
-            name_part, domain = lead.split('@')
-            clean_name = name_part.replace('.', ' ').title()
-            
-            # Simulated Clearbit/HubSpot Firmographic Enrichment Matrix Logic
-            if "bmw" in domain:
-                org, size, sector, product_target = "BMW Group", "150,000+ Emps", "Automotive Core (DE/US)", "Smart City Traffic Matrix"
-            elif "mercedes" in domain:
-                org, size, sector, product_target = "Mercedes-Benz AG", "170,000+ Emps", "Luxury Automotive", "Fault-Tolerant Corporate Network Topology"
-            elif "vw" in domain or "volkswagen" in domain:
-                org, size, sector, product_target = "Volkswagen Group", "600,000+ Emps", "Mass-Market Automotive", "Enterprise Container Orchestration Manual"
-            elif "michellin" in domain:
-                org, size, sector, product_target = "Michelin Group", "120,000+ Emps", "Industrial Tier Components", "Cryogenic Fluid Logistics Matrix"
-            elif "zf" in domain:
-                org, size, sector, product_target = "ZF Friedrichshafen", "160,000+ Emps", "Drivetrain Technology", "High-Voltage Propulsion Stator Ledger"
-            else:
-                org, size, sector, product_target = "Enterprise Target Core", "Variable Scale", "Diversified Markets", "Agile Sprint Estimation PMP Toolkit"
-
-            outbound_hook = f"Hello {clean_name}, I noticed your technical track at {org}. Given your scale of operations across {sector}, I wanted to share our '{product_target}' framework blueprint currently online inside our global asset index center."
-
-            enriched_data.append({
-                "Direct Lead Email": lead,
-                "Target Executive": clean_name,
-                "Enriched Organization": org,
-                "Corporate Scale": size,
-                "SaaS Blueprint Target Connection": product_target,
-                "Automated Outreach Copy Script String": outbound_hook
-            })
-
-        lead_df = pd.DataFrame(enriched_data)
-        st.markdown("### 📊 Live Firmographic Enrichment Grid (Simulated Clearbit / Attio Data)")
-        st.dataframe(lead_df, use_container_width=True)
-
-        st.markdown("---")
-        st.markdown("### 📨 Featured Outbound Outreach Previews (Loops Email Engine)")
-        
-        # Pull high-profile sample indices safely to preview featured corporate blocks
-        previews = [8, 12, 19, 21] 
-        for p_idx in previews:
-            if p_idx < len(enriched_data):
-                item = enriched_data[p_idx]
-                st.info(f"**To:** `{item['Direct Lead Email']}` ({item['Enriched Organization']}) \n\n **Draft Message Text:** *\"{item['Automated Outreach Copy Script String']}\"*")
+        with st.container():
+            c_main, c_side = st.columns([3, 1])  # Symmetrical 75% / 25% alignment ratio
+            with c_main:
+                st.markdown(f"### 📄 Card {str_id} - {name}")
+                st.write(f"*Premium enterprise tracking blueprint matrix configuration.*")
+                
+                url = video_streaming_urls.get(str_id, "")
+                if url:
+                    embed_html = f'''
+                    <iframe src="{url}" width="100%" height="360" allow="autoplay; encrypted-media" allowfullscreen style="border: none; border-radius: 8px;"></iframe>
+                    '''
+                    st.components.v1.html(embed_html, height=380)
+                else:
+                    st.caption("ℹ️ *[ Briefing Media Tracks Synchronizing / Blueprint Core Online ]*")
+                    
+            with c_side:
+                st.write("")
+                st.metric(label="Store Price", value=f"${price:.2f}")
+                if st.button("Simulate Deployment", key=f"d_b_{str_id}"):
+                    st.success(f"⚡ Card {str_id} variables verified inside secure staging sandbox.")
+            st.markdown("<hr style='border: 0; border-top: 1px dashed #CBD5E1;' />", unsafe_allow_html=True)
