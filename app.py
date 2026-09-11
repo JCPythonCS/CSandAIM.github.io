@@ -266,6 +266,7 @@ with tab_workspace:
         st.markdown("---")
         wm.render_renamer()
         st.markdown("---")
+        wm.render_lead_sandbox() 
     else:
         st.error("Module functions temporarily offline.")
 
