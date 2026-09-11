@@ -271,22 +271,21 @@ def render_library_catalog():
         if query and query.lower() not in name.lower():
             continue
             
-        with st.container():
-            c_main, c_side = st.columns([3, 1])
-            with c_main:
-                st.markdown(f"### 📄 Card {str_id} - {name}")
-                st.write(f"*Premium system blueprint matrix blueprint.*")
-                url = video_streaming_urls.get(str_id, "")
-                if url:
-                    st.video(url)
-                else:
-                    st.caption("ℹ️ *[ Media Syncing / Blueprint Core Online ]*")
-            with c_side:
-                st.write("")
-                st.metric(label="Store Price", value=f"${price:.2f}")
-                if st.button("Simulate Deployment", key=f"d_b_{str_id}"):
-                    st.success(f"⚡ Card {str_id} variables verified inside secure sandbox.")
-            st.markdown("<hr style='border: 0; border-top: 1px dashed #CBD5E1;' />", unsafe_allow_html=True)
+            url = video_streaming_urls.get(str_id, "")
+            if url:
+                # 🌐 Forces the browser to load Google's native web player cleanly
+                embed_html = f'''
+                <iframe src="{url}" 
+                        width="100%" 
+                        height="360" 
+                        allow="autoplay; encrypted-media" 
+                        allowfullscreen 
+                        style="border: none; border-radius: 8px;">
+                </iframe>
+                '''
+                st.components.v1.html(embed_html, height=380)
+            else:
+                st.caption("ℹ️ *[ Media Syncing / Blueprint Core Online ]*")
 
 def render_lead_sandbox():
     st.markdown("---")
