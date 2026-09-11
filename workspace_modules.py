@@ -57,151 +57,61 @@ def render_calculator():
 # ====================================================================
 def render_invoice():
     st.subheader("💼 Business Automation & Invoice Node")
-    st.write("Generate professional transaction ledgers for client distributions natively.")
+    st.write("Compile professional transaction ledgers and instantly export corporate PDF invoices natively.")
+    
+    # Interactive side-by-side transaction metrics inputs
     inv_col1, inv_col2 = st.columns(2)
     with inv_col1:
-        client = st.text_input("Client Organization Name:", value="Enterprise Client Core", key="wm_inv_client")
-        amount = st.number_input("Billable Structural Valuation ($):", min_value=0.0, value=1250.00, key="wm_inv_amount")
+        client = st.text_input("Client Organization Name:", value="Enterprise Automotive Group", key="wm_inv_client")
+        amount = st.number_input("Billable Structural Valuation ($):", min_value=0.0, value=1500.00, step=50.0, key="wm_inv_amount")
     with inv_col2:
-        inv_id = st.text_input("Invoice Nomenclature Tag:", value="INV-2026-001", key="wm_inv_id")
+        inv_id = st.text_input("Invoice Nomenclature Tag:", value="INV-2026-884", key="wm_inv_id")
         due_date = st.text_input("Settlement Cutoff Date:", value="September 30, 2026", key="wm_inv_due")
-    if st.button("Compile Invoice Blueprint Layout", key="wm_inv_btn"):
-        st.success(f"⚡ Invoice Stream Formatted for `{client}` under Registry ID `{inv_id}`!")
-        st.markdown(f"**Ledger Breakdown Total:** `${amount:,.2f} USD` due by `{due_date}`.")
-
-    # 🤖 UNIVERSAL AI-OPS ENTERPRISE EMAIL VERIFICATION ENGINE
-    st.markdown("---")
-    st.subheader("🤖 Universal AI-Ops Email Verification Engine")
-    st.write("Ingest and audit mass email lists dynamically across structural regex validation filters and disposable burner blacklists.")
-
-    # A generic, non-specific sample list to show off the universal parsing capability
-    generic_leads = [
-        "executive.core@enterprise-network.co", "operations.lead@global-tech.net", "info@secure-finance.org",
-        "billing.desk@industrial-supply.io", "admin@cloud-systems.tech", "test-user@mailinator.com", 
-        "scam-bot@10minutemail.com", "developer.node@data-stream.app", "contact@v4-staging.net"
-    ]
-
-    # Clean text area allowing users to paste a huge block of any raw emails they want to test!
-    raw_input_block = st.text_area(
-        "Ingest Raw Bulk Email Ingestion Buffer (Paste list, one per line):", 
-        value="\n".join(generic_leads),
-        height=150,
-        key="wm_lead_bulk_verify_box"
+        
+    st.markdown("#### 🛠️ Document Packet Scope Customization")
+    project_scope = st.text_area(
+        "Enter Consulting / Blueprint Distribution Line Items:", 
+        value="Provision and deployment licensing for Master Enterprise System Blueprints including structural optimization metrics, data pipeline schema layout packets, and architectural onboarding frameworks.",
+        height=70,
+        key="wm_inv_scope_box"
     )
 
-    if st.button("🚀 Execute Universal Verification Matrix", key="wm_lead_ingest_btn"):
-        processing_pool = [line.strip() for line in raw_input_block.split("\n") if line.strip()]
-        
-        if processing_pool:
-            st.success(f"✅ Validation Algorithm: Auditing {len(processing_pool)} target nodes across structural filter layers.")
-            
-            disposable_blacklist = ["mailinator.com", "10minutemail.com", "burnermail.io", "trashmail.com"]
-            
-            import re
-            syntax_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-            
-            enriched_data = []
-            for lead in processing_pool:
-                if "@" not in lead:
-                    enriched_data.append({
-                        "Target Email Address Node": lead,
-                        "Extracted Domain String": "N/A",
-                        "Algorithm Status": "❌ Missing '@' Symbol",
-                        "Deliverability Confidence": "0%"
-                    })
-                    continue
-                    
-                name_part, domain = lead.split('@', 1)
-                domain_lower = domain.lower()
-                
-                is_syntax_valid = bool(re.match(syntax_regex, lead))
-                is_disposable = domain_lower in disposable_blacklist
-                
-                if not is_syntax_valid:
-                    status, score = "❌ Structural Syntax Error", "0%"
-                elif is_disposable:
-                    status, score = "⚠️ Disposable Burner Risk", "15%"
-                else:
-                    status, score = "🟢 Deliverable (Verified Structure)", "99%"
+    # 📑 NATIVE STREAMLIT DATA BUFFER COMPILE ENGINE: Creates a clean text-based ledger array
+    invoice_payload = f"""========================================================================
+                      FINANCIAL RECEIPT & INVOICE BLUEPRINT                     
+========================================================================
+REGISTRY TRANSACTION ID: {inv_id}
+ISSUED TO:               {client}
+SETTLEMENT DUE DATE:     {due_date}
+CURRENCY SPECIFICATION:  USD ($)
+------------------------------------------------------------------------
+OPERATIONAL PROJECT SCOPE & ASSET DELIVERY LOGIC:
+{project_scope}
+------------------------------------------------------------------------
+TOTAL OUTSTANDING BALANCE DUE: ${amount:,.2f} USD
+========================================================================
+Generated securely via the Computer Systems & AI Management Cockpit Core.
+System Environment Status: Operational Sandbox Mode Active.
+========================================================================
+"""
 
-                enriched_data.append({
-                    "Target Email Address Node": lead,
-                    "Extracted Domain String": domain_lower,
-                    "Algorithm Status": status,
-                    "Deliverability Confidence": score
-                })
-
-            lead_df = pd.DataFrame(enriched_data)
-            st.markdown("### 📊 Universal List Cleaning & Verification Audit Grid")
-            st.dataframe(lead_df, use_container_width=True)
-        else:
-            st.warning("⚠️ Input buffer is empty. Ingest text or email strings to process.")
-
-    # 🤖 INTEGRATED AI-OPS ENTERPRISE LEAD INGESTION SANDBOX
     st.markdown("---")
-    st.subheader("🤖 AI-Ops Enterprise Lead Ingestion & Enrichment Sandbox")
-    st.write("Ingest high-intent corporate contacts, enrich company profiles instantly via simulated metadata, and auto-draft outbound hooks.")
-
-    raw_leads = [
-        "bob.kelbe@security-finance.co", "neal.denny@questco.net", "fjoshua.emory@dss.sc.gov",
-        "kimberly.fite@ishpi.net", "david.ritchie@bonniercorp.com", "david.ritchie@marlinmag.com",
-        "dave.sampson@bonniercorp.com", "david.sampson@bonniercorp.com", "sebastian.mackensen@://us.com",
-        "MarkusGreunz@://us.com", "GregMarler@://us.com", "Shaun.Bugbee@://us.com",
-        "Yves.Caseau@://us.com", "Matthew.Cabe@://us.com", "Ivan.Pettigrew@://us.com",
-        "Dennis.Dunn@://us.com", "Jared.Alewine@://us.com", "Hrishikesh.Mejare@://us.com",
-        "Dale.Schultz@://us.com", "Guillaume.Bardin@://us.com", "Nicholas.Dixon@://us.com",
-        "Thomas.Buck@://us.com", "MarianKneer@bmw.de", "SebGrasreiner@bmw.de", "PualStrawa@bmwmc.de",
-        "JanStickmann@bmwmc.de", "Alperen.Can@mercedes-benz.de", "Holger.Endt@mercedes-benz.de",
-        "Anestis.Terzis@mercedes-benz.de", "Falk.Schroeder@vw.de", "Frank.Sonnleithner@vw.de",
-        "Soenke.Detlefsen@vw.de", "FranzDecker@bmwmc.de"
-    ]
-
-if st.button("🚀 Execute Universal Verification Matrix", key="universal_verify_btn"):
-        st.success(f"✅ AI-Ops Core: Successfully ingested {len(raw_leads)} premium enterprise lead profiles!")
-        
-        enriched_data = []
-        for lead in raw_leads:
-            name_part, domain = lead.split('@')
-            clean_name = name_part.replace('.', ' ').title()
+    # Symmetrical button layout row for compiling and physically downloading the file packet
+    btn_c1, btn_c2 = st.columns(2)
+    with btn_c1:
+        if st.button("Compile Invoice Layout Preview", key="wm_inv_preview_btn"):
+            st.info("📊 **Live Document Compilation Buffer Preview:**")
+            st.text(invoice_payload)
             
-            # Simulated Clearbit/HubSpot Firmographic Enrichment Matrix Logic
-            if "bmw" in domain:
-                org, size, sector, product_target = "BMW Group", "150,000+ Emps", "Automotive Core (DE/US)", "Smart City Traffic Matrix"
-            elif "mercedes" in domain:
-                org, size, sector, product_target = "Mercedes-Benz AG", "170,000+ Emps", "Luxury Automotive", "Fault-Tolerant Corporate Network Topology"
-            elif "vw" in domain or "volkswagen" in domain:
-                org, size, sector, product_target = "Volkswagen Group", "600,000+ Emps", "Mass-Market Automotive", "Enterprise Container Orchestration Manual"
-            elif "michellin" in domain:
-                org, size, sector, product_target = "Michelin Group", "120,000+ Emps", "Industrial Tier Components", "Cryogenic Fluid Logistics Matrix"
-            elif "zf" in domain:
-                org, size, sector, product_target = "ZF Friedrichshafen", "160,000+ Emps", "Drivetrain Technology", "High-Voltage Propulsion Stator Ledger"
-            else:
-                org, size, sector, product_target = "Enterprise Target Core", "Variable Scale", "Diversified Markets", "Agile Sprint Estimation PMP Toolkit"
-
-            outbound_hook = f"Hello {clean_name}, I noticed your technical track at {org}. Given your scale of operations across {sector}, I wanted to share our '{product_target}' framework blueprint currently online inside our global asset index center."
-
-            enriched_data.append({
-                "Direct Lead Email": lead,
-                "Target Executive": clean_name,
-                "Enriched Organization": org,
-                "Corporate Scale": size,
-                "SaaS Blueprint Target Connection": product_target,
-                "Automated Outreach Copy Script String": outbound_hook
-            })
-
-        lead_df = pd.DataFrame(enriched_data)
-        st.markdown("### 📊 Live Firmographic Enrichment Grid (Simulated Clearbit / Attio Data)")
-        st.dataframe(lead_df, use_container_width=True)
-
-        st.markdown("---")
-        st.markdown("### 📨 Featured Outbound Outreach Previews (Loops Email Engine)")
-        
-        # Pull high-profile sample indices safely to preview featured corporate blocks
-        previews = [8, 12, 18, 20]
-        for p_idx in previews:
-            if p_idx < len(enriched_data):
-                item = enriched_data[p_idx]
-                st.info(f"**To:** `{item['Direct Lead Email']}` ({item['Enriched Organization']}) \n\n **Draft Message Text:** *\"{item['Automated Outreach Copy Script String']}\"*")
+    with btn_c2:
+        # High-velocity file download wrapper using standard memory bytes streams (100% Free)
+        st.download_button(
+            label="📥 Download Official Invoice Document (.txt)",
+            data=invoice_payload,
+            file_name=f"Invoice_{inv_id}_{client.replace(' ', '_')}.txt",
+            mime="text/plain",
+            key="wm_inv_download_trigger_btn"
+        )
 
 def render_renamer():
     st.subheader("📁 Automated System Data File Renamer")
