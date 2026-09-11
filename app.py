@@ -266,6 +266,7 @@ with tab_workspace:
         wm.render_invoice()
         st.markdown("---")
         wm.render_renamer()
+        wm.render_email_verifier()
         st.markdown("---")
     else:
         st.error("Module functions temporarily offline.")
