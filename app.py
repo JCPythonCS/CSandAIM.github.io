@@ -5,7 +5,7 @@ import os
 st.set_page_config(page_title="Enterprise Metrics Cockpit", layout="wide")
 
 # 🏆 Title Banner
-st.title("🛡️ Chieftess AI - Enterprise Operations Cockpit")
+st.title("🛡️ Computer Systems and AI Managent Cockpit")
 st.markdown("---")
 
 # 📂 Load the Data Local to the Container
