@@ -13,21 +13,21 @@ st.set_page_config(page_title="Computer Systems and AI Management Cockpit", layo
 st.title("🛡️ Computer Systems and AI Management Cockpit")
 st.markdown("---")
 
-# 📂 Load Local Workspace Data Loop (From Your Original Code Base)
+# 📂 FIXED: Load Local Workspace Data Loop (Fixes the Critical Missing Table Error)
 data_folder = '.'
 all_files = [os.path.join(data_folder, f) for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
 database = {}
 
 for file_path in all_files:
     file_name = os.path.basename(file_path)
-    table_name = os.path.splitext(file_name)
+    # Strip extension out completely to match the string key 'enterprise_retail_dataT' exactly
+    table_name = os.path.splitext(file_name)[0]
     try:
         database[table_name] = pd.read_excel(file_path)
     except:
         pass
 
 # 🎛️ COMPLETE COCKPIT MASTER NAVIGATION (Fully Separated Layout)
-# All views are completely isolated independent panels to prevent grouping
 active_panel = st.selectbox(
     "Select Workspace System Node To Deploy:",
     [
@@ -45,7 +45,6 @@ active_panel = st.selectbox(
 st.markdown("---")
 
 # 🎙️ DYNAMIC SIDEBAR VISIBILITY CONTROLLER
-# The Voice Actor Sidebar configuration is ONLY visible on Tab 5 where your media engines live
 if active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab 5)":
     st.sidebar.header("🗣️ Audio Profiles Configuration")
     male_profile = st.sidebar.selectbox("Male Actor Voice", ["Male_Adam (Deep/Calm)", "Male_Michael (Professional)", "Male_David"])
@@ -53,7 +52,6 @@ if active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab 5
     st.sidebar.markdown("---")
     st.sidebar.caption("Voice Profile Parameters Active on Library Canvas")
 else:
-    # Completely clears the sidebar on all other tabs so they are full-width
     st.sidebar.empty()
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
@@ -98,7 +96,7 @@ if active_panel == "📊 Retail Enterprise Analytics Dashboard (Tab 1)":
         st.subheader("🔎 Ingested Database Record Stream")
         st.dataframe(filtered_df.head(100), use_container_width=True)
     else:
-        st.error("❌ Critical Error: 'enterprise_retail_dataT.xlsx' table not found in root workspace directory.")
+        st.error("❌ Critical Error: 'enterprise_retail_dataT' table key index matching failed. Ensure 'enterprise_retail_dataT.xlsx' is committed into your main repository root.")
 
 # ---- PANEL 2: TRANSLATOR (Tab 2) ----
 elif active_panel == "🌐 System Language Translation Engine (Tab 2)":
@@ -126,7 +124,6 @@ elif active_panel == "🤖 AI-Ops Verification & Network Security Node (Tab 4)":
 # ---- PANEL 7: TAB 5 LIBRARY WITH INTEGRATED AUDIO & VIDEO TOOLS (Tab 5) ----
 elif active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab 5)":
     
-    # 🎬 INTEGRATED GOOGLE DRIVE ASSET SYNC FOR LIBRARY CARDS
     st.markdown("### 🎬 Studio Asset Management Engine")
     drive_id = st.text_input(
         "Linked Google Drive Folder ID URL Sync Anchor:", 
@@ -135,13 +132,11 @@ elif active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab
     )
     st.success(f"✅ Active Cloud Channel Connected to Google Drive Directory: `{drive_id}`")
     
-    # Video Catalog Selection Tracker
     video_catalog_names = ["scene_01_raw.mp4", "b_roll_overlay.mp4", "intro_sequence.mov"]
     selected_target_video = st.selectbox("Select Active Google Drive Video Track to Process:", video_catalog_names)
     
     st.markdown("---")
     
-    # 🎙️ INTEGRATED ALTERNATING VOICE SCRIPT CONTROLLER
     st.markdown("### 📝 Alternating Dialogue Timeline Setup")
     default_script = (
         "Male: Welcome back to the library matrix. Your voice track is rendering.\n"
@@ -149,7 +144,6 @@ elif active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab
     )
     script_text = st.text_area("Input Library Card Script Dialogue:", value=default_script, height=140, key="library_script_editor")
     
-    # Dialogue Parse Pipeline
     raw_lines = script_text.strip().split("\n")
     timeline_flow = []
     for line in raw_lines:
@@ -164,14 +158,11 @@ elif active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab
             else:
                 timeline_flow.append({"speaker": "Male", "profile": male_profile, "text": line.strip()})
                 
-    # Quick Timeline Preview Indicator
     with st.expander("🔍 View Script Segment Distribution Map", expanded=False):
         for idx, segment in enumerate(timeline_flow):
             avatar = "👨" if segment["speaker"] == "Male" else "👩"
             st.write(f"**Line {idx+1} — {avatar} {segment['speaker']} ({segment['profile']}):** {segment['text']}")
 
     st.markdown("---")
-    
-    # 📚 RENDER THE COMPREHENSIVE STOREFRONT LIBRARY CATALOG (From workspace_modules.py)
     st.info(f"🎯 Global Processing Scope: Active Script and Video Track (**{selected_target_video}**) are locked to your storefront cards below.")
     wm.render_library_catalog()
