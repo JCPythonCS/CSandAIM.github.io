@@ -20,62 +20,129 @@ database = {}
 
 for file_path in all_files:
     file_name = os.path.basename(file_path)
-    table_name = os.path.splitext(file_name)
+    table_name = os.path.splitext(file_name)[0]
     try:
         database[table_name] = pd.read_excel(file_path)
     except:
         pass
 
-# 🎛️ COMPLETE COCKPIT MASTER NAVIGATION TABS
-# We track the active selection using the `key` parameter to toggle the sidebar
-active_tab = st.radio(
-    "Select Cockpit Workspace Focus:",
+# 🎛️ COMPLETE COCKPIT MASTER NAVIGATION (Ungrouped Layout)
+# Replaced native grouped tabs with an independent view selector panel
+active_panel = st.selectbox(
+    "Select Workspace System Node To Deploy:",
     [
-        "🎙️ Voice Text Engine (Tab 1)", 
-        "📁 Google Drive Asset Sync (Tab 2)", 
-        "🛠️ Workspace Utilities (Tabs 2 & 3)", 
-        "✈️ Modeling Runway (Tabs 3 & 4)", 
-        "📚 Storefront Asset Library (Tab 5)"
+        "📊 Retail Enterprise Analytics Dashboard (Tab 1)",
+        "🛠️ Workspace Utilities Terminal (Tabs 2 & 3)",
+        "✈️ Modeling Runway & Network Monitor (Tabs 3 & 4)",
+        "📚 Storefront Asset Library with Voice & Video Sync (Tab 5)"
     ],
-    horizontal=True,
-    key="navigation_tabs"
+    key="cockpit_panel_navigation"
 )
 
 st.markdown("---")
 
 # 🎙️ DYNAMIC SIDEBAR VISIBILITY CONTROLLER
-# The sidebar only populates if the user is actively working on the Voice Text Engine
-if active_tab == "🎙️ Voice Text Engine (Tab 1)":
+# The Voice Actor Sidebar configuration is ONLY visible on Tab 5 where your media engines live
+if active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab 5)":
     st.sidebar.header("🗣️ Audio Profiles Configuration")
     male_profile = st.sidebar.selectbox("Male Actor Voice", ["Male_Adam (Deep/Calm)", "Male_Michael (Professional)", "Male_David"])
     female_profile = st.sidebar.selectbox("Female Actor Voice", ["Female_Emily (Smooth)", "Female_Serena (Narrator)", "Female_Rachel"])
     st.sidebar.markdown("---")
-    st.sidebar.caption("Voice Profile Parameters Active")
+    st.sidebar.caption("Voice Profile Parameters Active on Library Canvas")
 else:
-    # If any other tab is active, we render an empty sidebar configuration to hide it
+    # Completely clears the sidebar on all other tabs so they are full-width
     st.sidebar.empty()
-    # We assign default structural values so the backend code doesn't throw a NameError
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
 
 # ==================== ACTIVE VIEWPORT ROUTING GRID ====================
 
-# ---- VIEWPORT 1: VOICE TEXT ENGINE ----
-if active_tab == "🎙️ Voice Text Engine (Tab 1)":
-    st.subheader("📝 Alternating Dialogue Timeline Setup")
-    st.caption("Alternate fluidly between your chosen Male and Female voice actor profiles. Type using 'Male:' or 'Female:' tags.")
+# ---- PANEL 1: RETAIL ENTERPRISE DASHBOARD (Your Original Code Layout) ----
+if active_panel == "📊 Retail Enterprise Analytics Dashboard (Tab 1)":
+    st.subheader("📊 Enterprise Retail Data Ingestion Streams")
     
-    default_script = (
-        "Male: Welcome back to the cockpit. Your alternating voice script engine is now active.\n"
-        "Female: Perfect. We can line up our voiceover text blocks right here in the Streamlit engine.\n"
-        "Male: Next, we can alternate audio segments directly onto our Google Drive video track."
+    if 'enterprise_retail_dataT' in database:
+        df = database['enterprise_retail_dataT']
+        
+        # Display Filters directly inside the page view since sidebar is hidden
+        col_f1, col_f2 = st.columns(2)
+        with col_f1:
+            selected_region = st.multiselect("Select Region Filter Context:", options=df['Region'].unique(), default=df['Region'].unique())
+        with col_f2:
+            selected_retailer = st.multiselect("Select Retailer Filter Context:", options=df['Retailer'].unique(), default=df['Retailer'].unique())
+            
+        filtered_df = df[(df['Region'].isin(selected_region)) & (df['Retailer'].isin(selected_retailer))]
+        
+        # KPIs
+        total_vol = filtered_df['Volume_USD'].sum()
+        total_txns = len(filtered_df)
+        
+        c1, c2 = st.columns(2)
+        with c1:
+            st.metric(label="💰 Total Combined Sales Volume", value=f"${total_vol:,.2f}")
+        with c2:
+            st.metric(label="📦 Total Ingested Transactions", value=f"{total_txns:,}")
+            
+        st.markdown("---")
+        chart_col1, chart_col2 = st.columns(2)
+        with chart_col1:
+            st.subheader("🏆 Retailer Performance Rankings")
+            st.bar_chart(filtered_df.groupby('Retailer')['Volume_USD'].sum().sort_values(ascending=False))
+        with chart_col2:
+            st.subheader("🔸 Revenue Vol by Market Sector")
+            st.bar_chart(filtered_df.groupby('Market_Tier')['Volume_USD'].sum().sort_values(ascending=False))
+            
+        st.subheader("🔎 Ingested Database Record Stream")
+        st.dataframe(filtered_df.head(100), use_container_width=True)
+    else:
+        st.error("❌ Critical Error: 'enterprise_retail_dataT.xlsx' table not found in root workspace directory.")
+
+# ---- PANEL 2: UTILITIES TERMINAL ----
+elif active_panel == "🛠️ Workspace Utilities Terminal (Tabs 2 & 3)":
+    wm.render_translator()
+    st.markdown("---")
+    wm.render_calculator()
+    wm.render_codec()
+    st.markdown("---")
+    wm.render_invoice()
+    st.markdown("---")
+    wm.render_renamer()
+
+# ---- PANEL 3: MODELING RUNWAY ----
+elif active_panel == "✈️ Modeling Runway & Network Monitor (Tabs 3 & 4)":
+    wm.render_runway()
+    st.markdown("---")
+    wm.render_email_verifier()
+
+# ---- PANEL 4: TAB 5 LIBRARY WITH INTEGRATED AUDIO & VIDEO TOOLS ----
+elif active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab 5)":
+    
+    # 🎬 INTEGRATED GOOGLE DRIVE ASSET SYNC FOR LIBRARY CARDS
+    st.markdown("### 🎬 Studio Asset Management Engine")
+    drive_id = st.text_input(
+        "Linked Google Drive Folder ID URL Sync Anchor:", 
+        value="1BUnCmw4e4OTSBgyjjbJJsS12Yvg_lvrL", 
+        key="library_drive_sync_input"
     )
-    script_text = st.text_area("Input Dialogue Timeline Text:", value=default_script, height=200, key="cockpit_script_editor")
+    st.success(f"✅ Active Cloud Channel Connected to Google Drive Directory: `{drive_id}`")
     
-    # Process text layout blocks into alternating timeline structures
+    # Video Catalog Selection Tracker
+    video_catalog_names = ["scene_01_raw.mp4", "b_roll_overlay.mp4", "intro_sequence.mov"]
+    selected_target_video = st.selectbox("Select Active Google Drive Video Track to Process:", video_catalog_names)
+    
+    st.markdown("---")
+    
+    # 🎙️ INTEGRATED ALTERNATING VOICE SCRIPT CONTROLLER
+    st.markdown("### 📝 Alternating Dialogue Timeline Setup")
+    default_script = (
+        "Male: Welcome back to the library matrix. Your voice track is rendering.\n"
+        "Female: Perfect. We can match our script lines directly to our Google Drive files below."
+    )
+    script_text = st.text_area("Input Library Card Script Dialogue:", value=default_script, height=140, key="library_script_editor")
+    
+    # Dialogue Parse Pipeline
     raw_lines = script_text.strip().split("\n")
     timeline_flow = []
-    
     for line in raw_lines:
         if not line.strip(): continue
         if line.lower().startswith("male:"):
@@ -87,77 +154,16 @@ if active_tab == "🎙️ Voice Text Engine (Tab 1)":
                 timeline_flow.append({"speaker": "Female", "profile": female_profile, "text": line.strip()})
             else:
                 timeline_flow.append({"speaker": "Male", "profile": male_profile, "text": line.strip()})
-
-    st.markdown("#### 🔍 Active Dialogue Timeline Analysis")
-    for idx, segment in enumerate(timeline_flow):
-        avatar = "👨" if segment["speaker"] == "Male" else "👩"
-        bg = "#e8f4f8" if segment["speaker"] == "Male" else "#fef0f5"
-        border = "#2b7bba" if segment["speaker"] == "Male" else "#e05295"
-        
-        st.markdown(
-            f"""
-            <div style="background-color: {bg}; padding: 12px; border-radius: 6px; margin-bottom: 8px; border-left: 5px solid {border};">
-                <strong>Segment {idx+1} — {avatar} {segment['speaker']} ({segment['profile']}):</strong> {segment['text']}
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
-        
-    if st.button("🚀 Process & Synthesize Voices Layout", type="primary"):
-        prog = st.progress(0)
-        status = st.empty()
+                
+    # Quick Timeline Preview Indicator
+    with st.expander("🔍 View Script Segment Distribution Map", expanded=False):
         for idx, segment in enumerate(timeline_flow):
-            status.text(f"Processing Segment {idx+1}/{len(timeline_flow)} via {segment['profile']}...")
-            time.sleep(0.6)
-            prog.progress(int((idx + 1) / len(timeline_flow) * 100))
-        st.success("🎉 Combined alternating voiceover tracks generated successfully!")
-        st.audio("https://soundhelix.com")
+            avatar = "👨" if segment["speaker"] == "Male" else "👩"
+            st.write(f"**Line {idx+1} — {avatar} {segment['speaker']} ({segment['profile']}):** {segment['text']}")
 
-# ---- VIEWPORT 2: GOOGLE DRIVE VIDEO ASSETS ----
-elif active_tab == "📁 Google Drive Asset Sync (Tab 2)":
-    st.subheader("🎬 Google Drive Studio Assets Connection")
+    st.markdown("---")
     
-    drive_id = st.text_input(
-        "Linked Google Drive Folder ID:", 
-        value="1BUnCmw4e4OTSBgyjjbJJsS12Yvg_lvrL", 
-        key="cockpit_drive_input"
-    )
-    
-    st.success(f"✅ Successfully synchronized workspace layout with Google Drive Folder: `{drive_id}`")
-    st.markdown("### 📽️ Synced Video Files Detected on Cloud Drive")
-    
-    video_catalog = {
-        "Video File Name": ["scene_01_raw.mp4", "b_roll_overlay.mp4", "intro_sequence.mov"],
-        "Format Track": ["MP4", "MP4", "MOV"],
-        "Buffer Status": ["Available", "Available", "Available"]
-    }
-    st.dataframe(video_catalog, use_container_width=True)
-    chosen_video = st.selectbox("Select Active Video Track for Voice Over Overlay:", video_catalog["Video File Name"])
-    
-    st.markdown("---")
-    if st.button("🎬 Compile Final Composite Video File"):
-        with st.spinner(f"Executing timeline processing and syncing alternating voiceover tracks onto '{chosen_video}'..."):
-            time.sleep(3)
-        st.success("✨ Production rendering complete! Video master layout built successfully.")
-        st.button("📥 Download Final Video Asset")
-
-# ---- VIEWPORT 3: WORKSPACE UTILITIES ----
-elif active_tab == "🛠️ Workspace Utilities (Tabs 2 & 3)":
-    wm.render_translator()
-    st.markdown("---")
-    wm.render_calculator()
-    wm.render_codec()
-    st.markdown("---")
-    wm.render_invoice()
-    st.markdown("---")
-    wm.render_renamer()
-
-# ---- VIEWPORT 4: INFRASTRUCTURE RUNWAY ----
-elif active_tab == "✈️ Modeling Runway (Tabs 3 & 4)":
-    wm.render_runway()
-    st.markdown("---")
-    wm.render_email_verifier()
-
-# ---- VIEWPORT 5: MULTIMEDIA STOREFRONT LIBRARY ----
-elif active_tab == "📚 Storefront Asset Library (Tab 5)":
+    # 📚 RENDER THE COMPREHENSIVE STOREFRONT LIBRARY CATALOG (From workspace_modules.py)
+    # The voice tracking elements can now be applied to any selected card catalog item seamlessly
+    st.info(f"🎯 Global Processing Scope: Active Script and Video Track (**{selected_target_video}**) are locked to your storefront cards below.")
     wm.render_library_catalog()
