@@ -9,8 +9,26 @@ import workspace_modules as wm
 # 🖥️ Exact Page Config from your Repository
 st.set_page_config(page_title="Computer Systems and AI Management Cockpit", layout="wide")
 
-# 🏆 Original Title Banner
+# 🏆 MASTER TITLE BLOCK DESIGN WITH DUAL SIDE-SPACED LOGOS
 st.title("🛡️ Computer Systems and AI Management Cockpit")
+
+# This column layout pushes Logo 1 to the absolute left and Logo 2 to the absolute right
+col_logo_left, col_title_spacer, col_logo_right = st.columns([1, 4, 1])
+
+with col_logo_left:
+    try:
+        # Replace 'logo1.png' with your first repository logo filename
+        st.image("LOGOB.png", use_container_width=True)
+    except:
+        st.caption("🖼️ [Left Logo Slot]")
+
+with col_logo_right:
+    try:
+        # Replace 'logo2.png' with your second repository logo filename
+        st.image("LOGOG.png", use_container_width=True)
+    except:
+        st.caption("🖼️ [Right Logo Slot]")
+
 st.markdown("---")
 
 # 📂 Load Local Workspace Data Loop
@@ -20,7 +38,6 @@ database = {}
 
 for file_path in all_files:
     file_name = os.path.basename(file_path)
-    # Extract string name cleanly to match the database dictionary keys exactly
     table_name = os.path.splitext(file_name)[0]
     try:
         database[table_name] = pd.read_excel(file_path)
@@ -43,7 +60,6 @@ active_panel = st.selectbox(
 st.markdown("---")
 
 # 🎙️ DYNAMIC SIDEBAR VISIBILITY CONTROLLER
-# The Voice Actor Sidebar configuration is ONLY visible on the Library module (Tab 5)
 if active_panel == "📚 Library (Tab 5)":
     st.sidebar.header("🗣️ Audio Profiles Configuration")
     male_profile = st.sidebar.selectbox("Male Actor Voice", ["Male_Adam (Deep/Calm)", "Male_Michael (Professional)", "Male_David"])
@@ -51,7 +67,6 @@ if active_panel == "📚 Library (Tab 5)":
     st.sidebar.markdown("---")
     st.sidebar.caption("Voice Profile Parameters Active on Library Canvas")
 else:
-    # Completely clears the sidebar on all other tabs so they are full-width
     st.sidebar.empty()
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
@@ -118,7 +133,6 @@ elif active_panel == "✈️ Simulation (Tab 4)":
 # ---- PANEL 5: LIBRARY (Tab 5) ----
 elif active_panel == "📚 Library (Tab 5)":
     
-    # 🎬 GOOGLE DRIVE STUDIO ASSET SELECTION
     st.markdown("### 🎬 Studio Asset Management Engine")
     drive_id = st.text_input(
         "Linked Google Drive Folder ID URL Sync Anchor:", 
@@ -132,7 +146,6 @@ elif active_panel == "📚 Library (Tab 5)":
     
     st.markdown("---")
     
-    # 🎙️ ALTERNATING VOICE SCRIPT PIPELINE
     st.markdown("### 📝 Alternating Dialogue Timeline Setup")
     default_script = (
         "Male: Welcome back to the library matrix. Your voice track is rendering.\n"
@@ -162,5 +175,4 @@ elif active_panel == "📚 Library (Tab 5)":
     st.markdown("---")
     st.info(f"🎯 Global Processing Scope: Active Script and Video Track (**{selected_target_video}**) are locked to your storefront cards below.")
     
-    # Renders your 33 storefront card library items
     wm.render_library_catalog()
