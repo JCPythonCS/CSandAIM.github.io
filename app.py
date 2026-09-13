@@ -31,7 +31,7 @@ with col_logo_right:
 
 import datetime
 
-# --- AUTOMATED TACTICAL COUNTDOWN TIMER ---
+# --- LIVE AUTO-REFRESHING TACTICAL COUNTDOWN TIMER ---
 st.sidebar.markdown("### ⏳ Target Countdown")
 
 # Calculate the target window: Next upcoming Saturday at 11:00 AM
@@ -45,10 +45,10 @@ target_saturday = datetime.datetime.combine(
     datetime.time(11, 0, 0)
 )
 
-# Live ticking display component
+# Live ticking display placeholder container
 countdown_placeholder = st.sidebar.empty()
 
-# Calculate initial delta time
+# Calculate exact current time delta
 time_remaining = target_saturday - datetime.datetime.now()
 
 if time_remaining.total_seconds() > 0:
@@ -56,7 +56,7 @@ if time_remaining.total_seconds() > 0:
     hours, remainder = divmod(time_remaining.seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
     
-    # Renders a clean visual block in your sidebar panel
+    # Renders the visual countdown box block in your sidebar panel
     countdown_placeholder.markdown(
         f"""
         <div style="background-color: #1e293b; padding: 12px; border-radius: 6px; border-left: 5px solid #ef4444; color: #f8fafc; font-family: monospace; text-align: center;">
@@ -66,6 +66,9 @@ if time_remaining.total_seconds() > 0:
         """,
         unsafe_allow_html=True
     )
+    # Pause for 1 single second, then automatically tell Streamlit to run app.py again to tick the clock
+    time.sleep(1)
+    st.rerun()
 else:
     countdown_placeholder.success("🚀 Operational Window Active!")
 
