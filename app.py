@@ -13,31 +13,29 @@ st.set_page_config(page_title="Computer Systems and AI Management Cockpit", layo
 st.title("🛡️ Computer Systems and AI Management Cockpit")
 st.markdown("---")
 
-# 📂 FIXED: Load Local Workspace Data Loop (Fixes the Critical Missing Table Error)
+# 📂 Load Local Workspace Data Loop
 data_folder = '.'
 all_files = [os.path.join(data_folder, f) for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
 database = {}
 
 for file_path in all_files:
     file_name = os.path.basename(file_path)
-    # Strip extension out completely to match the string key 'enterprise_retail_dataT' exactly
+    # Extract string name cleanly to match the database dictionary keys exactly
     table_name = os.path.splitext(file_name)[0]
     try:
         database[table_name] = pd.read_excel(file_path)
     except:
         pass
 
-# 🎛️ COMPLETE COCKPIT MASTER NAVIGATION (Fully Separated Layout)
+# 🎛️ COCKPIT MASTER NAVIGATION (Ungrouped Selection Panels)
 active_panel = st.selectbox(
     "Select Workspace System Node To Deploy:",
     [
-        "📊 Retail Enterprise Analytics Dashboard (Tab 1)",
-        "🌐 System Language Translation Engine (Tab 2)",
-        "🧮 Extended Scientific Calculation Node (Tab 3)",
-        "💼 Business Automation & Invoice Node (Tab 4)",
-        "✈️ Tactical Infrastructure Modeling Runway (Tab 4)",
-        "🤖 AI-Ops Verification & Network Security Node (Tab 4)",
-        "📚 Storefront Asset Library with Voice & Video Sync (Tab 5)"
+        "📊 Analytics (Tab 1)",
+        "🛠️ Utilities (Tab 2)",
+        "💼 Workspace (Tab 3)",
+        "✈️ Simulation (Tab 4)",
+        "📚 Library (Tab 5)"
     ],
     key="cockpit_panel_navigation"
 )
@@ -45,27 +43,28 @@ active_panel = st.selectbox(
 st.markdown("---")
 
 # 🎙️ DYNAMIC SIDEBAR VISIBILITY CONTROLLER
-if active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab 5)":
+# The Voice Actor Sidebar configuration is ONLY visible on the Library module (Tab 5)
+if active_panel == "📚 Library (Tab 5)":
     st.sidebar.header("🗣️ Audio Profiles Configuration")
     male_profile = st.sidebar.selectbox("Male Actor Voice", ["Male_Adam (Deep/Calm)", "Male_Michael (Professional)", "Male_David"])
     female_profile = st.sidebar.selectbox("Female Actor Voice", ["Female_Emily (Smooth)", "Female_Serena (Narrator)", "Female_Rachel"])
     st.sidebar.markdown("---")
     st.sidebar.caption("Voice Profile Parameters Active on Library Canvas")
 else:
+    # Completely clears the sidebar on all other tabs so they are full-width
     st.sidebar.empty()
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
 
 # ==================== ACTIVE VIEWPORT ROUTING GRID ====================
 
-# ---- PANEL 1: RETAIL ENTERPRISE DASHBOARD (Tab 1) ----
-if active_panel == "📊 Retail Enterprise Analytics Dashboard (Tab 1)":
+# ---- PANEL 1: ANALYTICS (Tab 1) ----
+if active_panel == "📊 Analytics (Tab 1)":
     st.subheader("📊 Enterprise Retail Data Ingestion Streams")
     
     if 'enterprise_retail_dataT' in database:
         df = database['enterprise_retail_dataT']
         
-        # Display Filters directly inside the page view since sidebar is hidden
         col_f1, col_f2 = st.columns(2)
         with col_f1:
             selected_region = st.multiselect("Select Region Filter Context:", options=df['Region'].unique(), default=df['Region'].unique())
@@ -74,7 +73,6 @@ if active_panel == "📊 Retail Enterprise Analytics Dashboard (Tab 1)":
             
         filtered_df = df[(df['Region'].isin(selected_region)) & (df['Retailer'].isin(selected_retailer))]
         
-        # KPIs
         total_vol = filtered_df['Volume_USD'].sum()
         total_txns = len(filtered_df)
         
@@ -96,34 +94,31 @@ if active_panel == "📊 Retail Enterprise Analytics Dashboard (Tab 1)":
         st.subheader("🔎 Ingested Database Record Stream")
         st.dataframe(filtered_df.head(100), use_container_width=True)
     else:
-        st.error("❌ Critical Error: 'enterprise_retail_dataT' table key index matching failed. Ensure 'enterprise_retail_dataT.xlsx' is committed into your main repository root.")
+        st.error("❌ Critical Error: 'enterprise_retail_dataT' table not found in repository. Ensure 'enterprise_retail_dataT.xlsx' is present.")
 
-# ---- PANEL 2: TRANSLATOR (Tab 2) ----
-elif active_panel == "🌐 System Language Translation Engine (Tab 2)":
+# ---- PANEL 2: UTILITIES (Tab 2) ----
+elif active_panel == "🛠️ Utilities (Tab 2)":
     wm.render_translator()
-
-# ---- PANEL 3: CALCULATOR & CODEC (Tab 3) ----
-elif active_panel == "🧮 Extended Scientific Calculation Node (Tab 3)":
-    wm.render_calculator()
-    wm.render_codec()
-
-# ---- PANEL 4: INVOICING & FILE RENAMER (Tab 4) ----
-elif active_panel == "💼 Business Automation & Invoice Node (Tab 4)":
-    wm.render_invoice()
     st.markdown("---")
     wm.render_renamer()
 
-# ---- PANEL 5: MODELING RUNWAY (Tab 4) ----
-elif active_panel == "✈️ Tactical Infrastructure Modeling Runway (Tab 4)":
-    wm.render_runway()
+# ---- PANEL 3: WORKSPACE (Tab 3) ----
+elif active_panel == "💼 Workspace (Tab 3)":
+    wm.render_calculator()
+    wm.render_codec()
+    st.markdown("---")
+    wm.render_invoice()
 
-# ---- PANEL 6: EMAIL VERIFIER (Tab 4) ----
-elif active_panel == "🤖 AI-Ops Verification & Network Security Node (Tab 4)":
+# ---- PANEL 4: SIMULATION (Tab 4) ----
+elif active_panel == "✈️ Simulation (Tab 4)":
+    wm.render_runway()
+    st.markdown("---")
     wm.render_email_verifier()
 
-# ---- PANEL 7: TAB 5 LIBRARY WITH INTEGRATED AUDIO & VIDEO TOOLS (Tab 5) ----
-elif active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab 5)":
+# ---- PANEL 5: LIBRARY (Tab 5) ----
+elif active_panel == "📚 Library (Tab 5)":
     
+    # 🎬 GOOGLE DRIVE STUDIO ASSET SELECTION
     st.markdown("### 🎬 Studio Asset Management Engine")
     drive_id = st.text_input(
         "Linked Google Drive Folder ID URL Sync Anchor:", 
@@ -137,6 +132,7 @@ elif active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab
     
     st.markdown("---")
     
+    # 🎙️ ALTERNATING VOICE SCRIPT PIPELINE
     st.markdown("### 📝 Alternating Dialogue Timeline Setup")
     default_script = (
         "Male: Welcome back to the library matrix. Your voice track is rendering.\n"
@@ -165,4 +161,6 @@ elif active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab
 
     st.markdown("---")
     st.info(f"🎯 Global Processing Scope: Active Script and Video Track (**{selected_target_video}**) are locked to your storefront cards below.")
+    
+    # Renders your 33 storefront card library items
     wm.render_library_catalog()
