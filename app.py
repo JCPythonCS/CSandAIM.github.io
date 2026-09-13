@@ -20,20 +20,23 @@ database = {}
 
 for file_path in all_files:
     file_name = os.path.basename(file_path)
-    table_name = os.path.splitext(file_name)[0]
+    table_name = os.path.splitext(file_name)
     try:
         database[table_name] = pd.read_excel(file_path)
     except:
         pass
 
-# 🎛️ COMPLETE COCKPIT MASTER NAVIGATION (Ungrouped Layout)
-# Replaced native grouped tabs with an independent view selector panel
+# 🎛️ COMPLETE COCKPIT MASTER NAVIGATION (Fully Separated Layout)
+# All views are completely isolated independent panels to prevent grouping
 active_panel = st.selectbox(
     "Select Workspace System Node To Deploy:",
     [
         "📊 Retail Enterprise Analytics Dashboard (Tab 1)",
-        "🛠️ Workspace Utilities Terminal (Tabs 2 & 3)",
-        "✈️ Modeling Runway & Network Monitor (Tabs 3 & 4)",
+        "🌐 System Language Translation Engine (Tab 2)",
+        "🧮 Extended Scientific Calculation Node (Tab 3)",
+        "💼 Business Automation & Invoice Node (Tab 4)",
+        "✈️ Tactical Infrastructure Modeling Runway (Tab 4)",
+        "🤖 AI-Ops Verification & Network Security Node (Tab 4)",
         "📚 Storefront Asset Library with Voice & Video Sync (Tab 5)"
     ],
     key="cockpit_panel_navigation"
@@ -57,7 +60,7 @@ else:
 
 # ==================== ACTIVE VIEWPORT ROUTING GRID ====================
 
-# ---- PANEL 1: RETAIL ENTERPRISE DASHBOARD (Your Original Code Layout) ----
+# ---- PANEL 1: RETAIL ENTERPRISE DASHBOARD (Tab 1) ----
 if active_panel == "📊 Retail Enterprise Analytics Dashboard (Tab 1)":
     st.subheader("📊 Enterprise Retail Data Ingestion Streams")
     
@@ -97,24 +100,30 @@ if active_panel == "📊 Retail Enterprise Analytics Dashboard (Tab 1)":
     else:
         st.error("❌ Critical Error: 'enterprise_retail_dataT.xlsx' table not found in root workspace directory.")
 
-# ---- PANEL 2: UTILITIES TERMINAL ----
-elif active_panel == "🛠️ Workspace Utilities Terminal (Tabs 2 & 3)":
+# ---- PANEL 2: TRANSLATOR (Tab 2) ----
+elif active_panel == "🌐 System Language Translation Engine (Tab 2)":
     wm.render_translator()
-    st.markdown("---")
+
+# ---- PANEL 3: CALCULATOR & CODEC (Tab 3) ----
+elif active_panel == "🧮 Extended Scientific Calculation Node (Tab 3)":
     wm.render_calculator()
     wm.render_codec()
-    st.markdown("---")
+
+# ---- PANEL 4: INVOICING & FILE RENAMER (Tab 4) ----
+elif active_panel == "💼 Business Automation & Invoice Node (Tab 4)":
     wm.render_invoice()
     st.markdown("---")
     wm.render_renamer()
 
-# ---- PANEL 3: MODELING RUNWAY ----
-elif active_panel == "✈️ Modeling Runway & Network Monitor (Tabs 3 & 4)":
+# ---- PANEL 5: MODELING RUNWAY (Tab 4) ----
+elif active_panel == "✈️ Tactical Infrastructure Modeling Runway (Tab 4)":
     wm.render_runway()
-    st.markdown("---")
+
+# ---- PANEL 6: EMAIL VERIFIER (Tab 4) ----
+elif active_panel == "🤖 AI-Ops Verification & Network Security Node (Tab 4)":
     wm.render_email_verifier()
 
-# ---- PANEL 4: TAB 5 LIBRARY WITH INTEGRATED AUDIO & VIDEO TOOLS ----
+# ---- PANEL 7: TAB 5 LIBRARY WITH INTEGRATED AUDIO & VIDEO TOOLS (Tab 5) ----
 elif active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab 5)":
     
     # 🎬 INTEGRATED GOOGLE DRIVE ASSET SYNC FOR LIBRARY CARDS
@@ -164,6 +173,5 @@ elif active_panel == "📚 Storefront Asset Library with Voice & Video Sync (Tab
     st.markdown("---")
     
     # 📚 RENDER THE COMPREHENSIVE STOREFRONT LIBRARY CATALOG (From workspace_modules.py)
-    # The voice tracking elements can now be applied to any selected card catalog item seamlessly
     st.info(f"🎯 Global Processing Scope: Active Script and Video Track (**{selected_target_video}**) are locked to your storefront cards below.")
     wm.render_library_catalog()
