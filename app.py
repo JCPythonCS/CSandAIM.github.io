@@ -12,10 +12,10 @@ st.set_page_config(page_title="Computer Systems and AI Management Cockpit", layo
 # 🏆 MASTER TITLE BLOCK DESIGN WITH DUAL SIDE-SPACED LOGOS
 st.title("🛡️ Computer Systems and AI Management Cockpit")
 
-# LOGO CONTAINER: Maps explicit absolute workspace routing loops to prevent missing asset errors
+# FIXED LOGO GRID: Allocates a precise 3-column framework to avoid TypeError crashes
 col_logo_left, col_title_spacer, col_logo_right = st.columns(3)
 
-# Search for assets in local root path directories
+# Pinpoint absolute root directory path boundaries to maintain server image persistence
 current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
 
 with col_logo_left:
@@ -48,7 +48,6 @@ for file_name in all_files:
     file_path = os.path.join(data_folder, file_name)
     display_name = os.path.splitext(file_name)[0]
     try:
-        # Save file configurations to load data dynamically on choice
         database[display_name] = file_path
     except:
         pass
@@ -73,42 +72,42 @@ if active_panel == "📊 Analytics (Tab 1)":
     st.sidebar.header("🎯 Dashboard Control Filters")
     
     if database:
-        # DYNAMIC FILE SELECTOR: Let users select ANY file found in the GitHub repo
+        # DYNAMIC FILE SELECTOR: Choose any workspace file from your repository
         selected_file_name = st.sidebar.selectbox(
             "Select Database File Asset:", 
             options=sorted(list(database.keys())),
             help="Choose any workspace excel file from your repository to analyze dynamically."
         )
         
-        # Load the selected dataset dynamically from the file path mapping
         target_file_path = database[selected_file_name]
         
         try:
             df = pd.read_excel(target_file_path)
             
-            # DYNAMIC FILTER MATCHING: Pull unique Region columns if they exist in the chosen file
-            if 'Region' in df.columns:
-                selected_region = st.sidebar.multiselect("Select Region Filter Context:", options=df['Region'].unique(), default=df['Region'].unique())
+            # 🛡️ STRATEGIC FILTER MATRICES: Renders filters strictly based on your operational column headers
+            if 'Active Combat Unit Name' in df.columns:
+                selected_units = st.sidebar.multiselect("Active Combat Unit Name:", options=df['Active Combat Unit Name'].unique(), default=df['Active Combat Unit Name'].unique())
             else:
-                st.sidebar.info("ℹ️ Selected file contains no standard 'Region' parameter.")
-                selected_region = []
-                
-            # Pull unique Retailer or Store columns if they exist in the chosen file
-            retailer_col = 'Retailer' if 'Retailer' in df.columns else 'Store' if 'Store' in df.columns else None
-            if retailer_col:
-                selected_retailer = st.sidebar.multiselect(f"Select {retailer_col} Filter Context:", options=df[retailer_col].unique(), default=df[retailer_col].unique())
+                selected_units = []
+
+            if 'Strategic Command Sector' in df.columns:
+                selected_sectors = st.sidebar.multiselect("Strategic Command Sector:", options=df['Strategic Command Sector'].unique(), default=df['Strategic Command Sector'].unique())
             else:
-                st.sidebar.info("ℹ️ Selected file contains no standard 'Retailer/Store' parameter.")
-                selected_retailer = []
+                selected_sectors = []
+
+            if 'Agency Command Tier' in df.columns:
+                selected_tiers = st.sidebar.multiselect("Agency Command Tier:", options=df['Agency Command Tier'].unique(), default=df['Agency Command Tier'].unique())
+            else:
+                selected_tiers = []
                 
         except Exception as e:
-            st.sidebar.error(f"Error reading file: {e}")
+            st.sidebar.error(f"Error reading file elements: {e}")
             df = None
-            selected_region, selected_retailer = [], []
+            selected_units, selected_sectors, selected_tiers = [], [], []
     else:
         st.sidebar.warning("⚠️ No `.xlsx` or `.xls` spreadsheet assets detected in the root repository.")
         df = None
-        selected_region, selected_retailer = [], []
+        selected_units, selected_sectors, selected_tiers = [], [], []
         
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
@@ -128,46 +127,54 @@ else:
 
 # ---- PANEL 1: ANALYTICS (Tab 1) ----
 if active_panel == "📊 Analytics (Tab 1)":
-    st.subheader(f"📊 Enterprise Retail Ingestion Streams")
+    st.subheader(f"📊 Tactical Systems & Analytics Stream")
     
     if df is not None:
-        # Dynamically process data based on whatever fields exist in the active spreadsheet
+        # Dynamically process data filtered by your tactical columns
         filtered_df = df.copy()
-        if 'Region' in df.columns and selected_region:
-            filtered_df = filtered_df[filtered_df['Region'].isin(selected_region)]
+        
+        if 'Active Combat Unit Name' in df.columns and selected_units:
+            filtered_df = filtered_df[filtered_df['Active Combat Unit Name'].isin(selected_units)]
             
-        retailer_col = 'Retailer' if 'Retailer' in df.columns else 'Store' if 'Store' in df.columns else None
-        if retailer_col and selected_retailer:
-            filtered_df = filtered_df[filtered_df[retailer_col].isin(selected_retailer)]
+        if 'Strategic Command Sector' in df.columns and selected_sectors:
+            filtered_df = filtered_df[filtered_df['Strategic Command Sector'].isin(selected_sectors)]
+            
+        if 'Agency Command Tier' in df.columns and selected_tiers:
+            filtered_df = filtered_df[filtered_df['Agency Command Tier'].isin(selected_tiers)]
         
-        # Look for metric volume values dynamically across headers
-        volume_col = 'Volume_USD' if 'Volume_USD' in filtered_df.columns else filtered_df.select_dtypes(include='number').columns[0] if len(filtered_df.select_dtypes(include='number').columns) > 0 else None
-        
-        total_vol = filtered_df[volume_col].sum() if volume_col else 0.0
-        total_txns = len(filtered_df)
+        # Calculate row counts and numerical balances across data fields
+        total_records = len(filtered_df)
+        num_cols = filtered_df.select_dtypes(include='number').columns
         
         c1, c2 = st.columns(2)
         with c1:
-            st.metric(label=f"💰 Total Combined Volume ({volume_col if volume_col else 'N/A'})", value=f"${total_vol:,.2f}")
+            st.metric(label="📦 Active Tracked Records", value=f"{total_records:,}")
         with c2:
-            st.metric(label="📦 Total Ingested Transactions", value=f"{total_txns:,}")
+            if len(num_cols) > 0:
+                metric_sum = filtered_df[num_cols[0]].sum()
+                st.metric(label=f"📊 Aggregate Core Metrics ({num_cols[0]})", value=f"{metric_sum:,.2f}")
+            else:
+                st.metric(label="📊 Operational Status", value="Data Deployment Active")
             
         st.markdown("---")
+        
+        # Performance/Distribution charts based on your operational fields
         chart_col1, chart_col2 = st.columns(2)
         
-        if retailer_col and volume_col:
+        if 'Strategic Command Sector' in filtered_df.columns:
             with chart_col1:
-                st.subheader(f"🏆 {retailer_col} Performance Rankings")
-                st.bar_chart(filtered_df.groupby(retailer_col)[volume_col].sum().sort_values(ascending=False))
-        if 'Market_Tier' in filtered_df.columns and volume_col:
+                st.subheader("🌐 Strategic Command Sector Distribution")
+                st.bar_chart(filtered_df.groupby('Strategic Command Sector').size())
+                
+        if 'Agency Command Tier' in filtered_df.columns:
             with chart_col2:
-                st.subheader("🔸 Revenue Vol by Market Sector")
-                st.bar_chart(filtered_df.groupby('Market_Tier')[volume_col].sum().sort_values(ascending=False))
+                st.subheader("🔸 Agency Command Tier Breakdown")
+                st.bar_chart(filtered_df.groupby('Agency Command Tier').size())
             
-        st.subheader("🔎 Ingested Database Record Stream")
+        st.subheader("🔎 Secure Ingested Record Stream")
         st.dataframe(filtered_df.head(100), use_container_width=True)
     else:
-        st.info("ℹ️ Select a database file from the left sidebar to populate your charts and tables.")
+        st.info("ℹ️ Select an operational file from the left sidebar to populate your tactical dashboard data lines.")
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 elif active_panel == "🛠️ Utilities (Tab 2)":
@@ -225,3 +232,12 @@ elif active_panel == "📚 Library (Tab 5)":
             else:
                 timeline_flow.append({"speaker": "Male", "profile": male_profile, "text": line.strip()})
                 
+    with st.expander("🔍 View Script Segment Distribution Map", expanded=False):
+        for idx, segment in enumerate(timeline_flow):
+            avatar = "👨" if segment["speaker"] == "Male" else "👩"
+            st.write(f"**Line {idx+1} — {avatar} {segment['speaker']} ({segment['profile']}):** {segment['text']}")
+
+    st.markdown("---")
+    st.info(f"🎯 Global Processing Scope: Active Script and Video Track (**{selected_target_video}**) are locked to your storefront cards below.")
+    
+    wm.render_library_catalog()
