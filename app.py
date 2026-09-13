@@ -12,34 +12,44 @@ st.set_page_config(page_title="Computer Systems and AI Management Cockpit", layo
 # 🏆 MASTER TITLE BLOCK DESIGN WITH DUAL SIDE-SPACED LOGOS
 st.title("🛡️ Computer Systems and AI Management Cockpit")
 
-# FIXED: Explicitly passed an integer argument '3' into st.columns to prevent the TypeError crash
+# LOGO CONTAINER: Maps explicit absolute workspace routing loops to prevent missing asset errors
 col_logo_left, col_title_spacer, col_logo_right = st.columns(3)
 
+# Search for assets in local root path directories
+current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
+
 with col_logo_left:
-    try:
+    logo1_path = os.path.join(current_working_dir, "logo1.png")
+    if os.path.exists(logo1_path):
+        st.image(logo1_path, use_container_width=True)
+    elif os.path.exists("logo1.png"):
         st.image("logo1.png", use_container_width=True)
-    except:
-        st.caption("🖼️ [Left Logo Slot]")
+    else:
+        st.caption("🖼️ `logo1.png` missing from root repository directory slot")
 
 with col_logo_right:
-    try:
+    logo2_path = os.path.join(current_working_dir, "logo2.png")
+    if os.path.exists(logo2_path):
+        st.image(logo2_path, use_container_width=True)
+    elif os.path.exists("logo2.png"):
         st.image("logo2.png", use_container_width=True)
-    except:
-        st.caption("🖼️ [Right Logo Slot]")
+    else:
+        st.caption("🖼️ `logo2.png` missing from root repository directory slot")
 
 st.markdown("---")
 
-# 📂 LOAD LOCAL WORKSPACE DATA LOOP
-data_folder = '.'
-all_files = [os.path.join(data_folder, f) for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
+# 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
+data_folder = current_working_dir
+all_files = [f for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
 database = {}
 
-for file_path in all_files:
-    file_name = os.path.basename(file_path)
-    # FIXED: Added index [0] to extract ONLY the plain text name string from splitext tuple
-    table_name = os.path.splitext(file_name)[0]
+# Loops through every discovered sheet file and maps its plain-text name for the UI menu
+for file_name in all_files:
+    file_path = os.path.join(data_folder, file_name)
+    display_name = os.path.splitext(file_name)[0]
     try:
-        database[table_name] = pd.read_excel(file_path)
+        # Save file configurations to load data dynamically on choice
+        database[display_name] = file_path
     except:
         pass
 
@@ -58,17 +68,47 @@ active_panel = st.selectbox(
 
 st.markdown("---")
 
-# 🎙️ DYNAMIC SIDEBAR VISIBILITY CONTROLLER
+# 🎙️ FIXED SIDEBAR VISIBILITY CONTROLLER
 if active_panel == "📊 Analytics (Tab 1)":
     st.sidebar.header("🎯 Dashboard Control Filters")
-    if 'enterprise_retail_dataT' in database:
-        df = database['enterprise_retail_dataT']
-        selected_region = st.sidebar.multiselect("Select Region Filter Context:", options=df['Region'].unique(), default=df['Region'].unique())
-        selected_retailer = st.sidebar.multiselect("Select Retailer Filter Context:", options=df['Retailer'].unique(), default=df['Retailer'].unique())
+    
+    if database:
+        # DYNAMIC FILE SELECTOR: Let users select ANY file found in the GitHub repo
+        selected_file_name = st.sidebar.selectbox(
+            "Select Database File Asset:", 
+            options=sorted(list(database.keys())),
+            help="Choose any workspace excel file from your repository to analyze dynamically."
+        )
+        
+        # Load the selected dataset dynamically from the file path mapping
+        target_file_path = database[selected_file_name]
+        
+        try:
+            df = pd.read_excel(target_file_path)
+            
+            # DYNAMIC FILTER MATCHING: Pull unique Region columns if they exist in the chosen file
+            if 'Region' in df.columns:
+                selected_region = st.sidebar.multiselect("Select Region Filter Context:", options=df['Region'].unique(), default=df['Region'].unique())
+            else:
+                st.sidebar.info("ℹ️ Selected file contains no standard 'Region' parameter.")
+                selected_region = []
+                
+            # Pull unique Retailer or Store columns if they exist in the chosen file
+            retailer_col = 'Retailer' if 'Retailer' in df.columns else 'Store' if 'Store' in df.columns else None
+            if retailer_col:
+                selected_retailer = st.sidebar.multiselect(f"Select {retailer_col} Filter Context:", options=df[retailer_col].unique(), default=df[retailer_col].unique())
+            else:
+                st.sidebar.info("ℹ️ Selected file contains no standard 'Retailer/Store' parameter.")
+                selected_retailer = []
+                
+        except Exception as e:
+            st.sidebar.error(f"Error reading file: {e}")
+            df = None
+            selected_region, selected_retailer = [], []
     else:
-        st.sidebar.warning("⚠️ Waiting for 'enterprise_retail_dataT' data array match...")
-        selected_region = []
-        selected_retailer = []
+        st.sidebar.warning("⚠️ No `.xlsx` or `.xls` spreadsheet assets detected in the root repository.")
+        df = None
+        selected_region, selected_retailer = [], []
         
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
@@ -88,39 +128,46 @@ else:
 
 # ---- PANEL 1: ANALYTICS (Tab 1) ----
 if active_panel == "📊 Analytics (Tab 1)":
-    st.subheader("📊 Enterprise Retail Data Ingestion Streams")
+    st.subheader(f"📊 Enterprise Retail Ingestion Streams")
     
-    if 'enterprise_retail_dataT' in database:
-        df = database['enterprise_retail_dataT']
+    if df is not None:
+        # Dynamically process data based on whatever fields exist in the active spreadsheet
+        filtered_df = df.copy()
+        if 'Region' in df.columns and selected_region:
+            filtered_df = filtered_df[filtered_df['Region'].isin(selected_region)]
+            
+        retailer_col = 'Retailer' if 'Retailer' in df.columns else 'Store' if 'Store' in df.columns else None
+        if retailer_col and selected_retailer:
+            filtered_df = filtered_df[filtered_df[retailer_col].isin(selected_retailer)]
         
-        # Filter matching sequence
-        if not selected_region or not selected_retailer:
-            filtered_df = df.copy()
-        else:
-            filtered_df = df[(df['Region'].isin(selected_region)) & (df['Retailer'].isin(selected_retailer))]
+        # Look for metric volume values dynamically across headers
+        volume_col = 'Volume_USD' if 'Volume_USD' in filtered_df.columns else filtered_df.select_dtypes(include='number').columns[0] if len(filtered_df.select_dtypes(include='number').columns) > 0 else None
         
-        total_vol = filtered_df['Volume_USD'].sum()
+        total_vol = filtered_df[volume_col].sum() if volume_col else 0.0
         total_txns = len(filtered_df)
         
         c1, c2 = st.columns(2)
         with c1:
-            st.metric(label="💰 Total Combined Sales Volume", value=f"${total_vol:,.2f}")
+            st.metric(label=f"💰 Total Combined Volume ({volume_col if volume_col else 'N/A'})", value=f"${total_vol:,.2f}")
         with c2:
             st.metric(label="📦 Total Ingested Transactions", value=f"{total_txns:,}")
             
         st.markdown("---")
         chart_col1, chart_col2 = st.columns(2)
-        with chart_col1:
-            st.subheader("🏆 Retailer Performance Rankings")
-            st.bar_chart(filtered_df.groupby('Retailer')['Volume_USD'].sum().sort_values(ascending=False))
-        with chart_col2:
-            st.subheader("🔸 Revenue Vol by Market Sector")
-            st.bar_chart(filtered_df.groupby('Market_Tier')['Volume_USD'].sum().sort_values(ascending=False))
+        
+        if retailer_col and volume_col:
+            with chart_col1:
+                st.subheader(f"🏆 {retailer_col} Performance Rankings")
+                st.bar_chart(filtered_df.groupby(retailer_col)[volume_col].sum().sort_values(ascending=False))
+        if 'Market_Tier' in filtered_df.columns and volume_col:
+            with chart_col2:
+                st.subheader("🔸 Revenue Vol by Market Sector")
+                st.bar_chart(filtered_df.groupby('Market_Tier')[volume_col].sum().sort_values(ascending=False))
             
         st.subheader("🔎 Ingested Database Record Stream")
         st.dataframe(filtered_df.head(100), use_container_width=True)
     else:
-        st.error("❌ Critical Error: 'enterprise_retail_dataT' table not found in repository. Ensure 'enterprise_retail_dataT.xlsx' is present.")
+        st.info("ℹ️ Select a database file from the left sidebar to populate your charts and tables.")
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 elif active_panel == "🛠️ Utilities (Tab 2)":
@@ -178,12 +225,3 @@ elif active_panel == "📚 Library (Tab 5)":
             else:
                 timeline_flow.append({"speaker": "Male", "profile": male_profile, "text": line.strip()})
                 
-    with st.expander("🔍 View Script Segment Distribution Map", expanded=False):
-        for idx, segment in enumerate(timeline_flow):
-            avatar = "👨" if segment["speaker"] == "Male" else "👩"
-            st.write(f"**Line {idx+1} — {avatar} {segment['speaker']} ({segment['profile']}):** {segment['text']}")
-
-    st.markdown("---")
-    st.info(f"🎯 Global Processing Scope: Active Script and Video Track (**{selected_target_video}**) are locked to your storefront cards below.")
-    
-    wm.render_library_catalog()
