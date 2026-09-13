@@ -9,36 +9,30 @@ import workspace_modules as wm
 # 🖥️ Exact Page Config from your Repository
 st.set_page_config(page_title="Computer Systems and AI Management Cockpit", layout="wide")
 
-# 🏆 MASTER TITLE BLOCK DESIGN WITH DUAL SIDE-SPACED LOGOS
+# 🏆 MASTER TITLE BLOCK DESIGN WITH YOUR DUAL SIDE-SPACED LOGOS
 st.title("🛡️ Computer Systems and AI Management Cockpit")
 
 # FIXED LOGO GRID: Allocates a precise 3-column framework to avoid TypeError crashes
 col_logo_left, col_title_spacer, col_logo_right = st.columns(3)
 
-# Pinpoint absolute root directory path boundaries to maintain server image persistence
-current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
-
 with col_logo_left:
-    logo1_path = os.path.join(current_working_dir, "logo1.png")
-    if os.path.exists(logo1_path):
-        st.image(logo1_path, use_container_width=True)
-    elif os.path.exists("logo1.png"):
+    # 📝 Left Logo Configured with your exact filename
+    if os.path.exists("LOGOB.png"):
         st.image("LOGOB.png", use_container_width=True)
     else:
-        st.caption("🖼️ `logo1.png` missing from root repository directory slot")
+        st.caption("🖼️ `LOGOB.png` missing from root repository directory slot")
 
 with col_logo_right:
-    logo2_path = os.path.join(current_working_dir, "logo2.png")
-    if os.path.exists(logo2_path):
-        st.image(logo2_path, use_container_width=True)
-    elif os.path.exists("logo2.png"):
-        st.image("logo2.png", use_container_width=True)
+    # 📝 Right Logo Configured with your exact filename
+    if os.path.exists("LOGOG.png"):
+        st.image("LOGOG.png", use_container_width=True)
     else:
         st.caption("🖼️ `LOGOG.png` missing from root repository directory slot")
 
 st.markdown("---")
 
 # 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
+current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
 data_folder = current_working_dir
 all_files = [f for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
 database = {}
@@ -151,8 +145,8 @@ if active_panel == "📊 Analytics (Tab 1)":
             st.metric(label="📦 Active Tracked Records", value=f"{total_records:,}")
         with c2:
             if len(num_cols) > 0:
-                metric_sum = filtered_df[num_cols[0]].sum()
-                st.metric(label=f"📊 Aggregate Core Metrics ({num_cols[0]})", value=f"{metric_sum:,.2f}")
+                metric_sum = filtered_df[num_cols].sum()
+                st.metric(label=f"📊 Aggregate Core Metrics ({num_cols[0]})", value=f"{metric_sum.iloc[0]:,.2f}")
             else:
                 st.metric(label="📊 Operational Status", value="Data Deployment Active")
             
