@@ -1,15 +1,33 @@
-import streamlit as st
+
+# ==========================================================================
+# REST OF APP.PY INTERFACE FOLLOWS DIRECTLY BELOW...
+# ==========================================================================
+
+# Force sidebar to be globally collapsible via the native UI chevron button
+st.set_page_config(
+    page_title="Computer Systems & AI Management", 
+    layout="wide",
+    initial_sidebar_state="expanded" 
+)
+
+# Avoid breaking telemetry loops by checking for your module safely
+tryimport streamlit as st
 import streamlit.components.v1 as components
-import os
-import math
-import re
-from datetime import datetime
+import pandas as pd
+import datetime
 
 # ==========================================================================
-# MASTER COCKPIT COUNTDOWN TIMER - TOP CENTERED DEPLOYMENT
+# 🛑 STREAMLIT RULES: PAGE CONFIGURATION MUST BE THE ABSOLUTE FIRST COMMAND
 # ==========================================================================
+st.set_page_config(
+    page_title="JCPSS Enterprise Cockpit",
+    page_icon="🚀",
+    layout="wide"
+)
 
-# Force the countdown card to clip perfectly centered into the top screen matrix
+# ==========================================================================
+# ⏱️ COCKPIT SATURDAY DEADLINE TIMER - PERFECTLY CENTERED AT THE TOP
+# ==========================================================================
 left_gap, center_core, right_gap = st.columns([1, 2, 1])
 
 with center_core:
@@ -55,18 +73,17 @@ with center_core:
     components.html(countdown_html_code, height=160)
 
 # ==========================================================================
-# REST OF APP.PY INTERFACE FOLLOWS DIRECTLY BELOW...
+# 📊 CORE APP WORKSPACE MODULES & DATA STRUCTURES
 # ==========================================================================
+st.title("🚀 JCPSS Enterprise Dashboard Control Room")
+st.write("Welcome to your central cloud command infrastructure interface.")
 
-# Force sidebar to be globally collapsible via the native UI chevron button
-st.set_page_config(
-    page_title="Computer Systems & AI Management", 
-    layout="wide",
-    initial_sidebar_state="expanded" 
-)
+# This initializes your empty DataFrame structure to clear the line 140 NameError bug
+filtered_df = pd.DataFrame()
 
-# Avoid breaking telemetry loops by checking for your module safely
-try:
+# Placeholders for your telemetry arrays and workspace files logs
+st.info("📊 Database status active. Ready to link workspace modules.")
+
     import workspace_modules as wm
 except ImportError:
     st.error("🚨 Missing structural link: Ensure 'workspace_modules.py' is pushed to the same repository root directory.")
