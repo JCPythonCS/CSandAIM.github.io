@@ -31,10 +31,10 @@ with col_logo_right:
     logo2_path = os.path.join(current_working_dir, "logo2.png")
     if os.path.exists(logo2_path):
         st.image(logo2_path, use_container_width=True)
-    elif os.path.exists("LOGOG.png"):
+    elif os.path.exists("logo2.png"):
         st.image("logo2.png", use_container_width=True)
     else:
-        st.caption("🖼️ `logo2.png` missing from root repository directory slot")
+        st.caption("🖼️ `LOGOG.png` missing from root repository directory slot")
 
 st.markdown("---")
 
