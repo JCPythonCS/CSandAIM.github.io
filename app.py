@@ -22,8 +22,8 @@ with col_logo_left:
     logo1_path = os.path.join(current_working_dir, "logo1.png")
     if os.path.exists(logo1_path):
         st.image(logo1_path, use_container_width=True)
-    elif os.path.exists("LOGOB.png"):
-        st.image("logo1.png", use_container_width=True)
+    elif os.path.exists("logo1.png"):
+        st.image("LOGOB.png", use_container_width=True)
     else:
         st.caption("🖼️ `logo1.png` missing from root repository directory slot")
 
