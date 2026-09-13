@@ -29,6 +29,46 @@ with col_logo_right:
     else:
         st.caption("🖼️ `LOGOG.png` missing from root repository directory slot")
 
+import datetime
+
+# --- AUTOMATED TACTICAL COUNTDOWN TIMER ---
+st.sidebar.markdown("### ⏳ Target Countdown")
+
+# Calculate the target window: Next upcoming Saturday at 11:00 AM
+now = datetime.datetime.now()
+days_ahead = (5 - now.weekday()) % 7  # 5 represents Saturday in Python's weekday tracker
+if days_ahead == 0 and now.hour >= 11:
+    days_ahead = 7  # If it's already past 11 AM on Saturday, point to next week
+
+target_saturday = datetime.datetime.combine(
+    now.date() + datetime.timedelta(days=days_ahead),
+    datetime.time(11, 0, 0)
+)
+
+# Live ticking display component
+countdown_placeholder = st.sidebar.empty()
+
+# Calculate initial delta time
+time_remaining = target_saturday - datetime.datetime.now()
+
+if time_remaining.total_seconds() > 0:
+    days = time_remaining.days
+    hours, remainder = divmod(time_remaining.seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    
+    # Renders a clean visual block in your sidebar panel
+    countdown_placeholder.markdown(
+        f"""
+        <div style="background-color: #1e293b; padding: 12px; border-radius: 6px; border-left: 5px solid #ef4444; color: #f8fafc; font-family: monospace; text-align: center;">
+            <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 5px;">Time remaining to Briefing</div>
+            <div style="font-size: 1.2rem; font-weight: bold;">{days}d : {hours:02d}h : {minutes:02d}m : {seconds:02d}s</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+else:
+    countdown_placeholder.success("🚀 Operational Window Active!")
+
 st.markdown("---")
 
 # 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
