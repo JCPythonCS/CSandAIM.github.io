@@ -12,8 +12,8 @@ st.set_page_config(page_title="Computer Systems and AI Management Cockpit", layo
 # 🏆 MASTER TITLE BLOCK DESIGN WITH DUAL SIDE-SPACED LOGOS
 st.title("🛡️ Computer Systems and AI Management Cockpit")
 
-# This column layout pushes Logo 1 to the absolute left and Logo 2 to the absolute right
-col_logo_left, col_title_spacer, col_logo_right = st.columns()
+# FIXED: Explicitly passed an integer argument '3' into st.columns to prevent the TypeError crash
+col_logo_left, col_title_spacer, col_logo_right = st.columns(3)
 
 with col_logo_left:
     try:
@@ -29,14 +29,14 @@ with col_logo_right:
 
 st.markdown("---")
 
-# 📂 FIXED: Load Local Workspace Data Loop (Extracts the bare string key)
+# 📂 LOAD LOCAL WORKSPACE DATA LOOP
 data_folder = '.'
 all_files = [os.path.join(data_folder, f) for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
 database = {}
 
 for file_path in all_files:
     file_name = os.path.basename(file_path)
-    # Fixed with [0] to ensure it registers as a plain text dictionary key string
+    # FIXED: Added index [0] to extract ONLY the plain text name string from splitext tuple
     table_name = os.path.splitext(file_name)[0]
     try:
         database[table_name] = pd.read_excel(file_path)
@@ -59,12 +59,10 @@ active_panel = st.selectbox(
 st.markdown("---")
 
 # 🎙️ DYNAMIC SIDEBAR VISIBILITY CONTROLLER
-# This section now exclusively renders your data drop-downs on the left side panel
 if active_panel == "📊 Analytics (Tab 1)":
     st.sidebar.header("🎯 Dashboard Control Filters")
     if 'enterprise_retail_dataT' in database:
         df = database['enterprise_retail_dataT']
-        # Filters are officially locked to the left side bar layout view
         selected_region = st.sidebar.multiselect("Select Region Filter Context:", options=df['Region'].unique(), default=df['Region'].unique())
         selected_retailer = st.sidebar.multiselect("Select Retailer Filter Context:", options=df['Retailer'].unique(), default=df['Retailer'].unique())
     else:
@@ -82,7 +80,6 @@ elif active_panel == "📚 Library (Tab 5)":
     st.sidebar.markdown("---")
     st.sidebar.caption("Voice Profile Parameters Active on Library Canvas")
 else:
-    # Completely clears out the sidebar frame for Utilities, Workspace, and Simulation configurations
     st.sidebar.empty()
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
@@ -96,7 +93,7 @@ if active_panel == "📊 Analytics (Tab 1)":
     if 'enterprise_retail_dataT' in database:
         df = database['enterprise_retail_dataT']
         
-        # Filter the dataset using the options selected on the left sidebar
+        # Filter matching sequence
         if not selected_region or not selected_retailer:
             filtered_df = df.copy()
         else:
