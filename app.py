@@ -22,7 +22,7 @@ with col_logo_left:
     logo1_path = os.path.join(current_working_dir, "logo1.png")
     if os.path.exists(logo1_path):
         st.image(logo1_path, use_container_width=True)
-    elif os.path.exists("logo1.png"):
+    elif os.path.exists("LOGOB.png"):
         st.image("logo1.png", use_container_width=True)
     else:
         st.caption("🖼️ `logo1.png` missing from root repository directory slot")
@@ -31,7 +31,7 @@ with col_logo_right:
     logo2_path = os.path.join(current_working_dir, "logo2.png")
     if os.path.exists(logo2_path):
         st.image(logo2_path, use_container_width=True)
-    elif os.path.exists("logo2.png"):
+    elif os.path.exists("LOGOG.png"):
         st.image("logo2.png", use_container_width=True)
     else:
         st.caption("🖼️ `logo2.png` missing from root repository directory slot")
