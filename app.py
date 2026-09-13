@@ -235,3 +235,9 @@ elif active_panel == "📚 Library (Tab 5)":
     st.info(f"🎯 Global Processing Scope: Active Script and Video Track (**{selected_target_video}**) are locked to your storefront cards below.")
     
     wm.render_library_catalog()
+            st.write(f"**Line {idx+1} — {avatar} {segment['speaker']} ({segment['profile']}):** {segment['text']}")
+
+    st.markdown("---")
+    st.info(f"🎯 Global Processing Scope: Active Script and Video Track (**{selected_target_video}**) are locked to your storefront cards below.")
+    
+    wm.render_library_catalog()
