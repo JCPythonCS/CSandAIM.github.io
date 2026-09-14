@@ -1170,3 +1170,42 @@ def render_obd_matcher():
             st.warning(f"ℹ️ Code '{code_input}' recognized but not in local micro-dictionary ledger. Staging full database sync.")
         else:
             st.error("❌ Code format invalid. Must be a 5-character alphanumeric trouble string.")
+
+def render_sprint_velocity():
+    """
+    TAB 7 ADDITION: SPRINT VELOCITY CALCULATOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("⏱️ Sprint Velocity Calculator & Delivery Forecaster")
+    st.write("Analyze historical story point throughput data lines to predict future operational milestone horizons.")
+    
+    sv_c1, sv_c2 = st.columns(2)
+    with sv_c1:
+        points_completed = st.number_input("Total Story Points Completed (Past 3 Sprints):", min_value=1, value=45, key="sv_points_in")
+    with sv_c2:
+        backlog_remaining = st.number_input("Remaining Backlog Scope Volume (Points):", min_value=1, value=60, key="sv_backlog_in")
+        
+    avg_velocity = points_completed / 3.0
+    sprints_needed = backlog_remaining / avg_velocity if avg_velocity > 0 else 0
+    
+    st.metric(label="📊 Average Weekly Sprint Velocity", value=f"{avg_velocity:.1f} Points / Week", delta=f"{sprints_needed:.1f} Sprints to Clear Backlog")
+
+def render_dependency_validator():
+    """
+    TAB 7 ADDITION: TASK DEPENDENCY CHAIN VALIDATOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🔗 Task Dependency Chain & Sequence Validator")
+    st.write("Audit pipeline chronological sequences to safeguard architectural deployment tracks.")
+    
+    p_task = st.checkbox("Prerequisite Parent Task (Build app.py Structure) Completed?", value=True, key="dep_parent")
+    c_task = st.checkbox("Downstream Child Task (Deploy Live Production Server Code) Active?", value=False, key="dep_child")
+    
+    if c_task and not p_task:
+        st.error("🚨 CRITICAL SEQUENCE BREACH: Attempting to deploy downstream server code before parent app.py structures are finalized!")
+    elif p_task and c_task:
+        st.success("🟢 PIPELINE SEQUENCE VALIDATED: Structural dependencies aligned cleanly across all active branches.")
+    else:
+        st.info("🛰️ Telemetry Locked: Awaiting task execution combinations to verify alignment bounds.")
