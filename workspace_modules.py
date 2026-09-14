@@ -730,3 +730,81 @@ def render_commercial_control():
     else:
         sm_col2.metric(label="🛡️ Liquid Net Take-Home", value=f"${combined_net_takehome:,.2f}")
         sm_col3.metric(label="⚙️ System Status", value="Calibrated")
+def render_threat_analyzer():
+    """
+    TAB 2 ADDITION: PHISHING & SPAM THREAT ANALYZER ENGINE
+    Scans alphanumeric handles, domain variations, and text lines for security risks.
+    """
+    import streamlit as st
+    import pandas as pd
+    import re
+    
+    st.markdown("---")
+    st.subheader("🛡️ Enterprise Phishing & Spam Threat Ingestion Matrix")
+    st.write("Audit inbound lead queues, detect malicious look-alike domains, and run structural fraud profile checks natively.")
+    
+    # 📑 Core Local Dictionary Threat Databases
+    high_risk_words = ["invoice", "wire", "transfer", "payout", "crypto", "verify", "admin", "secure", "billing", "update"]
+    spoofed_lookalikes = ["jcpss", "oracle", "github", "paypal", "streamlit", "apex"]
+    known_spammers = ["mailinator.com", "10minutemail.com", "burnermail.io", "trashmail.com", "bot-net.xyz", "scam-core.biz"]
+    
+    # Clean text input buffer allowing operators to test addresses right from their chair
+    test_email = st.text_input("Ingest Target Lead Email String to Audit:", placeholder="example@corporate-node.com", key="threat_input_box")
+    
+    if st.button("🚀 Execute Cybersecurity Threat Scan", key="threat_execute_btn"):
+        if test_email and "@" in test_email:
+            with st.spinner("🔍 Running trace heuristics across threat vectors..."):
+                # Parse strings into clean localized components
+                name_part, domain_part = test_email.strip().split("@", 1)
+                name_lower = name_part.lower()
+                domain_lower = domain_part.lower()
+                
+                # Heuristic Vector 1: Check known burner/spammer domains
+                domain_blacklisted = domain_lower in known_spammers
+                
+                # Heuristic Vector 2: Check for credential harvesting look-alike typos (Spoofing)
+                is_spoofed = False
+                for brand in spoofed_lookalikes:
+                    if brand in domain_lower and domain_lower != f"{brand}.com" and domain_lower != f"{brand}.io":
+                        is_spoofed = True
+                        break
+                
+                # Heuristic Vector 3: Check for high-risk text fraud triggers inside the user handle
+                triggered_keywords = [word for word in high_risk_words if word in name_lower]
+                has_fraud_keywords = len(triggered_keywords) > 0
+                
+                # 📈 Threat Metrics Score Calculation
+                threat_score = 0
+                reasons = []
+                
+                if domain_blacklisted:
+                    threat_score += 60
+                    reasons.append("🚨 CRITICAL: Domain matches known automated spammer/burner blacklist database fields.")
+                if is_spoofed:
+                    threat_score += 30
+                    reasons.append("⚠️ WARNING: Domain contains corporate brand look-alike nomenclature strings (Phishing/Spoofing Risk).")
+                if has_fraud_keywords:
+                    threat_score += 20
+                    reasons.append(f"🔍 NOTICE: Handle contains high-frequency fraud trigger keywords: {triggered_keywords}")
+                
+                # Cap the maximum risk metric score at 100%
+                threat_score = min(threat_score, 100)
+                
+                # Render results panels based on calculated security flags
+                st.markdown("##### 🛰️ Threat Telemetry Risk Assessment")
+                
+                if threat_score >= 60:
+                    st.error(f"🚨 HIGH RISK DETECTED: {threat_score}% Threat Rating")
+                elif threat_score >= 20:
+                    st.warning(f"⚠️ ELEVATED RISK NOTICE: {threat_score}% Threat Rating")
+                else:
+                    st.success(f"🟢 SECURE TRANSACTION TIER: {threat_score}% Threat Rating")
+                
+                # Output itemized log breakdown lines
+                if reasons:
+                    for reason in reasons:
+                        st.write(reason)
+                else:
+                    st.write("✅ Clean Trace: Email format matches standard public or corporate baseline parameters. Zero risk identifiers detected.")
+        else:
+            st.warning("⚠️ Input buffer invalid. Ingest a complete email address containing an '@' symbol to scan.")
