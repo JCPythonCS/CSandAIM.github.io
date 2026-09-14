@@ -246,6 +246,10 @@ elif active_panel == "📋 Project Management (Tab 7)":
 elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
     if 'wm' in locals() and hasattr(wm, 'render_tracking_aggregator'):
         wm.render_tracking_aggregator()
+        
+        # 👇 HOOKS THE SAFETY STOCK BUFFER CALC NATIVELY TO TAB 8
+        if hasattr(wm, 'render_safety_stock'):
+            wm.render_safety_stock()
     else:
         st.error("❌ Linkage Failure: render_tracking_aggregator missing from workspace_modules.py.")
 
@@ -253,6 +257,10 @@ elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
 elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
     if 'wm' in locals() and hasattr(wm, 'render_vin_parser'):
         wm.render_vin_parser()
+        
+        # 👇 HOOKS THE OBD DIAGNOSTIC CODE DICTIONARY TO TAB 9
+        if hasattr(wm, 'render_obd_matcher'):
+            wm.render_obd_matcher()
     else:
         st.error("❌ Linkage Failure: render_vin_parser missing from workspace_modules.py.")
 
