@@ -1077,3 +1077,46 @@ def render_sentiment_classifier():
                 st.write(f" Heuristic Log Analysis: {desc}")
         else:
             st.warning("⚠️ Input buffer empty. Ingest text to analyze.")
+
+def render_pm_roadmap():
+    """
+    TAB 7 RECONCILIATION: INTERACTIVE GANTT TIMELINE MATRIX
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("📅 Enterprise Project Timeline & Gantt Roadmap Matrix")
+    st.write("Monitor cross-functional project milestone phases, task owners, and critical overlapping deadlines.")
+    
+    roadmap_db = pd.DataFrame([
+        {"Project Phase Node": "SaaS Compliance Audit", "Start Date": "2026-09-14", "Hard Deadline": "2026-09-18", "Assigned Owner": "Johnny"},
+        {"Project Phase Node": "PayPal Webhook Sync", "Start Date": "2026-09-15", "Hard Deadline": "2026-09-17", "Assigned Owner": "Marcus"},
+        {"Project Phase Node": "Beta Cockpit Deployment", "Start Date": "2026-09-18", "Hard Deadline": "2026-09-19", "Assigned Owner": "Sarah"}
+    ])
+    st.dataframe(roadmap_db, use_container_width=True)
+
+def render_revenue_sorter():
+    """
+    TAB 7 RECONCILIATION: REVENUE-WEIGHTED PRIORITY SORTER
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("📊 Revenue-Weighted Task Priority Matrix Sorter")
+    st.write("Input task variables to automatically rearrange your queue, forcing the highest-revenue items to the top.")
+    
+    if "priority_db" not in st.session_state:
+        st.session_state.priority_db = pd.DataFrame([
+            {"Task Objective": "Update store.html PayPal buttons", "Financial Impact ($)": 15000, "Hours of Effort": 2},
+            {"Task Objective": "Fix server cluster memory leaks", "Financial Impact ($)": 5000, "Hours of Effort": 8},
+            {"Task Objective": "Draft B2B outbound marketing copy", "Financial Impact ($)": 45000, "Hours of Effort": 4}
+        ])
+        
+    edited_p_df = st.data_editor(st.session_state.priority_db, use_container_width=True, num_rows="dynamic", key="priority_editor")
+    
+    if st.button("🚀 Calculate & Sort Money-Making Operations", key="priority_sort_btn"):
+        # Calculate a simple revenue-per-hour efficiency index score
+        edited_p_df["Efficiency Score"] = edited_p_df["Financial Impact ($)"] / edited_p_df["Hours of Effort"].replace(0, 1)
+        sorted_df = edited_p_df.sort_values(by="Efficiency Score", ascending=False)
+        st.session_state.priority_db = sorted_df
+        st.success("✅ Priorities calculated! Highest revenue-producing items forced to the top of your queue.")
