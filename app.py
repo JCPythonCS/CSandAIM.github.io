@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 import time
+import datetime
 
 # Import all of your specific tool handlers from your workspace_modules.py file
 import workspace_modules as wm
@@ -16,63 +17,60 @@ st.title("🛡️ Computer Systems and AI Management Cockpit")
 col_logo_left, col_title_spacer, col_logo_right = st.columns(3)
 
 with col_logo_left:
-    # 📝 Left Logo Configured with your exact filename
     if os.path.exists("LOGOB.png"):
         st.image("LOGOB.png", use_container_width=True)
     else:
         st.caption("🖼️ `LOGOB.png` missing from root repository directory slot")
 
 with col_logo_right:
-    # 📝 Right Logo Configured with your exact filename
     if os.path.exists("LOGOG.png"):
         st.image("LOGOG.png", use_container_width=True)
     else:
         st.caption("🖼️ `LOGOG.png` missing from root repository directory slot")
 
-import datetime
-
-# --- LIVE AUTO-REFRESHING TACTICAL COUNTDOWN TIMER ---
-st.sidebar.markdown("### ⏳ Target Countdown")
-
-# Calculate the target window: Next upcoming Saturday at 11:00 AM
-now = datetime.datetime.now()
-days_ahead = (5 - now.weekday()) % 7  # 5 represents Saturday in Python's weekday tracker
-if days_ahead == 0 and now.hour >= 11:
-    days_ahead = 7  # If it's already past 11 AM on Saturday, point to next week
-
-target_saturday = datetime.datetime.combine(
-    now.date() + datetime.timedelta(days=days_ahead),
-    datetime.time(11, 0, 0)
-)
-
-# Live ticking display placeholder container
-countdown_placeholder = st.sidebar.empty()
-
-# Calculate exact current time delta
-time_remaining = target_saturday - datetime.datetime.now()
-
-if time_remaining.total_seconds() > 0:
-    days = time_remaining.days
-    hours, remainder = divmod(time_remaining.seconds, 3600)
-    minutes, seconds = divmod(remainder, 60)
-    
-    # Renders the visual countdown box block in your sidebar panel
-    countdown_placeholder.markdown(
-        f"""
-        <div style="background-color: #1e293b; padding: 12px; border-radius: 6px; border-left: 5px solid #ef4444; color: #f8fafc; font-family: monospace; text-align: center;">
-            <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 5px;">Time remaining to Briefing</div>
-            <div style="font-size: 1.2rem; font-weight: bold;">{days}d : {hours:02d}h : {minutes:02d}m : {seconds:02d}s</div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-    # Pause for 1 single second, then automatically tell Streamlit to run app.py again to tick the clock
-    time.sleep(1)
-    st.rerun()
-else:
-    countdown_placeholder.success("🚀 Operational Window Active!")
-
 st.markdown("---")
+
+
+# ⏱️ FIXED: REAL-TIME ISOLATED COUNTDOWN ENGINE
+# Using st.fragment ensures ONLY this block reloads, stopping the entire page from breaking
+@st.fragment(run_every=1.0)
+def render_live_countdown():
+    st.sidebar.markdown("### ⏳ Target Countdown")
+    
+    # Calculate the target window: Next upcoming Saturday at 11:00 AM
+    now = datetime.datetime.now()
+    days_ahead = (5 - now.weekday()) % 7
+    if days_ahead == 0 and now.hour >= 11:
+        days_ahead = 7
+
+    target_saturday = datetime.datetime.combine(
+        now.date() + datetime.timedelta(days=days_ahead),
+        datetime.time(11, 0, 0)
+    )
+
+    time_remaining = target_saturday - datetime.datetime.now()
+
+    if time_remaining.total_seconds() > 0:
+        days = time_remaining.days
+        hours, remainder = divmod(time_remaining.seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        
+        st.markdown(
+            f"""
+            <div style="background-color: #1e293b; padding: 12px; border-radius: 6px; border-left: 5px solid #ef4444; color: #f8fafc; font-family: monospace; text-align: center;">
+                <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 5px;">Time remaining to Briefing</div>
+                <div style="font-size: 1.2rem; font-weight: bold;">{days}d : {hours:02d}h : {minutes:02d}m : {seconds:02d}s</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
+        st.success("🚀 Operational Window Active!")
+
+# Run the isolated countdown module in the sidebar safely
+with st.sidebar:
+    render_live_countdown()
+
 
 # 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
 current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
@@ -80,7 +78,6 @@ data_folder = current_working_dir
 all_files = [f for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
 database = {}
 
-# Loops through every discovered sheet file and maps its plain-text name for the UI menu
 for file_name in all_files:
     file_path = os.path.join(data_folder, file_name)
     display_name = os.path.splitext(file_name)[0]
@@ -105,11 +102,12 @@ active_panel = st.selectbox(
 st.markdown("---")
 
 # 🎙️ FIXED SIDEBAR VISIBILITY CONTROLLER
+# Appends data options or audio profile settings underneath the isolated live timer box
 if active_panel == "📊 Analytics (Tab 1)":
+    st.sidebar.markdown("---")
     st.sidebar.header("🎯 Dashboard Control Filters")
     
     if database:
-        # DYNAMIC FILE SELECTOR: Choose any workspace file from your repository
         selected_file_name = st.sidebar.selectbox(
             "Select Database File Asset:", 
             options=sorted(list(database.keys())),
@@ -121,7 +119,6 @@ if active_panel == "📊 Analytics (Tab 1)":
         try:
             df = pd.read_excel(target_file_path)
             
-            # 🛡️ STRATEGIC FILTER MATRICES: Renders filters strictly based on your operational column headers
             if 'Active Combat Unit Name' in df.columns:
                 selected_units = st.sidebar.multiselect("Active Combat Unit Name:", options=df['Active Combat Unit Name'].unique(), default=df['Active Combat Unit Name'].unique())
             else:
@@ -150,13 +147,13 @@ if active_panel == "📊 Analytics (Tab 1)":
     female_profile = "Female_Emily (Smooth)"
 
 elif active_panel == "📚 Library (Tab 5)":
+    st.sidebar.markdown("---")
     st.sidebar.header("🗣️ Audio Profiles Configuration")
     male_profile = st.sidebar.selectbox("Male Actor Voice", ["Male_Adam (Deep/Calm)", "Male_Michael (Professional)", "Male_David"])
     female_profile = st.sidebar.selectbox("Female Actor Voice", ["Female_Emily (Smooth)", "Female_Serena (Narrator)", "Female_Rachel"])
     st.sidebar.markdown("---")
     st.sidebar.caption("Voice Profile Parameters Active on Library Canvas")
 else:
-    st.sidebar.empty()
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
 
@@ -167,7 +164,6 @@ if active_panel == "📊 Analytics (Tab 1)":
     st.subheader(f"📊 Tactical Systems & Analytics Stream")
     
     if df is not None:
-        # Dynamically process data filtered by your tactical columns
         filtered_df = df.copy()
         
         if 'Active Combat Unit Name' in df.columns and selected_units:
@@ -179,7 +175,6 @@ if active_panel == "📊 Analytics (Tab 1)":
         if 'Agency Command Tier' in df.columns and selected_tiers:
             filtered_df = filtered_df[filtered_df['Agency Command Tier'].isin(selected_tiers)]
         
-        # Calculate row counts and numerical balances across data fields
         total_records = len(filtered_df)
         num_cols = filtered_df.select_dtypes(include='number').columns
         
@@ -195,7 +190,6 @@ if active_panel == "📊 Analytics (Tab 1)":
             
         st.markdown("---")
         
-        # Performance/Distribution charts based on your operational fields
         chart_col1, chart_col2 = st.columns(2)
         
         if 'Strategic Command Sector' in filtered_df.columns:
@@ -234,7 +228,6 @@ elif active_panel == "✈️ Simulation (Tab 4)":
 
 # ---- PANEL 5: LIBRARY (Tab 5) ----
 elif active_panel == "📚 Library (Tab 5)":
-    
     st.markdown("### 🎬 Studio Asset Management Engine")
     drive_id = st.text_input(
         "Linked Google Drive Folder ID URL Sync Anchor:", 
@@ -258,12 +251,14 @@ elif active_panel == "📚 Library (Tab 5)":
     raw_lines = script_text.strip().split("\n")
     timeline_flow = []
     for line in raw_lines:
-        if not line.strip(): continue
+        if not line.strip(): 
+            continue
         if line.lower().startswith("male:"):
             timeline_flow.append({"speaker": "Male", "profile": male_profile, "text": line[5:].strip()})
         elif line.lower().startswith("female:"):
             timeline_flow.append({"speaker": "Female", "profile": female_profile, "text": line[7:].strip()})
         else:
+            # Alternates voice styles automatically if speaker tag isn't explicitly written
             if timeline_flow and timeline_flow[-1]["speaker"] == "Male":
                 timeline_flow.append({"speaker": "Female", "profile": female_profile, "text": line.strip()})
             else:
@@ -272,3 +267,10 @@ elif active_panel == "📚 Library (Tab 5)":
     with st.expander("🔍 View Script Segment Distribution Map", expanded=False):
         for idx, segment in enumerate(timeline_flow):
             avatar = "👨" if segment["speaker"] == "Male" else "👩"
+            st.write(f"**Line {idx+1} — {avatar} {segment['speaker']} ({segment['profile']}):** {segment['text']}")
+
+    st.markdown("---")
+    st.info(f"🎯 Global Processing Scope: Active Script and Video Track (**{selected_target_video}**) are locked to your storefront cards below.")
+    
+    # Renders the final library product cards from your custom module block
+    wm.render_library_catalog()
