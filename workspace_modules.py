@@ -991,8 +991,6 @@ def render_text_parser():
         else:
             st.warning("⚠️ Input buffer empty. Ingest a block of text lines to scan.")
 
-render_sentiment_classifier()
-
 def render_delivery_countdown():
     """
     TAB 7: PROJECT MANAGEMENT COUNTDOWN ENGINE
