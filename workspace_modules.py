@@ -598,6 +598,7 @@ def render_commercial_control():
     """
     import streamlit as st
     import pandas as pd
+    import datetime
     
     st.subheader("💰 Executive Revenue Ledger & Processing Controls")
     st.write("Track gross storefront performance, calculate payment processor fee leakage, and audit real-time net take-home earnings.")
