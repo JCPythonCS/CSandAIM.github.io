@@ -91,10 +91,11 @@ active_panel = st.selectbox(
     "Select Workspace System Node To Deploy:",
     [
         "📊 Analytics (Tab 1)",
-        "🛠️ Utilities (Tab 2)",
+        "🛠 Utilities (Tab 2)",
         "💼 Workspace (Tab 3)",
-        "✈️ Simulation (Tab 4)",
-        "📚 Library (Tab 5)"
+        "✈ Simulation (Tab 4)",
+        "📚 Library (Tab 5)",
+        "💰 Commercial Control (Tab 6)"
     ],
     key="cockpit_panel_navigation"
 )
@@ -295,3 +296,10 @@ elif active_panel == "📚 Library (Tab 5)":
     
     # Renders the final library product cards from your custom module block
     wm.render_library_catalog()
+
+# ---- PANEL 6: COMMERCIAL CONTROL (Tab 6) ----
+elif active_panel == "💰 Commercial Control (Tab 6)":
+    if 'wm' in locals() and hasattr(wm, 'render_commercial_control'):
+        wm.render_commercial_control()
+    else:
+        st.error("❌ Linkage Failure: render_commercial_control engine missing from workspace_modules.py.")
