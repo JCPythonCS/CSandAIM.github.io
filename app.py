@@ -203,6 +203,9 @@ elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' W
     wm.render_invoice()
     wm.render_kanban_funnel()
     wm.render_vin_parser()
+    wm.render_lead_matcher()
+    wm.render_utm_generator()
+    wm.render_invoice_ledger()
 
 # ---- PANEL 4: SIMULATION (Tab 4) ----
 elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
