@@ -938,12 +938,58 @@ def render_invoice_ledger():
 
 def render_text_parser():
     """
-    TAB 10 RECONCILIATION: AI-OPS TEXT PARSING ENGINE
+    TAB 10: AI-OPS TEXT PARSING & DOCUMENT INTELLIGENCE
     """
     import streamlit as st
+    import pandas as pd
+    
     st.markdown("### 🤖 AI-Ops Text Parsing & Document Intelligence")
     st.write("Extract action items, analyze competitor landing copy, and automate text processing sequences.")
-    st.info("📡 System Ready: Drop downstream parsing utilities, scraping metrics, or text summarizers directly into this block.")
+    
+    st.markdown("---")
+    st.markdown("#### 📝 Meeting Notes Action-Item Extractor")
+    st.write("Paste unorganized call transcripts or raw notes below to instantly extract clean bulleted to-do assignments and owners.")
+    
+    default_notes = (
+        "Project Sync - Sept 14\n"
+        "- Marcus needs to fix the cloud routing wires by Wednesday morning.\n"
+        "- Task: Sarah to update the financial ledger sheet for the investors ASAP.\n"
+        "- We must clear out the database cache before Friday's deployment. Johnny is handling this."
+    )
+    
+    raw_text = st.text_area("Ingest Raw Meeting Transcript Text Node:", value=default_notes, height=150, key="ai_text_ingest")
+    
+    if st.button("🚀 Execute Text Extraction Matrix", key="ai_text_btn"):
+        if raw_text.strip():
+            with st.spinner("⚡ Running string filtration filters..."):
+                lines = raw_text.split("\n")
+                extracted_tasks = []
+                
+                # Heuristic keyword match arrays for enterprise task hunting
+                trigger_keywords = ["task", "need", "needs", "must", "handle", "handling", "update", "fix"]
+                
+                for line in lines:
+                    line_clean = line.strip()
+                    if not line_clean:
+                        continue
+                    
+                    # Track lines containing action anchors or assignment profiles
+                    lower_line = line_clean.lower()
+                    if any(word in lower_line for word in trigger_keywords) or ":" in lower_line:
+                        # Extract basic priority assumptions
+                        priority = "Standard Priority"
+                        if "asap" in lower_line or "critical" in lower_line or "must" in lower_line:
+                            priority = "🚨 HIGH PRIORITY"
+                            
+                        extracted_tasks.append({"Extracted Action Item Node": line_clean, "Operational Tier": priority})
+                
+                if extracted_tasks:
+                    st.success("✅ Extraction Sequence Complete:")
+                    st.dataframe(pd.DataFrame(extracted_tasks), use_container_width=True)
+                else:
+                    st.info("ℹ️ Clean Scan: No explicit task triggers detected inside the text strings.")
+        else:
+            st.warning("⚠️ Input buffer empty. Ingest a block of text lines to scan.")
 
 def render_delivery_countdown():
     """
