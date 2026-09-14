@@ -264,6 +264,8 @@ elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
         # 👇 HOOKS THE OBD DIAGNOSTIC CODE DICTIONARY TO TAB 9
         if hasattr(wm, 'render_obd_matcher'):
             wm.render_obd_matcher()
+        if hasattr(wm, 'render_parts_cross_ref'):
+            wm.render_parts_cross_ref()
     else:
         st.error("❌ Linkage Failure: render_vin_parser missing from workspace_modules.py.")
 
@@ -275,6 +277,8 @@ elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
         # This safely renders your brand new tool right below the text parser
         if hasattr(wm, 'render_sentiment_classifier'):
             wm.render_sentiment_classifier()
+        if hasattr(wm, 'render_headline_analyzer'):
+            wm.render_headline_analyzer()
     else:
         st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
 
