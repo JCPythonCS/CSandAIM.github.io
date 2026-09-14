@@ -95,7 +95,11 @@ active_panel = st.selectbox(
         "💼 Workspace (Tab 3)",
         "✈ Simulation (Tab 4)",
         "📚 Library (Tab 5)",
-        "💰 Commercial Control (Tab 6)"
+        "💰 Commercial Control (Tab 6)",
+        "📋 Project Management (Tab 7)",
+        "📦 Supply Chain & Logistics (Tab 8)",
+        "🏎️ Fleet & Automotive (Tab 9)",
+        "🤖 AI-Ops Text Parsing (Tab 10)"
     ],
     key="cockpit_panel_navigation"
 )
@@ -225,3 +229,31 @@ elif active_panel == "💰 Commercial Control (Tab 6)":
         wm.render_commercial_control()
     else:
         st.error("❌ Linkage Failure: render_commercial_control engine missing from workspace_modules.py.")
+
+# ---- PANEL 7: PROJECT MANAGEMENT (Tab 7) ----
+elif active_panel == "📋 Project Management (Tab 7)":
+    if 'wm' in locals() and hasattr(wm, 'render_delivery_countdown'):
+        wm.render_delivery_countdown()
+    else:
+        st.error("❌ Linkage Failure: render_delivery_countdown missing from workspace_modules.py.")
+
+# ---- PANEL 8: SUPPLY CHAIN & LOGISTICS (Tab 8) ----
+elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
+    if 'wm' in locals() and hasattr(wm, 'render_tracking_aggregator'):
+        wm.render_tracking_aggregator()
+    else:
+        st.error("❌ Linkage Failure: render_tracking_aggregator missing from workspace_modules.py.")
+
+# ---- PANEL 9: FLEET & AUTOMOTIVE (Tab 9) ----
+elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
+    if 'wm' in locals() and hasattr(wm, 'render_vin_parser'):
+        wm.render_vin_parser()
+    else:
+        st.error("❌ Linkage Failure: render_vin_parser missing from workspace_modules.py.")
+
+# ---- PANEL 10: AI-OPS TEXT PARSING (Tab 10) ----
+elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
+    if 'wm' in locals() and hasattr(wm, 'render_text_parser'):
+        wm.render_text_parser()
+    else:
+        st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
