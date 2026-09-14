@@ -254,5 +254,10 @@ elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
 elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
     if 'wm' in locals() and hasattr(wm, 'render_text_parser'):
         wm.render_text_parser()
+        
+        # This safely renders your brand new tool right below the text parser
+        if hasattr(wm, 'render_sentiment_classifier'):
+            wm.render_sentiment_classifier()
     else:
         st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
+
