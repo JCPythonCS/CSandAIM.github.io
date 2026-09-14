@@ -944,3 +944,44 @@ def render_text_parser():
     st.markdown("### 🤖 AI-Ops Text Parsing & Document Intelligence")
     st.write("Extract action items, analyze competitor landing copy, and automate text processing sequences.")
     st.info("📡 System Ready: Drop downstream parsing utilities, scraping metrics, or text summarizers directly into this block.")
+
+def render_delivery_countdown():
+    """
+    TAB 7: PROJECT MANAGEMENT COUNTDOWN ENGINE
+    """
+    import streamlit as st
+    import datetime
+    st.markdown("### 📋 Enterprise Project Milestone Dashboard")
+    st.write("Track precision countdown windows for multi-client milestone submissions.")
+    
+    target_date = datetime.datetime.combine(datetime.date.today() + datetime.timedelta(days=3), datetime.time(17, 0))
+    now = datetime.datetime.now()
+    time_diff = target_date - now
+    
+    if time_diff.total_seconds() > 0:
+        days = time_diff.days
+        hours, remainder = divmod(time_diff.seconds, 3600)
+        minutes, _ = divmod(remainder, 60)
+        
+        if days < 1:
+            st.error(f"🚨 CRITICAL MILESTONE DEADLINE: {hours}h : {minutes}m remaining for Deliverable!")
+        else:
+            st.warning(f"⏳ Upcoming Submission Window: {days}d : {hours}h : {minutes}m remaining for Client Blueprint Assembly.")
+    else:
+        st.success("🚀 Milestone Deadline Reached - Assets Dispatched to Client Workspace.")
+
+def render_tracking_aggregator():
+    """
+    TAB 8: SUPPLY CHAIN & COURIER PIPELINE
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("### 📦 Supply Chain & Courier Status Pipeline")
+    st.write("Consolidate fulfillment barcodes and audit logistics carrier delivery segments.")
+    
+    shipping_db = pd.DataFrame([
+        {"Tracking Number Node": "1Z999AA10123456784", "Carrier Core": "UPS Ground", "Fulfillment Status": "In Transit"},
+        {"Tracking Number Node": "940010000000000000", "Carrier Core": "USPS Priority", "Fulfillment Status": "Out for Delivery"},
+        {"Tracking Number Node": "771234567890", "Carrier Core": "FedEx Express", "Fulfillment Status": "Delivered"}
+    ])
+    st.dataframe(shipping_db, use_container_width=True)
