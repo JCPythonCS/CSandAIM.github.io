@@ -206,7 +206,6 @@ elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' W
     st.markdown("---")
     wm.render_invoice()
     wm.render_kanban_funnel()
-    wm.render_vin_parser()
     wm.render_lead_matcher()
     wm.render_utm_generator()
     wm.render_invoice_ledger()
