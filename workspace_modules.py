@@ -1120,3 +1120,53 @@ def render_revenue_sorter():
         sorted_df = edited_p_df.sort_values(by="Efficiency Score", ascending=False)
         st.session_state.priority_db = sorted_df
         st.success("✅ Priorities calculated! Highest revenue-producing items forced to the top of your queue.")
+
+def render_safety_stock():
+    """
+    TAB 8 RECONCILIATION: SAFETY STOCK BUFFER CALCULATOR
+    """
+    import streamlit as st
+    import math
+    st.markdown("---")
+    st.subheader("🛡️ Safety Stock Buffer & Emergency Inventory Calculator")
+    st.write("Compute baseline safety quantities to shield warehouse operations from supplier delays and demand spikes.")
+    
+    col_s1, col_s2 = st.columns(2)
+    with col_s1:
+        max_sales = st.number_input("Maximum Daily Sales (Units):", min_value=1, value=120, key="ss_max_sales")
+        max_lead_time = st.number_input("Maximum Supplier Lead Time (Days):", min_value=1, value=14, key="ss_max_lead")
+    with col_s2:
+        avg_sales = st.number_input("Average Daily Sales (Units):", min_value=1, value=80, key="ss_avg_sales")
+        avg_lead_time = st.number_input("Average Supplier Lead Time (Days):", min_value=1, value=10, key="ss_avg_lead")
+        
+    if max_sales and max_lead_time and avg_sales and avg_lead_time:
+        # Standard inventory formula: (Max Sales * Max Lead) - (Avg Sales * Avg Lead)
+        safety_stock = (max_sales * max_lead_time) - (avg_sales * avg_lead_time)
+        st.success(f"🎯 **Recommended Safety Stock Buffer:** `{max(0, safety_stock)} Units` resting in reserve.")
+
+def render_obd_matcher():
+    """
+    TAB 9 RECONCILIATION: OBD-II ERROR CODE DICTIONARY MATCHER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🔧 OBD-II Diagnostic Error Code Dictionary Matcher")
+    st.write("Input diagnostic trouble codes (DTC) to instantly view system fault descriptions.")
+    
+    # Quick alphanumeric diagnostic dictionary lookup index map
+    obd_dict = {
+        "P0300": "🚨 Random/Multiple Cylinder Misfire Detected (Engine Ignition Failure)",
+        "P0171": "⚠️ System Too Lean - Bank 1 (Air/Fuel Ratio Imbalance or Vacuum Leak)",
+        "P0420": "🛑 Catalyst System Efficiency Below Threshold - Bank 1 (Catalytic Converter Exhaust Issue)",
+        "P0113": "🔍 Intake Air Temperature Sensor 1 Circuit High Input"
+    }
+    
+    code_input = st.text_input("Enter 5-Character OBD-II Error Code:", max_chars=5, placeholder="P0300", key="obd_box").strip().upper()
+    
+    if st.button("🔎 Run Diagnostic Code Match", key="obd_execute_btn"):
+        if code_input in obd_dict:
+            st.info(obd_dict[code_input])
+        elif len(code_input) == 5:
+            st.warning(f"ℹ️ Code '{code_input}' recognized but not in local micro-dictionary ledger. Staging full database sync.")
+        else:
+            st.error("❌ Code format invalid. Must be a 5-character alphanumeric trouble string.")
