@@ -207,6 +207,27 @@ if active_panel == "📊 Analytics (Tab 1)":
     else:
         st.info("ℹ️ Select an operational file from the left sidebar to populate your tactical dashboard data lines.")
 
+    # ==========================================================================
+    # 📋 ACTIVE STREAM REGISTERS - LIVE COMMERCE INGESTION GRID
+    # ==========================================================================
+    st.markdown("---")
+    st.markdown("## 📋 Active Stream Registers")
+    st.markdown("### Real-Time Customer Purchase Logs & Delivery Staging Node")
+    
+    # Safely call the background database data stream engine we built in Block 1
+    if 'wm' in locals() and hasattr(wm, 'fetch_active_stream_registers'):
+        with st.spinner("🛰️ Pinging autonomous database container registries..."):
+            customer_store_df = wm.fetch_active_stream_registers()
+        
+        if not customer_store_df.empty:
+            # Render the data table cleanly across the full fluid width of your layout
+            st.dataframe(customer_store_df, use_container_width=True)
+            st.sidebar.success(f"🛒 Commerce Stream Online: {len(customer_store_df)} Orders Loaded")
+        else:
+            st.warning("📡 Standby: Scanning for live client transactions... Active storage block is empty.")
+    else:
+        st.error("❌ Linkage Failure: fetch_active_stream_registers engine missing from workspace_modules.py.")
+
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 elif active_panel == "🛠️ Utilities (Tab 2)":
     wm.render_translator()
