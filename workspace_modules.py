@@ -685,3 +685,48 @@ def render_commercial_control():
         st.line_chart(runway_df.set_index("Month"), y="Projected Balance ($)")
     else:
         st.success("🛡️ Monthly burn rate is zero. Capital runway is infinitely sustainable.")
+
+    # ----------------------------------------------------------------------
+    # 🎛️ BLOCK 3: MULTI-TIER SERVICE PRICING MODELER
+    # ----------------------------------------------------------------------
+    st.markdown("---")
+    st.markdown("#### 🎯 Multi-Tier Service Pricing & Break-Even Modeler")
+    st.write("Shift pricing levers and transactional volumes to evaluate how fee margins alter your operational break-even targets.")
+    
+    # Symmetrical configuration columns for pricing models
+    pr_c1, pr_c2 = st.columns(2)
+    with pr_c1:
+        base_tier_price = st.slider("Base Access Tier Price ($):", min_value=19.00, max_value=99.00, value=49.00, step=5.00, key="pm_base_price")
+        premium_tier_price = st.slider("Premium Matrix Tier Price ($):", min_value=99.00, max_value=499.00, value=149.00, step=10.00, key="pm_prem_price")
+    with pr_c2:
+        monthly_base_sales = st.number_input("Projected Base Monthly Sales (Units):", min_value=0, value=50, step=5, key="pm_base_units")
+        monthly_prem_sales = st.number_input("Projected Premium Monthly Sales (Units):", min_value=0, value=20, step=5, key="pm_prem_units")
+
+    # Math calculations for PayPal fee structures (3.49% + $0.49 flat fee)
+    base_gross = base_tier_price * monthly_base_sales
+    base_fees = (base_gross * 0.0349) + (monthly_base_sales * 0.49) if monthly_base_sales > 0 else 0
+    base_net = base_gross - base_fees
+
+    prem_gross = premium_tier_price * monthly_prem_sales
+    prem_fees = (prem_gross * 0.0349) + (monthly_prem_sales * 0.49) if monthly_prem_sales > 0 else 0
+    prem_net = prem_gross - prem_fees
+
+    combined_gross_runrate = base_gross + prem_gross
+    combined_net_takehome = base_net + prem_net
+    
+    # Display the simulation metrics matrix
+    st.markdown("##### 📈 Projected Monthly Run-Rate Scenarios")
+    sm_col1, sm_col2, sm_col3 = st.columns(3)
+    sm_col1.metric(label="📊 Combined Gross Volume", value=f"${combined_gross_runrate:,.2f}")
+    
+    # Calculate a safety warning flag if burn rate is known from earlier block parameters
+    if 'monthly_burn' in locals() and monthly_burn > 0:
+        net_surplus = combined_net_takehome - monthly_burn
+        sm_col2.metric(label="🛡️ Liquid Net Take-Home", value=f"${combined_net_takehome:,.2f}")
+        if net_surplus >= 0:
+            sm_col3.metric(label="🚀 Projected Monthly Surplus", value=f"+${net_surplus:,.2f}")
+        else:
+            sm_col3.metric(label="🚨 Operational Cash Deficit", value=f"${net_surplus:,.2f}", delta="Volume Increase Required")
+    else:
+        sm_col2.metric(label="🛡️ Liquid Net Take-Home", value=f"${combined_net_takehome:,.2f}")
+        sm_col3.metric(label="⚙️ System Status", value="Calibrated")
