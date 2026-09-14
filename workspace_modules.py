@@ -991,6 +991,8 @@ def render_text_parser():
         else:
             st.warning("⚠️ Input buffer empty. Ingest a block of text lines to scan.")
 
+render_sentiment_classifier()
+
 def render_delivery_countdown():
     """
     TAB 7: PROJECT MANAGEMENT COUNTDOWN ENGINE
@@ -1031,3 +1033,49 @@ def render_tracking_aggregator():
         {"Tracking Number Node": "771234567890", "Carrier Core": "FedEx Express", "Fulfillment Status": "Delivered"}
     ])
     st.dataframe(shipping_db, use_container_width=True)
+
+def render_sentiment_classifier():
+    """
+    TAB 10 ADDITION: CUSTOMER SUPPORT SENTIMENT CLASSIFIER
+    """
+    import streamlit as st
+    import pandas as pd
+    
+    st.markdown("---")
+    st.markdown("#### 🗣️ Customer Support Sentiment Classifier")
+    st.write("Process user feedback strings to assign automated urgency parameters and operational tiers.")
+    
+    feedback_input = st.text_area("Ingest Customer Feedback Copy String:", 
+                                  value="Your platform is amazing, it saved our company hours! However, the billing module threw an error when I tried to upgrade.", 
+                                  height=100, key="sentiment_input_box")
+    
+    if st.button("🚀 Analyze Sentiment Profile", key="sentiment_execute_btn"):
+        if feedback_input.strip():
+            with st.spinner("Parsing text markers..."):
+                lower_text = feedback_input.lower()
+                
+                # Baseline scoring markers
+                critical_words = ["error", "broken", "fail", "bug", "crash", "wrong", "expensive", "issue"]
+                positive_words = ["amazing", "great", "love", "saved", "excellent", "perfect", "good"]
+                
+                crit_matches = [w for w in critical_words if w in lower_text]
+                pos_matches = [w for w in positive_words if w in lower_text]
+                
+                # Heuristic classification sorting loop
+                if crit_matches and len(crit_matches) >= len(pos_matches):
+                    status = "🚨 ACTION REQUIRED"
+                    color_box = st.error
+                    desc = f"Critical indicators flagged: {crit_matches}"
+                elif pos_matches and not crit_matches:
+                    status = "🟢 POSITIVE TIER"
+                    color_box = st.success
+                    desc = f"Positive sentiment drivers identified: {pos_matches}"
+                else:
+                    status = "🟡 NEUTRAL / MIXED ATTRIBUTE"
+                    color_box = st.warning
+                    desc = "Mixed or standard operational text layout detected."
+                    
+                color_box(f"**Calculated State: {status}**")
+                st.write(f" Heuristic Log Analysis: {desc}")
+        else:
+            st.warning("⚠️ Input buffer empty. Ingest text to analyze.")
