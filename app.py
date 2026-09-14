@@ -193,6 +193,7 @@ elif active_panel == "🛠 Utilities (Tab 2)":  # <--- MAKE SURE THIS IS 'elif' 
     wm.render_translator()
     st.markdown("---")
     wm.render_renamer()
+    wm.render_threat_analyzer()
 
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
 elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
