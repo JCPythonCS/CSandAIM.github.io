@@ -868,3 +868,70 @@ def render_vin_parser():
             """, language="text")
         else:
             st.warning("⚠️ Fleet string invalid. VIN target boundary must be exactly 17 characters.")
+
+def render_lead_matcher():
+    """
+    TAB 3 ADDITION: B2B TARGET TITLE MATCHER
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("🎯 B2B Target Title Matcher & Lead Ranker")
+    st.write("Rank inbound leads instantly by matching corporate hierarchy keyword strings.")
+    
+    raw_leads = st.text_area("Ingest Raw Names and Titles (Paste copy, one per line):", 
+                             value="John Doe - Vice President of Sales\nJane Smith - Marketing Coordinator\nBob Vance - Director of Operations", 
+                             key="lead_matcher_box")
+    
+    if st.button("🚀 Run Lead Priority Scoring Algorithm", key="lead_match_btn"):
+        lines = [line.strip() for line in raw_leads.split("\n") if line.strip()]
+        scored_data = []
+        for line in lines:
+            score = 10
+            tier = "Tier 3: Standard Prospect"
+            lower_line = line.lower()
+            if "vp" in lower_line or "president" in lower_line or "chief" in lower_line:
+                score, tier = 95, "Tier 1: Executive Champion"
+            elif "director" in lower_line or "manager" in lower_line or "head" in lower_line:
+                score, tier = 65, "Tier 2: Operational Decision-Maker"
+                
+            scored_data.append({"Lead Descriptor Node": line, "Priority Weight Score": f"{score}/100", "Deployment Group": tier})
+        st.dataframe(pd.DataFrame(scored_data), use_container_width=True)
+
+def render_utm_generator():
+    """
+    TAB 3 ADDITION: UTM LINK GENERATOR & REPOSITORY
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("🔗 Universal UTM Link Generator & Marketing Repository")
+    st.write("Programmatically assemble trackable marketing URLs and log campaign records cleanly.")
+    
+    c1, c2, c3 = st.columns(3)
+    with c1: base_url = st.text_input("Destination URL:", value="https://jcpss.com", key="utm_url")
+    with c2: source = st.text_input("Campaign Source:", value="linkedin", key="utm_src")
+    with c3: medium = st.text_input("Campaign Medium:", value="paid-ad", key="utm_med")
+    
+    if base_url and source and medium:
+        clean_url = base_url.strip().rstrip("/")
+        generated_utm = f"{clean_url}/?utm_source={source.strip()}&utm_medium={medium.strip()}"
+        st.success("✅ Trackable Marketing URL Compiled:")
+        st.code(generated_utm)
+
+def render_invoice_ledger():
+    """
+    TAB 3 ADDITION: CLIENT INVOICE AGING LEDGER
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("💸 Client Invoice Aging Ledger & Collection Monitor")
+    st.write("Track accounts receivable horizons across strict chronological aging thresholds.")
+    
+    aging_data = pd.DataFrame([
+        {"Client Account": "Global Tech Distribution", "Outstanding Invoice ($)": 4500.00, "Aging Bracket": "0 - 30 Days (Current)"},
+        {"Client Account": "Delta Manufacturing Core", "Outstanding Invoice ($)": 8900.00, "Aging Bracket": "61 - 90 Days (Past Due)"},
+        {"Client Account": "Nexus Enterprise Systems", "Outstanding Invoice ($)": 12000.00, "Aging Bracket": "90+ Days (CRITICAL)"}
+    ])
+    st.dataframe(aging_data, use_container_width=True)
