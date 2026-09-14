@@ -230,11 +230,18 @@ elif active_panel == "📋 Project Management (Tab 7)":
     if 'wm' in locals() and hasattr(wm, 'render_delivery_countdown'):
         wm.render_delivery_countdown()
         
-        # 👇 HOOK THE TWO NEW TOOLS TO THE END OF THE TAB 7 ROUTING LOOP
         if hasattr(wm, 'render_pm_roadmap'):
             wm.render_pm_roadmap()
         if hasattr(wm, 'render_revenue_sorter'):
             wm.render_revenue_sorter()
+        if hasattr(wm, 'render_revision_logger'):
+            wm.render_revision_logger()
+            
+        # 👇 HOOKS THE SPRINT VELOCITY AND DEPENDENCY VALIDATORS
+        if hasattr(wm, 'render_sprint_velocity'):
+            wm.render_sprint_velocity()
+        if hasattr(wm, 'render_dependency_validator'):
+            wm.render_dependency_validator()
     else:
         st.error("❌ Linkage Failure: render_delivery_countdown missing from workspace_modules.py.")
 
