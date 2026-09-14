@@ -647,3 +647,40 @@ def render_commercial_control():
         st.dataframe(store_df[["ORDER_ID", "CUSTOMER_EMAIL", "PURCHASED_CARD_CODE", "Gross Amount ($)", "Merchant Fees ($)", "Net Cash ($)"]], use_container_width=True)
     else:
         st.info("📡 Scanning for live database rows to populate revenue summary metrics.")
+
+    # ----------------------------------------------------------------------
+    # 📉 BLOCK 2: FINANCIAL RUNWAY SIMULATOR
+    # ----------------------------------------------------------------------
+    st.markdown("---")
+    st.markdown("#### ⏳ Corporate Cash Runway Simulator")
+    st.write("Model your monthly operational overhead burn against current cash reserves to project capital depletion dates.")
+    
+    # Structural layout inputs for your financial modeling
+    col_b1, col_b2 = st.columns(2)
+    with col_b1:
+        current_cash = st.number_input("Current Liquid Cash Balance ($):", min_value=0.0, value=25000.0, step=1000.0, key="runway_cash_input")
+    with col_b2:
+        monthly_burn = st.slider("Monthly Operational Burn Rate ($/month):", min_value=500, max_value=15000, value=2500, step=250, key="runway_burn_slider")
+        
+    if monthly_burn > 0:
+        months_remaining = current_cash / monthly_burn
+        st.metric(label="⏱️ Projected Runway Remaining", value=f"{months_remaining:.1f} Months", delta=f"Depletion in {int(months_remaining * 30)} Days", delta_color="inverse")
+        
+        # Build out the 12-month projections tracking matrix dataframe
+        projection_data = []
+        remaining_balance = current_cash
+        
+        # Start tracking chronologically from today's date context (September 2026)
+        start_date = datetime.datetime(2026, 9, 1)
+        
+        for m in range(13):
+            display_date = (start_date + datetime.timedelta(days=m*30.43)).strftime("%b %Y")
+            projection_data.append({"Month": display_date, "Projected Balance ($)": max(0.0, remaining_balance)})
+            remaining_balance -= monthly_burn
+            
+        runway_df = pd.DataFrame(projection_data)
+        
+        # Render a clean, native line chart tracking your financial trajectory
+        st.line_chart(runway_df.set_index("Month"), y="Projected Balance ($)")
+    else:
+        st.success("🛡️ Monthly burn rate is zero. Capital runway is infinitely sustainable.")
