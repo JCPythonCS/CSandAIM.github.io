@@ -158,7 +158,9 @@ else:
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
 
-# ==================== ACTIVE VIEWPORT ROUTING GRID ====================
+# ==========================================================================
+# 🚀 LIVE WORKSPACE ROUTING NODE LOOP EXECUTION
+# ==========================================================================
 
 # ---- PANEL 1: ANALYTICS (Tab 1) ----
 if active_panel == "📊 Analytics (Tab 1)":
@@ -166,135 +168,49 @@ if active_panel == "📊 Analytics (Tab 1)":
     
     if df is not None:
         filtered_df = df.copy()
-        
-        if 'Active Combat Unit Name' in df.columns and selected_units:
-            filtered_df = filtered_df[filtered_df['Active Combat Unit Name'].isin(selected_units)]
-            
-        if 'Strategic Command Sector' in df.columns and selected_sectors:
-            filtered_df = filtered_df[filtered_df['Strategic Command Sector'].isin(selected_sectors)]
-            
-        if 'Agency Command Tier' in df.columns and selected_tiers:
-            filtered_df = filtered_df[filtered_df['Agency Command Tier'].isin(selected_tiers)]
-        
-        total_records = len(filtered_df)
-        num_cols = filtered_df.select_dtypes(include='number').columns
-        
-        c1, c2 = st.columns(2)
-        with c1:
-            st.metric(label="📦 Active Tracked Records", value=f"{total_records:,}")
-        with c2:
-            if len(num_cols) > 0:
-                metric_sum = filtered_df[num_cols].sum()
-                st.metric(label=f"📊 Aggregate Core Metrics ({num_cols[0]})", value=f"{metric_sum.iloc[0]:,.2f}")
-            else:
-                st.metric(label="📊 Operational Status", value="Data Deployment Active")
-            
-        st.markdown("---")
-        
-        chart_col1, chart_col2 = st.columns(2)
-        
-        if 'Strategic Command Sector' in filtered_df.columns:
-            with chart_col1:
-                st.subheader("🌐 Strategic Command Sector Distribution")
-                st.bar_chart(filtered_df.groupby('Strategic Command Sector').size())
-                
-        if 'Agency Command Tier' in filtered_df.columns:
-            with chart_col2:
-                st.subheader("🔸 Agency Command Tier Breakdown")
-                st.bar_chart(filtered_df.groupby('Agency Command Tier').size())
-            
-        st.subheader("🔎 Secure Ingested Record Stream")
+        # ... [Keep all your existing Panel 1 internal code and filters exactly the same] ...
         st.dataframe(filtered_df.head(100), use_container_width=True)
     else:
         st.info("ℹ️ Select an operational file from the left sidebar to populate your tactical dashboard data lines.")
 
     # ==========================================================================
-    # 📋 ACTIVE STREAM REGISTERS - LIVE COMMERCE INGESTION GRID
+    # 📋 PERMANENT ACTIVE STREAM REGISTERS MAPPING
     # ==========================================================================
     st.markdown("---")
     st.markdown("## 📋 Active Stream Registers")
     st.markdown("### Real-Time Customer Purchase Logs & Delivery Staging Node")
     
-    # Safely call the background database data stream engine we built in Block 1
     if 'wm' in locals() and hasattr(wm, 'fetch_active_stream_registers'):
         with st.spinner("🛰️ Pinging autonomous database container registries..."):
             customer_store_df = wm.fetch_active_stream_registers()
-        
         if not customer_store_df.empty:
-            # Render the data table cleanly across the full fluid width of your layout
             st.dataframe(customer_store_df, use_container_width=True)
-            st.sidebar.success(f"🛒 Commerce Stream Online: {len(customer_store_df)} Orders Loaded")
         else:
             st.warning("📡 Standby: Scanning for live client transactions... Active storage block is empty.")
-    else:
-        st.error("❌ Linkage Failure: fetch_active_stream_registers engine missing from workspace_modules.py.")
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
-elif active_panel == "🛠️ Utilities (Tab 2)":
+elif active_panel == "🛠️ Utilities (Tab 2)":  # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     wm.render_translator()
     st.markdown("---")
     wm.render_renamer()
 
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
-elif active_panel == "💼 Workspace (Tab 3)":
+elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     wm.render_calculator()
     wm.render_codec()
     st.markdown("---")
     wm.render_invoice()
 
 # ---- PANEL 4: SIMULATION (Tab 4) ----
-elif active_panel == "✈️ Simulation (Tab 4)":
+elif active_panel == "✈️ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     wm.render_runway()
     st.markdown("---")
     wm.render_email_verifier()
 
 # ---- PANEL 5: LIBRARY (Tab 5) ----
-elif active_panel == "📚 Library (Tab 5)":
+elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     st.markdown("### 🎬 Studio Asset Management Engine")
-    drive_id = st.text_input(
-        "Linked Google Drive Folder ID URL Sync Anchor:", 
-        value="1BUnCmw4e4OTSBgyjjbJJsS12Yvg_lvrL", 
-        key="library_drive_sync_input"
-    )
-    st.success(f"✅ Active Cloud Channel Connected to Google Drive Directory: `{drive_id}`")
-    
-    video_catalog_names = ["scene_01_raw.mp4", "b_roll_overlay.mp4", "intro_sequence.mov"]
-    selected_target_video = st.selectbox("Select Active Google Drive Video Track to Process:", video_catalog_names)
-    
-    st.markdown("---")
-    
-    st.markdown("### 📝 Alternating Dialogue Timeline Setup")
-    default_script = (
-        "Male: Welcome back to the library matrix. Your voice track is rendering.\n"
-        "Female: Perfect. We can match our script lines directly to our Google Drive files below."
-    )
-    script_text = st.text_area("Input Library Card Script Dialogue:", value=default_script, height=140, key="library_script_editor")
-    
-    raw_lines = script_text.strip().split("\n")
-    timeline_flow = []
-    for line in raw_lines:
-        if not line.strip(): 
-            continue
-        if line.lower().startswith("male:"):
-            timeline_flow.append({"speaker": "Male", "profile": male_profile, "text": line[5:].strip()})
-        elif line.lower().startswith("female:"):
-            timeline_flow.append({"speaker": "Female", "profile": female_profile, "text": line[7:].strip()})
-        else:
-            # Alternates voice styles automatically if speaker tag isn't explicitly written
-            if timeline_flow and timeline_flow[-1]["speaker"] == "Male":
-                timeline_flow.append({"speaker": "Female", "profile": female_profile, "text": line.strip()})
-            else:
-                timeline_flow.append({"speaker": "Male", "profile": male_profile, "text": line.strip()})
-                
-    with st.expander("🔍 View Script Segment Distribution Map", expanded=False):
-        for idx, segment in enumerate(timeline_flow):
-            avatar = "👨" if segment["speaker"] == "Male" else "👩"
-            st.write(f"**Line {idx+1} — {avatar} {segment['speaker']} ({segment['profile']}):** {segment['text']}")
-
-    st.markdown("---")
-    st.info(f"🎯 Global Processing Scope: Active Script and Video Track (**{selected_target_video}**) are locked to your storefront cards below.")
-    
-    # Renders the final library product cards from your custom module block
+    # ... [Keep all your existing Panel 5 code text areas and video dropdown blocks exactly the same] ...
     wm.render_library_catalog()
 
 # ---- PANEL 6: COMMERCIAL CONTROL (Tab 6) ----
