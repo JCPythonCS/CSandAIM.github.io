@@ -37,19 +37,15 @@ st.markdown("---")
 def render_live_countdown():
     st.sidebar.markdown("### ⏳ Target Countdown")
     
-    # Calculate the target window: Next upcoming Saturday at 11:00 AM
-    now = datetime.datetime.now()
-    days_ahead = (5 - now.weekday()) % 7
-    if days_ahead == 0 and now.hour >= 11:
-        days_ahead = 7
-
-    target_saturday = datetime.datetime.combine(
-        now.date() + datetime.timedelta(days=days_ahead),
-        datetime.time(11, 0, 0)
-    )
-
-    time_remaining = target_saturday - datetime.datetime.now()
-
+    # Force the engine to establish the exact target: Saturday, Sept 19, 2026 at 11:00 AM EST
+    # Streamlit Cloud runs on UTC, which is exactly 4 hours ahead of Eastern Daylight Time (EDT)
+    # Therefore, 11:00 AM EST is exactly 15:00 (3:00 PM) UTC server-time!
+    
+    now_utc = datetime.datetime.utcnow()
+    target_saturday_utc = datetime.datetime(2026, 9, 19, 15, 0, 0)
+    
+    time_remaining = target_saturday_utc - now_utc
+    
     if time_remaining.total_seconds() > 0:
         days = time_remaining.days
         hours, remainder = divmod(time_remaining.seconds, 3600)
@@ -58,14 +54,14 @@ def render_live_countdown():
         st.markdown(
             f"""
             <div style="background-color: #1e293b; padding: 12px; border-radius: 6px; border-left: 5px solid #ef4444; color: #f8fafc; font-family: monospace; text-align: center;">
-                <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 5px;">Time remaining to Briefing</div>
+                <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 5px;">Time remaining to SaaS Briefing</div>
                 <div style="font-size: 1.2rem; font-weight: bold;">{days}d : {hours:02d}h : {minutes:02d}m : {seconds:02d}s</div>
             </div>
             """,
             unsafe_allow_html=True
         )
     else:
-        st.success("🚀 Operational Window Active!")
+        st.success("🚀 Operational Window Active! SaaS Paywall Deploying.")
 
 # Run the isolated countdown module in the sidebar safely
 with st.sidebar:
