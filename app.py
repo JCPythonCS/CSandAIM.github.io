@@ -189,7 +189,7 @@ if active_panel == "📊 Analytics (Tab 1)":
             st.warning("📡 Standby: Scanning for live client transactions... Active storage block is empty.")
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
-elif active_panel == "🛠️ Utilities (Tab 2)":  # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
+elif active_panel == "🛠 Utilities (Tab 2)":  # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     wm.render_translator()
     st.markdown("---")
     wm.render_renamer()
@@ -202,7 +202,7 @@ elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' W
     wm.render_invoice()
 
 # ---- PANEL 4: SIMULATION (Tab 4) ----
-elif active_panel == "✈️ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
+elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     wm.render_runway()
     st.markdown("---")
     wm.render_email_verifier()
