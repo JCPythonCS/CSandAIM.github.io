@@ -590,3 +590,60 @@ def fetch_active_stream_registers():
         # so your main interface never crashes or displays a red error box.
         fallback_cols = ["ORDER_ID", "CUSTOMER_EMAIL", "TRANSACTION_ID", "PURCHASED_CARD_CODE", "PAYMENT_STATUS", "CREATED_AT"]
         return pd.DataFrame(columns=fallback_cols)
+
+def render_commercial_control():
+    """
+    TAB 6: COMMERCIAL CONTROL ENGINE
+    Tracks processing fees, computes net financial margins, and models capital runway.
+    """
+    import streamlit as st
+    import pandas as pd
+    
+    st.subheader("💰 Executive Revenue Ledger & Processing Controls")
+    st.write("Track gross storefront performance, calculate payment processor fee leakage, and audit real-time net take-home earnings.")
+    
+    # ----------------------------------------------------------------------
+    # 🔧 BLOCK 1: GROSS-TO-NET REVENUE LEDGER
+    # ----------------------------------------------------------------------
+    st.markdown("---")
+    st.markdown("#### 📊 Processing Fee Leakage Monitor")
+    
+    # Safely extract rows from our previously built active database registry
+    if 'fetch_active_stream_registers' in globals():
+        store_df = fetch_active_stream_registers()
+    else:
+        # Standard fallback placeholder structure matching your true Oracle database schema fields
+        fallback_cols = ["ORDER_ID", "CUSTOMER_EMAIL", "TRANSACTION_ID", "PURCHASED_CARD_CODE", "PAYMENT_STATUS", "CREATED_AT"]
+        store_df = pd.DataFrame([
+            [1001, "premium_node@jcpss.com", "TX-88392", "CARD-PLATINUM-777", "VALIDATED", pd.Timestamp.now()],
+            [1002, "enterprise_ops@global.net", "TX-19402", "CARD-GOLD-555", "VALIDATED", pd.Timestamp.now()]
+        ], columns=fallback_cols)
+
+    # Establish standard business constants for processing calculations (PayPal Benchmark: 3.49% + $0.49 flat fee)
+    fee_percentage = 0.0349
+    flat_fee = 0.49
+    
+    # Map premium bundle prices to your custom card package codes natively
+    price_map = {"CARD-PLATINUM-777": 399.00, "CARD-GOLD-555": 149.00}
+    
+    if not store_df.empty:
+        # Calculate dynamic financial fields based on your database rows
+        store_df['Gross Amount ($)'] = store_df['PURCHASED_CARD_CODE'].map(price_map).fillna(49.00)
+        store_df['Merchant Fees ($)'] = (store_df['Gross Amount ($)'] * fee_percentage) + flat_fee
+        store_df['Net Cash ($)'] = store_df['Gross Amount ($)'] - store_df['Merchant Fees ($)']
+        
+        # Calculate high-level financial metrics aggregates
+        total_gross = store_df['Gross Amount ($)'].sum()
+        total_fees = store_df['Merchant Fees ($)'].sum()
+        total_net = store_df['Net Cash ($)'].sum()
+        
+        # Display the financial summary metric cards
+        mc1, mc2, mc3 = st.columns(3)
+        mc1.metric(label="💰 Gross Storefront Revenue", value=f"${total_gross:,.2f}")
+        mc2.metric(label="💸 Total Merchant Processing Fees", value=f"${total_fees:,.2f}", delta=f"-{(total_fees/total_gross)*100 if total_gross > 0 else 0:.2f}% Cost")
+        mc3.metric(label="🛡️ Liquid Net Capital (Take-Home)", value=f"${total_net:,.2f}")
+        
+        st.markdown("##### 📋 Audited Transaction Financial Breakdown")
+        st.dataframe(store_df[["ORDER_ID", "CUSTOMER_EMAIL", "PURCHASED_CARD_CODE", "Gross Amount ($)", "Merchant Fees ($)", "Net Cash ($)"]], use_container_width=True)
+    else:
+        st.info("📡 Scanning for live database rows to populate revenue summary metrics.")
