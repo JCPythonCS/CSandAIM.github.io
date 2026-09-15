@@ -460,7 +460,6 @@ def render_email_verifier():
 # TAB 5: MULTIMEDIA LIBRARY STORAGE MAP (33 VERIFIED CARDS)
 # ====================================================================
 def render_library_catalog():
-def render_library_catalog():
     """
     TAB 5 OVERHAUL: DYNAMIC 33-TRACK MEDIA CORE ENGINE
     """
@@ -475,10 +474,9 @@ def render_library_catalog():
     
     st.markdown("---")
     
-    # 📑 Programmatic 33-Track Array Builder
     production_tracks = [f"scene_{idx:02d}_voiceover.mp4" for idx in range(1, 34)]
     
-    c1, c2 = st.columns([2, 1])
+    c1, c2 = st.columns(2)
     with c1:
         selected_video = st.selectbox(
             "Select Active Production Video Track to Stream:", 
