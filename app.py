@@ -162,23 +162,19 @@ active_panel = st.selectbox(
 
 st.markdown("---")
 
-# 🎙️ FIXED SIDEBAR VISIBILITY CONTROLLER
-# Appends data options or audio profile settings underneath the isolated live timer box
+# ==========================================================================
+# 📊 TAB 1 INTERACTIVE ROUTING DATA BRIDGE
+# ==========================================================================
 if active_panel == "📊 Analytics (Tab 1)":
-    st.sidebar.markdown("---")
-    st.sidebar.header("🎯 Dashboard Control Filters")
+    st.subheader(f"📊 Tactical Systems & Analytics Stream")
     
-    if database:
-        selected_file_name = st.sidebar.selectbox(
-            "Select Database File Asset:", 
-            options=sorted(list(database.keys())),
-            help="Choose any workspace excel file from your repository to analyze dynamically."
-        )
-        
-        target_file_path = database[selected_file_name]
-        
-        try:
-            df = pd.read_excel(target_file_path)
+    # Secure validation check: Link the panel views to the dynamic sidebar engine variables
+    if 'df' in locals() and df is not None:
+        active_data = df
+    elif 'df_master' in locals() and df_master is not None:
+        active_data = df_master
+    else:
+        active_data = None
             
             if 'Active Combat Unit Name' in df.columns:
                 selected_units = st.sidebar.multiselect("Active Combat Unit Name:", options=df['Active Combat Unit Name'].unique(), default=df['Active Combat Unit Name'].unique())
