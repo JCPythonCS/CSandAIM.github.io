@@ -194,6 +194,8 @@ elif active_panel == "🛠 Utilities (Tab 2)":  # <--- MAKE SURE THIS IS 'elif' 
     st.markdown("---")
     wm.render_renamer()
     wm.render_threat_analyzer()
+    if hasattr(wm, 'render_ip_throttle_monitor'): wm.render_ip_throttle_monitor()
+    if hasattr(wm, 'render_token_radar'): wm.render_token_radar()
 
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
 elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -207,6 +209,7 @@ elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' W
     wm.render_invoice_ledger()
     if hasattr(wm, 'render_sales_commission_calc'):
         wm.render_sales_commission_calc()    
+    if hasattr(wm, 'render_conversion_velocity'): wm.render_conversion_velocity()
 
 # ---- PANEL 4: SIMULATION (Tab 4) ----
 elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -252,15 +255,15 @@ elif active_panel == "📋 Project Management (Tab 7)":
 elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
     if 'wm' in locals() and hasattr(wm, 'render_tracking_aggregator'):
         wm.render_tracking_aggregator()
-        
-        # 👇 HOOKS THE SAFETY STOCK BUFFER CALC NATIVELY TO TAB 8
         if hasattr(wm, 'render_safety_stock'):
             wm.render_safety_stock()
         if hasattr(wm, 'render_reorder_trigger_ledger'):
             wm.render_reorder_trigger_ledger()
         if hasattr(wm, 'render_fuel_analyst_v2'):
             wm.render_fuel_analyst_v2()
-
+        if hasattr(wm, 'render_storage_optimizer'): wm.render_storage_optimizer()
+        if hasattr(wm, 'render_carrier_auditor'): wm.render_carrier_auditor()
+    
     else:
         st.error("❌ Linkage Failure: render_tracking_aggregator missing from workspace_modules.py.")
 
