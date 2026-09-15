@@ -68,15 +68,24 @@ with st.sidebar:
     render_live_countdown()
 
 # ==========================================================================
-# 📡 DATABASE ASSET LOADING ENGINE (MUST SIT FLUSH TO THE LEFT MARGIN)
+# 📡 DYNAMIC ENGINE LOADER (REPLACES STATIC HARDCODED EXCEL POINTER)
 # ==========================================================================
 import pandas as pd
 import os
 
-if os.path.exists("enterprise_retail_dataT.xlsx"):
-    df_master = pd.read_excel("enterprise_retail_dataT.xlsx")
+# Link df_master directly to whichever file is selected in your database tool dropdown
+if 'database' in locals() and database and 'selected_file_name' in locals():
+    chosen_file_path = database[selected_file_name]
+    if os.path.exists(chosen_file_path):
+        df_master = pd.read_excel(chosen_file_path)
+    else:
+        df_master = None
 else:
-    df_master = None
+    # Safe fallback to default asset if dashboard state hasn't fully booted yet
+    if os.path.exists("enterprise_retail_dataT.xlsx"):
+        df_master = pd.read_excel("enterprise_retail_dataT.xlsx")
+    else:
+        df_master = None
 
 # ==========================================================================
 # 🌐 MASTER COCKPIT SIDEBAR CONTROL PANEL
@@ -90,32 +99,29 @@ with st.sidebar:
 
     # 1. Core Reporting Agency Filter
     if df_master is not None and 'Agency' in df_master.columns:
-        # Pulls from df_master so selecting a region won't break the agency options
         agency_opts = sorted(df_master['Agency'].dropna().unique())
-        selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v13")
+        selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v14")
         if selected_agency != "All Agencies" and df is not None:
             df = df[df['Agency'] == selected_agency]
 
-    # 2. Operational Region Filter (PULLS ALL REGIONS REGARDLESS OF OTHER FILTERS)
+    # 2. Operational Region Filter
     if df_master is not None and 'Region' in df_master.columns:
-        # FIXED: Pulls directly from df_master so all 5 to 8 regions show up every time!
         region_opts = sorted(df_master['Region'].dropna().unique())
-        selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v13")
+        selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v14")
         if selected_region != "All Regions" and df is not None:
             df = df[df['Region'] == selected_region]
 
     # 3. Active Retailer Filter
     if df_master is not None and 'Retailer' in df_master.columns:
-        # Pulls from df_master so your complete list of stores stays visible
         retailer_opts = sorted(df_master['Retailer'].dropna().unique())
-        selected_retailer = st.selectbox("Select Active Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v13")
+        selected_retailer = st.selectbox("Select Active Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v14")
         if selected_retailer != "All Retailers" and df is not None:
             df = df[df['Retailer'] == selected_retailer]
 
-    # 4. Command Tier Filter (Unified single column)
+    # 4. Command Tier Filter 
     if df_master is not None and 'Command Tier' in df_master.columns:
         command_tier_opts = sorted(df_master['Command Tier'].dropna().unique())
-        selected_command_tier = st.selectbox("Select Command Tier:", ["All Command Tiers"] + list(command_tier_opts), key="sb_command_tier_v13")
+        selected_command_tier = st.selectbox("Select Command Tier:", ["All Command Tiers"] + list(command_tier_opts), key="sb_command_tier_v14")
         if selected_command_tier != "All Command Tiers" and df is not None:
             df = df[df['Command Tier'] == selected_command_tier]
 
