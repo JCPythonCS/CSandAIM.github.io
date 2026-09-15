@@ -238,8 +238,9 @@ elif active_panel == "💰 Commercial Control (Tab 6)":
     wm.render_cac_monitor()
     wm.render_ltv_calculator()
 
+    else:
 
-else:
+    
     st.error("❌ Linkage Failure: render_commercial_control engine missing from workspace_modules.py.")
 
 # ---- PANEL 7: PROJECT MANAGEMENT (Tab 7) ----
