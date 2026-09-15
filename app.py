@@ -226,9 +226,41 @@ else:
 if active_panel == "📊 Analytics (Tab 1)":
     st.subheader(f"📊 Tactical Systems & Analytics Stream")
     
-    if df is not None:
-        filtered_df = df.copy()
-        # ... [Keep all your existing Panel 1 internal code and filters exactly the same] ...
+    # Check if a filtered dataset has been safely passed from our sidebar system
+    if 'filtered_df' in locals() and filtered_df is not None:
+        total_records = len(filtered_df)
+        
+        # 1. TOP CARD METRICS SECTION
+        c1, c2 = st.columns(2)
+        with c1:
+            st.metric(label="📦 Active Tracked Records", value=f"{total_records:,}")
+        with c2:
+            # Dynamically calculate the total sum of numerical values if they exist
+            num_cols = filtered_df.select_dtypes(include='number').columns
+            if len(num_cols) > 0:
+                metric_sum = filtered_df[num_cols[0]].sum()
+                st.metric(label=f"📊 Aggregate Core Metrics ({num_cols[0]})", value=f"{metric_sum:,.2f}")
+            else:
+                st.metric(label="📊 Operational Status", value="Data Deployment Active")
+            
+        st.markdown("---")
+        
+        # 2. DYNAMIC CHARTING TILES (Only draws bars if the column exists in the chosen spreadsheet)
+        chart_col1, chart_col2 = st.columns(2)
+        
+        # Render dynamic chart fields if it's the Fuel report or the Enterprise report
+        if 'Region' in filtered_df.columns:
+            with chart_col1:
+                st.subheader("🌐 Geographic Region Distribution")
+                st.bar_chart(filtered_df.groupby('Region').size())
+                
+        if 'Retailer' in filtered_df.columns:
+            with chart_col2:
+                st.subheader("🏬 Active Retailer Breakdown")
+                st.bar_chart(filtered_df.groupby('Retailer').size())
+            
+        # 3. SECURE INTERACTIVE DATA SPREADSHEET CANVAS
+        st.subheader("🔎 Secure Ingested Record Stream")
         st.dataframe(filtered_df.head(100), use_container_width=True)
     else:
         st.info("ℹ️ Select an operational file from the left sidebar to populate your tactical dashboard data lines.")
