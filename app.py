@@ -162,39 +162,6 @@ active_panel = st.selectbox(
 
 st.markdown("---")
 
-# ==========================================================================
-# 📊 TAB 1 INTERACTIVE ROUTING DATA BRIDGE
-# ==========================================================================
-if active_panel == "📊 Analytics (Tab 1)":
-    st.subheader(f"📊 Tactical Systems & Analytics Stream")
-    
-    # Secure validation check: Link the panel views to the dynamic sidebar engine variables
-    if 'df' in locals() and df is not None:
-        active_data = df
-    elif 'df_master' in locals() and df_master is not None:
-        active_data = df_master
-    else:
-        active_data = None
-            
-            if 'Active Combat Unit Name' in df.columns:
-                selected_units = st.sidebar.multiselect("Active Combat Unit Name:", options=df['Active Combat Unit Name'].unique(), default=df['Active Combat Unit Name'].unique())
-            else:
-                selected_units = []
-
-            if 'Strategic Command Sector' in df.columns:
-                selected_sectors = st.sidebar.multiselect("Strategic Command Sector:", options=df['Strategic Command Sector'].unique(), default=df['Strategic Command Sector'].unique())
-            else:
-                selected_sectors = []
-
-            if 'Agency Command Tier' in df.columns:
-                selected_tiers = st.sidebar.multiselect("Agency Command Tier:", options=df['Agency Command Tier'].unique(), default=df['Agency Command Tier'].unique())
-            else:
-                selected_tiers = []
-                
-        except Exception as e:
-            st.sidebar.error(f"Error reading file elements: {e}")
-            df = None
-            selected_units, selected_sectors, selected_tiers = [], [], []
     else:
         st.sidebar.warning("⚠️ No `.xlsx` or `.xls` spreadsheet assets detected in the root repository.")
         df = None
