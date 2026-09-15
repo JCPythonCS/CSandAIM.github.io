@@ -235,8 +235,9 @@ elif active_panel == "💰 Commercial Control (Tab 6)":
     if hasattr(wm, 'render_churn_predictor'): wm.render_churn_predictor()
     if hasattr(wm, 'render_product_markup_calc'): wm.render_product_markup_calc()
     if hasattr(wm, 'render_tax_estimator_v2'): wm.render_tax_estimator_v2()
-    wm.render_cac_monitor()
-    wm.render_ltv_calculator()
+    if hasattr(wm, 'render_cac_monitor'): wm.render_cac_monitor()
+    if hasattr(wm, 'render_ltv_calculator'): wm.render_ltv_calculator()
+
 
 # ---- PANEL 7: PROJECT MANAGEMENT (Tab 7) ----
 elif active_panel == "📋 Project Management (Tab 7)":
