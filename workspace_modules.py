@@ -1517,3 +1517,82 @@ def render_ai_dispatcher():
         Timestamp Matrix: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')} EST
         """
         st.code(dispatch_memo, language="text")
+
+def render_sprint_burndown_v2():
+    """
+    TAB 7: SPRINT BURNDOWN GRAPH GRAPH SIMULATOR
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("📉 Milestone Sprint Burndown Simulator")
+    st.write("Simulate ideal task completion velocities against actual development paces.")
+    
+    bd_c1, bd_c2 = st.columns(2)
+    with bd_c1: total_scope = st.number_input("Total Sprint Backlog Points Matrix:", min_value=10, value=100, step=10, key="bd_scope_v2")
+    with bd_c2: current_day = st.slider("Current Active Sprint Day Horizon:", min_value=1, max_value=10, value=4, key="bd_day_v2")
+    
+    days_idx = [f"Day {d}" for d in range(1, 11)]
+    ideal = [max(0.0, total_scope - (total_scope / 10.0) * d) for d in range(10)]
+    actual = [max(0, int(total_scope - (total_scope / 12.0) * d)) if d < current_day else None for d in range(10)]
+    
+    st.line_chart(pd.DataFrame({"Ideal Burn Trajectory Floor": ideal, "Actual Remaining Backlog": actual}, index=days_idx))
+
+def render_fuel_analyst_v2():
+    """
+    TAB 9: FLEET FUEL AND RANGE CALCULATOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("⛽ Fleet Fuel Consumption & Range Analyst")
+    st.write("Process engine load constraints to compute maximum vehicle operational ranges.")
+    
+    f_c1, f_c2 = st.columns(2)
+    with f_c1: tank_g = st.number_input("Fuel Tank Fluid Capacity (Gallons):", min_value=5.0, value=18.5, key="f_tank_v2")
+    with f_c2: current_pct = st.slider("Current Fuel Level Reading (%):", min_value=0, max_value=100, value=65, key="f_pct_v2")
+    
+    max_range = (tank_g * (current_pct / 100.0)) * 24
+    st.success(f"🎯 **Calculated Fleet Operational Range:** `{max_range:.1f} Miles Remaining`")
+
+def render_ai_dispatcher_v2():
+    """
+    TAB 10: ACTION ITEM EMAIL DISPATCH TEXT PACKAGER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("📋 AI-Ops Action Item Outreach Dispatcher")
+    st.write("Convert unorganized items blocks into copy-pasteable team notification payloads.")
+    
+    task_str = st.text_input("Enter Discovered Assignment String:", value="Marcus needs to repair the database indexing schema by tomorrow noon.", key="ai_disp_v2")
+    owner = st.selectbox("Assign Primary Target Owner Node:", ["Marcus", "Johnny", "Sarah"], key="ai_owner_v2")
+    
+    if st.button("🚀 Compile Corporate Outreach Dispatch", key="ai_btn_v2"):
+        st.code(f"[⚠️ NOTICE] @{owner}: {task_str}\nTimestamp: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')}", language="text")
+
+def render_tax_estimator_v2():
+    """
+    TAB 6: CORPORATE TAX BRACKET EXCISE VAULT
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🏛️ Corporate Income Tax Bracket Estimator")
+    st.write("Project federal corporate income excise liabilities using multi-tier gross margin data inputs.")
+    
+    gross_inc = st.number_input("Projected Corporate Gross Net Income ($):", min_value=0.0, value=75000.0, step=5000.0, key="tax_gross_v2")
+    fed_tax = gross_inc * 0.21
+    st.metric(label="🛡️ Estimated Corporate Federal Liability (21% Tax Floor)", value=f"${fed_tax:,.2f}", delta=f"${gross_inc - fed_tax:,.2f} Post-Tax Retained Cash")
+
+def render_reorder_ledger_v2():
+    """
+    TAB 8: AUTOMATED LOGISTICAL REORDER POINT CONTROLLER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("📦 Logistical Reorder Point Restock Ledger")
+    st.write("Compute asset replenish levels using supplier turnaround speeds.")
+    
+    usage = st.number_input("Average Daily Unit Sales Speeds:", min_value=1, value=40, key="ro_use_v2")
+    lead = st.number_input("Supplier Delivery Turnaround (Days Log):", min_value=1, value=7, key="ro_lead_v2")
+    
+    reorder_pt = (usage * lead) + 100
+    st.success(f"🎯 **Calculated Restock Inventory Reorder Point Threshold:** `{reorder_pt} Units`")
