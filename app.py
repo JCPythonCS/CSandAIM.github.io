@@ -270,6 +270,8 @@ elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
             wm.render_obd_matcher()
         if hasattr(wm, 'render_parts_cross_ref'):
             wm.render_parts_cross_ref()
+            if hasattr(wm, 'render_batch_obd_scanner'):
+                wm.render_batch_obd_scanner()
     else:
         st.error("❌ Linkage Failure: render_vin_parser missing from workspace_modules.py.")
 
