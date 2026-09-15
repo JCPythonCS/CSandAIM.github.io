@@ -68,12 +68,23 @@ with st.sidebar:
     render_live_countdown()
 
 # ==========================================================================
-# 📡 AUTOMATED DATA CONNECTION SIDEBAR FILTERS (FIXED)
+# 📡 DATABASE ASSET LOADING ENGINE (MUST SIT FLUSH TO THE LEFT MARGIN)
 # ==========================================================================
 import pandas as pd
 import os
 
+if os.path.exists("enterprise_retail_dataT.xlsx"):
+    df = pd.read_excel("enterprise_retail_dataT.xlsx")
+else:
+    df = None
+
+# ==========================================================================
+# 🌐 GLOBAL SIDEBAR CONTROL PANEL
+# ==========================================================================
 with st.sidebar:
+    st.markdown("---")
+    st.header("🌐 Global System Filters")
+
     # Dynamic Region Selection Filter
     if df is not None and 'Region' in df.columns:
         region_opts = sorted(df['Region'].dropna().unique())
