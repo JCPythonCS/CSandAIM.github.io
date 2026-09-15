@@ -188,18 +188,20 @@ if active_panel == "📊 Analytics (Tab 1)":
         else:
             st.warning("📡 Standby: Scanning for live client transactions... Active storage block is empty.")
             
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_kpi_pulse_grid()
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_funnel_attribution()
+        if hasattr(wm, 'render_kpi_pulse_grid'): wm.render_kpi_pulse_grid()
+        if hasattr(wm, 'render_funnel_attribution'): wm.render_funnel_attribution()
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
-elif active_panel == "🛠 Utilities (Tab 2)":  # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_translator()
-    st.markdown("---")
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_renamer()
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_threat_analyzer()
-    if hasattr(wm, 'render_ip_throttle_monitor'): wm.render_ip_throttle_monitor()
-    if hasattr(wm, 'render_token_radar'): wm.render_token_radar()
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_agent_fingerprinter()
+elif active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
+    if 'wm' in locals():
+        if hasattr(wm, 'render_translator'): wm.render_translator()
+        st.markdown("---")
+        if hasattr(wm, 'render_renamer'): wm.render_renamer()
+        if hasattr(wm, 'render_threat_analyzer'): wm.render_threat_analyzer()
+        if hasattr(wm, 'render_ip_throttle_monitor'): wm.render_ip_throttle_monitor()
+        if hasattr(wm, 'render_token_radar'): wm.render_token_radar()
+        if hasattr(wm, 'render_agent_fingerprinter'): wm.render_agent_fingerprinter()
+
 
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
 elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
