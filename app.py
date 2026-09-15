@@ -30,7 +30,6 @@ with col_logo_right:
 
 st.markdown("---")
 
-
 # ⏱️ FIXED: REAL-TIME ISOLATED COUNTDOWN ENGINE
 # Using st.fragment ensures ONLY this block reloads, stopping the entire page from breaking
 @st.fragment(run_every=1.0)
@@ -97,29 +96,37 @@ with st.sidebar:
     st.markdown("---")
     st.header("🌐 Global System Filters")
 
-    # Establish an active session data copy to filter step-by-step
-    df = df_master.copy() if df_master is not None else None
+    # Establish active dataframe globally so filters sync correctly
+    if 'selected_file_name' in st.session_state and database:
+        try:
+            target_path = database[st.session_state['selected_file_name']]
+            df_active = pd.read_excel(target_path)
+        except:
+            df_active = df_master.copy() if df_master is not None else None
+    else:
+        df_active = df_master.copy() if df_master is not None else None
 
-    # 1. Core Reporting Agency Filter
-    if df_master is not None and 'Agency' in df_master.columns:
-        agency_opts = sorted(df_master['Agency'].dropna().unique())
-        selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v15")
-        if selected_agency != "All Agencies" and df is not None:
-            df = df[df['Agency'] == selected_agency]
+    df = df_active.copy() if df_active is not None else None
 
-    # 2. Operational Region Filter
-    if df_master is not None and 'Region' in df_master.columns:
-        region_opts = sorted(df_master['Region'].dropna().unique())
-        selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v15")
-        if selected_region != "All Regions" and df is not None:
-            df = df[df['Region'] == selected_region]
+    if df_active is not None:
+        # Operational Region and Agency/Retailer Filters
+        if 'Region' in df_active.columns:
+            region_opts = sorted(df_active['Region'].dropna().unique())
+            selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v16")
+            if selected_region != "All Regions" and df is not None:
+                df = df[df['Region'] == selected_region]
 
-    # 3. Active Retailer Filter
-    if df_master is not None and 'Retailer' in df_master.columns:
-        retailer_opts = sorted(df_master['Retailer'].dropna().unique())
-        selected_retailer = st.selectbox("Select Active Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v15")
-        if selected_retailer != "All Retailers" and df is not None:
-            df = df[df['Retailer'] == selected_retailer]
+        if 'Agency' in df_active.columns:
+            agency_opts = sorted(df_active['Agency'].dropna().unique())
+            selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v16")
+            if selected_agency != "All Agencies" and df is not None:
+                df = df[df['Agency'] == selected_agency]
+
+        if 'Retailer' in df_active.columns:
+            retailer_opts = sorted(df_active['Retailer'].dropna().unique())
+            selected_retailer = st.selectbox("Select Active Store/Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v16")
+            if selected_retailer != "All Retailers" and df is not None:
+                df = df[df['Retailer'] == selected_retailer]
 
     # 4. Command Tier Filter 
     if df_master is not None and 'Command Tier' in df_master.columns:
