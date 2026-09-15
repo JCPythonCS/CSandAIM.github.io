@@ -91,28 +91,28 @@ with st.sidebar:
     # 1. Core Reporting Agency Filter
     if df_master is not None and 'Agency' in df_master.columns:
         agency_opts = sorted(df_master['Agency'].dropna().unique())
-        selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v9")
+        selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v10")
         if selected_agency != "All Agencies" and df is not None:
             df = df[df['Agency'] == selected_agency]
 
-    # 2. Operational Region Filter (FIXED TO LOWERCASE)
+    # 2. Operational Region Filter (STRICT MATCH FOR LOWERCASE 'region')
     if df_master is not None and 'region' in df_master.columns:
         region_opts = sorted(df_master['region'].dropna().unique())
-        selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v9")
-        if selected_region != "All Regions" and df is not None:
+        selected_region = st.selectbox("Select Operational Region:", ["All Region"] + list(region_opts), key="sb_region_v10")
+        if selected_region != "All Region" and df is not None:
             df = df[df['region'] == selected_region]
 
     # 3. Active Retailer Filter
     if df_master is not None and 'Retailer' in df_master.columns:
         retailer_opts = sorted(df_master['Retailer'].dropna().unique())
-        selected_retailer = st.selectbox("Select Active Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v9")
+        selected_retailer = st.selectbox("Select Active Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v10")
         if selected_retailer != "All Retailers" and df is not None:
             df = df[df['Retailer'] == selected_retailer]
 
     # 4. Command Tier Filter (Unified single column)
     if df_master is not None and 'Command Tier' in df_master.columns:
         command_tier_opts = sorted(df_master['Command Tier'].dropna().unique())
-        selected_command_tier = st.selectbox("Select Command Tier:", ["All Command Tiers"] + list(command_tier_opts), key="sb_command_tier_v9")
+        selected_command_tier = st.selectbox("Select Command Tier:", ["All Command Tiers"] + list(command_tier_opts), key="sb_command_tier_v10")
         if selected_command_tier != "All Command Tiers" and df is not None:
             df = df[df['Command Tier'] == selected_command_tier]
 
