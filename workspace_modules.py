@@ -1817,3 +1817,93 @@ def render_stack_clearance_advisor():
         
     cubic_allocation = bay_width * bay_length * stack_height
     st.metric(label="📦 Allocated Cubic Footprint Volumetric Capacity", value=f"{cubic_allocation:,} cu ft", delta="Safe Load Boundary Verified")
+
+def render_funnel_attribution():
+    """
+    TAB 1 ADDITION: B2B FUNNEL ATTRIBUTION MODELER
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("📊 Multi-Channel Marketing Funnel Attribution Modeler")
+    st.write("Evaluate inbound acquisition channels to calibrate strategic growth metrics.")
+    
+    c_at1, c_at2 = st.columns(2)
+    with c_at1:
+        li_weight = st.slider("Attribution Weight Allocation - LinkedIn (%):", min_value=0, max_value=100, value=60, key="at_li_wt_k")
+    with c_at2:
+        gg_weight = st.slider("Attribution Weight Allocation - Google (%):", min_value=0, max_value=100, value=40, key="at_gg_wt_k")
+        
+    st.info(f"🛰️ Telemetry Status: Growth weights balanced. Combined Matrix Depth: {li_weight + gg_weight}%")
+
+def render_agent_fingerprinter():
+    """
+    TAB 2 ADDITION: SUSPICIOUS USER-AGENT THREAT FINGERPRINTER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Suspicious User-Agent Threat Fingerprinter")
+    st.write("Scan client browser signatures to flag automated scraping tools.")
+    
+    agent_str = st.text_input("Ingest Target Client User-Agent String:", value="Mozilla/5.0 (compatible; Googlebot/2.1; +http://google.com)", key="threat_ua_str_k")
+    
+    if st.button("🚀 Analyze Client Browser Signature", key="threat_ua_btn_k"):
+        if "bot" in agent_str.lower() or "crawler" in agent_str.lower():
+            st.error("🚨 MALICIOUS SIGNATURE MATCH: Automated core scraper signature identified! Ingestion block active.")
+        else:
+            st.success("🟢 VERIFIED VALID PASS: Core client signature matches public baseline parameters.")
+
+def render_ltv_calculator():
+    """
+    TAB 6 ADDITION: CUSTOMER LIFETIME VALUE (LTV) CALCULATOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🔮 Dynamic Customer Lifetime Value (LTV) Calculator")
+    st.write("Project recurring monetization value horizons based on customer lifespan parameters.")
+    
+    col_lt1, col_lt2 = st.columns(2)
+    with col_lt1:
+        arpu_val = st.number_input("Average Revenue Per User (ARPU / Month $):", min_value=1.0, value=149.0, key="ltv_arpu_k")
+    with col_lt2:
+        churn_pct = st.slider("Active Corporate Account Churn Rate (%):", min_value=1, max_value=25, value=5, key="ltv_churn_k")
+        
+    estimated_ltv = arpu_val / (churn_pct / 100.0) if churn_pct > 0 else 0
+    st.metric(label="💰 Projected Customer Lifetime Value (LTV Floor)", value=f"${estimated_ltv:,.2f}", delta=f"{100/churn_pct:.1f} Months Retention")
+
+def render_cycle_time_analyst():
+    """
+    TAB 7 ADDITION: MILESTONE CYCLE TIME EFFICIENCY ANALYST
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("⏱️ Milestone Cycle Time Efficiency Analyst")
+    st.write("Track true project velocity by measuring production deployment timelines.")
+    
+    cycle_db = pd.DataFrame([
+        {"Task Node ID": "TSK-892", "Staging Setup Days": 2.4, "Production Release Days": 1.1, "Operational Status": "🟢 Optimized Line"},
+        {"Task Node ID": "TSK-401", "Staging Setup Days": 6.8, "Production Release Days": 3.4, "Operational Status": "⚠️ Delivery Delay"}
+    ])
+    st.dataframe(cycle_db, use_container_width=True)
+
+def render_weight_limit_monitor():
+    """
+    TAB 8 ADDITION: PALLET STACK WEIGHT LIMIT MONITOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("📐 Warehouse Pallet Rack Structural Weight Limit Monitor")
+    st.write("Audit storage row allocations against structural weight safety ceilings.")
+    
+    col_w1, col_w2 = st.columns(2)
+    with col_w1:
+        pallet_count = st.number_input("Number of Pallets Injected in Shelf Row:", min_value=1, value=4, key="wt_count_k")
+        avg_pallet_weight = st.number_input("Average Individual Weight Per Pallet (lbs):", min_value=100, value=1200, key="wt_avg_k")
+    with col_w2:
+        max_shelf_load = st.number_input("Maximum Rack Structural Safety Ceiling (lbs):", min_value=1000, value=6000, key="wt_max_k")
+        
+    total_load = pallet_count * avg_pallet_weight
+    st.success(f"⚖️ **Calculated Total Row Load Mass:** `{total_load:,} lbs`")
+    if total_load > max_shelf_load:
+        st.error("🚨 CRITICAL STRUCTURAL OVERLOAD: Row load mass breaches structural rack constraints!")
