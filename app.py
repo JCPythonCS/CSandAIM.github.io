@@ -98,8 +98,8 @@ with st.sidebar:
     # 2. Operational Region Filter
     if df_master is not None and 'Region' in df_master.columns:
         region_opts = sorted(df_master['Region'].dropna().unique())
-        selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v8")
-        if selected_region != "All Regions" and df is not None:
+        selected_region = st.selectbox("Select Operational Region:", ["All Region"] + list(region_opts), key="sb_region_v8")
+        if selected_region != "All Region" and df is not None:
             df = df[df['Region'] == selected_region]
 
     # 3. Active Retailer Filter
