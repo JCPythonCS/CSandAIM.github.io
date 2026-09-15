@@ -226,6 +226,8 @@ elif active_panel == "💰 Commercial Control (Tab 6)":
         wm.render_commercial_control()
         if hasattr(wm, 'render_churn_predictor'):
             wm.render_churn_predictor()
+        if hasattr(wm, 'render_product_markup_calc'):
+            wm.render_product_markup_calc()
     else:
         st.error("❌ Linkage Failure: render_commercial_control engine missing from workspace_modules.py.")
 
@@ -279,6 +281,8 @@ elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
 elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
     if 'wm' in locals() and hasattr(wm, 'render_text_parser'):
         wm.render_text_parser()
+        if hasattr(wm, 'render_ad_copy_scraper'):
+            wm.render_ad_copy_scraper()
         
         # This safely renders your brand new tool right below the text parser
         if hasattr(wm, 'render_sentiment_classifier'):
