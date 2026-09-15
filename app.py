@@ -208,8 +208,8 @@ elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' W
     wm.render_lead_matcher()
     wm.render_utm_generator()
     wm.render_invoice_ledger()
-        if hasattr(wm, 'render_sales_commission_calc'): wm.render_sales_commission_calc()
-        if hasattr(wm, 'render_conversion_velocity'): wm.render_conversion_velocity()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_sales_commission_calc()
+    if hasattr(wm, 'render_conversion_velocity'): wm.render_conversion_velocity()
 
 
 # ---- PANEL 4: SIMULATION (Tab 4) ----
