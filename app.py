@@ -30,6 +30,22 @@ with col_logo_right:
 
 st.markdown("---")
 
+# 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
+current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
+data_folder = current_working_dir
+all_files = [f for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
+database = {}
+
+for file_name in all_files:
+    file_path = os.path.join(data_folder, file_name)
+    display_name = os.path.splitext(file_name)[0]
+    try:
+        database[display_name] = file_path
+    except:
+        pass
+if 'selected_file_name' not in st.session_state and database:
+    st.session_state['selected_file_name'] = sorted(list(database.keys()))[0]
+
 # ⏱️ FIXED: REAL-TIME ISOLATED COUNTDOWN ENGINE
 # Using st.fragment ensures ONLY this block reloads, stopping the entire page from breaking
 @st.fragment(run_every=1.0)
@@ -90,73 +106,41 @@ else:
         df_master = pd.read_excel("enterprise_retail_dataT.xlsx")
 
 # ==========================================================================
-# 🌐 MASTER COCKPIT SIDEBAR CONTROL PANEL
+# 🌐 MASTER COCKPIT SIDEBAR CONTROL PANEL (REPLACES LINES 111-151)
 # ==========================================================================
 with st.sidebar:
     st.markdown("---")
-    st.header("🌐 Global System Filters")
-
-    # 1. Establish the base active dataframe from session state
-    if 'selected_file_name' in st.session_state and database:
-        try:
-            target_path = database[st.session_state['selected_file_name']]
-            df_active = pd.read_excel(target_path)
-        except:
-            df_active = df_master.copy() if df_master is not None else None
+    st.header("🎛️ Database Selector")
+    
+    if database:
+        selected_file = st.selectbox(
+            "Select Database File Asset:",
+            options=sorted(list(database.keys())),
+            key="selected_file_name_master"
+        )
+        st.session_state['selected_file_name'] = selected_file
+        df_master = pd.read_excel(database[selected_file])
     else:
-        df_active = df_master.copy() if df_master is not None else None
+        st.warning("⚠ No spreadsheet assets detected.")
+        df_master = None
 
-    # This 'df' variable will be sequentially filtered down step-by-step
-    df = df_active.copy() if df_active is not None else None
+    st.markdown("---")
+    st.header("🌐 Global System Filters")
+    df = df_master.copy() if df_master is not None else None
 
-    # 2. Render cascading filters sequentially if a valid dataframe is loaded
-    if df_active is not None and df is not None:
-        
-        # LEVEL 1: Command Tier Filter
-        if 'Command Tier' in df_active.columns:
-            # Command Tier always reads from the full active dataset options
-            command_opts = sorted(df_active['Command Tier'].dropna().unique())
-            selected_command_tier = st.selectbox("Select Command Tier:", ["All Command Tiers"] + list(command_opts), key="sb_command_tier_v18")
-            if selected_command_tier != "All Command Tiers":
-                df = df[df['Command Tier'] == selected_command_tier]
-
-        # LEVEL 2: Core Reporting Agency Filter (Depends on Command Tier selection)
-        if 'Agency' in df_active.columns:
-            # Reads options strictly from the 'df' that may have been filtered by Command Tier
-            agency_opts = sorted(df['Agency'].dropna().unique())
-            selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v18")
-            if selected_agency != "All Agencies":
-                df = df[df['Agency'] == selected_agency]
-
-        # LEVEL 3: Operational Region Filter (Depends on Agency selection)
-        if 'Region' in df_active.columns:
-            # Reads options strictly from the 'df' that may have been filtered by Agency
-            region_opts = sorted(df['Region'].dropna().unique())
-            selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v18")
-            if selected_region != "All Regions":
-                df = df[df['Region'] == selected_region]
-
-        # LEVEL 4: Active Retailer Filter (Depends on Region selection)
-        if 'Retailer' in df_active.columns:
-            # Reads options strictly from the 'df' that may have been filtered by Region
-            retailer_opts = sorted(df['Retailer'].dropna().unique())
-            selected_retailer = st.selectbox("Select Active Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v18")
-            if selected_retailer != "All Retailers":
-                df = df[df['Retailer'] == selected_retailer]
-
-# 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
-current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
-data_folder = current_working_dir
-all_files = [f for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
-database = {}
-
-for file_name in all_files:
-    file_path = os.path.join(data_folder, file_name)
-    display_name = os.path.splitext(file_name)[0]
-    try:
-        database[display_name] = file_path
-    except:
-        pass
+    if df_master is not None and df is not None:
+        # Cascading Pipeline Chain: Command Tier -> Agency -> Region -> Retailer
+        for col, label, reset_text in [
+            ('Command Tier', 'Select Command Tier:', 'All Command Tiers'),
+            ('Agency', 'Select Core Reporting Agency:', 'All Agencies'),
+            ('Region', 'Select Operational Region:', 'All Regions'),
+            ('Retailer', 'Select Active Retailer:', 'All Retailers')
+        ]:
+            if col in df_master.columns:
+                opts = sorted(df[col].dropna().unique())
+                selected_val = st.selectbox(label, [reset_text] + list(opts), key=f"sb_hier_{col.lower().replace(' ', '_')}")
+                if selected_val != reset_text:
+                    df = df[df[col] == selected_val]
 
 # 🎛️ COCKPIT MASTER NAVIGATION (Ungrouped Selection Panels)
 active_panel = st.selectbox(
