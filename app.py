@@ -291,20 +291,18 @@ elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
 
 # ---- PANEL 10: AI-OPS TEXT PARSING (Tab 10) ----
 elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
-    if 'wm' in locals() and hasattr(wm, 'render_text_parser'):
-        wm.render_text_parser()
-        if hasattr(wm, 'render_ad_copy_scraper'):
-            wm.render_ad_copy_scraper()
-        
-        # This safely renders your brand new tool right below the text parser
-        if hasattr(wm, 'render_sentiment_classifier'):
+    if 'wm' in locals():
+        if hasattr(wm, 'render_text_parser'): 
+            wm.render_text_parser()
+        if hasattr(wm, 'render_sentiment_classifier'): 
             wm.render_sentiment_classifier()
-        if hasattr(wm, 'render_headline_analyzer'):
+        if hasattr(wm, 'render_headline_analyzer'): 
             wm.render_headline_analyzer()
-        if hasattr(wm, 'render_ad_copy_scraper'):
-            wm.render_ad_copy_scraper()
-        if hasattr(wm, 'render_ai_dispatcher'):
+        if hasattr(wm, 'render_ad_copy_scraper'): 
+            wm.render_ad_copy_scraper()  # <--- KEEP ONLY ONE OF THESE LINES
+        if hasattr(wm, 'render_ai_dispatcher'): 
             wm.render_ai_dispatcher()
+
     else:
         st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
 
