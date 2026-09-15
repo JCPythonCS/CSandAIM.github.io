@@ -224,6 +224,8 @@ elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' 
 elif active_panel == "💰 Commercial Control (Tab 6)":
     if 'wm' in locals() and hasattr(wm, 'render_commercial_control'):
         wm.render_commercial_control()
+        if hasattr(wm, 'render_churn_predictor'):
+            wm.render_churn_predictor()
     else:
         st.error("❌ Linkage Failure: render_commercial_control engine missing from workspace_modules.py.")
 
