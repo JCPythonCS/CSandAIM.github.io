@@ -510,34 +510,6 @@ def render_library_catalog():
     ])
     st.dataframe(mock_catalog, use_container_width=True)
 
-    # 🗺️ LINKED RENDERER ENGINE LOOP: Perfectly aligned with variable names
-    for idx, (name, price) in enumerate(library_master_list, start=1):
-        str_id = f"{idx:02d}"
-        if query and query.lower() not in name.lower():
-            continue
-            
-        with st.container():
-            c_main, c_side = st.columns([3, 1])  # Symmetrical 75% / 25% alignment ratio
-            with c_main:
-                st.markdown(f"### 📄 Card {str_id} - {name}")
-                st.write(f"*Premium enterprise tracking blueprint matrix configuration.*")
-                
-                url = video_streaming_urls.get(str_id, "")
-                if url:
-                    embed_html = f'''
-                    <iframe src="{url}" width="100%" height="360" allow="autoplay; encrypted-media" allowfullscreen style="border: none; border-radius: 8px;"></iframe>
-                    '''
-                    st.components.v1.html(embed_html, height=380)
-                else:
-                    st.caption("ℹ️ *[ Briefing Media Tracks Synchronizing / Blueprint Core Online ]*")
-                    
-            with c_side:
-                st.write("")
-                st.metric(label="Store Price", value=f"${price:.2f}")
-                if st.button("Simulate Deployment", key=f"d_b_{str_id}"):
-                    st.success(f"⚡ Card {str_id} variables verified inside secure staging sandbox.")
-            st.markdown("<hr style='border: 0; border-top: 1px dashed #CBD5E1;' />", unsafe_allow_html=True)
-
 def fetch_active_stream_registers():
     """
     Connects to the Oracle Autonomous Database container and safely extracts
