@@ -67,37 +67,36 @@ def render_live_countdown():
 with st.sidebar:
     render_live_countdown()
 
-        # 🏙️ 1. Dynamic Region Selection Filter
-        if 'Region' in df.columns:
-            region_opts = sorted(df['Region'].dropna().unique())
-            selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_opt_v4")
-            if selected_region != "All Regions":
-                df = df[df['Region'] == selected_region]
+    # 🏙️ 1. Dynamic Region Selection Filter
+    if 'Region' in df.columns:
+        region_opts = sorted(df['Region'].dropna().unique())
+        selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_opt_v4")
+        if selected_region != "All Regions":
+            df = df[df['Region'] == selected_region]
 
-        # 🏢 2. Dynamic Agency Selection Filter
-        if 'Agency' in df.columns:
-            agency_opts = sorted(df['Agency'].dropna().unique())
-            selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_opt_v4")
-            if selected_agency != "All Agencies":
-                df = df[df['Agency'] == selected_agency]
+    # 🏢 2. Dynamic Agency Selection Filter
+    if 'Agency' in df.columns:
+        agency_opts = sorted(df['Agency'].dropna().unique())
+        selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_opt_v4")
+        if selected_agency != "All Agencies":
+            df = df[df['Agency'] == selected_agency]
 
-        # 🎖️ 3. Dynamic Command Level Selection Filter
-        if 'Command' in df.columns:
-            command_opts = sorted(df['Command'].dropna().unique())
-            selected_command = st.selectbox("Select Strategic Command:", ["All Commands"] + list(command_opts), key="sb_command_opt_v4")
-            if selected_command != "All Commands":
-                df = df[df['Command'] == selected_command]
+    # 🎖️ 3. Dynamic Command Level Selection Filter
+    if 'Command' in df.columns:
+        command_opts = sorted(df['Command'].dropna().unique())
+        selected_command = st.selectbox("Select Strategic Command:", ["All Commands"] + list(command_opts), key="sb_command_opt_v4")
+        if selected_command != "All Commands":
+            df = df[df['Command'] == selected_command]
 
-        # 📊 4. Dynamic Performance Tier Selection Filter
-        if 'Tier' in df.columns:
-            tier_opts = sorted(df['Tier'].dropna().unique())
-            selected_tier = st.selectbox("Select Operational Performance Tier:", ["All Tiers"] + list(tier_opts), key="sb_tier_opt_v4")
-            if selected_tier != "All Tiers":
-                df = df[df['Tier'] == selected_tier]
+    # 📊 4. Dynamic Performance Tier Selection Filter
+    if 'Tier' in df.columns:
+        tier_opts = sorted(df['Tier'].dropna().unique())
+        selected_tier = st.selectbox("Select Operational Performance Tier:", ["All Tiers"] + list(tier_opts), key="sb_tier_opt_v4")
+        if selected_tier != "All Tiers":
+            df = df[df['Tier'] == selected_tier]
                 
-        # Assign the master filtered data slice down to your Tab 1 layout views
-        filtered_df = df
-
+    # Assign the master filtered data slice down to your Tab 1 layout views
+    filtered_df = df
 
 # 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
 current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
