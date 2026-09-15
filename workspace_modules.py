@@ -460,45 +460,65 @@ def render_email_verifier():
 # TAB 5: MULTIMEDIA LIBRARY STORAGE MAP (33 VERIFIED CARDS)
 # ====================================================================
 def render_library_catalog():
-    """
-    TAB 5 OVERHAUL: DYNAMIC 33-TRACK MEDIA CORE ENGINE
-    """
-    import streamlit as st
-    import pandas as pd
+    st.subheader("📚 Global System Asset Library & Multimedia Center")
+    st.write("Stream live video briefings matching your live storefront repository.")
     
+    # 🧠 THE DEFINITIVE SYMMETRICAL DATA MASTER LIST
+    library_master_list = [
+        ("Agile Sprint Estimation & Cloud Cost PMP Toolkit", 49.00), ("Developer Onboarding Framework Base Ledger", 59.00),
+        ("Smart City Traffic Matrix", 79.00), ("Edge Compute Grid Blueprint", 99.00), ("Enterprise Security Architecture", 149.00),
+        ("Global Datacenter Architecture", 179.00), ("Municipal Smart Grid Layout", 199.00), ("Fault-Tolerant Corporate Network Topology", 219.00),
+        ("Enterprise Container Orchestration Manual", 249.00), ("Mission-Critical Disaster Recovery Playbook", 279.00),
+        ("Enterprise Identity & Access Management (IAM)", 299.00), ("High-Frequency Telemetry Instrumentation Dashboard", 319.00),
+        ("CI/CD Automated Software Release Build Chain", 329.00), ("Advanced Intermodal Port Articulation Matrix", 349.00),
+        ("High-Voltage Propulsion Stator Ledger", 379.00), ("Cryogenic Fluid Logistics Matrix", 399.00), ("Kinetic Energy Recovery Grid", 429.00),
+        ("Orbital Telemetry Link Node", 459.00), ("Geothermal Pressure Vent Core", 489.00), ("Bio-Chemical Inoculation Matrix", 499.00),
+        ("Stratospheric Drone Network Array", 519.00), ("Subsurface Acoustic Array Matrix", 539.00), ("Hydrogen Propulsion Fuel Array", 559.00),
+        ("Automated Freight Switchyard Grid", 579.00), ("Quantum Encryption Key Ledger", 599.00), ("Hydroelectric Turbine Gateway Matrix Grid", 609.00),
+        ("Orbital Refueling Dock Link", 619.00), ("Macromolecular Diamondoid Mechanical Actuator Matrix", 89.00),
+        ("Self-Replicating Molecular Assembler Swarm Optimization Matrix", 89.00), ("Topological Insulator Quantum Logic Registry", 89.00),
+        ("Programmable Bio-Molecular Nano-Filter Matrix", 89.00), ("Sub-Nanometer Quantum Waveguide Mesh Core Framework", 89.00),
+        ("Atomically Precise Graphene Circuit Matrix Ledger", 89.00)
+    ]
+    
+    # Converted Google Drive Streaming Mapping Tables (Web Viewport Compliant Previews)
+    video_streaming_urls = {
+        "01": "https://www.google.com",
+        "02": "https://www.google.com",
+        "03": "https://www.google.com",
+        "04": "https://www.google.com",
+        "05": "https://www.google.com",
+        "06": "https://www.google.com",
+        "07": "https://www.google.com",
+        "08": "https://www.google.com",
+        "09": "https://www.google.com",
+        "10": "https://www.google.com",
+        "11": "https://www.google.com",
+        "12": "https://www.google.com",
+        "13": "https://www.google.com",
+        "14": "https://www.google.com",
+        "15": "https://www.google.com",
+        "16": "https://www.google.com",
+        "17": "https://www.google.com",
+        "18": "https://www.google.com",
+        "19": "https://www.google.com",
+        "20": "https://www.google.com",
+        "21": "https://www.google.com",
+        "22": "https://www.google.com",
+        "23": "https://www.google.com",
+        "24": "https://www.google.com",
+        "25": "https://www.google.com",
+        "26": "https://www.google.com",
+        "27": "https://www.google.com",
+        "28": "https://www.google.com",
+        "29": "https://www.google.com",
+        "30": "https://www.google.com",
+        "31": "https://www.google.com",
+        "32": "https://www.google.com"
+    }
+
+    query = st.text_input("🔍 Filter Catalog by Key Phrase:", placeholder="Type name...", key="wm_lib_s_b")
     st.markdown("---")
-    st.subheader("🎬 Production Studio Catalog & Streaming Node")
-    st.write("Stream any of your 33 synchronized voiceover video tracks directly from your cloud directory.")
-    
-    # 📑 Generate the complete structural list of all 33 production tracks programmatically
-    # This automatically tracks files sequence-by-sequence without legacy loop crashes
-    production_tracks = [f"scene_{idx:02d}_voiceover.mp4" for idx in range(1, 34)]
-    
-    # Render an explicit selection dropdown right inside the tool body layout
-    selected_video = st.selectbox(
-        "Select Active Production Video Track to Stream:", 
-        production_tracks, 
-        key="cockpit_studio_video_select"
-    )
-    
-    # Fixed base parent folder sharing ID asset reference anchor
-    # Allows downstream engines to target the global directory node natively
-    parent_folder_id = "1BUnCmw4e4OTSBgyjjbJJsS12Yvg_lvrL"
-    
-    # Compile a direct public connection path to access folder frames safely
-    folder_url = f"https://google.com{parent_folder_id}"
-    
-    st.info(f"🛰️ Telemetry Locked: Streaming tracking channel target (**{selected_video}**)")
-    st.markdown(f"🔗 **[Open JCPSS Cloud Directory Link Platform]({folder_url})**")
-    
-    # Safe, self-contained display catalog table replacing all broken legacy references
-    st.markdown("---")
-    st.markdown("### 📋 Linked Storefront Product Asset Matrix")
-    mock_catalog = pd.DataFrame([
-        {"Asset Target Name": "Premium Video Access Card", "Package Reference": "CARD-PLATINUM-777", "Base Value ($)": 399.00},
-        {"Asset Target Name": "Standard Media Bundle", "Package Reference": "CARD-GOLD-555", "Base Value ($)": 149.00}
-    ])
-    st.dataframe(mock_catalog, use_container_width=True)
 
     # 🗺️ LINKED RENDERER ENGINE LOOP: Perfectly aligned with variable names
     for idx, (name, price) in enumerate(library_master_list, start=1):
