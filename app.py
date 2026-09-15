@@ -95,8 +95,9 @@ with st.sidebar:
             if selected_tier != "All Tiers":
                 df = df[df['Tier'] == selected_tier]
                 
-        # Update the master filtered global dataset reference
+        # Assign the master filtered data slice down to your Tab 1 layout views
         filtered_df = df
+
 
 # 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
 current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
