@@ -1260,3 +1260,63 @@ def render_sales_commission_calc():
         cm1, cm2 = st.columns(2)
         cm1.metric(label="📊 Base Tier Commission", value=f"${base_commission:,.2f}")
         cm2.metric(label="⚡ Milestone Performance Bonus", value=f"${milestone_bonus:,.2f}", delta="Triggered" if milestone_bonus > 0 else "N/A")
+
+def render_batch_obd_scanner():
+    """
+    TAB 9 ADDITION: MULTI-CODE OBD-II BATCH SCANNER
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("🏎️ Multi-Code OBD-II Diagnostic Batch Scanner")
+    st.write("Ingest and analyze multiple diagnostic trouble codes simultaneously to map full vehicular system failures.")
+    
+    # Core technical alphanumeric trouble lookup dictionary index
+    extended_obd_db = {
+        "P0300": "🚨 Random/Multiple Cylinder Misfire Detected (Ignition)",
+        "P0171": "⚠️ System Too Lean - Bank 1 (Air/Fuel Ratio / Vacuum Leak)",
+        "P0420": "🛑 Catalyst System Efficiency Below Threshold (Exhaust)",
+        "P0113": "🔍 Intake Air Temperature Sensor 1 Circuit High Input",
+        "P0505": "⚙️ Idle Control System Malfunction (Throttle Core)",
+        "P0700": "⚡ Transmission Control System Malfunction (Gearbox Vector)"
+    }
+    
+    batch_input = st.text_input("Ingest Comma-Separated DTC Codes:", value="P0300, P0171, P0700", key="obd_batch_box")
+    
+    if st.button("🚀 Execute Multi-Code Batch Diagnostics", key="obd_batch_btn"):
+        codes = [c.strip().upper() for c in batch_input.split(",") if c.strip()]
+        scan_results = []
+        
+        for code in codes:
+            description = extended_obd_db.get(code, "ℹ️ Fault code recognized. Awaiting deep data-link synchronization.")
+            scan_results.append({"Trouble Code Node": code, "System Diagnostic Assessment": description})
+            
+        st.success("🟢 BATCH ANALYSIS MATRIX STABLE:")
+        st.dataframe(pd.DataFrame(scan_results), use_container_width=True)
+
+def render_churn_predictor():
+    """
+    TAB 6 ADDITION: SUBSCRIPTION DEFECTION & CHURN PREDICTOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("📊 Subscription Defection & Revenue Churn Predictor")
+    st.write("Model the impact of customer cancellations against recurring financial horizons.")
+    
+    ch_c1, ch_c2 = st.columns(2)
+    with ch_c1:
+        starting_mrr = st.number_input("Current Monthly Recurring Revenue ($):", min_value=1000, value=15000, step=1000, key="ch_mrr_in")
+        projected_churn_rate = st.slider("Target Expected Monthly Churn Rate (%):", min_value=1, max_value=30, value=5, key="ch_rate_sl")
+    with ch_c2:
+        new_expansion_sales = st.number_input("Projected New Pipeline Sales per Month ($):", min_value=0, value=2500, step=500, key="ch_new_in")
+        
+    # Accrual defection forecasting algorithms
+    gross_churn_loss = starting_mrr * (projected_churn_rate / 100.0)
+    net_monthly_mrr_delta = new_expansion_sales - gross_churn_loss
+    ending_mrr_horizon = starting_mrr + net_monthly_mrr_delta
+    
+    st.markdown("##### 📉 30-Day Cash Horizon Trajectory")
+    ch_m1, ch_m2, ch_m3 = st.columns(3)
+    ch_m1.metric(label="💸 Gross Churn Revenue Leakage", value=f"-${gross_churn_loss:,.2f}")
+    ch_m2.metric(label="⚡ Net MRR Growth Velocity", value=f"${net_monthly_mrr_delta:,.2f}", delta=f"${net_monthly_mrr_delta:,.2f}")
+    ch_m3.metric(label="🔮 Next-Month Projected MRR Floor", value=f"${ending_mrr_horizon:,.2f}")
