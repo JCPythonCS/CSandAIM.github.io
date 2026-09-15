@@ -1379,3 +1379,57 @@ def render_ad_copy_scraper():
                 st.info("ℹ️ Analytics Clean: Zero common high-conversion power hooks identified in input copy text lines.")
         else:
             st.warning("⚠️ Ingestion buffer is empty. Paste copy lines to analyze.")
+
+def render_resource_allocation_tracker():
+    """
+    TAB 7 ADDITION: RESOURCE CAPACITY ALLOCATION TRACKER
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("👥 Team Resource Capacity Allocation Tracker")
+    st.write("Monitor engineering capacities, assign development tracks, and proactively flag over-allocated team assets.")
+    
+    if "resource_db" not in st.session_state:
+        st.session_state.resource_db = pd.DataFrame([
+            {"Engineer Name": "Marcus", "Assigned Focus": "PayPal Integration Gateway", "Weekly Allocated Hours": 38, "Max Capacity Threshold": 40},
+            {"Engineer Name": "Johnny", "Assigned Focus": "Oracle Database Core Security", "Weekly Allocated Hours": 45, "Max Capacity Threshold": 40},
+            {"Engineer Name": "Sarah", "Assigned Focus": "UI Responsive Refinements", "Weekly Allocated Hours": 25, "Max Capacity Threshold": 40}
+        ])
+        
+    edited_res_df = st.data_editor(st.session_state.resource_db, use_container_width=True, num_rows="dynamic", key="resource_editor")
+    
+    if st.button("🚀 Audit Resource Allocation Vectors", key="resource_audit_btn"):
+        st.session_state.resource_db = edited_res_df
+        st.success("✅ Team capacity calculations completed successfully.")
+        
+        # Chronological allocation loop scan to verify load constraints
+        for index, row in edited_res_df.iterrows():
+            if row["Weekly Allocated Hours"] > row["Max Capacity Threshold"]:
+                st.error(f"🚨 OVER-ALLOCATION ALARM: Engineer **{row['Engineer Name']}** is tracking at {row['Weekly Allocated Hours']} hours! Reduce task backlog immediately to safeguard timeline health.")
+            else:
+                st.success(f"🟢 Resource Stabilized: **{row['Engineer Name']}** workload balanced correctly ({row['Weekly Allocated Hours']}/{row['Max Capacity Threshold']}h).")
+
+def render_reorder_trigger_ledger():
+    """
+    TAB 8 ADDITION: REORDER POINT TRIGGER LEDGER
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("📦 Reorder Point Trigger Ledger")
+    st.write("Compute inventory reorder points automatically by balancing average daily usage speeds against supplier turnaround metrics.")
+    
+    col_ro1, col_ro2 = st.columns(2)
+    with col_ro1:
+        daily_usage = st.number_input("Average Daily Unit Sales / Usage:", min_value=1, value=50, step=5, key="ro_usage_in")
+        lead_time_days = st.number_input("Supplier Delivery Turnaround (Days):", min_value=1, value=7, step=1, key="ro_lead_in")
+    with col_ro2:
+        safety_stock_floor = st.number_input("Current Safety Stock Reserve Level:", min_value=0, value=150, step=10, key="ro_safety_in")
+        
+    if daily_usage and lead_time_days:
+        # Standard logistical reorder point calculation formula: (Daily Usage * Lead Time) + Safety Stock
+        calculated_reorder_point = (daily_usage * lead_time_days) + safety_stock_floor
+        
+        st.success(f"🎯 **Calculated Restock Inventory Reorder Point:** `{calculated_reorder_point} Units`")
+        st.info(f"💡 *Operational Log: Trigger a fresh wholesale restock request the exact second your local inventory drops below this threshold parameter matrix.*")
