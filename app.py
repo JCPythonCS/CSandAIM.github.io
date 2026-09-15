@@ -96,7 +96,7 @@ with st.sidebar:
     st.markdown("---")
     st.header("🌐 Global System Filters")
 
-    # Establish active dataframe globally so filters sync correctly
+    # 1. Establish the active dataframe globally so filters sync in real-time
     if 'selected_file_name' in st.session_state and database:
         try:
             target_path = database[st.session_state['selected_file_name']]
@@ -108,32 +108,36 @@ with st.sidebar:
 
     df = df_active.copy() if df_active is not None else None
 
+    # 2. Render filters only if a valid dataframe asset is loaded
     if df_active is not None:
-        # Operational Region and Agency/Retailer Filters
-        if 'Region' in df_active.columns:
-            region_opts = sorted(df_active['Region'].dropna().unique())
-            selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v16")
-            if selected_region != "All Regions" and df is not None:
-                df = df[df['Region'] == selected_region]
-
+        
+        # --- Core Reporting Agency Filter ---
         if 'Agency' in df_active.columns:
             agency_opts = sorted(df_active['Agency'].dropna().unique())
             selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v16")
             if selected_agency != "All Agencies" and df is not None:
                 df = df[df['Agency'] == selected_agency]
 
+        # --- Operational Region Filter ---
+        if 'Region' in df_active.columns:
+            region_opts = sorted(df_active['Region'].dropna().unique())
+            selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v16")
+            if selected_region != "All Regions" and df is not None:
+                df = df[df['Region'] == selected_region]
+
+        # --- Active Retailer Filter ---
         if 'Retailer' in df_active.columns:
             retailer_opts = sorted(df_active['Retailer'].dropna().unique())
-            selected_retailer = st.selectbox("Select Active Store/Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v16")
+            selected_retailer = st.selectbox("Select Active Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v16")
             if selected_retailer != "All Retailers" and df is not None:
                 df = df[df['Retailer'] == selected_retailer]
 
-    # 4. Command Tier Filter 
-    if df_master is not None and 'Command Tier' in df_master.columns:
-        command_tier_opts = sorted(df_master['Command Tier'].dropna().unique())
-        selected_command_tier = st.selectbox("Select Command Tier:", ["All Command Tiers"] + list(command_tier_opts), key="sb_command_tier_v15")
-        if selected_command_tier != "All Command Tiers" and df is not None:
-            df = df[df['Command Tier'] == selected_command_tier]
+        # --- Command Tier Filter ---
+        if 'Command Tier' in df_active.columns:
+            command_tier_opts = sorted(df_active['Command Tier'].dropna().unique())
+            selected_command_tier = st.selectbox("Select Command Tier:", ["All Command Tiers"] + list(command_tier_opts), key="sb_command_tier_v16")
+            if selected_command_tier != "All Command Tiers" and df is not None:
+                df = df[df['Command Tier'] == selected_command_tier]
 
 # 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
 current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
