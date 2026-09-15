@@ -96,7 +96,7 @@ with st.sidebar:
     st.markdown("---")
     st.header("🌐 Global System Filters")
 
-    # 1. Establish the active dataframe globally so filters sync in real-time
+    # 1. Establish the base active dataframe from session state
     if 'selected_file_name' in st.session_state and database:
         try:
             target_path = database[st.session_state['selected_file_name']]
@@ -106,38 +106,43 @@ with st.sidebar:
     else:
         df_active = df_master.copy() if df_master is not None else None
 
+    # This 'df' variable will be sequentially filtered down step-by-step
     df = df_active.copy() if df_active is not None else None
 
-    # 2. Render filters only if a valid dataframe asset is loaded
-    if df_active is not None:
+    # 2. Render cascading filters sequentially if a valid dataframe is loaded
+    if df_active is not None and df is not None:
         
-        # --- Core Reporting Agency Filter ---
+        # LEVEL 1: Command Tier Filter
+        if 'Command Tier' in df_active.columns:
+            # Command Tier always reads from the full active dataset options
+            command_opts = sorted(df_active['Command Tier'].dropna().unique())
+            selected_command_tier = st.selectbox("Select Command Tier:", ["All Command Tiers"] + list(command_opts), key="sb_command_tier_v18")
+            if selected_command_tier != "All Command Tiers":
+                df = df[df['Command Tier'] == selected_command_tier]
+
+        # LEVEL 2: Core Reporting Agency Filter (Depends on Command Tier selection)
         if 'Agency' in df_active.columns:
-            agency_opts = sorted(df_active['Agency'].dropna().unique())
-            selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v16")
-            if selected_agency != "All Agencies" and df is not None:
+            # Reads options strictly from the 'df' that may have been filtered by Command Tier
+            agency_opts = sorted(df['Agency'].dropna().unique())
+            selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v18")
+            if selected_agency != "All Agencies":
                 df = df[df['Agency'] == selected_agency]
 
-        # --- Operational Region Filter ---
+        # LEVEL 3: Operational Region Filter (Depends on Agency selection)
         if 'Region' in df_active.columns:
-            region_opts = sorted(df_active['Region'].dropna().unique())
-            selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v16")
-            if selected_region != "All Regions" and df is not None:
+            # Reads options strictly from the 'df' that may have been filtered by Agency
+            region_opts = sorted(df['Region'].dropna().unique())
+            selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v18")
+            if selected_region != "All Regions":
                 df = df[df['Region'] == selected_region]
 
-        # --- Active Retailer Filter ---
+        # LEVEL 4: Active Retailer Filter (Depends on Region selection)
         if 'Retailer' in df_active.columns:
-            retailer_opts = sorted(df_active['Retailer'].dropna().unique())
-            selected_retailer = st.selectbox("Select Active Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v16")
-            if selected_retailer != "All Retailers" and df is not None:
+            # Reads options strictly from the 'df' that may have been filtered by Region
+            retailer_opts = sorted(df['Retailer'].dropna().unique())
+            selected_retailer = st.selectbox("Select Active Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v18")
+            if selected_retailer != "All Retailers":
                 df = df[df['Retailer'] == selected_retailer]
-
-        # --- Command Tier Filter ---
-        if 'Command Tier' in df_active.columns:
-            command_tier_opts = sorted(df_active['Command Tier'].dropna().unique())
-            selected_command_tier = st.selectbox("Select Command Tier:", ["All Command Tiers"] + list(command_tier_opts), key="sb_command_tier_v16")
-            if selected_command_tier != "All Command Tiers" and df is not None:
-                df = df[df['Command Tier'] == selected_command_tier]
 
 # 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
 current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
