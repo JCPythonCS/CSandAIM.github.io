@@ -193,10 +193,7 @@ elif active_panel == "🛠 Utilities (Tab 2)":  # <--- MAKE SURE THIS IS 'elif' 
     wm.render_translator()
     st.markdown("---")
     wm.render_renamer()
-    if hasattr(wm, 'render_threat_analyzer'): wm.render_threat_analyzer()
-    if hasattr(wm, 'render_ip_throttle_monitor'): wm.render_ip_throttle_monitor()
-    if hasattr(wm, 'render_token_radar'): wm.render_token_radar()
-    
+    wm.render_threat_analyzer()
 
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
 elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -208,9 +205,8 @@ elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' W
     wm.render_lead_matcher()
     wm.render_utm_generator()
     wm.render_invoice_ledger()
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_sales_commission_calc()
-    if hasattr(wm, 'render_conversion_velocity'): wm.render_conversion_velocity()
-
+    if hasattr(wm, 'render_sales_commission_calc'):
+        wm.render_sales_commission_calc()    
 
 # ---- PANEL 4: SIMULATION (Tab 4) ----
 elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -226,61 +222,81 @@ elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' 
 
 # ---- PANEL 6: COMMERCIAL CONTROL (Tab 6) ----
 elif active_panel == "💰 Commercial Control (Tab 6)":
-    if 'wm' in locals() and hasattr(wm, 'render_commercial_control'): wm.render_commercial_control()
-    if hasattr(wm, 'render_churn_predictor'): wm.render_churn_predictor()
-    if hasattr(wm, 'render_product_markup_calc'): wm.render_product_markup_calc()
-    if hasattr(wm, 'render_tax_estimator_v2'): wm.render_tax_estimator_v2()
+    if 'wm' in locals() and hasattr(wm, 'render_commercial_control'):
+        wm.render_commercial_control()
+        if hasattr(wm, 'render_churn_predictor'):
+            wm.render_churn_predictor()
+        if hasattr(wm, 'render_product_markup_calc'):
+            wm.render_product_markup_calc()
+        if hasattr(wm, 'render_tax_estimator_v2'):
+            wm.render_tax_estimator_v2()
     else:
         st.error("❌ Linkage Failure: render_commercial_control engine missing from workspace_modules.py.")
 
 # ---- PANEL 7: PROJECT MANAGEMENT (Tab 7) ----
 elif active_panel == "📋 Project Management (Tab 7)":
     if 'wm' in locals():
-    if hasattr(wm, 'render_delivery_countdown'): wm.render_delivery_countdown()
-    if hasattr(wm, 'render_pm_roadmap'): wm.render_pm_roadmap()
-    if hasattr(wm, 'render_revenue_sorter'): wm.render_revenue_sorter()
-    if hasattr(wm, 'render_revision_logger'): wm.render_revision_logger()
-    if hasattr(wm, 'render_sprint_velocity'): wm.render_sprint_velocity()
-    if hasattr(wm, 'render_dependency_validator'): wm.render_dependency_validator()
-    if hasattr(wm, 'render_resource_allocation_tracker'): wm.render_resource_allocation_tracker()
-    if hasattr(wm, 'render_sprint_burndown_v2'): wm.render_sprint_burndown_v2() # <--- KEEP ONLY THIS VERSION
+        if hasattr(wm, 'render_delivery_countdown'): wm.render_delivery_countdown()
+        if hasattr(wm, 'render_pm_roadmap'): wm.render_pm_roadmap()
+        if hasattr(wm, 'render_revenue_sorter'): wm.render_revenue_sorter()
+        if hasattr(wm, 'render_revision_logger'): wm.render_revision_logger()
+        if hasattr(wm, 'render_sprint_velocity'): wm.render_sprint_velocity()
+        if hasattr(wm, 'render_dependency_validator'): wm.render_dependency_validator()
+        if hasattr(wm, 'render_resource_allocation_tracker'): wm.render_resource_allocation_tracker()
+        if hasattr(wm, 'render_sprint_burndown_v2'): wm.render_sprint_burndown_v2() # <--- KEEP ONLY THIS VERSION
 
-else:
-    st.error("❌ Linkage Failure: render_delivery_countdown missing from workspace_modules.py.")
+    else:
+        st.error("❌ Linkage Failure: render_delivery_countdown missing from workspace_modules.py.")
 
 # ---- PANEL 8: SUPPLY CHAIN & LOGISTICS (Tab 8) ----
 elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
     if 'wm' in locals() and hasattr(wm, 'render_tracking_aggregator'):
         wm.render_tracking_aggregator()
-    if hasattr(wm, 'render_safety_stock'): wm.render_safety_stock()
-    if hasattr(wm, 'render_reorder_trigger_ledger'): wm.render_reorder_trigger_ledger()
-    if hasattr(wm, 'render_fuel_analyst_v2'): wm.render_fuel_analyst_v2()
-    if hasattr(wm, 'render_storage_optimizer'): wm.render_storage_optimizer()
-    if hasattr(wm, 'render_carrier_auditor'): wm.render_carrier_auditor()
+        
+        # 👇 HOOKS THE SAFETY STOCK BUFFER CALC NATIVELY TO TAB 8
+        if hasattr(wm, 'render_safety_stock'):
+            wm.render_safety_stock()
+        if hasattr(wm, 'render_reorder_trigger_ledger'):
+            wm.render_reorder_trigger_ledger()
+        if hasattr(wm, 'render_fuel_analyst_v2'):
+            wm.render_fuel_analyst_v2()
 
-else:
-    st.error("❌ Linkage Failure: render_tracking_aggregator missing from workspace_modules.py.")
+    else:
+        st.error("❌ Linkage Failure: render_tracking_aggregator missing from workspace_modules.py.")
 
 # ---- PANEL 9: FLEET & AUTOMOTIVE (Tab 9) ----
 elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
-    if 'wm' in locals() and hasattr(wm, 'render_vin_parser'): wm.render_vin_parser()
-    if hasattr(wm, 'render_obd_matcher'): wm.render_obd_matcher()
-    if hasattr(wm, 'render_parts_cross_ref'): wm.render_parts_cross_ref()
-    if hasattr(wm, 'render_batch_obd_scanner'): wm.render_batch_obd_scanner()
-    if hasattr(wm, 'render_fuel_analyst'): wm.render_fuel_analyst()
+    if 'wm' in locals() and hasattr(wm, 'render_vin_parser'):
+        wm.render_vin_parser()
+        
+        # 👇 HOOKS THE OBD DIAGNOSTIC CODE DICTIONARY TO TAB 9
+        if hasattr(wm, 'render_obd_matcher'):
+            wm.render_obd_matcher()
+        if hasattr(wm, 'render_parts_cross_ref'):
+            wm.render_parts_cross_ref()
+            if hasattr(wm, 'render_batch_obd_scanner'):
+                wm.render_batch_obd_scanner()
+        if hasattr(wm, 'render_fuel_analyst'):
+            wm.render_fuel_analyst()
 
-else:
-    st.error("❌ Linkage Failure: render_vin_parser missing from workspace_modules.py.")
+    else:
+        st.error("❌ Linkage Failure: render_vin_parser missing from workspace_modules.py.")
 
 # ---- PANEL 10: AI-OPS TEXT PARSING (Tab 10) ----
 elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
-    if 'wm' in locals(): 
-    if hasattr(wm, 'render_text_parser'): wm.render_text_parser()
-    if hasattr(wm, 'render_sentiment_classifier'): wm.render_sentiment_classifier()
-    if hasattr(wm, 'render_headline_analyzer'): wm.render_headline_analyzer()
-    if hasattr(wm, 'render_ad_copy_scraper'): wm.render_ad_copy_scraper()
-    if hasattr(wm, 'render_ai_dispatcher'): wm.render_ai_dispatcher()
-    if hasattr(wm, 'render_ai_dispatcher_v2'): wm.render_ai_dispatcher_v2()
+    if 'wm' in locals():
+        if hasattr(wm, 'render_text_parser'): 
+            wm.render_text_parser()
+        if hasattr(wm, 'render_sentiment_classifier'): 
+            wm.render_sentiment_classifier()
+        if hasattr(wm, 'render_headline_analyzer'): 
+            wm.render_headline_analyzer()
+        if hasattr(wm, 'render_ad_copy_scraper'): 
+            wm.render_ad_copy_scraper()  # <--- KEEP ONLY ONE OF THESE LINES
+        if hasattr(wm, 'render_ai_dispatcher'): 
+            wm.render_ai_dispatcher()
+        if hasattr(wm, 'render_ai_dispatcher_v2'):
+            wm.render_ai_dispatcher_v2()
 
     else:
         st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
