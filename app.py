@@ -210,12 +210,14 @@ elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' W
     if hasattr(wm, 'render_sales_commission_calc'):
         wm.render_sales_commission_calc()    
     if hasattr(wm, 'render_conversion_velocity'): wm.render_conversion_velocity()
+    wm.render_compliance_builder()
 
 # ---- PANEL 4: SIMULATION (Tab 4) ----
 elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     wm.render_runway()
     st.markdown("---")
     wm.render_email_verifier()
+    wm.render_cloud_stress_tester()
 
 # ---- PANEL 5: LIBRARY (Tab 5) ----
 elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -233,6 +235,8 @@ elif active_panel == "💰 Commercial Control (Tab 6)":
             wm.render_product_markup_calc()
         if hasattr(wm, 'render_tax_estimator_v2'):
             wm.render_tax_estimator_v2()
+        wm.render_cac_monitor()
+
     else:
         st.error("❌ Linkage Failure: render_commercial_control engine missing from workspace_modules.py.")
 
@@ -247,7 +251,8 @@ elif active_panel == "📋 Project Management (Tab 7)":
         if hasattr(wm, 'render_dependency_validator'): wm.render_dependency_validator()
         if hasattr(wm, 'render_resource_allocation_tracker'): wm.render_resource_allocation_tracker()
         if hasattr(wm, 'render_sprint_burndown_v2'): wm.render_sprint_burndown_v2() # <--- KEEP ONLY THIS VERSION
-
+        wm.render_story_velocity_analyst()
+    
     else:
         st.error("❌ Linkage Failure: render_delivery_countdown missing from workspace_modules.py.")
 
@@ -263,6 +268,7 @@ elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
             wm.render_fuel_analyst_v2()
         if hasattr(wm, 'render_storage_optimizer'): wm.render_storage_optimizer()
         if hasattr(wm, 'render_carrier_auditor'): wm.render_carrier_auditor()
+        wm.render_stack_clearance_advisor()
     
     else:
         st.error("❌ Linkage Failure: render_tracking_aggregator missing from workspace_modules.py.")
