@@ -239,25 +239,25 @@ elif active_panel == "💰 Commercial Control (Tab 6)":
     wm.render_ltv_calculator()
 
 
-    else:
-        st.error("❌ Linkage Failure: render_commercial_control engine missing from workspace_modules.py.")
+else:
+    st.error("❌ Linkage Failure: render_commercial_control engine missing from workspace_modules.py.")
 
 # ---- PANEL 7: PROJECT MANAGEMENT (Tab 7) ----
 elif active_panel == "📋 Project Management (Tab 7)":
     if 'wm' in locals():
-        if hasattr(wm, 'render_delivery_countdown'): wm.render_delivery_countdown()
-        if hasattr(wm, 'render_pm_roadmap'): wm.render_pm_roadmap()
-        if hasattr(wm, 'render_revenue_sorter'): wm.render_revenue_sorter()
-        if hasattr(wm, 'render_revision_logger'): wm.render_revision_logger()
-        if hasattr(wm, 'render_sprint_velocity'): wm.render_sprint_velocity()
-        if hasattr(wm, 'render_dependency_validator'): wm.render_dependency_validator()
-        if hasattr(wm, 'render_resource_allocation_tracker'): wm.render_resource_allocation_tracker()
-        if hasattr(wm, 'render_sprint_burndown_v2'): wm.render_sprint_burndown_v2() # <--- KEEP ONLY THIS VERSION
-        wm.render_story_velocity_analyst()
-        wm.render_cycle_time_analyst()
+    if hasattr(wm, 'render_delivery_countdown'): wm.render_delivery_countdown()
+    if hasattr(wm, 'render_pm_roadmap'): wm.render_pm_roadmap()
+    if hasattr(wm, 'render_revenue_sorter'): wm.render_revenue_sorter()
+    if hasattr(wm, 'render_revision_logger'): wm.render_revision_logger()
+    if hasattr(wm, 'render_sprint_velocity'): wm.render_sprint_velocity()
+    if hasattr(wm, 'render_dependency_validator'): wm.render_dependency_validator()
+    if hasattr(wm, 'render_resource_allocation_tracker'): wm.render_resource_allocation_tracker()
+    if hasattr(wm, 'render_sprint_burndown_v2'): wm.render_sprint_burndown_v2() # <--- KEEP ONLY THIS VERSION
+    wm.render_story_velocity_analyst()
+    wm.render_cycle_time_analyst()
 
-    else:
-        st.error("❌ Linkage Failure: render_delivery_countdown missing from workspace_modules.py.")
+else:
+    st.error("❌ Linkage Failure: render_delivery_countdown missing from workspace_modules.py.")
 
 # ---- PANEL 8: SUPPLY CHAIN & LOGISTICS (Tab 8) ----
 elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
@@ -270,8 +270,8 @@ elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
     wm.render_stack_clearance_advisor()
     wm.render_weight_limit_monitor()
 
-    else:
-        st.error("❌ Linkage Failure: render_tracking_aggregator missing from workspace_modules.py.")
+else:
+    st.error("❌ Linkage Failure: render_tracking_aggregator missing from workspace_modules.py.")
 
 # ---- PANEL 9: FLEET & AUTOMOTIVE (Tab 9) ----
 elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
