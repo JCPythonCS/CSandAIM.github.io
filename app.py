@@ -68,15 +68,16 @@ with st.sidebar:
     render_live_countdown()
 
 # ==========================================================================
-# 📡 DATABASE ASSET LOADING ENGINE (MUST SIT FLUSH TO THE LEFT MARGIN)
+# 📡 DATABASE ASSET LOADING ENGINE (FAR-LEFT MARGIN)
 # ==========================================================================
 import pandas as pd
 import os
 
+# 1. Always load the complete, untouched raw spreadsheet into a master variable first
 if os.path.exists("enterprise_retail_dataT.xlsx"):
-    df = pd.read_excel("enterprise_retail_dataT.xlsx")
+    df_master = pd.read_excel("enterprise_retail_dataT.xlsx")
 else:
-    df = None
+    df_master = None
 
 # ==========================================================================
 # 🌐 GLOBAL SIDEBAR CONTROL PANEL
@@ -85,26 +86,36 @@ with st.sidebar:
     st.markdown("---")
     st.header("🌐 Global System Filters")
 
+    # Start with a clean copy of the data to apply filters to step-by-step
+    df = df_master.copy() if df_master is not None else None
+
     # Dynamic Region Selection Filter
-    if df is not None and 'Region' in df.columns:
-        region_opts = sorted(df['Region'].dropna().unique())
+    if df_master is not None and 'Region' in df_master.columns:
+        region_opts = sorted(df_master['Region'].dropna().unique())
         selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_opt_v4")
-        if selected_region != "All Regions":
+        if selected_region != "All Regions" and df is not None:
             df = df[df['Region'] == selected_region]
 
     # Dynamic Agency Selection Filter
-    if df is not None and 'Agency' in df.columns:
-        agency_opts = sorted(df['Agency'].dropna().unique())
+    if df_master is not None and 'Agency' in df_master.columns:
+        agency_opts = sorted(df_master['Agency'].dropna().unique())
         selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_opt_v4")
-        if selected_agency != "All Agencies":
+        if selected_agency != "All Agencies" and df is not None:
             df = df[df['Agency'] == selected_agency]
 
     # Dynamic Command Level Selection Filter
-    if df is not None and 'Command' in df.columns:
-        command_opts = sorted(df['Command'].dropna().unique())
+    if df_master is not None and 'Command' in df_master.columns:
+        command_opts = sorted(df_master['Command'].dropna().unique())
         selected_command = st.selectbox("Select Strategic Command:", ["All Commands"] + list(command_opts), key="sb_command_opt_v4")
-        if selected_command != "All Commands":
+        if selected_command != "All Commands" and df is not None:
             df = df[df['Command'] == selected_command]
+
+    # Dynamic Store/Performance Tier Selection Filter
+    if df_master is not None and 'Tier' in df_master.columns:
+        tier_opts = sorted(df_master['Tier'].dropna().unique())
+        selected_tier = st.selectbox("Select Operational Performance Tier:", ["All Tiers"] + list(tier_opts), key="sb_tier_opt_v4")
+        if selected_tier != "All Tiers" and df is not None:
+            df = df[df['Tier'] == selected_tier]
 
 # 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
 current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
