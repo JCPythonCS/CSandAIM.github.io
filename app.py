@@ -228,6 +228,8 @@ elif active_panel == "💰 Commercial Control (Tab 6)":
             wm.render_churn_predictor()
         if hasattr(wm, 'render_product_markup_calc'):
             wm.render_product_markup_calc()
+        if hasattr(wm, 'render_tax_estimator_v2'):
+            wm.render_tax_estimator_v2()
     else:
         st.error("❌ Linkage Failure: render_commercial_control engine missing from workspace_modules.py.")
 
@@ -244,7 +246,6 @@ elif active_panel == "📋 Project Management (Tab 7)":
             wm.render_revision_logger()
         if hasattr(wm, 'render_resource_allocation_tracker'):
             wm.render_resource_allocation_tracker()
-
             
         # 👇 HOOKS THE SPRINT VELOCITY AND DEPENDENCY VALIDATORS
         if hasattr(wm, 'render_sprint_velocity'):
@@ -253,6 +254,8 @@ elif active_panel == "📋 Project Management (Tab 7)":
             wm.render_dependency_validator()
         if hasattr(wm, 'render_sprint_burndown'):
             wm.render_sprint_burndown()
+        if hasattr(wm, 'render_sprint_burndown_v2'):
+            wm.render_sprint_burndown_v2()
 
     else:
         st.error("❌ Linkage Failure: render_delivery_countdown missing from workspace_modules.py.")
@@ -267,6 +270,8 @@ elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
             wm.render_safety_stock()
         if hasattr(wm, 'render_reorder_trigger_ledger'):
             wm.render_reorder_trigger_ledger()
+        if hasattr(wm, 'render_fuel_analyst_v2'):
+            wm.render_fuel_analyst_v2()
 
     else:
         st.error("❌ Linkage Failure: render_tracking_aggregator missing from workspace_modules.py.")
@@ -302,6 +307,8 @@ elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
             wm.render_ad_copy_scraper()  # <--- KEEP ONLY ONE OF THESE LINES
         if hasattr(wm, 'render_ai_dispatcher'): 
             wm.render_ai_dispatcher()
+        if hasattr(wm, 'render_ai_dispatcher_v2'):
+            wm.render_ai_dispatcher_v2()
 
     else:
         st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
