@@ -242,6 +242,9 @@ elif active_panel == "📋 Project Management (Tab 7)":
             wm.render_revenue_sorter()
         if hasattr(wm, 'render_revision_logger'):
             wm.render_revision_logger()
+        if hasattr(wm, 'render_resource_allocation_tracker'):
+            wm.render_resource_allocation_tracker()
+
             
         # 👇 HOOKS THE SPRINT VELOCITY AND DEPENDENCY VALIDATORS
         if hasattr(wm, 'render_sprint_velocity'):
@@ -259,6 +262,9 @@ elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
         # 👇 HOOKS THE SAFETY STOCK BUFFER CALC NATIVELY TO TAB 8
         if hasattr(wm, 'render_safety_stock'):
             wm.render_safety_stock()
+        if hasattr(wm, 'render_reorder_trigger_ledger'):
+            wm.render_reorder_trigger_ledger()
+
     else:
         st.error("❌ Linkage Failure: render_tracking_aggregator missing from workspace_modules.py.")
 
