@@ -68,24 +68,27 @@ with st.sidebar:
     render_live_countdown()
 
 # ==========================================================================
-# 📡 DYNAMIC ENGINE LOADER (REPLACES STATIC HARDCODED EXCEL POINTER)
+# 📡 DYNAMIC ENGINE LOADER (SITS DIRECTLY UNDER THE APP NAVIGATION SELECTION)
 # ==========================================================================
 import pandas as pd
 import os
 
-# Link df_master directly to whichever file is selected in your database tool dropdown
-if 'database' in locals() and database and 'selected_file_name' in locals():
+# Create a safe global variable default so the script won't crash on boot
+df_master = None
+
+# If a file has been selected in your dropdown menu, load it instantly!
+if 'selected_file_name' in st.session_state and st.session_state['selected_file_name'] in database:
+    chosen_file_path = database[st.session_state['selected_file_name']]
+    if os.path.exists(chosen_file_path):
+        df_master = pd.read_excel(chosen_file_path)
+elif 'selected_file_name' in locals() and selected_file_name in database:
     chosen_file_path = database[selected_file_name]
     if os.path.exists(chosen_file_path):
         df_master = pd.read_excel(chosen_file_path)
-    else:
-        df_master = None
 else:
-    # Safe fallback to default asset if dashboard state hasn't fully booted yet
+    # Safe universal fallback if the UI components are still building
     if os.path.exists("enterprise_retail_dataT.xlsx"):
         df_master = pd.read_excel("enterprise_retail_dataT.xlsx")
-    else:
-        df_master = None
 
 # ==========================================================================
 # 🌐 MASTER COCKPIT SIDEBAR CONTROL PANEL
@@ -100,28 +103,28 @@ with st.sidebar:
     # 1. Core Reporting Agency Filter
     if df_master is not None and 'Agency' in df_master.columns:
         agency_opts = sorted(df_master['Agency'].dropna().unique())
-        selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v14")
+        selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v15")
         if selected_agency != "All Agencies" and df is not None:
             df = df[df['Agency'] == selected_agency]
 
     # 2. Operational Region Filter
     if df_master is not None and 'Region' in df_master.columns:
         region_opts = sorted(df_master['Region'].dropna().unique())
-        selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v14")
+        selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v15")
         if selected_region != "All Regions" and df is not None:
             df = df[df['Region'] == selected_region]
 
     # 3. Active Retailer Filter
     if df_master is not None and 'Retailer' in df_master.columns:
         retailer_opts = sorted(df_master['Retailer'].dropna().unique())
-        selected_retailer = st.selectbox("Select Active Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v14")
+        selected_retailer = st.selectbox("Select Active Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v15")
         if selected_retailer != "All Retailers" and df is not None:
             df = df[df['Retailer'] == selected_retailer]
 
     # 4. Command Tier Filter 
     if df_master is not None and 'Command Tier' in df_master.columns:
         command_tier_opts = sorted(df_master['Command Tier'].dropna().unique())
-        selected_command_tier = st.selectbox("Select Command Tier:", ["All Command Tiers"] + list(command_tier_opts), key="sb_command_tier_v14")
+        selected_command_tier = st.selectbox("Select Command Tier:", ["All Command Tiers"] + list(command_tier_opts), key="sb_command_tier_v15")
         if selected_command_tier != "All Command Tiers" and df is not None:
             df = df[df['Command Tier'] == selected_command_tier]
 
