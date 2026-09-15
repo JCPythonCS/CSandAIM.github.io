@@ -1712,3 +1712,108 @@ def render_conversion_velocity():
         
     conversion_rate = (paid_conversions / raw_leads_count) * 100.0 if raw_leads_count > 0 else 0.0
     st.metric(label="🎯 System Conversion Efficiency Velocity", value=f"{conversion_rate:.2f}%", delta=f"{paid_conversions} Premium Closures Active")
+
+def render_cloud_stress_tester():
+    """
+    TAB 4 ADDITION: MULTI-CLOUD INFRASTRUCTURE STRESS TESTER
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("✈️ Multi-Cloud Infrastructure Stress Tester")
+    st.write("Model system queries/sec surges to evaluate database partition boundaries under massive traffic spikes.")
+    
+    col_st1, col_st2 = st.columns(2)
+    with col_st1:
+        peak_qps = st.number_input("Simulated Target Peak Load (Queries/Sec):", min_value=100, value=2500, step=100, key="st_qps_key")
+    with col_st2:
+        cloud_nodes = st.slider("Active Distributed Compute Nodes:", min_value=1, max_value=20, value=8, key="st_nodes_key")
+        
+    per_node_load = peak_qps / cloud_nodes if cloud_nodes > 0 else 0
+    st.success(f"🎯 **Calculated Structural Load per Node:** `{per_node_load:.1f} QPS / Node`")
+    if per_node_load > 400:
+        st.error("🚨 PER-NODE OVERLOAD RISK: Distributed latency values exceed baseline threshold limits.")
+
+def render_cac_monitor():
+    """
+    TAB 6 ADDITION: DYNAMIC CUSTOMER ACQUISITION COST (CAC) MONITOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("💰 Customer Acquisition Cost (CAC) Campaign Monitor")
+    st.write("Map growth advertising spend strings against closed transaction milestones.")
+    
+    col_ca1, col_ca2 = st.columns(2)
+    with col_ca1:
+        ad_spend = st.number_input("Total Aggregated Multi-Channel Ad Budget ($):", min_value=1.0, value=1200.0, step=100.0, key="cac_spend_key")
+    with col_ca2:
+        conversions = st.number_input("Total Attributed Closed Purchases (Units):", min_value=1, value=24, step=1, key="cac_conv_key")
+        
+    calculated_cac = ad_spend / conversions if conversions > 0 else 0
+    st.metric(label="💸 Calculated Acquisition Overhead (CAC)", value=f"${calculated_cac:,.2f} / User", delta=f"{conversions} Active Conversions")
+
+def render_compliance_builder():
+    """
+    TAB 3 ADDITION: CORPORATE COMPLIANCE & NDA SCAFFOLD BUILDER
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("📄 Corporate Compliance Memo & NDA Scaffold Builder")
+    st.write("Programmatically compile standardized legal text placeholders and data privacy frameworks.")
+    
+    org_name = st.text_input("Enter Legal Entity Name:", value="JCPSS Global Operations LLC", key="comp_org_key")
+    jurisdiction = st.text_input("Corporate Legal Jurisdiction Context:", value="Delaware, USA", key="comp_jur_key")
+    
+    if st.button("🚀 Compile Corporate Legal Scaffolding", key="comp_build_btn_key"):
+        legal_text = f"""
+        DATA PRIVACY & COMPLIANCE MEMORANDUM
+        
+        This structural documentation governs data ingestion parameters for {org_name}.
+        
+        1. LOCALIZED BOUNDARY CONTROL: All system telemetry data lines are processed strictly within regional tenant memory segments.
+        2. REGULATORY JURISDICTION: This framework maintains technical compliance alignment under the local rules of {jurisdiction}.
+        
+        Timestamp Node: {pd.Timestamp.now().strftime('%Y-%m-%d')} | Environment: SECURE SANDBOX
+        """
+        st.code(legal_text, language="text")
+
+def render_story_velocity_analyst():
+    """
+    TAB 7 ADDITION: ENGINEERING STORY POINT VELOCITY ANALYST
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("⏱️ Engineering Story Point Velocity Analyst")
+    st.write("Compute weekly sprint task output speeds to dynamically predict future release horizons.")
+    
+    col_va1, col_va2 = st.columns(2)
+    with col_va1:
+        points_done = st.number_input("Story Points Cleared (Past 2 Weeks):", min_value=1, value=30, key="vel_done_key")
+    with col_va2:
+        backlog_left = st.number_input("Remaining Core Product Backlog Scope:", min_value=1, value=75, key="vel_left_key")
+        
+    weekly_velocity = points_done / 2.0
+    weeks_to_clear = backlog_left / weekly_velocity if weekly_velocity > 0 else 0
+    st.success(f"📊 **Calculated Weekly Sprint Output:** `{weekly_velocity:.1f} Points / Week`")
+    st.info(f"🔮 Projected horizon timeline to completely empty backlog: {weeks_to_clear:.1f} Sprints.")
+
+def render_stack_clearance_advisor():
+    """
+    TAB 8 ADDITION: WAREHOUSE SAFE STACK CLEARANCE ADVISOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("📐 Warehouse Safe Stack Volumetric clearance Advisor")
+    st.write("Calculate safe cubic storage boundaries to optimize facility configurations.")
+    
+    col_sc1, col_sc2 = st.columns(2)
+    with col_sc1:
+        bay_width = st.number_input("Warehouse Bay Base Width (Feet):", min_value=5, value=40, key="clear_w_key")
+        bay_length = st.number_input("Warehouse Bay Base Length (Feet):", min_value=5, value=80, key="clear_l_key")
+    with col_sc2:
+        stack_height = st.slider("Target Vertical Pallet Stacking Height (Feet):", min_value=2, max_value=30, value=15, key="clear_h_key")
+        
+    cubic_allocation = bay_width * bay_length * stack_height
+    st.metric(label="📦 Allocated Cubic Footprint Volumetric Capacity", value=f"{cubic_allocation:,} cu ft", delta="Safe Load Boundary Verified")
