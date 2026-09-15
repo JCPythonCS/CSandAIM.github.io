@@ -255,6 +255,8 @@ elif active_panel == "📋 Project Management (Tab 7)":
     if hasattr(wm, 'render_sprint_burndown_v2'): wm.render_sprint_burndown_v2() # <--- KEEP ONLY THIS VERSION
     wm.render_story_velocity_analyst()
     wm.render_cycle_time_analyst()
+    if hasattr(wm, 'render_cycle_time_analyst'): wm.render_cycle_time_analyst()
+
 
 else:
     st.error("❌ Linkage Failure: render_delivery_countdown missing from workspace_modules.py.")
