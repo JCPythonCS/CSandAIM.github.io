@@ -161,11 +161,6 @@ active_panel = st.selectbox(
 )
 
 st.markdown("---")
-
-    else:
-        st.sidebar.warning("⚠️ No `.xlsx` or `.xls` spreadsheet assets detected in the root repository.")
-        df = None
-        selected_units, selected_sectors, selected_tiers = [], [], []
         
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
