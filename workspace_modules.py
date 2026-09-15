@@ -1224,3 +1224,39 @@ def render_headline_analyzer():
             st.dataframe(freq_df.head(10), use_container_width=True)
         else:
             st.warning("⚠️ Input buffer empty. Ingest copy strings to analyze.")
+
+def render_sales_commission_calc():
+    """
+    TAB 3 ADDITION: SALES COMMISSION CALCULATOR MATRIX
+    """
+    import streamlit as st
+    import pandas as pd
+    
+    st.markdown("---")
+    st.subheader("💰 Tiered Sales Commission & Bonus Calculator")
+    st.write("Compute tiered monthly or quarterly bonuses for sales reps based on contract milestones and values.")
+    
+    col_cc1, col_cc2 = st.columns(2)
+    with col_cc1:
+        rep_name = st.text_input("Sales Representative Name:", value="Marcus Vance", key="comm_rep_name")
+        contract_value = st.number_input("Closed Contract Value ($):", min_value=0.0, value=25000.0, step=1000.0, key="comm_contract_val")
+    with col_cc2:
+        tier_select = st.selectbox("Commission Structure Tier:", ["Standard (5%)", "Performance (10%)", "Executive Elite (15%)"], key="comm_tier_sel")
+    
+    # Establish commission multipliers based on selected tiers
+    tier_rates = {"Standard (5%)": 0.05, "Performance (10%)": 0.10, "Executive Elite (15%)": 0.15}
+    selected_rate = tier_rates[tier_select]
+    
+    if st.button("🚀 Calculate Commission Structure Payload", key="comm_execute_btn"):
+        base_commission = contract_value * selected_rate
+        
+        # Calculate dynamic corporate milestone performance overrides
+        milestone_bonus = 500.0 if contract_value >= 20000.0 else 0.0
+        total_payout = base_commission + milestone_bonus
+        
+        st.success(f"🎯 **Total Calculated Commission Payout for {rep_name}:** `${total_payout:,.2f}`")
+        
+        # Display breakdown metrics cards
+        cm1, cm2 = st.columns(2)
+        cm1.metric(label="📊 Base Tier Commission", value=f"${base_commission:,.2f}")
+        cm2.metric(label="⚡ Milestone Performance Bonus", value=f"${milestone_bonus:,.2f}", delta="Triggered" if milestone_bonus > 0 else "N/A")
