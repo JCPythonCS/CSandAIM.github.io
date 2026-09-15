@@ -1320,3 +1320,62 @@ def render_churn_predictor():
     ch_m1.metric(label="💸 Gross Churn Revenue Leakage", value=f"-${gross_churn_loss:,.2f}")
     ch_m2.metric(label="⚡ Net MRR Growth Velocity", value=f"${net_monthly_mrr_delta:,.2f}", delta=f"${net_monthly_mrr_delta:,.2f}")
     ch_m3.metric(label="🔮 Next-Month Projected MRR Floor", value=f"${ending_mrr_horizon:,.2f}")
+
+def render_product_markup_calc():
+    """
+    TAB 6 ADDITION: PRODUCT COST MARKUP & RETAIL MARGIN CALCULATOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("💸 Product Cost Markup & Retail Margin Calculator")
+    st.write("Establish individual product pricing benchmarks by evaluating raw wholesale costs against target profit parameters.")
+    
+    col_pm1, col_pm2 = st.columns(2)
+    with col_pm1:
+        wholesale_cost = st.number_input("Wholesale Unit Acquisition Cost ($):", min_value=0.01, value=45.00, step=1.00, key="markup_cost_in")
+    with col_pm2:
+        target_margin = st.slider("Target Desired Profit Gross Margin (%):", min_value=5, max_value=90, value=40, step=1, key="markup_margin_sl")
+        
+    if wholesale_cost and target_margin:
+        # Standard pricing markup calculation formula: Cost / (1 - Margin)
+        target_retail_price = wholesale_cost / (1.0 - (target_margin / 100.0))
+        net_profit_per_unit = target_retail_price - wholesale_cost
+        
+        st.success(f"🎯 **Calculated Target Retail Pricing Floor:** `${target_retail_price:,.2f} / Unit`")
+        
+        c_m1, c_m2 = st.columns(2)
+        c_m1.metric(label="📊 Gross Net Profit per Unit", value=f"${net_profit_per_unit:,.2f}")
+        c_m2.metric(label="🛡️ Target Markup Multiplier Score", value=f"{(target_retail_price / wholesale_cost):.2f} x Cost")
+
+def render_ad_copy_scraper():
+    """
+    TAB 10 ADDITION: COMPETITOR AD-COPY CONTENT SCRAPER
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("📡 Competitor Ad-Copy Content Scraper & Keyword Miner")
+    st.write("Audit competitive landing pages and ad copy strings to isolate target hooks and keyword frequencies.")
+    
+    raw_ad_blocks = st.text_area("Ingest Raw Competitor Copy Vectors (Paste text blocks):", 
+                                value="Deploy our advanced automation framework today to maximize team efficiency, streamline data pipelines, and stop missing critical business growth goals instantly.", 
+                                height=100, key="ad_scraper_box")
+    
+    if st.button("🚀 Run Ad-Copy Structural Mining Analysis", key="ad_scraper_btn"):
+        if raw_ad_blocks.strip():
+            # Heuristic structural marketing hook keyword match array parameters
+            power_hooks = ["maximize", "streamline", "advanced", "efficiency", "critical", "instantly", "growth", "optimize"]
+            lower_ad_text = raw_ad_blocks.lower()
+            
+            discovered_hooks = []
+            for hook in power_hooks:
+                if hook in lower_ad_text:
+                    discovered_hooks.append({"Marketing Power Hook Tag": hook.upper(), "Functional Priority": "🔥 High Inbound Conversion Anchor"})
+            
+            if discovered_hooks:
+                st.success("✅ Ad-Copy Content Mapping Complete:")
+                st.dataframe(pd.DataFrame(discovered_hooks), use_container_width=True)
+            else:
+                st.info("ℹ️ Analytics Clean: Zero common high-conversion power hooks identified in input copy text lines.")
+        else:
+            st.warning("⚠️ Ingestion buffer is empty. Paste copy lines to analyze.")
