@@ -188,33 +188,32 @@ if active_panel == "📊 Analytics (Tab 1)":
         else:
             st.warning("📡 Standby: Scanning for live client transactions... Active storage block is empty.")
             
-    wm.render_kpi_pulse_grid()
-    wm.render_funnel_attribution()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_kpi_pulse_grid()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_funnel_attribution()
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 elif active_panel == "🛠 Utilities (Tab 2)":  # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
-    wm.render_translator()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_translator()
     st.markdown("---")
-    wm.render_renamer()
-    wm.render_threat_analyzer()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_renamer()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_threat_analyzer()
     if hasattr(wm, 'render_ip_throttle_monitor'): wm.render_ip_throttle_monitor()
     if hasattr(wm, 'render_token_radar'): wm.render_token_radar()
-    wm.render_agent_fingerprinter()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_agent_fingerprinter()
 
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
 elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
-    wm.render_calculator()
-    wm.render_codec()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_calculator()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_codec()
     st.markdown("---")
-    wm.render_invoice()
-    wm.render_kanban_funnel()
-    wm.render_lead_matcher()
-    wm.render_utm_generator()
-    wm.render_invoice_ledger()
-    if hasattr(wm, 'render_sales_commission_calc'):
-        wm.render_sales_commission_calc()    
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_invoice()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_kanban_funnel()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_lead_matcher()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_utm_generator()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_invoice_ledger()
+    if hasattr(wm, 'render_sales_commission_calc'): wm.render_sales_commission_calc()    
     if hasattr(wm, 'render_conversion_velocity'): wm.render_conversion_velocity()
-    wm.render_compliance_builder()
+    wif hasattr(wm, 'render_sales_commission_calc'): wm.render_compliance_builder()
 
 # ---- PANEL 4: SIMULATION (Tab 4) ----
 elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
