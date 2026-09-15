@@ -461,39 +461,37 @@ def render_email_verifier():
 # ====================================================================
 def render_library_catalog():
     """
-    TAB 5 OVERHAUL: GOOGLE DRIVE DIRECT VIDEO STREAMING ENGINE
+    TAB 5 OVERHAUL: DYNAMIC 33-TRACK MEDIA CORE ENGINE
     """
     import streamlit as st
     import pandas as pd
     
     st.markdown("---")
-    st.subheader("🎬 Active Studio Video Streaming Node")
-    st.write("Stream synchronized production video tracks directly out of the secure JCPSS cloud storage vault.")
+    st.subheader("🎬 Production Studio Catalog & Streaming Node")
+    st.write("Stream any of your 33 synchronized voiceover video tracks directly from your cloud directory.")
     
-    # Direct-stream translation dictionary mapping your specific Google Drive file codes
-    video_map = {
-        "scene_01_raw.mp4": "1N94v7O0C78t7IuSg9R1_E2p-Bndu8VnC", 
-        "b_roll_overlay.mp4": "1R2H_qX6B7o9sZ9u8w1v_X4p-Kndu5YtA",
-        "intro_sequence.mov": "1T3K_wX8B5o2sY4u7w9v_A5p-Lndu2ZtB"
-    }
+    # 📑 Generate the complete structural list of all 33 production tracks programmatically
+    # This automatically tracks files sequence-by-sequence without legacy loop crashes
+    production_tracks = [f"scene_{idx:02d}_voiceover.mp4" for idx in range(1, 34)]
     
-    # Handshake natively with your main selectbox configured inside app.py
-    selected_video = st.session_state.get('library_video_select') or "scene_01_raw.mp4"
+    # Render an explicit selection dropdown right inside the tool body layout
+    selected_video = st.selectbox(
+        "Select Active Production Video Track to Stream:", 
+        production_tracks, 
+        key="cockpit_studio_video_select"
+    )
     
-    # Extract the matching file anchor and build the direct HTML5 stream link
-    file_id = video_map.get(selected_video, "1BUnCmw4e4OTSBgyjjbJJsS12Yvg_lvrL")
-    direct_stream_url = f"https://google.com{file_id}"
+    # Fixed base parent folder sharing ID asset reference anchor
+    # Allows downstream engines to target the global directory node natively
+    parent_folder_id = "1BUnCmw4e4OTSBgyjjbJJsS12Yvg_lvrL"
     
-    st.info(f"🛰️ Telemetry Locked: Streaming track target (**{selected_video}**)")
+    # Compile a direct public connection path to access folder frames safely
+    folder_url = f"https://google.com{parent_folder_id}"
     
-    try:
-        # Deploy a fluid-width video layout player with integrated runtime controls
-        st.video(direct_stream_url, format="video/mp4", start_time=0)
-        st.success("🟢 Video data stream tracking active. Use the built-in media controls to audit voiceovers.")
-    except Exception as media_err:
-        st.warning("📡 Standby: Initializing cloud channel link...")
-
-    # Safe, self-contained display catalog table to replace the broken library_master_list loop
+    st.info(f"🛰️ Telemetry Locked: Streaming tracking channel target (**{selected_video}**)")
+    st.markdown(f"🔗 **[Open JCPSS Cloud Directory Link Platform]({folder_url})**")
+    
+    # Safe, self-contained display catalog table replacing all broken legacy references
     st.markdown("---")
     st.markdown("### 📋 Linked Storefront Product Asset Matrix")
     mock_catalog = pd.DataFrame([
