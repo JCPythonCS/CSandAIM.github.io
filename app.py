@@ -281,7 +281,7 @@ elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
         if hasattr(wm, 'render_stack_clearance_advisor'): wm.render_stack_clearance_advisor()
         if hasattr(wm, 'render_weight_limit_monitor'): wm.render_weight_limit_monitor()
         if hasattr(wm, 'render_fuel_analyst_v2'): wm.render_fuel_analyst_v2()
-        if hasattr(wm, 'render_carrier_auditor'): wm.render_weight_limit_monitor()
+        if hasattr(wm, 'render_weight_limit_monitor'): wm.render_weight_limit_monitor()
 
 # ---- PANEL 9: FLEET & AUTOMOTIVE (Tab 9) ----
 elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
