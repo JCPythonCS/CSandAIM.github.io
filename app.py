@@ -251,6 +251,9 @@ elif active_panel == "📋 Project Management (Tab 7)":
             wm.render_sprint_velocity()
         if hasattr(wm, 'render_dependency_validator'):
             wm.render_dependency_validator()
+        if hasattr(wm, 'render_sprint_burndown'):
+            wm.render_sprint_burndown()
+
     else:
         st.error("❌ Linkage Failure: render_delivery_countdown missing from workspace_modules.py.")
 
@@ -280,6 +283,9 @@ elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
             wm.render_parts_cross_ref()
             if hasattr(wm, 'render_batch_obd_scanner'):
                 wm.render_batch_obd_scanner()
+        if hasattr(wm, 'render_fuel_analyst'):
+            wm.render_fuel_analyst()
+
     else:
         st.error("❌ Linkage Failure: render_vin_parser missing from workspace_modules.py.")
 
@@ -295,6 +301,10 @@ elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
             wm.render_sentiment_classifier()
         if hasattr(wm, 'render_headline_analyzer'):
             wm.render_headline_analyzer()
+        if hasattr(wm, 'render_ad_copy_scraper'):
+            wm.render_ad_copy_scraper()
+        if hasattr(wm, 'render_ai_dispatcher'):
+            wm.render_ai_dispatcher()
     else:
         st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
 
