@@ -193,9 +193,9 @@ elif active_panel == "🛠 Utilities (Tab 2)":  # <--- MAKE SURE THIS IS 'elif' 
     wm.render_translator()
     st.markdown("---")
     wm.render_renamer()
-     if hasattr(wm, 'render_threat_analyzer'): wm.render_threat_analyzer()
-     if hasattr(wm, 'render_ip_throttle_monitor'): wm.render_ip_throttle_monitor()
-     if hasattr(wm, 'render_token_radar'): wm.render_token_radar()
+    if hasattr(wm, 'render_threat_analyzer'): wm.render_threat_analyzer()
+    if hasattr(wm, 'render_ip_throttle_monitor'): wm.render_ip_throttle_monitor()
+    if hasattr(wm, 'render_token_radar'): wm.render_token_radar()
     
 
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
@@ -208,8 +208,8 @@ elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' W
     wm.render_lead_matcher()
     wm.render_utm_generator()
     wm.render_invoice_ledger()
-     if hasattr(wm, 'render_sales_commission_calc'): wm.render_sales_commission_calc()
-     if hasattr(wm, 'render_conversion_velocity'): wm.render_conversion_velocity()
+        if hasattr(wm, 'render_sales_commission_calc'): wm.render_sales_commission_calc()
+        if hasattr(wm, 'render_conversion_velocity'): wm.render_conversion_velocity()
 
 
 # ---- PANEL 4: SIMULATION (Tab 4) ----
@@ -226,14 +226,10 @@ elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' 
 
 # ---- PANEL 6: COMMERCIAL CONTROL (Tab 6) ----
 elif active_panel == "💰 Commercial Control (Tab 6)":
-    if 'wm' in locals() and hasattr(wm, 'render_commercial_control'):
-        wm.render_commercial_control()
-        if hasattr(wm, 'render_churn_predictor'):
-            wm.render_churn_predictor()
-        if hasattr(wm, 'render_product_markup_calc'):
-            wm.render_product_markup_calc()
-        if hasattr(wm, 'render_tax_estimator_v2'):
-            wm.render_tax_estimator_v2()
+    if 'wm' in locals() and hasattr(wm, 'render_commercial_control'): wm.render_commercial_control()
+        if hasattr(wm, 'render_churn_predictor'): wm.render_churn_predictor()
+        if hasattr(wm, 'render_product_markup_calc'): wm.render_product_markup_calc()
+        if hasattr(wm, 'render_tax_estimator_v2'): wm.render_tax_estimator_v2()
     else:
         st.error("❌ Linkage Failure: render_commercial_control engine missing from workspace_modules.py.")
 
