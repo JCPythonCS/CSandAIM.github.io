@@ -235,27 +235,15 @@ elif active_panel == "💰 Commercial Control (Tab 6)":
 
 # ---- PANEL 7: PROJECT MANAGEMENT (Tab 7) ----
 elif active_panel == "📋 Project Management (Tab 7)":
-    if 'wm' in locals() and hasattr(wm, 'render_delivery_countdown'):
-        wm.render_delivery_countdown()
-        
-        if hasattr(wm, 'render_pm_roadmap'):
-            wm.render_pm_roadmap()
-        if hasattr(wm, 'render_revenue_sorter'):
-            wm.render_revenue_sorter()
-        if hasattr(wm, 'render_revision_logger'):
-            wm.render_revision_logger()
-        if hasattr(wm, 'render_resource_allocation_tracker'):
-            wm.render_resource_allocation_tracker()
-            
-        # 👇 HOOKS THE SPRINT VELOCITY AND DEPENDENCY VALIDATORS
-        if hasattr(wm, 'render_sprint_velocity'):
-            wm.render_sprint_velocity()
-        if hasattr(wm, 'render_dependency_validator'):
-            wm.render_dependency_validator()
-        if hasattr(wm, 'render_sprint_burndown'):
-            wm.render_sprint_burndown()
-        if hasattr(wm, 'render_sprint_burndown_v2'):
-            wm.render_sprint_burndown_v2()
+    if 'wm' in locals():
+        if hasattr(wm, 'render_delivery_countdown'): wm.render_delivery_countdown()
+        if hasattr(wm, 'render_pm_roadmap'): wm.render_pm_roadmap()
+        if hasattr(wm, 'render_revenue_sorter'): wm.render_revenue_sorter()
+        if hasattr(wm, 'render_revision_logger'): wm.render_revision_logger()
+        if hasattr(wm, 'render_sprint_velocity'): wm.render_sprint_velocity()
+        if hasattr(wm, 'render_dependency_validator'): wm.render_dependency_validator()
+        if hasattr(wm, 'render_resource_allocation_tracker'): wm.render_resource_allocation_tracker()
+        if hasattr(wm, 'render_sprint_burndown_v2'): wm.render_sprint_burndown_v2() # <--- KEEP ONLY THIS VERSION
 
     else:
         st.error("❌ Linkage Failure: render_delivery_countdown missing from workspace_modules.py.")
