@@ -1596,3 +1596,20 @@ def render_reorder_ledger_v2():
     
     reorder_pt = (usage * lead) + 100
     st.success(f"🎯 **Calculated Restock Inventory Reorder Point Threshold:** `{reorder_pt} Units`")
+
+def render_revision_logger():
+    """
+    TAB 7 ADDITION: CLIENT REVISION CYCLE & CHANGE-ORDER LOGGER
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("📋 Client Revision Cycle & Change-Order Logger")
+    st.write("Log chronological text updates and change requests to monitor scope expansion factors.")
+    
+    if "revision_db" not in st.session_state:
+        st.session_state.revision_db = pd.DataFrame([
+            {"Log Date": "2026-09-14", "Client Entity": "Global Distribution Core", "Revision Request Details": "Append text verification logic to lead routing matrices"},
+            {"Log Date": "2026-09-15", "Client Entity": "Vance Refrigeration", "Revision Request Details": "Expand dashboard data panels to support ten distinct tabs"}
+        ])
+    st.dataframe(st.session_state.revision_db, use_container_width=True)
