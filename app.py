@@ -188,8 +188,8 @@ if active_panel == "📊 Analytics (Tab 1)":
         else:
             st.warning("📡 Standby: Scanning for live client transactions... Active storage block is empty.")
             
-     wm.render_kpi_pulse_grid()
-     wm.render_funnel_attribution()
+    wm.render_kpi_pulse_grid()
+    wm.render_funnel_attribution()
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 elif active_panel == "🛠 Utilities (Tab 2)":  # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
