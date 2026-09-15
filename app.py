@@ -203,24 +203,25 @@ elif active_panel == "🛠 Utilities (Tab 2)":  # <--- MAKE SURE THIS IS 'elif' 
 
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
 elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_calculator()
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_codec()
-    st.markdown("---")
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_invoice()
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_kanban_funnel()
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_lead_matcher()
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_utm_generator()
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_invoice_ledger()
-    if hasattr(wm, 'render_sales_commission_calc'): wm.render_sales_commission_calc()    
-    if hasattr(wm, 'render_conversion_velocity'): wm.render_conversion_velocity()
-    wif hasattr(wm, 'render_sales_commission_calc'): wm.render_compliance_builder()
+        if hasattr(wm, 'render_calculator'): wm.render_calculator()
+        if hasattr(wm, 'render_codec'): wm.render_codec()
+        st.markdown("---")
+        if hasattr(wm, 'render_invoice'): wm.render_invoice()
+        if hasattr(wm, 'render_kanban_funnel'): wm.render_kanban_funnel()
+        if hasattr(wm, 'render_lead_matcher'): wm.render_lead_matcher()
+        if hasattr(wm, 'render_utm_generator'): wm.render_utm_generator()
+        if hasattr(wm, 'render_invoice_ledger'): wm.render_invoice_ledger()
+        if hasattr(wm, 'render_sales_commission_calc'): wm.render_sales_commission_calc()
+        if hasattr(wm, 'render_conversion_velocity'): wm.render_conversion_velocity()
+        if hasattr(wm, 'render_compliance_builder'): wm.render_compliance_builder()
 
 # ---- PANEL 4: SIMULATION (Tab 4) ----
 elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
-    wm.render_runway()
-    st.markdown("---")
-    wm.render_email_verifier()
-    wm.render_cloud_stress_tester()
+    if 'wm' in locals():
+        if hasattr(wm, 'render_runway'): wm.render_runway()
+        st.markdown("---")
+        if hasattr(wm, 'render_email_verifier'): wm.render_email_verifier()
+        if hasattr(wm, 'render_cloud_stress_tester'): wm.render_cloud_stress_tester()
 
 # ---- PANEL 5: LIBRARY (Tab 5) ----
 elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
