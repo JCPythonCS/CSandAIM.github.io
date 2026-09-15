@@ -187,6 +187,9 @@ if active_panel == "📊 Analytics (Tab 1)":
             st.dataframe(customer_store_df, use_container_width=True)
         else:
             st.warning("📡 Standby: Scanning for live client transactions... Active storage block is empty.")
+            
+     wm.render_kpi_pulse_grid()
+     wm.render_funnel_attribution()
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 elif active_panel == "🛠 Utilities (Tab 2)":  # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -196,6 +199,7 @@ elif active_panel == "🛠 Utilities (Tab 2)":  # <--- MAKE SURE THIS IS 'elif' 
     wm.render_threat_analyzer()
     if hasattr(wm, 'render_ip_throttle_monitor'): wm.render_ip_throttle_monitor()
     if hasattr(wm, 'render_token_radar'): wm.render_token_radar()
+    wm.render_agent_fingerprinter()
 
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
 elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -227,15 +231,13 @@ elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' 
 
 # ---- PANEL 6: COMMERCIAL CONTROL (Tab 6) ----
 elif active_panel == "💰 Commercial Control (Tab 6)":
-    if 'wm' in locals() and hasattr(wm, 'render_commercial_control'):
-        wm.render_commercial_control()
-        if hasattr(wm, 'render_churn_predictor'):
-            wm.render_churn_predictor()
-        if hasattr(wm, 'render_product_markup_calc'):
-            wm.render_product_markup_calc()
-        if hasattr(wm, 'render_tax_estimator_v2'):
-            wm.render_tax_estimator_v2()
-        wm.render_cac_monitor()
+    if 'wm' in locals() and hasattr(wm, 'render_commercial_control'): wm.render_commercial_control()
+    if hasattr(wm, 'render_churn_predictor'): wm.render_churn_predictor()
+    if hasattr(wm, 'render_product_markup_calc'): wm.render_product_markup_calc()
+    if hasattr(wm, 'render_tax_estimator_v2'): wm.render_tax_estimator_v2()
+    wm.render_cac_monitor()
+    wm.render_ltv_calculator()
+
 
     else:
         st.error("❌ Linkage Failure: render_commercial_control engine missing from workspace_modules.py.")
@@ -252,24 +254,22 @@ elif active_panel == "📋 Project Management (Tab 7)":
         if hasattr(wm, 'render_resource_allocation_tracker'): wm.render_resource_allocation_tracker()
         if hasattr(wm, 'render_sprint_burndown_v2'): wm.render_sprint_burndown_v2() # <--- KEEP ONLY THIS VERSION
         wm.render_story_velocity_analyst()
-    
+        wm.render_cycle_time_analyst()
+
     else:
         st.error("❌ Linkage Failure: render_delivery_countdown missing from workspace_modules.py.")
 
 # ---- PANEL 8: SUPPLY CHAIN & LOGISTICS (Tab 8) ----
 elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
-    if 'wm' in locals() and hasattr(wm, 'render_tracking_aggregator'):
-        wm.render_tracking_aggregator()
-        if hasattr(wm, 'render_safety_stock'):
-            wm.render_safety_stock()
-        if hasattr(wm, 'render_reorder_trigger_ledger'):
-            wm.render_reorder_trigger_ledger()
-        if hasattr(wm, 'render_fuel_analyst_v2'):
-            wm.render_fuel_analyst_v2()
-        if hasattr(wm, 'render_storage_optimizer'): wm.render_storage_optimizer()
-        if hasattr(wm, 'render_carrier_auditor'): wm.render_carrier_auditor()
-        wm.render_stack_clearance_advisor()
-    
+    if 'wm' in locals() and hasattr(wm, 'render_tracking_aggregator'): wm.render_tracking_aggregator()
+    if hasattr(wm, 'render_safety_stock'): wm.render_safety_stock()
+    if hasattr(wm, 'render_reorder_trigger_ledger'): wm.render_reorder_trigger_ledger()
+    if hasattr(wm, 'render_fuel_analyst_v2'): wm.render_fuel_analyst_v2()
+    if hasattr(wm, 'render_storage_optimizer'): wm.render_storage_optimizer()
+    if hasattr(wm, 'render_carrier_auditor'): wm.render_carrier_auditor()
+    wm.render_stack_clearance_advisor()
+    wm.render_weight_limit_monitor()
+
     else:
         st.error("❌ Linkage Failure: render_tracking_aggregator missing from workspace_modules.py.")
 
