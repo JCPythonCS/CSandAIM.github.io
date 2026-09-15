@@ -30,21 +30,6 @@ with col_logo_right:
 
 st.markdown("---")
 
-# 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
-current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
-data_folder = current_working_dir
-all_files = [f for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
-database = {}
-
-for file_name in all_files:
-    file_path = os.path.join(data_folder, file_name)
-    display_name = os.path.splitext(file_name)[0]
-    try:
-        database[display_name] = file_path
-    except:
-        pass
-if 'selected_file_name' not in st.session_state and database:
-    st.session_state['selected_file_name'] = sorted(list(database.keys()))[0]
 
 # ⏱️ FIXED: REAL-TIME ISOLATED COUNTDOWN ENGINE
 # Using st.fragment ensures ONLY this block reloads, stopping the entire page from breaking
@@ -106,41 +91,56 @@ else:
         df_master = pd.read_excel("enterprise_retail_dataT.xlsx")
 
 # ==========================================================================
-# 🌐 MASTER COCKPIT SIDEBAR CONTROL PANEL (REPLACES LINES 111-151)
+# 🌐 MASTER COCKPIT SIDEBAR CONTROL PANEL
 # ==========================================================================
 with st.sidebar:
     st.markdown("---")
-    st.header("🎛️ Database Selector")
-    
-    if database:
-        selected_file = st.selectbox(
-            "Select Database File Asset:",
-            options=sorted(list(database.keys())),
-            key="selected_file_name_master"
-        )
-        st.session_state['selected_file_name'] = selected_file
-        df_master = pd.read_excel(database[selected_file])
-    else:
-        st.warning("⚠ No spreadsheet assets detected.")
-        df_master = None
-
-    st.markdown("---")
     st.header("🌐 Global System Filters")
+
+    # Establish an active session data copy to filter step-by-step
     df = df_master.copy() if df_master is not None else None
 
-    if df_master is not None and df is not None:
-        # Cascading Pipeline Chain: Command Tier -> Agency -> Region -> Retailer
-        for col, label, reset_text in [
-            ('Command Tier', 'Select Command Tier:', 'All Command Tiers'),
-            ('Agency', 'Select Core Reporting Agency:', 'All Agencies'),
-            ('Region', 'Select Operational Region:', 'All Regions'),
-            ('Retailer', 'Select Active Retailer:', 'All Retailers')
-        ]:
-            if col in df_master.columns:
-                opts = sorted(df[col].dropna().unique())
-                selected_val = st.selectbox(label, [reset_text] + list(opts), key=f"sb_hier_{col.lower().replace(' ', '_')}")
-                if selected_val != reset_text:
-                    df = df[df[col] == selected_val]
+    # 1. Core Reporting Agency Filter
+    if df_master is not None and 'Agency' in df_master.columns:
+        agency_opts = sorted(df_master['Agency'].dropna().unique())
+        selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v15")
+        if selected_agency != "All Agencies" and df is not None:
+            df = df[df['Agency'] == selected_agency]
+
+    # 2. Operational Region Filter
+    if df_master is not None and 'Region' in df_master.columns:
+        region_opts = sorted(df_master['Region'].dropna().unique())
+        selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v15")
+        if selected_region != "All Regions" and df is not None:
+            df = df[df['Region'] == selected_region]
+
+    # 3. Active Retailer Filter
+    if df_master is not None and 'Retailer' in df_master.columns:
+        retailer_opts = sorted(df_master['Retailer'].dropna().unique())
+        selected_retailer = st.selectbox("Select Active Retailer:", ["All Retailers"] + list(retailer_opts), key="sb_retailer_v15")
+        if selected_retailer != "All Retailers" and df is not None:
+            df = df[df['Retailer'] == selected_retailer]
+
+    # 4. Command Tier Filter 
+    if df_master is not None and 'Command Tier' in df_master.columns:
+        command_tier_opts = sorted(df_master['Command Tier'].dropna().unique())
+        selected_command_tier = st.selectbox("Select Command Tier:", ["All Command Tiers"] + list(command_tier_opts), key="sb_command_tier_v15")
+        if selected_command_tier != "All Command Tiers" and df is not None:
+            df = df[df['Command Tier'] == selected_command_tier]
+
+# 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
+current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
+data_folder = current_working_dir
+all_files = [f for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
+database = {}
+
+for file_name in all_files:
+    file_path = os.path.join(data_folder, file_name)
+    display_name = os.path.splitext(file_name)[0]
+    try:
+        database[display_name] = file_path
+    except:
+        pass
 
 # 🎛️ COCKPIT MASTER NAVIGATION (Ungrouped Selection Panels)
 active_panel = st.selectbox(
@@ -161,6 +161,48 @@ active_panel = st.selectbox(
 )
 
 st.markdown("---")
+
+# 🎙️ FIXED SIDEBAR VISIBILITY CONTROLLER
+# Appends data options or audio profile settings underneath the isolated live timer box
+if active_panel == "📊 Analytics (Tab 1)":
+    st.sidebar.markdown("---")
+    st.sidebar.header("🎯 Dashboard Control Filters")
+    
+    if database:
+        selected_file_name = st.sidebar.selectbox(
+            "Select Database File Asset:", 
+            options=sorted(list(database.keys())),
+            help="Choose any workspace excel file from your repository to analyze dynamically."
+        )
+        
+        target_file_path = database[selected_file_name]
+        
+        try:
+            df = pd.read_excel(target_file_path)
+            
+            if 'Active Combat Unit Name' in df.columns:
+                selected_units = st.sidebar.multiselect("Active Combat Unit Name:", options=df['Active Combat Unit Name'].unique(), default=df['Active Combat Unit Name'].unique())
+            else:
+                selected_units = []
+
+            if 'Strategic Command Sector' in df.columns:
+                selected_sectors = st.sidebar.multiselect("Strategic Command Sector:", options=df['Strategic Command Sector'].unique(), default=df['Strategic Command Sector'].unique())
+            else:
+                selected_sectors = []
+
+            if 'Agency Command Tier' in df.columns:
+                selected_tiers = st.sidebar.multiselect("Agency Command Tier:", options=df['Agency Command Tier'].unique(), default=df['Agency Command Tier'].unique())
+            else:
+                selected_tiers = []
+                
+        except Exception as e:
+            st.sidebar.error(f"Error reading file elements: {e}")
+            df = None
+            selected_units, selected_sectors, selected_tiers = [], [], []
+    else:
+        st.sidebar.warning("⚠️ No `.xlsx` or `.xls` spreadsheet assets detected in the root repository.")
+        df = None
+        selected_units, selected_sectors, selected_tiers = [], [], []
         
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
