@@ -1613,3 +1613,102 @@ def render_revision_logger():
             {"Log Date": "2026-09-15", "Client Entity": "Vance Refrigeration", "Revision Request Details": "Expand dashboard data panels to support ten distinct tabs"}
         ])
     st.dataframe(st.session_state.revision_db, use_container_width=True)
+
+def render_ip_throttle_monitor():
+    """
+    TAB 2 ADDITION: BRUTE-FORCE IP THROTTLE MONITOR
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("🔒 Brute-Force IP Login Throttle Monitor")
+    st.write("Audit rapid authentication vectors and flag suspicious IP nodes breaching local threshold parameters.")
+    
+    ip_data = pd.DataFrame([
+        {"Ingestion IP Node": "192.168.1.45", "Auth Attempts (1m)": 2, "Security Assessment": "🟢 Safe Status"},
+        {"Ingestion IP Node": "45.221.12.90", "Auth Attempts (1m)": 27, "Security Assessment": "🚨 CRITICAL: DOS SIGNATURE BLOCK"},
+        {"Ingestion IP Node": "185.40.101.4", "Auth Attempts (1m)": 8, "Security Assessment": "⚠️ ELEVATED ATTACK PROFILE"}
+    ])
+    st.dataframe(ip_data, use_container_width=True)
+    
+    for _, row in ip_data.iterrows():
+        if row["Auth Attempts (1m)"] >= 20:
+            st.error(f"🛑 FIREWALL INTERVENTION TRIGGERED: IP Node **{row['Ingestion IP Node']}** blocked globally following {row['Auth Attempts (1m)']} rapid failed handshakes.")
+
+def render_token_radar():
+    """
+    TAB 2 ADDITION: API TOKEN EXPIRATION COUNTDOWN RADAR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🔑 API Token Expiration Countdown Radar")
+    st.write("Monitor active cryptographic key files to safeguard operational webhook loops.")
+    
+    col_tk1, col_tk2 = st.columns(2)
+    with col_tk1:
+        token_label = st.selectbox("Select Core API Endpoint Key:", ["PayPal Production Webhook Token", "Oracle Cloud Autonomous DB Key", "Stripe Checkout Ledger Bridge"], key="tk_label_v3")
+    with col_tk2:
+        hours_left = st.slider("Key Lifespan Remaining (Hours):", min_value=1, max_value=72, value=12, key="tk_hours_v3")
+        
+    if hours_left < 24:
+        st.error(f"🚨 EXPIRED TOKEN PROFILE WARNING: **{token_label}** expires in `{hours_left} Hours`! Dispatch rotation macro immediately.")
+    else:
+        st.success(f"🟢 Token Secure: **{token_label}** verified active under safe boundary parameters.")
+
+def render_storage_optimizer():
+    """
+    TAB 8 ADDITION: WAREHOUSE STORAGE SPACE OPTIMIZER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("📐 Warehouse Storage Volumetric Space Optimizer")
+    st.write("Compute total cubic feet capacity allocations to guide pallet stacking metrics.")
+    
+    v_c1, v_c2 = st.columns(2)
+    with v_c1:
+        w_width = st.number_input("Warehouse Floor Bay Width (Feet):", min_value=10, value=150, key="v_w_v3")
+        w_length = st.number_input("Warehouse Floor Bay Length (Feet):", min_value=10, value=300, key="v_l_v3")
+    with v_c2:
+        w_height = st.number_input("Max Safe Vertical Clearance Stacking Height (Feet):", min_value=5, value=25, key="v_h_v3")
+        utilized_pct = st.slider("Current Physical Stock Footprint Occupied (%):", min_value=0, max_value=100, value=60, key="v_pct_v3")
+        
+    total_cubic_ft = w_width * w_length * w_height
+    available_space = total_cubic_ft * ((100 - utilized_pct) / 100.0)
+    
+    st.success(f"🎯 **Total Volumetric Bay Capacity:** `{total_cubic_ft:,} Cubic Feet`")
+    st.info(f"📦 Free space remaining for inbound freight: {available_space:,} Cubic Feet ({100 - utilized_pct}%).")
+
+def render_carrier_auditor():
+    """
+    TAB 8 ADDITION: FREIGHT CARRIER PERFORMANCE AUDITOR
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("🚚 Freight Shipping Carrier Performance Auditor")
+    st.write("Track delay deltas and delivery compliance metrics across logistics transportation providers.")
+    
+    carrier_db = pd.DataFrame([
+        {"Carrier Fleet Node": "UPS Ground core", "Dispatched Units": 1500, "Average Delay Delta": "+0.4 Days", "Compliance Score": "98.2%"},
+        {"Carrier Fleet Node": "FedEx Freight Express", "Dispatched Units": 850, "Average Delay Delta": "+1.8 Days", "Compliance Score": "84.5%"},
+        {"Carrier Fleet Node": "DHL Global Ocean Vector", "Dispatched Units": 420, "Average Delay Delta": "+3.1 Days", "Compliance Score": "76.1%"}
+    ])
+    st.dataframe(carrier_db, use_container_width=True)
+
+def render_conversion_velocity():
+    """
+    TAB 3 ADDITION: LEAD CONVERSION VELOCITY METER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("⚡ Dynamic Lead Conversion Velocity Meter")
+    st.write("Calculate the operational run-rate speed at which raw prospecting entries convert into paid subscriber files.")
+    
+    cv_c1, cv_c2 = st.columns(2)
+    with cv_c1:
+        raw_leads_count = st.number_input("Raw Inbound Leads Processed (Monthly cycle):", min_value=1, value=500, key="cv_leads_v3")
+    with cv_c2:
+        paid_conversions = st.number_input("Paid Premium Account Conversions Secured:", min_value=0, value=35, key="cv_paid_v3")
+        
+    conversion_rate = (paid_conversions / raw_leads_count) * 100.0 if raw_leads_count > 0 else 0.0
+    st.metric(label="🎯 System Conversion Efficiency Velocity", value=f"{conversion_rate:.2f}%", delta=f"{paid_conversions} Premium Closures Active")
