@@ -73,6 +73,7 @@ with st.sidebar:
 import pandas as pd
 import os
 
+with st.sidebar:
     # Dynamic Region Selection Filter
     if df is not None and 'Region' in df.columns:
         region_opts = sorted(df['Region'].dropna().unique())
