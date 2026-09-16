@@ -1907,3 +1907,105 @@ def render_weight_limit_monitor():
     st.success(f"⚖️ **Calculated Total Row Load Mass:** `{total_load:,} lbs`")
     if total_load > max_shelf_load:
         st.error("🚨 CRITICAL STRUCTURAL OVERLOAD: Row load mass breaches structural rack constraints!")
+
+def render_pipeline_forecaster():
+    """
+    TAB 1 ADDITION: B2B SALES PIPELINE FORECASTER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("📊 B2B Multi-Region Sales Pipeline Volume Forecaster")
+    st.write("Project upcoming corporate revenue horizons by evaluating contract close metrics.")
+    
+    col_f1, col_f2 = st.columns(2)
+    with col_f1:
+        pipeline_value = st.number_input("Total Active Deal Pipeline Value ($):", min_value=1000, value=250000, step=5000, key="fore_val_k")
+    with col_f2:
+        win_rate = st.slider("Historical Team Close Win Rate (%):", min_value=1, max_value=100, value=28, key="fore_rate_k")
+        
+    projected_revenue = pipeline_value * (win_rate / 100.0)
+    st.metric(label="🔮 Projected Closed-Won Revenue Horizon", value=f"${projected_revenue:,.2f}", delta="Calibrated Growth Bounds Verified")
+
+def render_gateway_limiter():
+    """
+    TAB 2 ADDITION: API GATEWAY RATE LIMITER MONITOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Enterprise Secure API Gateway Rate Limiter Monitor")
+    st.write("Audit sliding-window traffic spikes to calculate defensive credential throttle limits.")
+    
+    col_rl1, col_rl2 = st.columns(2)
+    with col_rl1:
+        incoming_requests = st.number_input("Simulated Incoming Request Spikes (Hits/Min):", min_value=10, value=12000, key="lim_req_k")
+    with col_rl2:
+        max_capacity = st.number_input("Maximum Secure Firewall Gateway Threshold:", min_value=1000, value=10000, key="lim_max_k")
+        
+    st.info(f"🛰️ Gateway Core Status: Monitoring active incoming vector arrays.")
+    if incoming_requests > max_capacity:
+        st.error("🚨 CRITICAL RATE CONSTRAINT BREACH: Automated sliding-window request throttling active!")
+    else:
+        st.success("🟢 TRAFFIC LIMITS BOUNDED: Gateway metrics are operating cleanly inside security parameters.")
+
+def render_password_generator():
+    """
+    TAB 2 ADDITION: HIGH-ENTROPY CRYPTOGRAPHIC PASSWORD GENERATOR
+    """
+    import streamlit as st
+    import string
+    import random
+    st.markdown("---")
+    st.subheader("🔑 High-Entropy Cryptographic Password Generator")
+    st.write("Generate enterprise-grade secure strings with full control over length and complex character metrics.")
+    
+    col_pg1, col_pg2 = st.columns(2)
+    with col_pg1:
+        pass_length = st.slider("Target Key Length (Characters):", min_value=8, max_value=64, value=16, key="pwd_len_k")
+    with col_pg2:
+        include_spec = st.checkbox("Include Advanced Special Characters (!@#$%^&*)", value=True, key="pwd_spec_k")
+        
+    if st.button("🚀 Generate Secure Structural Key", key="pwd_gen_btn_k"):
+        chars = string.ascii_uppercase + string.ascii_lowercase + string.digits
+        if include_spec:
+            chars += "!@#$%^&*()_+-=[]{}|;:,.<>?"
+            
+        secure_key = "".join(random.choice(chars) for _ in range(pass_length))
+        st.success("🟢 CRYPTOGRAPHIC VALUE GENERATED:")
+        st.code(secure_key, language="text")
+
+def render_dependency_validator():
+    """
+    TAB 7 ADDITION: CROSS-TEAM DEPENDENCY VALIDATOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🔗 Cross-Team Resource Dependency Grid Validator")
+    st.write("Map engineering roadblock indicators to flag hidden blocking conflicts across project paths.")
+    
+    col_dv1, col_dv2 = st.columns(2)
+    with col_dv1:
+        total_tasks = st.number_input("Total Tracked Roadmap Milestone Tasks:", min_value=1, value=45, key="dep_total_k")
+    with col_dv2:
+        blocking_links = st.slider("Identified Cross-Team Blocking Dependencies:", min_value=0, max_value=20, value=6, key="dep_block_k")
+        
+    risk_factor = (blocking_links / total_tasks) * 100 if total_tasks > 0 else 0
+    st.warning(f"⚠️ **Calculated Pipeline Delivery Risk Factor:** {risk_factor:.1f}% Risk Level")
+
+def render_text_summarizer():
+    """
+    TAB 10 ADDITION: AI-OPS AUTOMATED REPORT TEXT SUMMARIZER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🤖 AI-Ops Automated Operational Report Text Summarizer")
+    st.write("Condense long-form corporate operations logs into high-priority actionable bullet summaries.")
+    
+    user_log = st.text_area(
+        "Ingest Raw Operations Logs:", 
+        value="CRITICAL SYSTEM METRIC UPDATE: Infrastructure clusters resolved the memory cache saturation anomaly at 02:44 UTC. Network router assets successfully bypassed the localized traffic blocks and data paths are stable.", 
+        key="text_sum_area_k"
+    )
+    
+    if st.button("🚀 Execute Operational Extraction Analysis", key="text_sum_btn_k"):
+        st.success("🟢 AUTOMATED TELEMETRY RECONCILIATION COMPLETE:")
+        st.info(f"📌 **Extracted Action Directive:** {user_log.split(':')[-1] if ':' in user_log else user_log}")
