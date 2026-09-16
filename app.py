@@ -124,7 +124,7 @@ else:
         if hasattr(wm, 'render_funnel_diagnostic_v10'): wm.render_funnel_diagnostic_v10()
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
-elif active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
+if active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     if 'wm' in locals():
         if hasattr(wm, 'render_translator'): wm.render_translator()
         st.markdown("---")
