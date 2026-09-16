@@ -70,26 +70,26 @@ with st.sidebar:
     st.caption("Select your operational tier to unlock full cockpit capabilities.")
 
     # 💳 LEVEL 1: SILVER TIER BUTTON
-    with st.expander("🥉 Silver Node Access", expanded=False):
+    with st.expander("🥈 Silver Node Access", expanded=False):
         st.markdown("**Cost:** $249 / month")
         st.markdown("Includes baseline access to core utility nodes.")
         # Replace the link below with your actual PayPal Button Smart Link
         st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
 
     # 💳 LEVEL 2: GOLD EXECUTIVE TIER BUTTON
-    with st.expander("🥈 Gold Command Access", expanded=False):
+    with st.expander("🥇 Gold Command Access", expanded=False):
         st.markdown("**Cost:** $359 / month")
         st.markdown("Unlocks advanced simulation and analytical suites.")
         st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
 
     # 💳 LEVEL 3: PLATINUM CORPORATE TIER BUTTON
-    with st.expander("🥇 Platinum Executive Suite", expanded=True): # Expanded by default to highlight the best value
+    with st.expander("👑 Platinum Executive Suite", expanded=True): # Expanded by default to highlight the best value
         st.markdown("**Cost:** $499 / month")
         st.markdown("Complete access to all 105+ diagnostic tools and AI matrices.")
         st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="primary")
 
     # 💳 LEVEL 4: DIAMOND ENTERPRISE TIER BUTTON
-    with st.expander("👑 Diamond Enterprise Node", expanded=False):
+    with st.expander("💎 Diamond Enterprise Node", expanded=False):
         st.markdown("**Cost:** $799 / month")
         st.markdown("Dedicated server instances, custom modules, and 24/7 corporate priority support.")
         st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
