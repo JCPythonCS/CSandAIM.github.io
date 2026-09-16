@@ -67,6 +67,75 @@ def render_live_countdown():
 with st.sidebar:
     render_live_countdown()
 
+with st.sidebar:
+    # ⏱️ The Live Countdown Fragment remains safely at the top
+    render_live_countdown()
+    
+    st.markdown("---")
+    st.header("💎 Premium SaaS Access")
+    st.caption("Select your operational tier to unlock full cockpit capabilities.")
+
+    # 💳 LEVEL 1: SILVER TIER BUTTON
+    with st.expander("🥉 Bronze Node Access", expanded=False):
+        st.markdown("**Cost:** $249 / month")
+        st.markdown("Includes baseline access to core utility nodes.")
+        # Replace the link below with your actual PayPal Button Smart Link
+        st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
+
+    # 💳 LEVEL 2: GOLD EXECUTIVE TIER BUTTON
+    with st.expander("🥈 Silver Command Access", expanded=False):
+        st.markdown("**Cost:** $359 / month")
+        st.markdown("Unlocks advanced simulation and analytical suites.")
+        st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
+
+    # 💳 LEVEL 3: PLATINUM COTPORATE TIER BUTTON
+    with st.expander("🥇 Gold Executive Suite", expanded=True): # Expanded by default to highlight the best value
+        st.markdown("**Cost:** $499 / month")
+        st.markdown("Complete access to all 105+ diagnostic tools and AI matrices.")
+        st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="primary")
+
+    # 💳 LEVEL 4: DIAMOND ENTERPRISE TIER BUTTON
+    with st.expander("👑 Platinum Enterprise Node", expanded=False):
+        st.markdown("**Cost:** $799 / month")
+        st.markdown("Dedicated server instances, custom modules, and 24/7 corporate priority support.")
+        st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
+
+    st.markdown("---")
+    
+    # 💡 FEEDBACK & SUGGESTION BOX AREA
+    st.header("💡 Systems Suggestion Box")
+    with st.form(key="sidebar_suggestion_form", clear_on_submit=True):
+        user_email = st.text_input("Subscriber Email Address:", placeholder="name@domain.com")
+        suggestion_topic = st.selectbox("Target Node/Tool Component:", ["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"])
+        suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=500, placeholder="Describe your requested feature or adjustment here...")
+        
+        submit_suggestion = st.form_submit_form_button("Transmit Feedback Logs")
+        if submit_suggestion:
+            if suggestion_text.strip():
+                # Here you can add logic later to route this text to a file or database
+                st.success("✅ Feedback successfully logged to the secure queue!")
+            else:
+                st.error("⚠️ Feedback message body cannot be empty.")
+
+    st.markdown("---")
+    
+    # 🏢 CORPORATE INFORMATION FOOTPRINT
+    st.markdown(
+        """
+        <div style="background-color: #0f172a; padding: 15px; border-radius: 6px; border: 1px solid #334155; color: #94a3b8; font-size: 0.85rem;">
+            <div style="font-weight: bold; color: #f1f5f9; margin-bottom: 5px;">🏢 Computer Systems & AI Management</div>
+            <div style="margin-bottom: 3px;"><b>Version:</b> 4.2.0-SaaS (Production)</div>
+            <div style="margin-bottom: 3px;"><b>Global Network Operations Center</b></div>
+            <div style="margin-bottom: 10px; font-size: 0.75rem; color: #64748b;">All Rights Reserved © 2026</div>
+            <div style="border-top: 1px solid #1e293b; padding-top: 8px; font-size: 0.8rem;">
+                🔗 <a href="https://paypal.com" target="_blank" style="color: #38bdf8; text-decoration: none;">Subscriber Portal</a><br>
+                🛡️ <a href="#" style="color: #38bdf8; text-decoration: none;">Security Protocols</a>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
 # 🎛️ COCKPIT MASTER NAVIGATION (Ungrouped Selection Panels)
 active_panel = st.selectbox(
     "Select Workspace System Node To Deploy:",
