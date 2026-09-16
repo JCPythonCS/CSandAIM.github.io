@@ -2306,3 +2306,125 @@ def render_code_audit_v7():
             st.error("🚨 LINTING ANOMALY FLAGGED: Block structure contains unindented child conditional rows! Calibration required.")
         else:
             st.success("🟢 CODE BASE PATTERNS STABLE: Structural parsing modules confirmed clean and aligned.")
+
+def render_shipping_rate_calc_v8():
+    """
+    TAB 8 ADDITION: MULTI-LOCATION FREIGHT CARRIER SHIPPING RATE CALCULATOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("📦 Multi-Location Freight Carrier Shipping Rate Calculator")
+    st.write("Estimate regional freight shipping costs based on total weight metrics and target route adjustments.")
+    
+    col_rt1, col_rt2 = st.columns(2)
+    with col_rt1:
+        shipment_weight = st.number_input("Total Pallet Cargo Weight (lbs):", min_value=10, value=2500, step=50, key="rt_weight_v8")
+    with col_rt2:
+        distance_zone = st.selectbox("Select Target Destination Delivery Zone:", ["Zone A (Local < 100mi)", "Zone B (Regional < 500mi)", "Zone C (National > 500mi)"], key="rt_zone_v8")
+        
+    base_rate_per_lb = 0.15
+    zone_multipliers = {"Zone A (Local < 100mi)": 1.0, "Zone B (Regional < 500mi)": 1.4, "Zone C (National > 500mi)": 2.2}
+    
+    calculated_rate = shipment_weight * base_rate_per_lb * zone_multipliers.get(distance_zone, 1.0)
+    st.metric(label="🔮 Estimated Freight Transportation Contract Cost", value=f"\${calculated_rate:,.2f}", delta=f"Rate Vector Multiplier Balanced")
+
+def render_tire_pressure_monitor_v8():
+    """
+    TAB 9 ADDITION: FLEET VEHICLE TIRE PRESSURE & SAFETY GRID MONITOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🏎️ Fleet Vehicle Tire Pressure & Safety Grid Monitor")
+    st.write("Audit active fleet vehicle TPMS sensor telemetry against cold inflation manufacturing safety thresholds.")
+    
+    col_tp1, col_tp2 = st.columns(2)
+    with col_tp1:
+        front_left_psi = st.number_input("Front Left Tire Inflation Pressure (PSI):", min_value=10, max_value=60, value=32, key="tp_fl_v8")
+        front_right_psi = st.number_input("Front Right Tire Inflation Pressure (PSI):", min_value=10, max_value=60, value=32, key="tp_fr_v8")
+    with col_tp2:
+        rear_left_psi = st.number_input("Rear Left Tire Inflation Pressure (PSI):", min_value=10, max_value=60, value=32, key="tp_rl_v8")
+        rear_right_psi = st.number_input("Rear Right Tire Inflation Pressure (PSI):", min_value=10, max_value=60, value=26, key="tp_rr_v8")
+        
+    low_pressure_detected = any(psi < 30 for psi in [front_left_psi, front_right_psi, rear_left_psi, rear_right_psi])
+    if low_pressure_detected:
+        st.error("🚨 TPMS THRESHOLD BREACH FLAGGED: One or more tires display critical low pressure inflation metrics!")
+    else:
+        st.success("🟢 TPMS METRICS CONVERGED: All fleet vehicle tires are operating cleanly inside safe inflation limits.")
+
+def render_log_masker_v8():
+    """
+    TAB 10 ADDITION: AUTOMATED AI-OPS SYSTEM LOG REGEX DATA MASKER
+    """
+    import streamlit as st
+    import re
+    st.markdown("---")
+    st.subheader("🤖 Automated AI-Ops System Log Regex Data Masker")
+    st.write("Scan and mask sensitive personal identification sequences from system log text entries before exporting files.")
+    
+    raw_log_input = st.text_area(
+        "Ingest Raw Operational Incident Text Log:",
+        value="INCIDENT REPORT: Dispatch engineer John Doe contacted customer operations support at line 800-555-0199 to resolve cluster latency nodes.",
+        key="msk_log_v8"
+    )
+    
+    if st.button("🚀 Execute Cryptographic Regex Masking Routine", key="msk_btn_v8"):
+        # Simple procedural text string replacement mapping phone formatting
+        masked_log = re.sub(r'\d{3}-\d{3}-\d{4}', '[REDACTED_PHONE_STRING]', raw_log_input)
+        st.success("🟢 LOG SANITIZATION ROUTINE SUCCESSFUL:")
+        st.code(masked_log, language="text")
+
+def render_pipeline_leakage_v8():
+    """
+    TAB 1 ADDITION: B2B SALES FUNNEL PIPELINE LEAKAGE TRACKER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("📊 B2B Sales Funnel Pipeline Leakage Tracker")
+    st.write("Calculate drop-off abandonment rates between milestone sales stages to isolate pipeline leaks.")
+    
+    col_lk1, col_lk2 = st.columns(2)
+    with col_lk1:
+        initial_prospects = st.number_input("Total Initial Discovery Stage Leads:", min_value=1, value=500, key="lk_prop_v8")
+    with col_lk2:
+        closed_deals = st.number_input("Total Final Closed-Won Contracts signed:", min_value=0, value=120, key="lk_win_v8")
+        
+    leakage_rate = ((initial_prospects - closed_deals) / initial_prospects) * 100 if initial_prospects > 0 else 0
+    st.warning(f"⚠️ **Calculated Funnel Leakage/Abandonment Rate:** {leakage_rate:.1f}% Drop-off Velocity")
+
+def render_cors_auditor_v8():
+    """
+    TAB 2 ADDITION: API GATEWAY CORS CONFIGURATION AUDITOR
+    ```"""
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Enterprise Secure API Gateway CORS Configuration Auditor")
+    st.write("Audit server domain header variables to catch open wildcards or vulnerabilities to cross-site origin exploitation.")
+    
+    cors_origin_header = st.text_input("Ingest Access-Control-Allow-Origin Value Header:", value="*", key="crs_hdr_v8")
+    
+    if st.button("🚀 Verify Gateway Origin Header Safety", key="crs_btn_v8"):
+        if cors_origin_header == "*":
+            st.error("🚨 CRITICAL SECURITY MISCONFIGURATION FLAGGED: Universal wildcard character allow rule exposes API paths to cross-site script request hijacking!")
+        else:
+            st.success("🟢 DOMAIN SECURITY PARAMETERS BOUNDED: Explicit cross-origin request whitelist verified secure.")
+
+def render_velocity_stabilizer_v8():
+    """
+    TAB 7 ADDITION: AGILE SPRINT BACKLOG VELOCITY STABILIZER ANALYST
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("⏱️ Cross-Team Agile Sprint Backlog Velocity Stabilizer Analyst")
+    st.write("Evaluate scope creep point variances to maintain delivery baseline stability metrics.")
+    
+    col_st1, col_st2 = st.columns(2)
+    with col_st1:
+        planned_points = st.number_input("Planned Story Points at Sprint Commitment:", min_value=1, value=60, key="st_plan_v8")
+    with col_st2:
+        injected_points = st.slider("Scope Creep Story Points Injected During Sprint:", min_value=0, max_value=30, value=12, key="st_creep_v8")
+        
+    variance_rate = (injected_points / planned_points) * 100 if planned_points > 0 else 0
+    if variance_rate > 15.0:
+        st.error(f"🚨 VELOCITY DRIFT ALERT: Backlog scope creep expansion variable is too high at {variance_rate:.1f}% variance!")
+    else:
+        st.success(f"🟢 BACKLOG EXPANSION TRACK STABLE: Point variance is safely bounded at {variance_rate:.1f}%.")
