@@ -67,95 +67,6 @@ def render_live_countdown():
 with st.sidebar:
     render_live_countdown()
 
-# ==========================================================================
-# 📡 DYNAMIC ENGINE LOADER (SITS DIRECTLY UNDER THE APP NAVIGATION SELECTION)
-# ==========================================================================
-import pandas as pd
-import os
-
-# Create a safe global variable default so the script won't crash on boot
-df_master = None
-
-# If a file has been selected in your dropdown menu, load it instantly!
-if 'selected_file_name' in st.session_state and st.session_state['selected_file_name'] in database:
-    chosen_file_path = database[st.session_state['selected_file_name']]
-    if os.path.exists(chosen_file_path):
-        df_master = pd.read_excel(chosen_file_path)
-elif 'selected_file_name' in locals() and selected_file_name in database:
-    chosen_file_path = database[selected_file_name]
-    if os.path.exists(chosen_file_path):
-        df_master = pd.read_excel(chosen_file_path)
-else:
-    # Safe universal fallback if the UI components are still building
-    selected_name = st.session_state.get('selected_file_name')
-    
-    # Extract the true string clean-text key if it is currently trapped inside a tuple structure
-    if isinstance(selected_name, tuple) and len(selected_name) > 0:
-        selected_name = selected_name[0]
-        
-    df_loaded = False
-    
-    if selected_name:
-        selected_str = str(selected_name).strip()
-        # Create a list of all plausible extension variants to scan against your drive parameters
-        possible_filenames = [
-            selected_str,
-            f"{selected_str}.xlsx",
-            f"{selected_str}.xls"
-        ]
-        
-        for fname in possible_filenames:
-            if os.path.exists(fname):
-                df_master = pd.read_excel(fname)
-                df_loaded = True
-                break
-
-    # If the user hasn't made a choice yet or if the lookup fails, safely boot your core retail sheet
-    if not df_loaded:
-        if os.path.exists("enterprise_retail_dataT.xlsx"):
-            df_master = pd.read_excel("enterprise_retail_dataT.xlsx")
-
-# ==========================================================================
-# 🌐 MASTER COCKPIT SIDEBAR CONTROL PANEL
-# ==========================================================================
-with st.sidebar:
-    st.markdown("---")
-    st.header("🌐 Global System Filters")
-    df = df_master.copy() if df_master is not None else None
-
-    # Cascading Region -> Retailer -> Agency -> Command Tier selections
-    if df_master is not None and 'Region' in df_master.columns:
-        selected_region = st.selectbox("Select Operational Region:", ["All Regions"] + list(sorted(df_master['Region'].dropna().unique())), key="sb_region_v15")
-        if selected_region != "All Regions" and df is not None:
-            df = df[df['Region'] == selected_region]
-
-    if df_master is not None and 'Retailer' in df_master.columns:
-        selected_retailer = st.selectbox("Select Active Retailer:", ["All Retailers"] + list(sorted(df['Retailer'].dropna().unique()) if df is not None else []), key="sb_retailer_v15")
-        if selected_retailer != "All Retailers" and df is not None:
-            df = df[df['Retailer'] == selected_retailer]
-
-    if df_master is not None and 'Agency' in df_master.columns:
-        selected_agency = st.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(sorted(df['Agency'].dropna().unique()) if df is not None else []), key="sb_agency_v15")
-        if selected_agency != "All Agencies" and df is not None:
-            df = df[df['Agency'] == selected_agency]
-
-    if df_master is not None and 'Command Tier' in df_master.columns:
-        selected_command_tier = st.selectbox("Select Command Tier:", ["All Command Tiers"] + list(sorted(df['Command Tier'].dropna().unique()) if df is not None else []), key="sb_command_tier_v15")
-
-# 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
-current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
-data_folder = current_working_dir
-all_files = [f for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
-database = {}
-
-for file_name in all_files:
-    file_path = os.path.join(data_folder, file_name)
-    display_name = os.path.splitext(file_name)[0]
-    try:
-        database[display_name] = file_path
-    except:
-        pass
-
 # 🎛️ COCKPIT MASTER NAVIGATION (Ungrouped Selection Panels)
 active_panel = st.selectbox(
     "Select Workspace System Node To Deploy:",
@@ -173,50 +84,6 @@ active_panel = st.selectbox(
     ],
     key="cockpit_panel_navigation"
 )
-
-st.markdown("---")
-
-# 🎙️ FIXED SIDEBAR VISIBILITY CONTROLLER
-# Appends data options or audio profile settings underneath the isolated live timer box
-if active_panel == "📊 Analytics (Tab 1)":
-    st.sidebar.markdown("---")
-    st.sidebar.header("🎯 Dashboard Control Filters")
-    
-    if database:
-        selected_file_name = st.sidebar.selectbox(
-            "Select Database File Asset:", 
-            options=sorted(list(database.keys())),
-            help="Choose any workspace excel file from your repository to analyze dynamically."
-        )
-        
-        target_file_path = database[selected_file_name]
-        
-        try:
-            df = pd.read_excel(target_file_path)
-            
-            if 'Active Combat Unit Name' in df.columns:
-                selected_units = st.sidebar.multiselect("Active Combat Unit Name:", options=df['Active Combat Unit Name'].unique(), default=df['Active Combat Unit Name'].unique())
-            else:
-                selected_units = []
-
-            if 'Strategic Command Sector' in df.columns:
-                selected_sectors = st.sidebar.multiselect("Strategic Command Sector:", options=df['Strategic Command Sector'].unique(), default=df['Strategic Command Sector'].unique())
-            else:
-                selected_sectors = []
-
-            if 'Agency Command Tier' in df.columns:
-                selected_tiers = st.sidebar.multiselect("Agency Command Tier:", options=df['Agency Command Tier'].unique(), default=df['Agency Command Tier'].unique())
-            else:
-                selected_tiers = []
-                
-        except Exception as e:
-            st.sidebar.error(f"Error reading file elements: {e}")
-            df = None
-            selected_units, selected_sectors, selected_tiers = [], [], []
-    else:
-        st.sidebar.warning("⚠️ No `.xlsx` or `.xls` spreadsheet assets detected in the root repository.")
-        df = None
-        selected_units, selected_sectors, selected_tiers = [], [], []
         
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
@@ -231,59 +98,6 @@ elif active_panel == "📚 Library (Tab 5)":
 else:
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
-
-# ==========================================================================
-# 🚀 LIVE WORKSPACE ROUTING NODE LOOP EXECUTION
-# ==========================================================================
-
-# ---- PANEL 1: ANALYTICS (Tab 1) ----
-if active_panel == "📊 Analytics (Tab 1)":
-    st.subheader(f"📊 Tactical Systems & Analytics Stream")
-    
-    # 🎯 FIX: Automatically grab whatever data is active in the master repository variables
-    active_data = None
-    if 'df' in locals() and df is not None:
-        active_data = df
-    elif 'df_master' in locals() and df_master is not None:
-        active_data = df_master
-
-    # Render the layout if active data records exist
-    if active_data is not None:
-        total_records = len(active_data)
-        
-        # 1. TOP CARD METRICS SECTION
-        c1, c2 = st.columns(2)
-        with c1:
-            st.metric(label="📦 Active Tracked Records", value=f"{total_records:,}")
-        with c2:
-            # Dynamically calculate the total sum of numerical values if they exist
-            num_cols = active_data.select_dtypes(include='number').columns
-            if len(num_cols) > 0:
-                metric_sum = active_data[num_cols].sum()
-                st.metric(label=f"📊 Aggregate Core Metrics ({list(num_cols)})", value=f"{metric_sum.iloc[0]:,.2f}" if hasattr(metric_sum, 'iloc') else f"{metric_sum:.2f}")
-            else:
-                st.metric(label="📊 Operational Status", value="Data Deployment Active")
-            
-        st.markdown("---")
-        
-        # 2. DYNAMIC CHARTING TILES (Draws bars based on your active columns)
-        chart_col1, chart_col2 = st.columns(2)
-        
-        if 'Region' in active_data.columns:
-            with chart_col1:
-                st.subheader("🌐 Geographic Region Distribution")
-                st.bar_chart(active_data.groupby('Region').size())
-                
-        if 'Retailer' in active_data.columns:
-            with chart_col2:
-                st.subheader("🏬 Active Retailer Breakdown")
-                st.bar_chart(active_data.groupby('Retailer').size())
-            
-        # 3. SECURE INTERACTIVE DATA SPREADSHEET CANVAS
-        st.subheader("🔎 Secure Ingested Record Stream")
-        st.dataframe(active_data.head(100), use_container_width=True)
-    else:
-        st.info("ℹ️ Select an operational file from the left sidebar to populate your tactical dashboard data lines.")
 
     # ==========================================================================
     # 📋 PERMANENT ACTIVE STREAM REGISTERS MAPPING
