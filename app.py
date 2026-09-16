@@ -87,7 +87,27 @@ elif 'selected_file_name' in locals() and selected_file_name in database:
         df_master = pd.read_excel(chosen_file_path)
 else:
     # Safe universal fallback if the UI components are still building
-    if os.path.exists("enterprise_retail_dataT.xlsx"):
+    # Check Streamlit memory for whichever file you clicked in the dropdown menu
+    selected_name = st.session_state.get('selected_file_name')
+    
+    # If the user selected a file, locate it dynamically in your folder
+    if selected_name:
+        # Convert a tuple key back to a standard string file path if needed
+        if isinstance(selected_name, tuple):
+            selected_name = selected_name[0]
+            
+        # Add the extension if it isn't explicitly attached yet
+        if not str(selected_name).lower().endswith(('.xlsx', '.xls')):
+            file_to_load = f"{selected_name}.xlsx"
+        else:
+            file_to_load = str(selected_name)
+            
+        if os.path.exists(file_to_load):
+            df_master = pd.read_excel(file_to_load)
+        elif os.path.exists("enterprise_retail_dataT.xlsx"):
+            df_master = pd.read_excel("enterprise_retail_dataT.xlsx")
+    # If the app is opening for the very first time, use your baseline retail file
+    elif os.path.exists("enterprise_retail_dataT.xlsx"):
         df_master = pd.read_excel("enterprise_retail_dataT.xlsx")
 
 # ==========================================================================
