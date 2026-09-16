@@ -2009,3 +2009,97 @@ def render_text_summarizer():
     if st.button("🚀 Execute Operational Extraction Analysis", key="text_sum_btn_k"):
         st.success("🟢 AUTOMATED TELEMETRY RECONCILIATION COMPLETE:")
         st.info(f"📌 **Extracted Action Directive:** {user_log.split(':')[-1] if ':' in user_log else user_log}")
+
+def render_conversion_velocity_v5():
+    """
+    TAB 1 ADDITION: B2B CONVERSION FUNNEL VELOCITY METER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("📊 B2B Operational Conversion Funnel Velocity Meter")
+    st.write("Evaluate time-lapse velocities between core lead acquisition and final contract signatures.")
+    
+    col_v1, col_v2 = st.columns(2)
+    with col_v1:
+        leads_processed = st.number_input("Total Lead Profiles Processed:", min_value=1, value=1250, key="vel_leads_v5")
+    with col_v2:
+        avg_days_to_close = st.slider("Average Conversion Operational Cycle (Days):", min_value=1, max_value=180, value=45, key="vel_days_v5")
+        
+    velocity_index = leads_processed / avg_days_to_close if avg_days_to_close > 0 else 0
+    st.metric(label="⚡ Pipeline Velocity Operational Index Value", value=f"{velocity_index:.2f} Leads / Day", delta="Throughput Rates Calibrated")
+
+def render_ip_throttle_monitor_v5():
+    """
+    TAB 2 ADDITION: API GATEWAY BRUTE-FORCE IP THROTTLE MONITOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Enterprise Secure API Gateway Brute-Force IP Throttle Monitor")
+    st.write("Scan incoming request authentication metadata signatures to isolate automated credential harvesting strings.")
+    
+    col_th1, col_th2 = st.columns(2)
+    with col_th1:
+        failed_attempts = st.number_input("Rapid Authentication Failures Detected (Window):", min_value=0, value=14, key="th_fail_v5")
+    with col_th2:
+        security_threshold = st.slider("Max Failure Security Limit Before Action:", min_value=3, max_value=20, value=5, key="th_limit_v5")
+        
+    if failed_attempts > security_threshold:
+        st.error("🚨 MALICIOUS BRUTE-FORCE ACTIVITY BLOCK: Automated IP firewall restriction matrix deployed!")
+    else:
+        st.success("🟢 ACCESS CREDENTIAL PARAMETERS CLEAN: Authentication streams operating smoothly inside limits.")
+
+def render_string_codec_v5():
+    """
+    TAB 3 ADDITION: HIGH-ENTROPY CRYPTOGRAPHIC STRING CODEC ENCODER
+    """
+    import streamlit as st
+    import base64
+    st.markdown("---")
+    st.subheader("💼 High-Entropy Cryptographic String Codec Encoder")
+    st.write("Process raw enterprise operations log payloads into standard Base64 text arrays safely.")
+    
+    raw_payload = st.text_input("Enter Ingested Operational String Content:", value="COCKPIT_SECURE_NODE_ALPHA_CONFIRMED", key="cdc_raw_v5")
+    
+    if st.button("🚀 Execute Base64 String Encoding", key="cdc_btn_v5"):
+        encoded_bytes = base64.b64encode(raw_payload.encode("utf-8"))
+        encoded_text = encoded_bytes.decode("utf-8")
+        st.success("🟢 PAYLOAD ENCODING SUCCESSFUL:")
+        st.code(encoded_text, language="text")
+
+def render_sprint_burndown_v5():
+    """
+    TAB 7 ADDITION: AGILE SPRINT BURNDOWN METRIC TRACKER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("⏱️ Cross-Team Agile Sprint Burndown & Metric Tracker")
+    st.write("Track real-time story point completion velocity across active development timelines.")
+    
+    col_bd1, col_bd2 = st.columns(2)
+    with col_bd1:
+        committed_points = st.number_input("Total Committed Sprint Story Points:", min_value=1, value=80, key="bd_commit_v5")
+        completed_points = st.number_input("Currently Closed Out Milestone Points:", min_value=0, value=52, key="bd_done_v5")
+    with col_bd2:
+        days_remaining = st.slider("Active Sprint Days Remaining on Clock:", min_value=1, max_value=30, value=6, key="bd_days_v5")
+        
+    points_left = max(0, committed_points - completed_points)
+    required_rate = points_left / days_remaining if days_remaining > 0 else 0
+    st.warning(f"⚠️ **Remaining Points Backlog:** {points_left} | **Required Burn Velocity:** {required_rate:.1f} Points / Day")
+
+def render_sentiment_classifier_v5():
+    """
+    TAB 10 ADDITION: AI-OPS KEYWORD SENTIMENT & HEADLINE CLASSIFIER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🤖 Strategic AI-Ops Keyword Sentiment & Headline Classifier")
+    st.write("Score incoming corporate operational text text headings to dynamically assign priority tags.")
+    
+    heading_text = st.text_input("Ingest Target Operational Text Heading:", value="CRITICAL UPDATE: Database core cluster node-2 crashed due to out-of-memory logs", key="snt_input_v5")
+    
+    if st.button("🚀 Analyze Headline Text Metrics", key="snt_btn_v5"):
+        lower_head = heading_text.lower()
+        if "critical" in lower_head or "crash" in lower_head or "error" in lower_head:
+            st.error("🚨 CLASSIFICATION PRIORITY MATCH: High-Severity Operational Incident Tag Assigned.")
+        else:
+            st.success("🟢 CLASSIFICATION ROUTINE CLEAN: Standard informational message parameters confirmed.")
