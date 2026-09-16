@@ -62,14 +62,6 @@ def render_live_countdown():
         )
     else:
         st.success("🚀 Operational Window Active! SaaS Paywall Deploying.")
-
-# Run the isolated countdown module in the sidebar safely
-with st.sidebar:
-    render_live_countdown()
-
-with st.sidebar:
-    # ⏱️ The Live Countdown Fragment remains safely at the top
-    render_live_countdown()
     
     st.markdown("---")
     st.header("💎 Premium SaaS Access")
