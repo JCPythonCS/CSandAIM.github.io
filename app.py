@@ -109,7 +109,7 @@ with st.sidebar:
         suggestion_topic = st.selectbox("Target Node/Tool Component:", ["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"])
         suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=500, placeholder="Describe your requested feature or adjustment here...")
         
-        submit_suggestion = st.form_submit_form_button("Transmit Feedback Logs")
+        submit_suggestion = st.form_submit_button("Transmit Feedback Logs")
         if submit_suggestion:
             if suggestion_text.strip():
                 # Here you can add logic later to route this text to a file or database
