@@ -54,6 +54,55 @@ else:
         df_master = pd.read_excel("enterprise_retail_dataT.xlsx")
 
 # ==========================================================================
+# 🎛️ CROSS-CONNECTED RELATIONAL FILTER MATRIX (ACTIVE SHEET LOOKUP)
+# ==========================================================================
+if 'df' in locals() and df is not None:
+    st.sidebar.markdown("### 🎛️ Live Dynamic Sheet Slicers")
+
+    # 🏙️ 1. Connected Region Filter (Reads columns natively from the active sheet)
+    if 'Region' in df.columns:
+        region_opts = sorted(df['Region'].dropna().unique())
+        selected_region = st.sidebar.selectbox("Select Operational Region:", ["All Regions"] + list(region_opts), key="sb_region_v17_rel")
+        if selected_region != "All Regions":
+            df = df[df['Region'] == selected_region]
+
+    # 🏢 2. Connected Agency Filter (Narrows options down by the selected Region)
+    if 'Agency' in df.columns:
+        agency_data = df
+        if 'Region' in agency_data.columns and 'selected_region' in locals() and selected_region != "All Regions":
+            agency_data = agency_data[agency_data['Region'] == selected_region]
+        
+        agency_opts = sorted(agency_data['Agency'].dropna().unique())
+        selected_agency = st.sidebar.selectbox("Select Core Reporting Agency:", ["All Agencies"] + list(agency_opts), key="sb_agency_v17_rel")
+        if selected_agency != "All Agencies":
+            df = df[df['Agency'] == selected_agency]
+
+    # 🛍️ 3. Connected Retailer Filter (Narrows options down by the selected Region)
+    if 'Retailer' in df.columns:
+        retail_data = df
+        if 'Region' in retail_data.columns and 'selected_region' in locals() and selected_region != "All Regions":
+            retail_data = retail_data[retail_data['Region'] == selected_region]
+            
+        retail_opts = sorted(retail_data['Retailer'].dropna().unique())
+        selected_retailer = st.sidebar.selectbox("Select Active Retailer:", ["All Retailers"] + list(retail_opts), key="sb_retailer_v17_rel")
+        if selected_retailer != "All Retailers":
+            df = df[df['Retailer'] == selected_retailer]
+
+    # 📊 4. Connected Command Tier Filter (Narrows options down by the selected Region)
+    if 'Command Tier' in df.columns:
+        ct_data = df
+        if 'Region' in ct_data.columns and 'selected_region' in locals() and selected_region != "All Regions":
+            ct_data = ct_data[ct_data['Region'] == selected_region]
+            
+        ct_opts = sorted(ct_data['Command Tier'].dropna().unique())
+        selected_command_tier = st.sidebar.selectbox("Select Command Tier:", ["All Command Tiers"] + list(ct_opts), key="sb_command_tier_v17_rel")
+        if selected_command_tier != "All Command Tiers":
+            df = df[df['Command Tier'] == selected_command_tier]
+
+    # Re-assign the fully filtered dataset matrix down to your dashboard page views
+    filtered_df = df
+
+# ==========================================================================
 # 🌐 MASTER COCKPIT SIDEBAR CONTROL PANEL
 # ==========================================================================
 with st.sidebar:
