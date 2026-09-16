@@ -375,6 +375,8 @@ elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
         if hasattr(wm, 'render_stack_clearance_advisor'): wm.render_stack_clearance_advisor()
         if hasattr(wm, 'render_weight_limit_monitor'): wm.render_weight_limit_monitor()
         if hasattr(wm, 'render_fuel_analyst_v2'): wm.render_fuel_analyst_v2()
+        if hasattr(wm, 'render_carrier_scorecard_v7'): wm.render_carrier_scorecard_v7()
+        if hasattr(wm, 'render_volumetric_optimizer_v7'): wm.render_volumetric_optimizer_v7()
 
 # ---- PANEL 9: FLEET & AUTOMOTIVE (Tab 9) ----
 elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
@@ -385,6 +387,8 @@ elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
         if hasattr(wm, 'render_parts_cross_ref'): wm.render_parts_cross_ref()
         if hasattr(wm, 'render_batch_obd_scanner'): wm.render_batch_obd_scanner()
         if hasattr(wm, 'render_fuel_analyst_v2'): wm.render_fuel_analyst_v2()
+        if hasattr(wm, 'render_fleet_telematics_v7'): wm.render_fleet_telematics_v7()
+        if hasattr(wm, 'render_obd_freeze_frame_v7'): wm.render_obd_freeze_frame_v7()
 
 # ---- PANEL 10: AI-OPS TEXT PARSING (Tab 10) ----
 elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
@@ -397,6 +401,7 @@ elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
         if hasattr(wm, 'render_text_summarizer'): wm.render_text_summarizer()
         if hasattr(wm, 'render_sentiment_classifier_v5'): wm.render_sentiment_classifier_v5()
         if hasattr(wm, 'render_spam_assessor_v6'): wm.render_spam_assessor_v6()
+        if hasattr(wm, 'render_code_audit_v7'): wm.render_code_audit_v7()
     
     else:
         st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
