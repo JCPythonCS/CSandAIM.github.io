@@ -289,6 +289,7 @@ if active_panel == "📊 Analytics (Tab 1)":
         if hasattr(wm, 'render_kpi_pulse_grid'): wm.render_kpi_pulse_grid()
         if hasattr(wm, 'render_funnel_attribution'): wm.render_funnel_attribution()
         if hasattr(wm, 'render_pipeline_forecaster'): wm.render_pipeline_forecaster()
+        if hasattr(wm, 'render_conversion_velocity_v5'): wm.render_conversion_velocity_v5()
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 elif active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -302,6 +303,7 @@ elif active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' W
         if hasattr(wm, 'render_agent_fingerprinter'): wm.render_agent_fingerprinter()
         if hasattr(wm, 'render_gateway_limiter'): wm.render_gateway_limiter()
         if hasattr(wm, 'render_password_generator'): wm.render_password_generator()
+        if hasattr(wm, 'render_ip_throttle_monitor_v5'): wm.render_ip_throttle_monitor_v5()
 
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
 elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -316,6 +318,7 @@ elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' W
         if hasattr(wm, 'render_sales_commission_calc'): wm.render_sales_commission_calc()
         if hasattr(wm, 'render_conversion_velocity'): wm.render_conversion_velocity()
         if hasattr(wm, 'render_compliance_builder'): wm.render_compliance_builder()
+        if hasattr(wm, 'render_string_codec_v5'): wm.render_string_codec_v5()
 
 # ---- PANEL 4: SIMULATION (Tab 4) ----
 elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -354,6 +357,7 @@ elif active_panel == "📋 Project Management (Tab 7)":
         if hasattr(wm, 'render_sprint_burndown_v2'): wm.render_sprint_burndown_v2()
         if hasattr(wm, 'render_story_velocity_analyst'): wm.render_story_velocity_analyst()
         if hasattr(wm, 'render_cycle_time_analyst'): wm.render_cycle_time_analyst()
+        if hasattr(wm, 'render_sprint_burndown_v5'): wm.render_sprint_burndown_v5()
 
 # ---- PANEL 8: SUPPLY CHAIN & LOGISTICS (Tab 8) ----
 elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
@@ -388,6 +392,7 @@ elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
         if hasattr(wm, 'render_ad_copy_scraper'): wm.render_ad_copy_scraper()
         if hasattr(wm, 'render_ai_dispatcher_v2'): wm.render_ai_dispatcher_v2()
         if hasattr(wm, 'render_text_summarizer'): wm.render_text_summarizer()
+        if hasattr(wm, 'render_sentiment_classifier_v5'): wm.render_sentiment_classifier_v5()
     
     else:
         st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
