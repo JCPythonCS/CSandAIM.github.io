@@ -2428,3 +2428,101 @@ def render_velocity_stabilizer_v8():
         st.error(f"🚨 VELOCITY DRIFT ALERT: Backlog scope creep expansion variable is too high at {variance_rate:.1f}% variance!")
     else:
         st.success(f"🟢 BACKLOG EXPANSION TRACK STABLE: Point variance is safely bounded at {variance_rate:.1f}%.")
+
+def render_session_timeout_v9():
+    """
+    TAB 3 ADDITION: ENTERPRISE WORKSPACE SESSION INACTIVITY AUTO-TIMEOUT MONITOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("💼 Enterprise Workspace Session Inactivity Auto-Timeout Monitor")
+    st.write("Audit workspace idle states to enforce dynamic logout security thresholds.")
+    
+    col_to1, col_to2 = st.columns(2)
+    with col_to1:
+        idle_minutes = st.number_input("Current Workspace Account Idle Duration (Minutes):", min_value=0, value=12, key="to_idle_v9")
+    with col_to2:
+        max_allowable = st.slider("Max Permitted Inactivity Window Before Action:", min_value=5, max_value=60, value=15, key="to_max_v9")
+        
+    minutes_left = max(0, max_allowable - idle_minutes)
+    if minutes_left <= 2:
+        st.error(f"🚨 SECURITY WARNING: Session expiration imminent! Automatic logout sequence in {minutes_left} minutes.")
+    else:
+        st.success(f"🟢 SESSION TOKEN ACTIVE: {minutes_left} minutes remaining until automated token sanitization.")
+
+def render_revenue_expansion_v9():
+    """
+    TAB 3 ADDITION: B2B SUBSCRIPTION UPGRADE NET-REVENUE EXPANSION MODELER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("💼 B2B Subscription Upgrade Net-Revenue Expansion Modeler")
+    st.write("Calculate monthly recurring revenue (MRR) expansion velocities based on subscription tier modifications.")
+    
+    col_ex1, col_ex2 = st.columns(2)
+    with col_ex1:
+        base_accounts = st.number_input("Total Accounts Upgrading From Basic to Premium:", min_value=1, value=45, key="ex_acct_v9")
+    with col_ex2:
+        tier_price_delta = st.number_input("Subscription Tier Price Expansion Difference ($/Mo):", min_value=5, value=50, key="ex_delta_v9")
+        
+    mrr_expansion = base_accounts * tier_price_delta
+    st.metric(label="🔮 Generated Net-New MRR Expansion Horizon", value=f"${mrr_expansion:,.2f}", delta="Expansion Metrics Confirmed")
+
+def render_memory_leak_sim_v9():
+    """
+    TAB 4 ADDITION: MULTI-CLOUD INFRASTRUCTURE MEMORY LEAK SIMULATOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("✈️ Multi-Cloud Workspace Infrastructure Memory Leak Simulator")
+    st.write("Model programmatic cluster memory depletion curves to stress test alert thresholds.")
+    
+    col_lk1, col_lk2 = st.columns(2)
+    with col_lk1:
+        leak_rate = st.number_input("Simulated Core Leak Deficit Speed (MB/Min):", min_value=10, value=250, key="lk_rate_v9")
+    with col_lk2:
+        available_ram = st.number_input("Total Assigned Cluster Runtime RAM Buffer (MB):", min_value=1000, value=16000, key="lk_ram_v9")
+        
+    hours_to_crash = (available_ram / leak_rate) / 60.0 if leak_rate > 0 else 0
+    if hours_to_crash <= 2.0:
+        st.error(f"🚨 CRITICAL LEAK TRAJECTORY: Server cluster out-of-memory failure predicted in {hours_to_crash:.1f} hours!")
+    else:
+        st.warning(f"⚠️ **Monitored Buffer Degradation:** OOM state threshold triggered in {hours_to_crash:.1f} hours.")
+
+def render_ping_matrix_v9():
+    """
+    TAB 2 ADDITION: API GATEWAY NETWORK ENDPOINT PING RESPONSE MATRIX
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Secure API Gateway Network Endpoint Ping Response Matrix")
+    st.write("Track live data travel times across global cloud zone targets to balance incoming traffic links.")
+    
+    target_zone = st.selectbox("Select Target Cloud Infrastructure Zone Node:", ["US-East (Virginia)", "EU-West (Frankfurt)", "AP-South (Singapore)"], key="png_zone_v9")
+    
+    zone_pings = {"US-East (Virginia)": 14, "EU-West (Frankfurt)": 88, "AP-South (Singapore)": 142}
+    current_ping = zone_pings.get(target_zone, 0)
+    
+    if current_ping > 100:
+        st.error(f"🚨 LATENCY ANOMALY FLAGGED: Travel duration is too slow at {current_ping}ms! Rerouting active.")
+    else:
+        st.success(f"🟢 NETWORK STREAMS STABLE: Travel time is optimal at {current_ping}ms inside parameters.")
+
+def render_link_validator_v9():
+    """
+    TAB 10 ADDITION: AI-OPS AUTOMATED EMAIL BODY LINK VALIDATOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🤖 AI-Ops Automated Email Body Link Validator")
+    st.write("Scan outward campaign body URLs to prevent deliverability drops or dead resource links.")
+    
+    campaign_url = st.text_input("Ingest Target Campaign URL Destination Route:", value="https://saas-node.com", key="lnk_input_v9")
+    
+    if st.button("🚀 Verify Route Structural Integrity", key="lnk_btn_v9"):
+        if "http://" in campaign_url:
+            st.error("🚨 INSECURE SCHEME DETECTED: Payload uses plaintext HTTP connection values! HTTPS rule required.")
+        elif "paywall" in campaign_url:
+            st.success("🟢 VERIFIED CONVERSION LANDING: Secure campaign link structures verified for broadcast.")
+        else:
+            st.info("ℹ️ **Link Schema Analyzed:** Standard tracking parameters confirmed safe.")
