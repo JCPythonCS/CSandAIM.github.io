@@ -102,20 +102,6 @@ if 'df' in locals() and df is not None:
     # Re-assign the fully filtered dataset matrix down to your dashboard page views
     filtered_df = df
 
-# 📂 MASTER FILE INGESTION ENGINE: Dynamically reads ALL files in the repository
-current_working_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else '.'
-data_folder = current_working_dir
-all_files = [f for f in os.listdir(data_folder) if f.lower().endswith(('.xlsx', '.xls'))]
-database = {}
-
-for file_name in all_files:
-    file_path = os.path.join(data_folder, file_name)
-    display_name = os.path.splitext(file_name)[0]
-    try:
-        database[display_name] = file_path
-    except:
-        pass
-
 # 🎛️ COCKPIT MASTER NAVIGATION (Ungrouped Selection Panels)
 active_panel = st.selectbox(
     "Select Workspace System Node To Deploy:",
