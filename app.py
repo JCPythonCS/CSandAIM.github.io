@@ -328,7 +328,7 @@ elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' W
         if hasattr(wm, 'render_string_codec_v5'): wm.render_string_codec_v5()
         if hasattr(wm, 'render_session_timeout_v9'): wm.render_session_timeout_v9()
         if hasattr(wm, 'render_revenue_expansion_v9'): wm.render_revenue_expansion_v9()
-        if hasattr(wm, 'render_burn_up_analyst_v10'): wm.render_burn_up_analyst_v10()
+        if hasattr(wm, 'render_travel_budget_v10'): wm.render_travel_budget_v10()
 
 # ---- PANEL 4: SIMULATION (Tab 4) ----
 elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
