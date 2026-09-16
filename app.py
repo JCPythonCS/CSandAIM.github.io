@@ -85,8 +85,8 @@ active_panel = st.selectbox(
     key="cockpit_panel_navigation"
 )
         
-        male_profile = "Male_Adam (Deep/Calm)"
-        female_profile = "Female_Emily (Smooth)"
+male_profile = "Male_Adam (Deep/Calm)"
+female_profile = "Female_Emily (Smooth)"
 
 elif active_panel == "📚 Library (Tab 5)":
     st.sidebar.markdown("---")
