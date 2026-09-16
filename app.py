@@ -87,28 +87,33 @@ elif 'selected_file_name' in locals() and selected_file_name in database:
         df_master = pd.read_excel(chosen_file_path)
 else:
     # Safe universal fallback if the UI components are still building
-    # Check Streamlit memory for whichever file you clicked in the dropdown menu
     selected_name = st.session_state.get('selected_file_name')
     
-    # If the user selected a file, locate it dynamically in your folder
+    # Extract the true string clean-text key if it is currently trapped inside a tuple structure
+    if isinstance(selected_name, tuple) and len(selected_name) > 0:
+        selected_name = selected_name[0]
+        
+    df_loaded = False
+    
     if selected_name:
-        # Convert a tuple key back to a standard string file path if needed
-        if isinstance(selected_name, tuple):
-            selected_name = selected_name[0]
-            
-        # Add the extension if it isn't explicitly attached yet
-        if not str(selected_name).lower().endswith(('.xlsx', '.xls')):
-            file_to_load = f"{selected_name}.xlsx"
-        else:
-            file_to_load = str(selected_name)
-            
-        if os.path.exists(file_to_load):
-            df_master = pd.read_excel(file_to_load)
-        elif os.path.exists("enterprise_retail_dataT.xlsx"):
+        selected_str = str(selected_name).strip()
+        # Create a list of all plausible extension variants to scan against your drive parameters
+        possible_filenames = [
+            selected_str,
+            f"{selected_str}.xlsx",
+            f"{selected_str}.xls"
+        ]
+        
+        for fname in possible_filenames:
+            if os.path.exists(fname):
+                df_master = pd.read_excel(fname)
+                df_loaded = True
+                break
+
+    # If the user hasn't made a choice yet or if the lookup fails, safely boot your core retail sheet
+    if not df_loaded:
+        if os.path.exists("enterprise_retail_dataT.xlsx"):
             df_master = pd.read_excel("enterprise_retail_dataT.xlsx")
-    # If the app is opening for the very first time, use your baseline retail file
-    elif os.path.exists("enterprise_retail_dataT.xlsx"):
-        df_master = pd.read_excel("enterprise_retail_dataT.xlsx")
 
 # ==========================================================================
 # 🌐 MASTER COCKPIT SIDEBAR CONTROL PANEL
