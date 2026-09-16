@@ -88,9 +88,9 @@ active_panel = st.selectbox(
 male_profile = "Male_Adam (Deep/Calm)"
 female_profile = "Female_Emily (Smooth)"
 
-elif active_panel == "📚 Library (Tab 5)":
+if active_panel == "📚 Library (Tab 5)":
     st.sidebar.markdown("---")
-    st.sidebar.header("🗣️ Audio Profiles Configuration")
+    st.sidebar.header("🗣 Audio Profiles Configuration")
     male_profile = st.sidebar.selectbox("Male Actor Voice", ["Male_Adam (Deep/Calm)", "Male_Michael (Professional)", "Male_David"])
     female_profile = st.sidebar.selectbox("Female Actor Voice", ["Female_Emily (Smooth)", "Female_Serena (Narrator)", "Female_Rachel"])
     st.sidebar.markdown("---")
@@ -98,6 +98,7 @@ elif active_panel == "📚 Library (Tab 5)":
 else:
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
+
 
     # ==========================================================================
     # 📋 PERMANENT ACTIVE STREAM REGISTERS MAPPING
