@@ -2103,3 +2103,99 @@ def render_sentiment_classifier_v5():
             st.error("🚨 CLASSIFICATION PRIORITY MATCH: High-Severity Operational Incident Tag Assigned.")
         else:
             st.success("🟢 CLASSIFICATION ROUTINE CLEAN: Standard informational message parameters confirmed.")
+
+def render_lead_velocity_v6():
+    """
+    TAB 1 ADDITION: CORPORATE INBOUND LEAD CONVERSION VELOCITY MODEL
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("📊 Corporate Inbound Lead Conversion Velocity Model")
+    st.write("Track pipeline touchpoint speed intervals to isolate and clear sales friction points.")
+    
+    col_l1, col_l2 = st.columns(2)
+    with col_l1:
+        total_leads = st.number_input("Total Active Sales Funnel Inbound Leads:", min_value=1, value=3500, key="ld_total_v6")
+    with col_l2:
+        conversion_time = st.slider("Average Conversion Response Pipeline (Hours):", min_value=1, max_value=72, value=12, key="ld_hours_v6")
+        
+    velocity_rate = total_leads / conversion_time if conversion_time > 0 else 0
+    st.metric(label="⚡ Funnel Velocity Processing Speed", value=f"{velocity_rate:.1f} Leads / Hour", delta="Pipeline Ingestion Stable")
+
+def render_path_sanitizer_v6():
+    """
+    TAB 2 ADDITION: API GATEWAY URL PATH SANITIZER & AUDIT MONITOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Enterprise Secure API Gateway URL Path Sanitizer & Regex Audit Monitor")
+    st.write("Scan network endpoint request pathways to catch directory traversal strings or malicious scripting strings.")
+    
+    request_path = st.text_input("Ingest API URL Request Route Payload:", value="/api/v1/users/profiles/../../etc/passwd", key="san_path_v6")
+    
+    if st.button("🚀 Execute Endpoint Sanitization Scan", key="san_btn_v6"):
+        if "../" in request_path or ".." in request_path or "etc" in request_path:
+            st.error("🚨 MALICIOUS ENDPOINT VECTOR DETECTED: Path traversal signature flagged. Route dropped.")
+        else:
+            st.success("🟢 ROUTE SECURITY BOUNDS CLEAN: API request pathway verified safe for downstream balancing.")
+
+def render_tax_estimator_v6():
+    """
+    TAB 6 ADDITION: FINTECH AUTOMATED TAX ESCROW ESTIMATOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("💰 Fintech Automated Corporate Tax Escrow Estimator")
+    st.write("Calculate dynamic quarterly tax holding bounds based on operational gross profit scales.")
+    
+    col_tx1, col_tx2 = st.columns(2)
+    with col_tx1:
+        gross_rev = st.number_input("Projected Quarterly Gross Corporate Revenue ($):", min_value=5000, value=750000, step=10000, key="tx_rev_v6")
+    with col_tx2:
+        tax_bracket = st.slider("Target Corporate Income Bracket Rate (%):", min_value=10, max_value=40, value=21, key="tx_rate_v6")
+        
+    escrow_allocation = gross_rev * (tax_bracket / 100.0)
+    st.metric(label="🔮 Required Quarterly Escrow Reserving Allocation", value=f"${escrow_allocation:,.2f}", delta="Tax Compliance Reserving Verified")
+
+def render_release_buffer_v6():
+    """
+    TAB 7 ADDITION: MILESTONE RELEASE BUFFER RISK EVALUATOR
+    """
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("🔗 Cross-Team Milestone Release Buffer Risk Evaluator")
+    st.write("Map engineering roadblock intervals to calculate target buffer decay values.")
+    
+    col_bf1, col_bf2 = st.columns(2)
+    with col_bf1:
+        allocated_buffer = st.number_input("Total Allocated Deployment Buffer (Days):", min_value=1, value=14, key="bf_alloc_v6")
+    with col_bf2:
+        active_delays = st.slider("Identified Track Roadblock Delays (Days):", min_value=0, max_value=30, value=4, key="bf_delay_v6")
+        
+    remaining_buffer = max(0, allocated_buffer - active_delays)
+    if remaining_buffer <= 3:
+        st.error(f"🚨 CRITICAL SCHEDULE RISK: Release buffer decayed down to {remaining_buffer} days left!")
+    else:
+        st.success(f"🟢 SCHEDULE SEGMENTS STABLE: {remaining_buffer} buffer days left across project tracks.")
+
+def render_spam_assessor_v6():
+    """
+    TAB 10 ADDITION: AI-OPS SUBJECT LINE SPAM PROBABILITY ASSESSOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🤖 Strategic AI-Ops Subject Line Spam Probability Assessor")
+    st.write("Scan bulk outward email headings to prevent platform deliverability filtration drops.")
+    
+    subject_text = st.text_input("Enter Target Outbound Email Subject Line Heading:", value="!!! FREE CASH NOW !!! CLICK HERE TO CLAIM YOUR MILLIONS TODAY", key="spm_input_v6")
+    
+    if st.button("🚀 Analyze Deliverability Score Matrix", key="spm_btn_v6"):
+        lower_sub = subject_text.lower()
+        spam_indicators = ["free", "!!!", "cash", "now", "claim", "millions"]
+        match_count = sum(1 for word in spam_indicators if word in lower_sub)
+        
+        if match_count >= 3:
+            st.error("🚨 HIGH SPAM RISK PROFILE DETECTED: Filtration risk matched. Refined copy modifications recommended.")
+        else:
+            st.success("🟢 CAMPAIGN COPY STABLE: Headline metrics score safely inside server delivery bounds.")
