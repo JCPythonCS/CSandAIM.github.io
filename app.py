@@ -60,7 +60,7 @@ def render_live_countdown():
             """,
             unsafe_allow_html=True
         )
-    else:
+
 with st.sidebar:
     # ⏱️ The Live Countdown Fragment remains safely at the top
     render_live_countdown()
