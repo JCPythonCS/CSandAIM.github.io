@@ -308,6 +308,7 @@ elif active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' W
         if hasattr(wm, 'render_ip_throttle_monitor_v5'): wm.render_ip_throttle_monitor_v5()
         if hasattr(wm, 'render_path_sanitizer_v6'): wm.render_path_sanitizer_v6()
         if hasattr(wm, 'render_cors_auditor_v8'): wm.render_cors_auditor_v8()
+        if hasattr(wm, 'render_ping_matrix_v9'): wm.render_ping_matrix_v9()
 
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
 elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -323,6 +324,8 @@ elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' W
         if hasattr(wm, 'render_conversion_velocity'): wm.render_conversion_velocity()
         if hasattr(wm, 'render_compliance_builder'): wm.render_compliance_builder()
         if hasattr(wm, 'render_string_codec_v5'): wm.render_string_codec_v5()
+        if hasattr(wm, 'render_session_timeout_v9'): wm.render_session_timeout_v9()
+        if hasattr(wm, 'render_revenue_expansion_v9'): wm.render_revenue_expansion_v9()
 
 # ---- PANEL 4: SIMULATION (Tab 4) ----
 elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -331,6 +334,7 @@ elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' W
         st.markdown("---")
         if hasattr(wm, 'render_email_verifier'): wm.render_email_verifier()
         if hasattr(wm, 'render_cloud_stress_tester'): wm.render_cloud_stress_tester()
+        if hasattr(wm, 'render_memory_leak_sim_v9'): wm.render_memory_leak_sim_v9()
 
 # ---- PANEL 5: LIBRARY (Tab 5) ----
 elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -408,6 +412,7 @@ elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
         if hasattr(wm, 'render_spam_assessor_v6'): wm.render_spam_assessor_v6()
         if hasattr(wm, 'render_code_audit_v7'): wm.render_code_audit_v7()
         if hasattr(wm, 'render_log_masker_v8'): wm.render_log_masker_v8()
+        if hasattr(wm, 'render_link_validator_v9'): wm.render_link_validator_v9()
     
     else:
         st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
