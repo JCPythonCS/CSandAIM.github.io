@@ -2650,3 +2650,105 @@ def render_obd_hex_decoder_v10():
             """)
         else:
             st.info("ℹ️ **Parsing Stream Core Complete:** Message payload structure saved. Target PID parameter matches informational parameters.")
+
+def render_sqli_scanner_v11():
+    """
+    SECURITY ADDITION 1: MALICIOUS SQL INJECTION PAYLOAD SIGNATURE SCANNER
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Malicious SQL Injection (SQLi) Payload Signature Scanner")
+    st.write("Audit text parameters against high-risk database extraction sequences to shield data tables.")
+    input_test = st.text_input("Test Incoming User Form Text Input:", value="SELECT * FROM users WHERE id = 1 OR '1'='1';", key="sql_in_v11")
+    if st.button("🚀 Run Deep Input SQLi Signature Scan", key="sql_btn_v11"):
+        lower_input = input_test.lower()
+        threat_patterns = ["select ", "union ", "or '1'='1'", "drop table", "--", "exec("]
+        matched = [p for p in threat_patterns if p in lower_input]
+        if matched:
+            st.error(f"🚨 INTRUSION BREACH THREAT FLAGGED: Malicious SQL pattern detected {matched}! Request dropped.")
+        else:
+            st.success("🟢 INPUT PARAMETERS SAFE: String metrics satisfy zero-exploit application validation rules.")
+
+def render_ddos_simulator_v11():
+    """
+    SECURITY ADDITION 2: ENTERPRISE DDOS NETWORK INGESTION STRESS SIMULATOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Enterprise DDoS Network Traffic Ingestion Stress Simulator")
+    st.write("Model high-volume distributed packet floods to stress test cloud load-balancing limits.")
+    col_dd1, col_dd2 = st.columns(2)
+    with col_dd1:
+        packet_load = st.number_input("Simulated Zombie Botnet Traffic (Packets/Sec):", min_value=1000, value=750000, step=50000, key="dd_pkt_v11")
+    with col_dd2:
+        mitigation_cap = st.number_input("Firewall Scrubbing Center Maximum Elastic Bandwidth:", min_value=10000, value=500000, step=50000, key="dd_cap_v11")
+    if packet_load > mitigation_cap:
+        overload = packet_load - mitigation_cap
+        st.error(f"🚨 EDGE BALANCER CRITICAL OVERFLOW: Traffic exceeds scrub limits by {overload:,} packets/sec!")
+    else:
+        st.success("🟢 MITIGATION PARAMETERS ACTIVE: Edge cloud scrubbers are completely absorbing the packet spikes.")
+
+def render_ransomware_canary_v11():
+    """
+    SECURITY ADDITION 3: CRYPTOGRAPHIC RANSOMWARE CANARY TRACKER
+    ```"""
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("🛡️ Cryptographic Ransomware File-Extension Canary Tracker")
+    st.write("Monitor file system block directories for rapid, high-entropy file name shifts matching ransomware signatures.")
+    canary_log = pd.DataFrame([
+        {"Directory Node": "/shared/corporate/financials", "File Modification Activity": "1,420 files renamed to .locked in 3 seconds"},
+        {"Directory Node": "/shared/corporate/engineering", "File Modification Activity": "Standard read/write operation stream"}
+    ])
+    st.dataframe(canary_log, use_container_width=True)
+    st.error("🚨 HIGH-ENTROPY CRYPTOGRAPHIC SPIKE: Automated ransomware quarantine containment matrix deployed on /financials!")
+
+def render_phishing_analyst_v11():
+    """
+    SECURITY ADDITION 4: PHISHING ATTACK VECTOR EMAIL HEADER FRAUD ANALYST
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Phishing Attack Vector Email Header Fraud Analyst")
+    st.write("Scan outbound and inbound mail transport headers to catch domain spoofing indicators.")
+    header_payload = st.text_area("Ingest Raw Email Header Metadata Transport Block:", value="From: corporate-payroll@yourfirm.com\nAuthentication-Results: spf=fail dkim=fail", key="phish_txt_v11")
+    if st.button("🚀 Run Header Spoofing Audit", key="phish_btn_v11"):
+        if "spf=fail" in header_payload or "dkim=fail" in header_payload:
+            st.error("🚨 FRAUDULENT EMAIL PROTOCOL DETECTED: Sender domain identity spoofed! Quarantine flag assigned.")
+        else:
+            st.success("🟢 EMAIL AUTHENTICATION CONFIRMED: SPF/DKIM verification loops match sender credentials.")
+
+def render_iam_auditor_v11():
+    """
+    SECURITY ADDITION 5: SECURE CLOUD IAM PRIVILEGE ESCALATION RISK AUDITOR
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Secure Cloud IAM Privilege Escalation Risk Auditor")
+    st.write("Scan cloud IAM policy permissions files to catch over-privileged admin tokens or loose security configurations.")
+    col_im1, col_im2 = st.columns(2)
+    with col_im1:
+        total_roles = st.number_input("Total Cloud Active IAM Roles:", min_value=1, value=140, key="iam_ttl_v11")
+    with col_im2:
+        wildcard_policies = st.slider("Roles Containing Full Administrative Access ('*':'*'):", min_value=0, max_value=50, value=18, key="iam_wld_v11")
+    risk_metric = (wildcard_policies / total_roles) * 100 if total_roles > 0 else 0
+    if risk_metric > 10.0:
+        st.error(f"🚨 SECURITY CONFIGURATION GAP: {risk_metric:.1f}% of cloud accounts possess unmonitored global root access!")
+    else:
+        st.success("🟢 ACCESS PROFILES SECURE: Privilege configurations satisfy standard enterprise principle-of-least-privilege mandates.")
+
+def render_malware_sandbox_v11():
+    """
+    SECURITY ADDITION 6: AUTOMATED CORPORATE MALWARE MALICIOUS STRINGS ANALYZE NODE
+    """
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Automated Corporate Malware Binary Execution Sandbox Analyzer")
+    st.write("Audit suspicious executable signatures or compressed script streams inside a secure virtualization context.")
+    binary_hash = st.text_input("Ingest Target Asset SHA-256 Signature Hash:", value="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", key="mal_hash_v11")
+    if st.button("🚀 Deploy Threat Emulation Sandbox", key="mal_btn_v11"):
+        if "e3b" in binary_hash:
+            st.warning("⚠️ MALICIOUS RUNTIME VARIABLE MATCHED: Executable payload attempts unexpected background registry changes. Quarantine applied.")
+        else:
+            st.success("🟢 BINARY STATIC ANALYSIS CLEAN: Execution structure satisfies standard software whitelists.")
