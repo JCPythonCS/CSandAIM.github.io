@@ -290,6 +290,7 @@ if active_panel == "📊 Analytics (Tab 1)":
         if hasattr(wm, 'render_funnel_attribution'): wm.render_funnel_attribution()
         if hasattr(wm, 'render_pipeline_forecaster'): wm.render_pipeline_forecaster()
         if hasattr(wm, 'render_conversion_velocity_v5'): wm.render_conversion_velocity_v5()
+        if hasattr(wm, 'render_lead_velocity_v6'): wm.render_lead_velocity_v6()
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 elif active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -304,6 +305,7 @@ elif active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' W
         if hasattr(wm, 'render_gateway_limiter'): wm.render_gateway_limiter()
         if hasattr(wm, 'render_password_generator'): wm.render_password_generator()
         if hasattr(wm, 'render_ip_throttle_monitor_v5'): wm.render_ip_throttle_monitor_v5()
+        if hasattr(wm, 'render_path_sanitizer_v6'): wm.render_path_sanitizer_v6()
 
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
 elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -342,7 +344,7 @@ elif active_panel == "💰 Commercial Control (Tab 6)":
     if hasattr(wm, 'render_tax_estimator_v2'): wm.render_tax_estimator_v2()
     if hasattr(wm, 'render_cac_monitor'): wm.render_cac_monitor()
     if hasattr(wm, 'render_ltv_calculator'): wm.render_ltv_calculator()
-
+    if hasattr(wm, 'render_tax_estimator_v6'): wm.render_tax_estimator_v6()
 
 # ---- PANEL 7: PROJECT MANAGEMENT (Tab 7) ----
 elif active_panel == "📋 Project Management (Tab 7)":
@@ -358,6 +360,7 @@ elif active_panel == "📋 Project Management (Tab 7)":
         if hasattr(wm, 'render_story_velocity_analyst'): wm.render_story_velocity_analyst()
         if hasattr(wm, 'render_cycle_time_analyst'): wm.render_cycle_time_analyst()
         if hasattr(wm, 'render_sprint_burndown_v5'): wm.render_sprint_burndown_v5()
+        if hasattr(wm, 'render_release_buffer_v6'): wm.render_release_buffer_v6()
 
 # ---- PANEL 8: SUPPLY CHAIN & LOGISTICS (Tab 8) ----
 elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
@@ -393,6 +396,7 @@ elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
         if hasattr(wm, 'render_ai_dispatcher_v2'): wm.render_ai_dispatcher_v2()
         if hasattr(wm, 'render_text_summarizer'): wm.render_text_summarizer()
         if hasattr(wm, 'render_sentiment_classifier_v5'): wm.render_sentiment_classifier_v5()
+        if hasattr(wm, 'render_spam_assessor_v6'): wm.render_spam_assessor_v6()
     
     else:
         st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
