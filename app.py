@@ -117,24 +117,6 @@ with st.sidebar:
     st.markdown(
         """
         <div style="background-color: #0f172a; padding: 15px; border-radius: 6px; border: 1px solid #334155; color: #94a3b8; font-size: 0.85rem;">
-            <div style="font-weight: bold; color: #f1f5f9; margin-bottom: 5px;">🏢 Corporate Systems & AI Management</div>
-            <div style="margin-bottom: 3px;"><b>Version:</b> 4.2.0-SaaS (Production)</div>
-            <div style="margin-bottom: 3px;"><b>Global Network Operations Center</b></div>
-            <div style="margin-bottom: 10px; font-size: 0.75rem; color: #64748b;">All Rights Reserved © 2026</div>
-            <div style="border-top: 1px solid #1e293b; padding-top: 8px; font-size: 0.8rem;">
-                🔗 <a href="https://paypal.com" target="_blank" style="color: #38bdf8; text-decoration: none;">Subscriber Portal</a><br>
-                🛡️ <a href="#" style="color: #38bdf8; text-decoration: none;">Security Protocols</a>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    
-    # 🏢 CORPORATE INFORMATION FOOTPRINT
-    st.markdown(
-        """
-        <div style="background-color: #0f172a; padding: 15px; border-radius: 6px; border: 1px solid #334155; color: #94a3b8; font-size: 0.85rem;">
             <div style="font-weight: bold; color: #f1f5f9; margin-bottom: 5px;">🏢 Computer Systems & AI Management</div>
             <div style="margin-bottom: 3px;"><b>Version:</b> 4.2.0-SaaS (Production)</div>
             <div style="margin-bottom: 3px;"><b>Global Network Operations Center</b></div>
