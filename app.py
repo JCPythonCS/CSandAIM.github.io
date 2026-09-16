@@ -344,6 +344,12 @@ elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' 
     st.markdown("### 🎬 Studio Asset Management Engine")
     # ... [Keep all your existing Panel 5 code text areas and video dropdown blocks exactly the same] ...
     wm.render_library_catalog()
+    if hasattr(wm, 'render_sqli_scanner_v11'): wm.render_sqli_scanner_v11()
+    if hasattr(wm, 'render_ddos_simulator_v11'): wm.render_ddos_simulator_v11()
+    if hasattr(wm, 'render_ransomware_canary_v11'): wm.render_ransomware_canary_v11()
+    if hasattr(wm, 'render_phishing_analyst_v11'): wm.render_phishing_analyst_v11()
+    if hasattr(wm, 'render_iam_auditor_v11'): wm.render_iam_auditor_v11()
+    if hasattr(wm, 'render_malware_sandbox_v11'): wm.render_malware_sandbox_v11()
 
 # ---- PANEL 6: COMMERCIAL CONTROL (Tab 6) ----
 elif active_panel == "💰 Commercial Control (Tab 6)":
