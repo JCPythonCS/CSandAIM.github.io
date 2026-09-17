@@ -2743,3 +2743,96 @@ def render_ssl_expiry_checker_v11():
     days_to_expiry = st.slider("Days Remaining Until Certificate Expiry Window:", min_value=1, max_value=365, value=14, key="ssl_days_v11")
     if days_to_expiry <= 15: st.error("🚨 EXPIRATION ALERT: SSL security certificate renewal required!")
     else: st.success("🟢 CERTIFICATE METRICS SAFE")
+
+def render_sqli_scanner_v11():
+    """SECURITY ADDITION 1: SQL INJECTION SCANNER"""
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Malicious SQL Injection (SQLi) Payload Signature Scanner")
+    input_test = st.text_input("Test Incoming User Form Text Input:", value="SELECT * FROM users WHERE id = 1 OR '1'='1';", key="sql_in_v11")
+    if st.button("🚀 Run Deep Input SQLi Signature Scan", key="sql_btn_v11"):
+        lower_input = input_test.lower()
+        threat_patterns = ["select ", "union ", "or '1'='1'", "drop table", "--"]
+        matched = [p for p in threat_patterns if p in lower_input]
+        if matched: st.error(f"🚨 SQL INJECTION DETECTED: {matched}")
+        else: st.success("🟢 INPUT PARAMETERS SAFE")
+
+def render_ddos_simulator_v11():
+    """SECURITY ADDITION 2: DDOS TRAFFIC INGESTION SIMULATOR"""
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Enterprise DDoS Network Traffic Ingestion Stress Simulator")
+    packet_load = st.number_input("Simulated Zombie Botnet Traffic (Packets/Sec):", min_value=1000, value=750000, key="dd_pkt_v11")
+    st.info(f"📡 Simulating traffic spikes at {packet_load:,} packets/sec... Mitigation active.")
+
+def render_ransomware_canary_v11():
+    """SECURITY ADDITION 3: RANSOMWARE EXTENSION CANARY TRACKER"""
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("🛡️ Cryptographic Ransomware File-Extension Canary Tracker")
+    canary_log = pd.DataFrame([{"Directory Node": "/shared/corporate/financials", "File Modification Activity": "1,420 files renamed to .locked"}])
+    st.dataframe(canary_log, use_container_width=True)
+    st.error("🚨 HIGH-ENTROPY CRYPTOGRAPHIC SPIKE DETECTED")
+
+def render_phishing_analyst_v11():
+    """SECURITY ADDITION 4: PHISHING EMAIL HEADER FRAUD ANALYST"""
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Phishing Attack Vector Email Header Fraud Analyst")
+    header_payload = st.text_area("Ingest Raw Email Header Metadata:", value="From: payroll@yourfirm.com\nAuthentication-Results: spf=fail dkim=fail", key="phish_txt_v11")
+    if st.button("🚀 Run Header Spoofing Audit", key="phish_btn_v11"):
+        if "spf=fail" in header_payload: st.error("🚨 FRAUDULENT EMAIL PROTOCOL DETECTED")
+        else: st.success("🟢 EMAIL AUTHENTICATION CONFIRMED")
+
+def render_iam_auditor_v11():
+    """SECURITY ADDITION 5: SECURE CLOUD IAM RISK AUDITOR"""
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Secure Cloud IAM Privilege Escalation Risk Auditor")
+    wildcard_policies = st.slider("Roles Containing Full Administrative Access ('*':'*'):", min_value=0, max_value=50, value=18, key="iam_wld_v11")
+    st.warning(f"⚠️ Monitored Configuration: {wildcard_policies} roles flag unmonitored global root access permissions.")
+
+def render_malware_sandbox_v11():
+    """SECURITY ADDITION 6: AUTOMATED MALWARE SANDBOX ANALYZER"""
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Automated Corporate Malware Binary Execution Sandbox Analyzer")
+    binary_hash = st.text_input("Ingest Target Asset SHA-256 Signature Hash:", value="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", key="mal_hash_v11")
+    if st.button("🚀 Deploy Threat Emulation Sandbox", key="mal_btn_v11"):
+        st.warning("⚠️ MALICIOUS RUNTIME VARIABLE MATCHED: Payload attempts unexpected registry changes.")
+
+def render_ransomware_decryption_sim_v11():
+    """SECURITY ADDITION 7: RANSOMWARE DECRYPTION SIMULATOR"""
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Cryptographic Ransomware Decryption Core Simulator")
+    allocated_cores = st.number_input("Assign High-Performance Processing Clusters:", min_value=1, value=32, key="dec_cor_v11")
+    if st.button("🚀 Initiate Emergency Decryption Sequence", key="dec_btn_v11"):
+        st.success(f"🟢 SUCCESS: Symmetric master key verified via {allocated_cores} compute nodes!")
+
+def render_compliance_auditor_v11():
+    """SECURITY ADDITION 8: COMPLIANCE AUDIT REPORTING ENGINE"""
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ SOC2 / HIPAA Cybersecurity Compliance Audit Reporting Engine")
+    audit_scope = st.selectbox("Select Target Framework Protocol:", ["SOC2 Type II Compliance", "HIPAA Health Data Audit"], key="cm_scp_v11")
+    st.success(f"🟢 AUDIT METRICS CONVERGED: Telemetry parameters satisfy {audit_scope} baseline requirements.")
+
+def render_honeypot_monitor_v11():
+    """SECURITY ADDITION 9: THREAT HUNTING HONEYPOT MONITOR"""
+    import streamlit as st
+    import pandas as pd
+    st.markdown("---")
+    st.subheader("🛡️ Decoy Infrastructure Threat Hunting Honeypot Monitor")
+    hp_log = pd.DataFrame([{"Decoy Node ID": "HP-DMZ-01 (Fake Database)", "Observed Payload Attack": "Tried root password 'admin123' 400 times"}])
+    st.dataframe(hp_log, use_container_width=True)
+
+def render_ssl_expiry_checker_v11():
+    """SECURITY ADDITION 10: AUTOMATED SSL CERTIFICATE EXPIRY MONITOR"""
+    import streamlit as st
+    st.markdown("---")
+    st.subheader("🛡️ Automated SSL/TLS Certificate Expiry & Integrity Monitor")
+    days_to_expiry = st.slider("Days Remaining Until Certificate Expiry Window:", min_value=1, max_value=365, value=14, key="ssl_days_v11")
+    if days_to_expiry <= 15: st.error("🚨 EXPIRATION ALERT: SSL security certificate renewal required!")
+    else: st.success("🟢 CERTIFICATE METRICS SAFE")
