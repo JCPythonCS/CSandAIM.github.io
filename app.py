@@ -82,11 +82,16 @@ with st.sidebar:
         st.markdown("Unlocks advanced simulation and analytical suites.")
         st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
 
-    # 💳 LEVEL 3: PLATINUM CORPORATE TIER BUTTON
-    with st.expander("👑 Platinum Executive Suite", expanded=True): # Expanded by default to highlight the best value
-        st.markdown("**Cost:** $499 / month")
-        st.markdown("Complete access to all 105+ diagnostic tools and AI matrices.")
-        st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="primary")
+    # 💳 LEVEL 3: PLATINUM TIER BUTTON
+with st.expander("👑 Platinum Executive Suite", expanded=True):
+    st.markdown("**Cost:** $499 / month")
+    st.markdown("""
+    * 👑 Complete Unrestricted Access Across All 105+ System Diagnostics
+    * 🔒 Full Integration of the 10-Tool Cybersecurity & Threat Arena (Tab 11)
+    * 🤖 High-Performance AI-Ops Text Parsing & Sandbox Automation
+    """)
+    st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
+
 
     # 💳 LEVEL 4: DIAMOND ENTERPRISE TIER BUTTON
 with st.expander("💎 Diamond Enterprise Node", expanded=False):
