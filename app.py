@@ -101,7 +101,7 @@ with st.sidebar:
     with st.form(key="sidebar_suggestion_form", clear_on_submit=True):
         user_email = st.text_input("Subscriber Email Address:", placeholder="name@domain.com")
         suggestion_topic = st.selectbox("Target Node/Tool Component:", ["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"])
-        suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=500, placeholder="Describe your requested feature or adjustment here...")
+        suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=800, placeholder="Describe your requested feature or adjustment here...")
         
         submit_suggestion = st.form_submit_button("Transmit Feedback Logs")
         if submit_suggestion:
