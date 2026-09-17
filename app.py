@@ -125,24 +125,21 @@ with st.sidebar:
             if suggestion_text.strip():
                 import requests
                 
+                # Direct backend web endpoint mapping to your destination mailbox
                 formsubmit_url = "https://formsubmit.co"
                 
-                payload = {
+                # 📡 Transmitting via raw form-encoded dictionary mapping to bypass 405 constraints
+                form_payload = {
                     "Subscriber Email": user_email if user_email.strip() else "Anonymous Subscriber",
                     "Target Node Component": suggestion_topic,
                     "Telemetry Logs": suggestion_text,
                     "_subject": f"🚀 Cockpit Feedback: {suggestion_topic}"
                 }
                 
-                # 🛡 ADDED HEADERS: Forces content alignment validation to clear the 405 block
-                headers = {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                }
-                
                 try:
-                    # Added headers parameter configuration here
-                    response = requests.post(formsubmit_url, json=payload, headers=headers)
+                    # 💡 FIX: Using data=form_payload sends standard form encoding, resolving the 405 error
+                    response = requests.post(formsubmit_url, data=form_payload)
+                    
                     if response.status_code == 200:
                         st.success("✅ Telemetry logs successfully compiled and transmitted to system terminal!")
                         st.toast("🛸 Processing queue clear: Data stream cleared from localized RAM buffers.")
