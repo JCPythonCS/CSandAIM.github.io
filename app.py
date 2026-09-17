@@ -125,7 +125,6 @@ with st.sidebar:
             if suggestion_text.strip():
                 import requests
                 
-                # Secure FormSubmit AJAX endpoint mapping directly to your target mailbox
                 formsubmit_url = "https://formsubmit.co"
                 
                 payload = {
@@ -135,9 +134,15 @@ with st.sidebar:
                     "_subject": f"🚀 Cockpit Feedback: {suggestion_topic}"
                 }
                 
-                # Dispatch data safely across the network container background
+                # 🛡 ADDED HEADERS: Forces content alignment validation to clear the 405 block
+                headers = {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+                
                 try:
-                    response = requests.post(formsubmit_url, json=payload)
+                    # Added headers parameter configuration here
+                    response = requests.post(formsubmit_url, json=payload, headers=headers)
                     if response.status_code == 200:
                         st.success("✅ Telemetry logs successfully compiled and transmitted to system terminal!")
                         st.toast("🛸 Processing queue clear: Data stream cleared from localized RAM buffers.")
