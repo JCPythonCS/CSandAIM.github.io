@@ -89,9 +89,13 @@ with st.sidebar:
         st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="primary")
 
     # 💳 LEVEL 4: DIAMOND ENTERPRISE TIER BUTTON
-    with st.expander("💎 Diamond Enterprise Node", expanded=False):
-        st.markdown("**Cost:** $799 / month")
-        st.markdown("Dedicated server instances, custom modules, and 24/7 corporate priority support.")
+with st.expander("💎 Diamond Enterprise Node", expanded=False):
+    st.markdown("**Cost:** $799 / month")
+    st.markdown("""
+    * 💎 Tailored Corporate White-Label Deployment Package
+    * 🏢 Injection of Dedicated Company Branding, Names, & Asset Logos
+    * ⚡ Priority Email Support & Custom Database Filter Configuration
+    """)
         st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
 
     st.markdown("---")
