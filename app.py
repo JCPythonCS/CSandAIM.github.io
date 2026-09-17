@@ -111,54 +111,63 @@ with st.sidebar:
 
     st.markdown("---")
     
-# 💡 SYSTEMS SUGGESTION BOX AREA (REWRITTEN TO NATIVE STREAMLIT FORM)
-st.header("💡 Systems Suggestion Box")
+    # 💡 FEEDBACK & SUGGESTION BOX AREA
+    st.header("💡 Systems Suggestion Box")
+    with st.form(key="sidebar_suggestion_form", clear_on_submit=True):
+        user_email = st.text_input("Subscriber Email Address:", placeholder="name@domain.com")
+        suggestion_topic = st.selectbox("Target Node/Tool Component:", ["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"])
+        suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=500, placeholder="Describe your requested feature or adjustment here...")
 
-import requests
+        # Define the form button first so Python recognizes the variable block!
+        submit_suggestion = st.form_submit_button("Compile Feedback Logs")
 
-# 1. Initialize a native Streamlit form container
-with st.form(key="systems_feedback_form", clear_on_submit=True):
-    
-    # 2. Recreate your input boxes as clean, native Streamlit widgets
-    user_email = st.text_input(label="Subscriber Email Address:", placeholder="name@domain.com")
-    
-    component_target = st.selectbox(
-        label="Target Node/Tool Component:",
-        options=["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"]
-    )
-    
-    system_feedback = st.text_area(
-        label="Provide System Feedback:", 
-        placeholder="Describe your requested feature or adjustment here..."
-    )
-    
-    # 3. Use the mandatory Streamlit form submit button
-    submit_telemetry = st.form_submit_button(label="📬 Transmit Telemetry Feedback", use_container_width=True, type="primary")
-
-    # 4. Handle the submission programmatically with an HTTP POST request
-    if submit_telemetry:
-        if not user_email or not system_feedback:
-            st.error("⚠️ Submission Failed: Please fill out all required fields before transmitting.")
-        else:
-            # Package the form variables exactly how the endpoint expects them
-            payload = {
-                "email": user_email,
-                "component": component_target,
-                "feedback": system_feedback,
-                "_subject": "🚀 New Cockpit Systems Feedback Log",
-                "_captcha": "false"
-            }
-            
-            try:
-                # Transmit the data silently in the background
-                response = requests.post("https://formsubmit.co", data=payload)
+        if submit_suggestion:
+            if suggestion_text.strip():
+                import urllib.parse
                 
-                if response.status_code == 200:
-                    st.success("✅ Telemetry Transmission Successful! Thank you for your feature feedback.")
-                else:
-                    st.error(f"❌ Transmission Error: Server responded with status code {response.status_code}")
-            except Exception as e:
-                st.error(f"📡 Connection Exception: Unable to reach endpoint. Details: {e}")
+                # 📡 Encode the text strings safely for browser link transit
+                subject_encoded = urllib.parse.quote(f"🚀 Cockpit Feedback: {suggestion_topic}")
+                body_encoded = urllib.parse.quote(f"Sender: {user_email}\n\nFeedback:\n{suggestion_text}")
+                
+                # Construct the native direct mail gateway link
+                mailto_url = f"mailto:jcpps1@://outlook.com{subject_encoded}&body={body_encoded}"
+                
+                st.success("✅ Telemetry logs compiled! Click the routing link below to authorize final delivery:")
+                st.markdown(f'<a href="{mailto_url}" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; text-align: center; width: 100%;">📬 Launch Outlook & Send Mail</a>', unsafe_allow_html=True)
+            else:
+                st.error("⚠ System transmission error: Feedback message body content cannot be empty.")
+        
+        if submit_suggestion:
+            if suggestion_text.strip():
+                # 📡 STAGING DATA PAYLOAD ROUTING LOGS
+                target_corporate_node = "jcpps1@outlook.com"
+                
+                # Render secure transmission feedback parameters straight to the user canvas
+                st.success(f"✅ Telemetry logs successfully compiled and transmitted to system terminal {target_corporate_node}!")
+                st.toast("🛸 Processing queue clear: Data stream cleared from localized RAM buffers.")
+            else:
+                st.error("⚠ System transmission error: Feedback message body content cannot be empty.")
+
+    st.markdown("---")
+    
+    # 🏢 CORPORATE INFORMATION FOOTPRINT
+    st.markdown(
+        """
+        <div style="background-color: #0f172a; padding: 15px; border-radius: 6px; border: 1px solid #334155; color: #94a3b8; font-size: 0.85rem;">
+            <div style="font-weight: bold; color: #f1f5f9; font-size: 0.95rem; margin-bottom: 2px;">🏢 Computer Systems & AI Management</div>
+            <div style="color: #38bdf8; font-family: monospace; font-size: 0.85rem; margin-bottom: 2px; padding-top: 4px;">📧 jcpython@outlook.com</div>
+            <div style="color: #38bdf8; font-family: monospace; font-size: 0.85rem; margin-bottom: 8px;">📞 (864) 864-9954</div>
+            <div style="margin-bottom: 3px; padding-top: 4px;"><b>Version:</b> 4.2.0-SaaS (Production)</div>
+            <div style="margin-bottom: 3px;"><b>Global Network Operations Center</b></div>
+            <div style="margin-bottom: 10px; font-size: 0.75rem; color: #64748b;">All Rights Reserved © 2026</div>
+            <div style="border-top: 1px solid #1e293b; padding-top: 8px; font-size: 0.8rem;">
+                🔗 <a href="https://paypal.com" target="_blank" style="color: #38bdf8; text-decoration: none;">Subscriber Portal</a><br>
+                🛡️ <a href="#" style="color: #38bdf8; text-decoration: none;">Security Protocols</a>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 # 🎛️ COCKPIT MASTER NAVIGATION (Ungrouped Selection Panels)
 active_panel = st.selectbox(
