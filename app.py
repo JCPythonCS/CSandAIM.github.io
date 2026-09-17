@@ -118,17 +118,12 @@ with st.sidebar:
         suggestion_topic = st.selectbox("Target Node/Tool Component:", ["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"])
         suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=500, placeholder="Describe your requested feature or adjustment here...")
         
-        # Define the form button
         submit_suggestion = st.form_submit_button("Compile Feedback Logs")
 
         if submit_suggestion:
             if suggestion_text.strip():
                 import requests
-                
-                # Direct backend web endpoint mapping to your destination mailbox
                 formsubmit_url = "https://formsubmit.co"
-                
-                # 📡 Transmitting via raw form-encoded dictionary mapping to bypass 405 constraints
                 form_payload = {
                     "Subscriber Email": user_email if user_email.strip() else "Anonymous Subscriber",
                     "Target Node Component": suggestion_topic,
@@ -137,9 +132,7 @@ with st.sidebar:
                 }
                 
                 try:
-                    # 💡 FIX: Using data=form_payload sends standard form encoding, resolving the 405 error
                     response = requests.post(formsubmit_url, data=form_payload)
-                    
                     if response.status_code == 200:
                         st.success("✅ Telemetry logs successfully compiled and transmitted to system terminal!")
                         st.toast("🛸 Processing queue clear: Data stream cleared from localized RAM buffers.")
@@ -151,9 +144,9 @@ with st.sidebar:
                 st.error("⚠ System transmission error: Feedback message body content cannot be empty.")
 
     st.markdown("---")
-    
-    # 🏢 CORPORATE INFORMATION FOOTPRINT
-    st.markdown(
+
+    # 🏢 CORPORATE INFORMATION FOOTPRINT (Refer to web document for full HTML block content)
+    st.markdown("Corporate footprint layout...", unsafe_allow_html=True)
         """
         <div style="background-color: #0f172a; padding: 15px; border-radius: 6px; border: 1px solid #334155; color: #94a3b8; font-size: 0.85rem;">
             <div style="font-weight: bold; color: #f1f5f9; font-size: 0.95rem; margin-bottom: 2px;">🏢 Computer Systems & AI Management</div>
