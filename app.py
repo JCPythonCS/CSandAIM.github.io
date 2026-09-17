@@ -315,8 +315,8 @@ elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
         if hasattr(wm, 'render_link_validator_v9'): wm.render_link_validator_v9()
 
 # ---- PANEL 11: CYBERSECURITY & INTRUSION (Tab 11) ----
-elif active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)":
-    if 'wm' in locals():    
+if active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)":
+    
     # 🛰️ Dynamic execution tracks mapping all 10 premium security utilities live
     if hasattr(wm, 'render_sqli_scanner_v11'): wm.render_sqli_scanner_v11()
     if hasattr(wm, 'render_ddos_simulator_v11'): wm.render_ddos_simulator_v11()
