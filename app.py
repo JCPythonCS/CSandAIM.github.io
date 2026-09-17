@@ -172,8 +172,6 @@ else:
     st.markdown("---")
     st.markdown("### Real-Time Customer Purchase Logs & Delivery Staging Node")
 
-if active_panel != "🔒 Cybersecurity & Intrusion (Tab 11)":
-
 if 'wm' in locals() and hasattr(wm, 'fetch_active_stream_registers') and active_panel == "📊 Analytics (Tab 1)":
         with st.spinner("🛰️ Pinging autonomous database container registries..."):
             customer_store_df = wm.fetch_active_stream_registers()
