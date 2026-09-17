@@ -111,61 +111,54 @@ with st.sidebar:
 
     st.markdown("---")
     
-    # 💡 FEEDBACK & SUGGESTION BOX AREA
-    st.header("💡 Systems Suggestion Box")
-    
-    import streamlit.components.v1 as components
-    
-    # 📝 Notice how the HTML block is safely indented using 8 spaces to fit inside the component wrapper block framework
-    html_form_code = """
-        <form action="https://formsubmit.co" method="POST" target="_blank" style="background-color: #0e1117; padding: 15px; border-radius: 8px; border: 1px solid #30363d; font-family: sans-serif; color: white;">
-            <input type="hidden" name="_subject" value="🚀 New Cockpit Systems Feedback Log">
-            <input type="hidden" name="_captcha" value="false">
-            
-            <label style="display:block; font-size: 14px; font-weight: bold; margin-bottom: 5px;">Subscriber Email Address:</label>
-            <input type="email" name="email" placeholder="name@domain.com" required style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #30363d; background-color: #161b22; color: white; box-sizing: border-box;">
-            
-            <label style="display:block; font-size: 14px; font-weight: bold; margin-bottom: 5px;">Target Node/Tool Component:</label>
-            <select name="component" style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #30363d; background-color: #161b22; color: white; box-sizing: border-box;">
-                <option value="General Cockpit">General Cockpit</option>
-                <option value="Analytics Streams">Analytics Streams</option>
-                <option value="Simulation Engine">Simulation Engine</option>
-                <option value="Audio Profiles">Audio Profiles</option>
-                <option value="Request New Tool">Request New Tool</option>
-            </select>
-            
-            <label style="display:block; font-size: 14px; font-weight: bold; margin-bottom: 5px;">Provide System Feedback:</label>
-            <textarea name="feedback" rows="3" placeholder="Describe your requested feature or adjustment here..." required style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #30363d; background-color: #161b22; color: white; resize: none; box-sizing: border-box;"></textarea>
-            
-            <button type="submit" style="width: 100%; padding: 12px; background-color: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; text-align: center; font-size: 14px;">
-                📬 Transmit Telemetry Feedback
-            </button>
-        </form>
-    """
-    
-    # Execute the component rendering engine using the variables initialized above
-    components.html(html_form_code, height=400)
+# 💡 SYSTEMS SUGGESTION BOX AREA (REWRITTEN TO NATIVE STREAMLIT FORM)
+st.header("💡 Systems Suggestion Box")
 
-    st.markdown("---")
+import requests
+
+# 1. Initialize a native Streamlit form container
+with st.form(key="systems_feedback_form", clear_on_submit=True):
     
-    # 🏢 CORPORATE INFORMATION FOOTPRINT
-    st.markdown(
-        """
-        <div style="background-color: #0f172a; padding: 15px; border-radius: 6px; border: 1px solid #334155; color: #94a3b8; font-size: 0.85rem;">
-            <div style="font-weight: bold; color: #f1f5f9; font-size: 0.95rem; margin-bottom: 2px;">🏢 Computer Systems & AI Management</div>
-            <div style="color: #38bdf8; font-family: monospace; font-size: 0.85rem; margin-bottom: 2px; padding-top: 4px;">📧 jcpython@outlook.com</div>
-            <div style="color: #38bdf8; font-family: monospace; font-size: 0.85rem; margin-bottom: 8px;">📞 (864) 864-9954</div>
-            <div style="margin-bottom: 3px; padding-top: 4px;"><b>Version:</b> 4.2.0-SaaS (Production)</div>
-            <div style="margin-bottom: 3px;"><b>Global Network Operations Center</b></div>
-            <div style="margin-bottom: 10px; font-size: 0.75rem; color: #64748b;">All Rights Reserved © 2026</div>
-            <div style="border-top: 1px solid #1e293b; padding-top: 8px; font-size: 0.8rem;">
-                🔗 <a href="https://paypal.com" target="_blank" style="color: #38bdf8; text-decoration: none;">Subscriber Portal</a><br>
-                🛡️ <a href="#" style="color: #38bdf8; text-decoration: none;">Security Protocols</a>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
+    # 2. Recreate your input boxes as clean, native Streamlit widgets
+    user_email = st.text_input(label="Subscriber Email Address:", placeholder="name@domain.com")
+    
+    component_target = st.selectbox(
+        label="Target Node/Tool Component:",
+        options=["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"]
     )
+    
+    system_feedback = st.text_area(
+        label="Provide System Feedback:", 
+        placeholder="Describe your requested feature or adjustment here..."
+    )
+    
+    # 3. Use the mandatory Streamlit form submit button
+    submit_telemetry = st.form_submit_button(label="📬 Transmit Telemetry Feedback", use_container_width=True, type="primary")
+
+    # 4. Handle the submission programmatically with an HTTP POST request
+    if submit_telemetry:
+        if not user_email or not system_feedback:
+            st.error("⚠️ Submission Failed: Please fill out all required fields before transmitting.")
+        else:
+            # Package the form variables exactly how the endpoint expects them
+            payload = {
+                "email": user_email,
+                "component": component_target,
+                "feedback": system_feedback,
+                "_subject": "🚀 New Cockpit Systems Feedback Log",
+                "_captcha": "false"
+            }
+            
+            try:
+                # Transmit the data silently in the background
+                response = requests.post("https://formsubmit.co", data=payload)
+                
+                if response.status_code == 200:
+                    st.success("✅ Telemetry Transmission Successful! Thank you for your feature feedback.")
+                else:
+                    st.error(f"❌ Transmission Error: Server responded with status code {response.status_code}")
+            except Exception as e:
+                st.error(f"📡 Connection Exception: Unable to reach endpoint. Details: {e}")
 
 # 🎛️ COCKPIT MASTER NAVIGATION (Ungrouped Selection Panels)
 active_panel = st.selectbox(
