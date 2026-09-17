@@ -271,7 +271,6 @@ elif active_panel == "📋 Project Management (Tab 7)":
 
 # ---- PANEL 8: SUPPLY CHAIN & LOGISTICS (Tab 8) ----
 elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
-    st.subheader("📦 Supply Chain & Logistics Control")
     if 'wm' in locals():
         if hasattr(wm, 'render_tracking_aggregator'): wm.render_tracking_aggregator()
         if hasattr(wm, 'render_safety_stock'): wm.render_safety_stock()
@@ -289,7 +288,6 @@ elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
 
 # ---- PANEL 9: FLEET & AUTOMOTIVE (Tab 9) ----
 elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
-    st.subheader("🏎️ Fleet & Automotive Operations")
     if 'wm' in locals():
         if hasattr(wm, 'render_vin_parser'): wm.render_vin_parser()
         if hasattr(wm, 'render_obd_matcher'): wm.render_obd_matcher()
@@ -317,10 +315,8 @@ elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
         if hasattr(wm, 'render_link_validator_v9'): wm.render_link_validator_v9()
 
 # ---- PANEL 11: CYBERSECURITY & INTRUSION (Tab 11) ----
-if active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)":
-    st.markdown("### 🔒 Cybersecurity & Intrusion Defense Arena")
-    st.write("Deploy programmatic virtualization blocks, audit cloud IAM privileges, simulate decryption keys, and isolate malicious injection payloads.")
-    
+elif active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)":
+    if 'wm' in locals():    
     # 🛰️ Dynamic execution tracks mapping all 10 premium security utilities live
     if hasattr(wm, 'render_sqli_scanner_v11'): wm.render_sqli_scanner_v11()
     if hasattr(wm, 'render_ddos_simulator_v11'): wm.render_ddos_simulator_v11()
