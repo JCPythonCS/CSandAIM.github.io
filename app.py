@@ -119,15 +119,21 @@ with st.sidebar:
         suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=500, placeholder="Describe your requested feature or adjustment here...")
 
         # Define the form button first so Python recognizes the variable block!
-        submit_suggestion = st.form_submit_button("Transmit Feedback Logs")
+        submit_suggestion = st.form_submit_button("Compile Feedback Logs")
 
         if submit_suggestion:
             if suggestion_text.strip():
-                # 📡 STAGING DATA PAYLOAD ROUTING LOGS
-                target_corporate_node = "jcpps1@outlook.com"
+                import urllib.parse
                 
-                st.success(f"✅ Telemetry logs successfully compiled and transmitted to system terminal {target_corporate_node}!")
-                st.toast("🛸 Processing queue clear: Data stream cleared from localized RAM buffers.")
+                # 📡 Encode the text strings safely for browser link transit
+                subject_encoded = urllib.parse.quote(f"🚀 Cockpit Feedback: {suggestion_topic}")
+                body_encoded = urllib.parse.quote(f"Sender: {user_email}\n\nFeedback:\n{suggestion_text}")
+                
+                # Construct the native direct mail gateway link
+                mailto_url = f"mailto:jcpps1@://outlook.com{subject_encoded}&body={body_encoded}"
+                
+                st.success("✅ Telemetry logs compiled! Click the routing link below to authorize final delivery:")
+                st.markdown(f'<a href="{mailto_url}" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; text-align: center; width: 100%;">📬 Launch Outlook & Send Mail</a>', unsafe_allow_html=True)
             else:
                 st.error("⚠ System transmission error: Feedback message body content cannot be empty.")
         
