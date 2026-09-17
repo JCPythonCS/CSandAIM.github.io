@@ -114,34 +114,36 @@ with st.sidebar:
     # 💡 FEEDBACK & SUGGESTION BOX AREA
     st.header("💡 Systems Suggestion Box")
     
-    st.markdown(
+    import streamlit.components.v1 as components
+    
+    # Render form inside an isolated browser iframe to guarantee proper display layout
+    components.html(
         """
-        <form action="https://formsubmit.co" method="POST" target="_blank" style="background-color: #0e1117; padding: 15px; border-radius: 8px; border: 1px solid #30363d; font-family: sans-serif; color: white;">
-            <!-- Hidden configuration fields for FormSubmit -->
-            <input type="hidden" name="_subject" value="🚀 New Cockpit Systems Feedback Log">
-            <input type="hidden" name="_captcha" value="false">
-            
-            <label style="display:block; font-size: 14px; font-weight: bold; margin-bottom: 5px;">Subscriber Email Address:</label>
-            <input type="email" name="email" placeholder="name@domain.com" required style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #30363d; background-color: #161b22; color: white; box-sizing: border-box;">
-            
-            <label style="display:block; font-size: 14px; font-weight: bold; margin-bottom: 5px;">Target Node/Tool Component:</label>
-            <select name="component" style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #30363d; background-color: #161b22; color: white; box-sizing: border-box;">
-                <option value="General Cockpit">General Cockpit</option>
-                <option value="Analytics Streams">Analytics Streams</option>
-                <option value="Simulation Engine">Simulation Engine</option>
-                <option value="Audio Profiles">Audio Profiles</option>
-                <option value="Request New Tool">Request New Tool</option>
-            </select>
-            
-            <label style="display:block; font-size: 14px; font-weight: bold; margin-bottom: 5px;">Provide System Feedback:</label>
-            <textarea name="feedback" rows="4" placeholder="Describe your requested feature or adjustment here..." required style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #30363d; background-color: #161b22; color: white; resize: vertical; box-sizing: border-box;"></textarea>
-            
-            <button type="submit" style="width: 100%; padding: 12px; background-color: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; text-align: center; font-size: 14px;">
-                📬 Transmit Telemetry Feedback
-            </button>
-        </form>
+<form action="https://formsubmit.co" method="POST" target="_blank" style="background-color: #0e1117; padding: 15px; border-radius: 8px; border: 1px solid #30363d; font-family: sans-serif; color: white;">
+    <input type="hidden" name="_subject" value="🚀 New Cockpit Systems Feedback Log">
+    <input type="hidden" name="_captcha" value="false">
+    
+    <label style="display:block; font-size: 14px; font-weight: bold; margin-bottom: 5px;">Subscriber Email Address:</label>
+    <input type="email" name="email" placeholder="name@domain.com" required style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #30363d; background-color: #161b22; color: white; box-sizing: border-box;">
+    
+    <label style="display:block; font-size: 14px; font-weight: bold; margin-bottom: 5px;">Target Node/Tool Component:</label>
+    <select name="component" style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #30363d; background-color: #161b22; color: white; box-sizing: border-box;">
+        <option value="General Cockpit">General Cockpit</option>
+        <option value="Analytics Streams">Analytics Streams</option>
+        <option value="Simulation Engine">Simulation Engine</option>
+        <option value="Audio Profiles">Audio Profiles</option>
+        <option value="Request New Tool">Request New Tool</option>
+    </select>
+    
+    <label style="display:block; font-size: 14px; font-weight: bold; margin-bottom: 5px;">Provide System Feedback:</label>
+    <textarea name="feedback" rows="3" placeholder="Describe your requested feature or adjustment here..." required style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #30363d; background-color: #161b22; color: white; resize: none; box-sizing: border-box;"></textarea>
+    
+    <button type="submit" style="width: 100%; padding: 12px; background-color: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; text-align: center; font-size: 14px;">
+        📬 Transmit Telemetry Feedback
+    </button>
+</form>
         """,
-        unsafe_allow_html=True
+        height=400
     )
 
     st.markdown("---")
