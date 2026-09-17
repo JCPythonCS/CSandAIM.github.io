@@ -180,13 +180,14 @@ else:
             st.dataframe(customer_store_df, use_container_width=True)
         else:
             st.warning("📡 Standby: Scanning for live client transactions... Active storage block is empty.")
-        if hasattr(wm, 'render_kpi_pulse_grid'): wm.render_kpi_pulse_grid()
-        if hasattr(wm, 'render_funnel_attribution'): wm.render_funnel_attribution()
-        if hasattr(wm, 'render_pipeline_forecaster'): wm.render_pipeline_forecaster()
-        if hasattr(wm, 'render_conversion_velocity_v5'): wm.render_conversion_velocity_v5()
-        if hasattr(wm, 'render_lead_velocity_v6'): wm.render_lead_velocity_v6()
-        if hasattr(wm, 'render_pipeline_leakage_v8'): wm.render_pipeline_leakage_v8()
-        if hasattr(wm, 'render_funnel_diagnostic_v10'): wm.render_funnel_diagnostic_v10()
+        if hasattr(wm, 'render_kpi_pulse_grid') and active_panel == "📊 Analytics (Tab 1)": wm.render_kpi_pulse_grid()
+        if hasattr(wm, 'render_funnel_attribution') and active_panel == "📊 Analytics (Tab 1)": wm.render_funnel_attribution()
+        if hasattr(wm, 'render_pipeline_forecaster') and active_panel == "📊 Analytics (Tab 1)": wm.render_pipeline_forecaster()
+        if hasattr(wm, 'render_conversion_velocity_v5') and active_panel == "📊 Analytics (Tab 1)": wm.render_conversion_velocity_v5()
+        if hasattr(wm, 'render_lead_velocity_v6') and active_panel == "📊 Analytics (Tab 1)": wm.render_lead_velocity_v6()
+        if hasattr(wm, 'render_pipeline_leakage_v8') and active_panel == "📊 Analytics (Tab 1)": wm.render_pipeline_leakage_v8()
+        if hasattr(wm, 'render_funnel_diagnostic_v10') and active_panel == "📊 Analytics (Tab 1)": wm.render_funnel_diagnostic_v10()
+
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 if active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
