@@ -117,34 +117,34 @@ with st.sidebar:
         user_email = st.text_input("Subscriber Email Address:", placeholder="name@domain.com")
         suggestion_topic = st.selectbox("Target Node/Tool Component:", ["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"])
         suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=500, placeholder="Describe your requested feature or adjustment here...")
-
-        # Define the form button first so Python recognizes the variable block!
+        
+        # Define the form button
         submit_suggestion = st.form_submit_button("Compile Feedback Logs")
 
         if submit_suggestion:
             if suggestion_text.strip():
-                import urllib.parse
+                import requests
                 
-                # 📡 Encode the text strings safely for browser link transit
-                subject_encoded = urllib.parse.quote(f"🚀 Cockpit Feedback: {suggestion_topic}")
-                body_encoded = urllib.parse.quote(f"Sender: {user_email}\n\nFeedback:\n{suggestion_text}")
+                # Secure FormSubmit AJAX endpoint mapping directly to your target mailbox
+                formsubmit_url = "https://formsubmit.co"
                 
-                # Construct the native direct mail gateway link
-                mailto_url = f"mailto:jcpps1@://outlook.com{subject_encoded}&body={body_encoded}"
+                payload = {
+                    "Subscriber Email": user_email if user_email.strip() else "Anonymous Subscriber",
+                    "Target Node Component": suggestion_topic,
+                    "Telemetry Logs": suggestion_text,
+                    "_subject": f"🚀 Cockpit Feedback: {suggestion_topic}"
+                }
                 
-                st.success("✅ Telemetry logs compiled! Click the routing link below to authorize final delivery:")
-                st.markdown(f'<a href="{mailto_url}" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; text-align: center; width: 100%;">📬 Launch Outlook & Send Mail</a>', unsafe_allow_html=True)
-            else:
-                st.error("⚠ System transmission error: Feedback message body content cannot be empty.")
-        
-        if submit_suggestion:
-            if suggestion_text.strip():
-                # 📡 STAGING DATA PAYLOAD ROUTING LOGS
-                target_corporate_node = "jcpps1@outlook.com"
-                
-                # Render secure transmission feedback parameters straight to the user canvas
-                st.success(f"✅ Telemetry logs successfully compiled and transmitted to system terminal {target_corporate_node}!")
-                st.toast("🛸 Processing queue clear: Data stream cleared from localized RAM buffers.")
+                # Dispatch data safely across the network container background
+                try:
+                    response = requests.post(formsubmit_url, json=payload)
+                    if response.status_code == 200:
+                        st.success("✅ Telemetry logs successfully compiled and transmitted to system terminal!")
+                        st.toast("🛸 Processing queue clear: Data stream cleared from localized RAM buffers.")
+                    else:
+                        st.error(f"⚠️ System transmission error: Server returned status code {response.status_code}")
+                except Exception as e:
+                    st.error("🚨 Network connectivity error: Unable to reach target mail container endpoint.")
             else:
                 st.error("⚠ System transmission error: Feedback message body content cannot be empty.")
 
