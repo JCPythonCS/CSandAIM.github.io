@@ -96,20 +96,38 @@ with st.sidebar:
 
     st.markdown("---")
     
-    # 💡 FEEDBACK & SUGGESTION BOX AREA
-    st.header("💡 Systems Suggestion Box")
-    with st.form(key="sidebar_suggestion_form", clear_on_submit=True):
-        user_email = st.text_input("Subscriber Email Address:", placeholder="name@domain.com")
-        suggestion_topic = st.selectbox("Target Node/Tool Component:", ["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"])
-        suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=500, placeholder="Describe your requested feature or adjustment here...")
-        
-        submit_suggestion = st.form_submit_button("Transmit Feedback Logs")
-        if submit_suggestion:
-            if suggestion_text.strip():
-                # Here you can add logic later to route this text to a file or database
-                st.success("✅ Feedback successfully logged to the secure queue!")
-            else:
-                st.error("⚠️ Feedback message body cannot be empty.")
+# 💡 FEEDBACK & SUGGESTION BOX AREA
+import requests
+
+st.header("💡 Systems Suggestion Box")
+with st.form(key="sidebar_suggestion_form", clear_on_submit=True):
+    user_email = st.text_input("Subscriber Email Address:", placeholder="name@domain.com")
+    suggestion_topic = st.selectbox("Target Node/Tool Component:", ["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"])
+    suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=500, placeholder="Describe your requested feature or adjustment here...")
+    submit_suggestion = st.form_submit_button("Transmit Feedback Logs")
+
+    if submit_suggestion:
+        if suggestion_text.strip():
+            # Prepare payload for FormSubmit API targeting your email
+            formsubmit_url = "https://formsubmit.co"
+            payload = {
+                "Subscriber Email": user_email if user_email.strip() else "Anonymous Subscriber",
+                "Target Component": suggestion_topic,
+                "Feedback/Request": suggestion_text,
+                "_subject": f"🎯 Cockpit Feedback: {suggestion_topic}"
+            }
+            
+            # Dispatch background HTTP POST log request
+            try:
+                response = requests.post(formsubmit_url, json=payload)
+                if response.status_code == 200:
+                    st.success("✅ Feedback successfully logged and transmitted to your inbox!")
+                else:
+                    st.error(f"⚠️ Transmission failed. Server returned status code: {response.status_code}")
+            except Exception as e:
+                st.error("🚨 Network connectivity error. Unable to reach mail server container.")
+        else:
+            st.error("⚠️ Feedback message body cannot be empty.")
 
     st.markdown("---")
     
