@@ -170,7 +170,6 @@ else:
     # 📋 PERMANENT ACTIVE STREAM REGISTERS MAPPING
     # ==========================================================================
     st.markdown("---")
-    st.markdown("## 📋 Active Stream Registers")
     st.markdown("### Real-Time Customer Purchase Logs & Delivery Staging Node")
 
 if active_panel != "🔒 Cybersecurity & Intrusion (Tab 11)":
