@@ -180,7 +180,6 @@ else:
             st.dataframe(customer_store_df, use_container_width=True)
         else:
             st.warning("📡 Standby: Scanning for live client transactions... Active storage block is empty.")
-            
         if hasattr(wm, 'render_kpi_pulse_grid'): wm.render_kpi_pulse_grid()
         if hasattr(wm, 'render_funnel_attribution'): wm.render_funnel_attribution()
         if hasattr(wm, 'render_pipeline_forecaster'): wm.render_pipeline_forecaster()
