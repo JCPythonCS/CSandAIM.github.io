@@ -72,36 +72,42 @@ with st.sidebar:
     # 💳 LEVEL 1: SILVER TIER BUTTON
     with st.expander("🥈 Silver Node Access", expanded=False):
         st.markdown("**Cost:** $249 / month")
-        st.markdown("Includes baseline access to core utility nodes.")
-        # Replace the link below with your actual PayPal Button Smart Link
+        st.markdown("""
+        * 🔓 Access to Core System Utilities (Tabs 2, 7, 10)
+        * ⚙️ Standard Engine Compute Performance
+        * 📊 Basic File Operations Log & Workspace Ingestion
+        """)
         st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
 
-    # 💳 LEVEL 2: GOLD EXECUTIVE TIER BUTTON
+    # 💳 LEVEL 2: GOLD TIER BUTTON
     with st.expander("🥇 Gold Command Access", expanded=False):
         st.markdown("**Cost:** $359 / month")
-        st.markdown("Unlocks advanced simulation and analytical suites.")
+        st.markdown("""
+        * 🚀 Unlocks Advanced Predictive Suites (Tabs 1, 4, 8, 9)
+        * 📈 Multi-Region Forecasting Models & Funnel Attribution Analytics
+        * 🏎️ Fleet OBD Freeze Frame Telematics Diagnostics Generators
+        """)
         st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
 
     # 💳 LEVEL 3: PLATINUM TIER BUTTON
-with st.expander("👑 Platinum Executive Suite", expanded=True):
-    st.markdown("**Cost:** $499 / month")
-    st.markdown("""
-    * 👑 Complete Unrestricted Access Across All 105+ System Diagnostics
-    * 🔒 Full Integration of the 10-Tool Cybersecurity & Threat Arena (Tab 11)
-    * 🤖 High-Performance AI-Ops Text Parsing & Sandbox Automation
-    """)
-    st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
-
+    with st.expander("👑 Platinum Executive Suite", expanded=True):
+        st.markdown("**Cost:** $499 / month")
+        st.markdown("""
+        * 👑 Complete Unrestricted Access Across All 105+ System Diagnostics
+        * 🔒 Full Integration of the 10-Tool Cybersecurity & Threat Arena (Tab 11)
+        * 🤖 High-Performance AI-Ops Text Parsing & Sandbox Automation
+        """)
+        st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
 
     # 💳 LEVEL 4: DIAMOND ENTERPRISE TIER BUTTON
-with st.expander("💎 Diamond Enterprise Node", expanded=False):
-    st.markdown("**Cost:** $799 / month")
-    st.markdown("""
-    * 💎 Tailored Corporate White-Label Deployment Package
-    * 🏢 Injection of Dedicated Company Branding, Names, & Asset Logos
-    * ⚡ Priority Email Support & Custom Database Filter Configuration
-    """)
-    st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
+    with st.expander("💎 Diamond Enterprise Node", expanded=False):
+        st.markdown("**Cost:** $799 / month")
+        st.markdown("""
+        * 💎 Tailored Corporate White-Label Deployment Package
+        * 🏢 Injection of Dedicated Company Branding, Names, & Asset Logos
+        * ⚡ Priority Email Support & Custom Database Filter Configuration
+        """)
+        st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
 
     st.markdown("---")
     
