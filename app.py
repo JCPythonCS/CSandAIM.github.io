@@ -113,40 +113,36 @@ with st.sidebar:
     
     # 💡 FEEDBACK & SUGGESTION BOX AREA
     st.header("💡 Systems Suggestion Box")
-    with st.form(key="sidebar_suggestion_form", clear_on_submit=True):
-        user_email = st.text_input("Subscriber Email Address:", placeholder="name@domain.com")
-        suggestion_topic = st.selectbox("Target Node/Tool Component:", ["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"])
-        suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=500, placeholder="Describe your requested feature or adjustment here...")
-
-        # Define the form button first so Python recognizes the variable block!
-        submit_suggestion = st.form_submit_button("Compile Feedback Logs")
-
-        if submit_suggestion:
-            if suggestion_text.strip():
-                import urllib.parse
-                
-                # 📡 Encode the text strings safely for browser link transit
-                subject_encoded = urllib.parse.quote(f"🚀 Cockpit Feedback: {suggestion_topic}")
-                body_encoded = urllib.parse.quote(f"Sender: {user_email}\n\nFeedback:\n{suggestion_text}")
-                
-                # Construct the native direct mail gateway link
-                mailto_url = f"mailto:jcpps1@://outlook.com{subject_encoded}&body={body_encoded}"
-                
-                st.success("✅ Telemetry logs compiled! Click the routing link below to authorize final delivery:")
-                st.markdown(f'<a href="{mailto_url}" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; text-align: center; width: 100%;">📬 Launch Outlook & Send Mail</a>', unsafe_allow_html=True)
-            else:
-                st.error("⚠ System transmission error: Feedback message body content cannot be empty.")
-        
-        if submit_suggestion:
-            if suggestion_text.strip():
-                # 📡 STAGING DATA PAYLOAD ROUTING LOGS
-                target_corporate_node = "jcpps1@outlook.com"
-                
-                # Render secure transmission feedback parameters straight to the user canvas
-                st.success(f"✅ Telemetry logs successfully compiled and transmitted to system terminal {target_corporate_node}!")
-                st.toast("🛸 Processing queue clear: Data stream cleared from localized RAM buffers.")
-            else:
-                st.error("⚠ System transmission error: Feedback message body content cannot be empty.")
+    
+    st.markdown(
+        """
+        <form action="https://formsubmit.co" method="POST" target="_blank" style="background-color: #0e1117; padding: 15px; border-radius: 8px; border: 1px solid #30363d; font-family: sans-serif; color: white;">
+            <!-- Hidden configuration fields for FormSubmit -->
+            <input type="hidden" name="_subject" value="🚀 New Cockpit Systems Feedback Log">
+            <input type="hidden" name="_captcha" value="false">
+            
+            <label style="display:block; font-size: 14px; font-weight: bold; margin-bottom: 5px;">Subscriber Email Address:</label>
+            <input type="email" name="email" placeholder="name@domain.com" required style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #30363d; background-color: #161b22; color: white; box-sizing: border-box;">
+            
+            <label style="display:block; font-size: 14px; font-weight: bold; margin-bottom: 5px;">Target Node/Tool Component:</label>
+            <select name="component" style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #30363d; background-color: #161b22; color: white; box-sizing: border-box;">
+                <option value="General Cockpit">General Cockpit</option>
+                <option value="Analytics Streams">Analytics Streams</option>
+                <option value="Simulation Engine">Simulation Engine</option>
+                <option value="Audio Profiles">Audio Profiles</option>
+                <option value="Request New Tool">Request New Tool</option>
+            </select>
+            
+            <label style="display:block; font-size: 14px; font-weight: bold; margin-bottom: 5px;">Provide System Feedback:</label>
+            <textarea name="feedback" rows="4" placeholder="Describe your requested feature or adjustment here..." required style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #30363d; background-color: #161b22; color: white; resize: vertical; box-sizing: border-box;"></textarea>
+            
+            <button type="submit" style="width: 100%; padding: 12px; background-color: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; text-align: center; font-size: 14px;">
+                📬 Transmit Telemetry Feedback
+            </button>
+        </form>
+        """,
+        unsafe_allow_html=True
+    )
 
     st.markdown("---")
     
