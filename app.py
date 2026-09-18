@@ -223,6 +223,8 @@ if 'wm' in locals() and hasattr(wm, 'fetch_active_stream_registers') and active_
         if hasattr(wm, 'render_lead_velocity_v6') and active_panel == "📊 Analytics (Tab 1)": wm.render_lead_velocity_v6()
         if hasattr(wm, 'render_volume_saturation') and active_panel == "📊 Analytics (Tab 1)": wm.render_volume_saturation()
         if hasattr(wm, 'render_cac_multiplier') and active_panel == "📊 Analytics (Tab 1)": wm.render_cac_multiplier()
+        if hasattr(wm, 'render_pipeline_leakage') and active_panel == "📊 Analytics (Tab 1)": wm.render_pipeline_leakage()
+        if hasattr(wm, 'render_funnel_diagnostic_v10') and active_panel == "📊 Analytics (Tab 1)": wm.render_funnel_diagnostic_v10()
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 if active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
