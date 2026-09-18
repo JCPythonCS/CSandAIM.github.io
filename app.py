@@ -272,9 +272,9 @@ elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' W
         if hasattr(wm, 'render_email_verifier'): wm.render_email_verifier()
         if hasattr(wm, 'render_cloud_stress_tester'): wm.render_cloud_stress_tester()
         if hasattr(wm, 'render_memory_leak_sim_v9'): wm.render_memory_leak_sim_v9()
-        if hasattr(wm, 'render_inventory_optimization') and active_panel == "🚀 Fleet & Ops (Tab 4)": wm.render_inventory_optimization()
-        if hasattr(wm, 'render_route_dispatch') and active_panel == "🚀 Fleet & Ops (Tab 4)": wm.render_route_dispatch()
-        if hasattr(wm, 'render_downtime_cost') and active_panel == "🚀 Fleet & Ops (Tab 4)": wm.render_downtime_cost()
+        if hasattr(wm, 'render_inventory_optimization') and active_panel == "✈️ Simulation (Tab 4)": wm.render_inventory_optimization()
+        if hasattr(wm, 'render_route_dispatch') and active_panel == "✈️ Simulation (Tab 4)": wm.render_route_dispatch()
+        if hasattr(wm, 'render_downtime_cost') and active_panel == "✈️ Simulation (Tab 4)": wm.render_downtime_cost()
 
 # ---- PANEL 5: LIBRARY (Tab 5) ----
 elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -291,7 +291,7 @@ elif active_panel == "💰 Commercial Control (Tab 6)":
     if hasattr(wm, 'render_cac_monitor'): wm.render_cac_monitor()
     if hasattr(wm, 'render_ltv_calculator'): wm.render_ltv_calculator()
     if hasattr(wm, 'render_tax_estimator_v6'): wm.render_tax_estimator_v6()
-    if hasattr(wm, 'render_memory_buffer_monitor') and active_panel == "🔧 Core Engineering (Tab 6)": wm.render_memory_buffer_monitor()
+    if hasattr(wm, 'render_memory_buffer_monitor') and active_panel == "💰 Commercial Control (Tab 6)": wm.render_memory_buffer_monitor()
 
 # ---- PANEL 7: PROJECT MANAGEMENT (Tab 7) ----
 elif active_panel == "📋 Project Management (Tab 7)":
@@ -340,7 +340,7 @@ elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
         if hasattr(wm, 'render_obd_freeze_frame_v7'): wm.render_obd_freeze_frame_v7()
         if hasattr(wm, 'render_tire_pressure_monitor_v8'): wm.render_tire_pressure_monitor_v8()
         if hasattr(wm, 'render_obd_hex_decoder_v10'): wm.render_obd_hex_decoder_v10()
-        if hasattr(wm, 'render_remote_telematics_sync') and active_panel == "🚗 Telematics & OBD (Tab 9)": wm.render_remote_telematics_sync()
+        if hasattr(wm, 'render_remote_telematics_sync') and active_panel == "🏎️ Fleet & Automotive (Tab 9)": wm.render_remote_telematics_sync()
 
 # ---- PANEL 10: AI-OPS TEXT PARSING (Tab 10) ----
 elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
@@ -360,20 +360,19 @@ elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
 # ---- PANEL 11: CYBERSECURITY & INTRUSION (Tab 11) ----
 if active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)":
     
-    # 🛰️ Dynamic execution tracks mapping all 10 premium security utilities live
-    if hasattr(wm, 'render_sqli_scanner_v11'): wm.render_sqli_scanner_v11()
-    if hasattr(wm, 'render_ddos_simulator_v11'): wm.render_ddos_simulator_v11()
-    if hasattr(wm, 'render_ransomware_canary_v11'): wm.render_ransomware_canary_v11()
-    if hasattr(wm, 'render_phishing_analyst_v11'): wm.render_phishing_analyst_v11()
-    if hasattr(wm, 'render_iam_auditor_v11'): wm.render_iam_auditor_v11()
-    if hasattr(wm, 'render_malware_sandbox_v11'): wm.render_malware_sandbox_v11()
-    if hasattr(wm, 'render_ransomware_decryption_sim_v11'): wm.render_ransomware_decryption_sim_v11()
-    if hasattr(wm, 'render_compliance_auditor_v11'): wm.render_compliance_auditor_v11()
-    if hasattr(wm, 'render_honeypot_monitor_v11'): wm.render_honeypot_monitor_v11()
-    if hasattr(wm, 'render_ssl_expiry_checker_v11'): wm.render_ssl_expiry_checker_v11()
-    if hasattr(wm, 'render_api_request_audit') and active_panel == "🔒 Cybersecurity Arena (Tab 11)": wm.render_api_request_audit()
-    if hasattr(wm, 'render_credential_rotation') and active_panel == "🔒 Cybersecurity Arena (Tab 11)": wm.render_credential_rotation()
-    if hasattr(wm, 'render_sandbox_isolation') and active_panel == "🔒 Cybersecurity Arena (Tab 11)": wm.render_sandbox_isolation()
+        if hasattr(wm, 'render_sqli_scanner_v11'): wm.render_sqli_scanner_v11()
+        if hasattr(wm, 'render_ddos_simulator_v11'): wm.render_ddos_simulator_v11()
+        if hasattr(wm, 'render_ransomware_canary_v11'): wm.render_ransomware_canary_v11()
+        if hasattr(wm, 'render_phishing_analyst_v11'): wm.render_phishing_analyst_v11()
+        if hasattr(wm, 'render_iam_auditor_v11'): wm.render_iam_auditor_v11()
+        if hasattr(wm, 'render_malware_sandbox_v11'): wm.render_malware_sandbox_v11()
+        if hasattr(wm, 'render_ransomware_decryption_sim_v11'): wm.render_ransomware_decryption_sim_v11()
+        if hasattr(wm, 'render_compliance_auditor_v11'): wm.render_compliance_auditor_v11()
+        if hasattr(wm, 'render_honeypot_monitor_v11'): wm.render_honeypot_monitor_v11()
+        if hasattr(wm, 'render_ssl_expiry_checker_v11'): wm.render_ssl_expiry_checker_v11()
+        if hasattr(wm, 'render_api_request_audit') and active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)": wm.render_api_request_audit()
+        if hasattr(wm, 'render_credential_rotation') and active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)": wm.render_credential_rotation()
+        if hasattr(wm, 'render_sandbox_isolation') and active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)": wm.render_sandbox_isolation()
 
     else:
         st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
