@@ -374,5 +374,5 @@ if active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)":
         if hasattr(wm, 'render_credential_rotation') and active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)": wm.render_credential_rotation()
         if hasattr(wm, 'render_sandbox_isolation') and active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)": wm.render_sandbox_isolation()
 
-    else:
-        st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
+else:
+    st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
