@@ -124,7 +124,7 @@ components.iframe(
     scrolling=True
 )
 
-    st.markdown("---")
+st.markdown("---")
     
     # 🏢 CORPORATE INFORMATION FOOTPRINT
     st.markdown(
