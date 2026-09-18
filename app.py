@@ -13,6 +13,8 @@ st.set_page_config(page_title="Computer Systems and AI Management Cockpit", layo
 # 🏆 MASTER TITLE BLOCK DESIGN WITH YOUR DUAL SIDE-SPACED LOGOS
 st.title("🛡️ Computer Systems and AI Management Cockpit")
 
+st.title("🚨 TESTING LIVE GIT SYNC 🚨")
+
 # FIXED LOGO GRID: Allocates a precise 3-column framework to avoid TypeError crashes
 col_logo_left, col_title_spacer, col_logo_right = st.columns(3)
 
