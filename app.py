@@ -376,3 +376,23 @@ if active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)":
 
 else:
     st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
+
+# 🚀 GLOBAL LAUNCH OVERRIDE SYSTEM
+st.markdown("---")
+st.subheader("🛠️ Expanded Master Operations Suite")
+
+col1, col2 = st.columns(2)
+with col1:
+    if hasattr(wm, 'render_pipeline_leakage_risk'): wm.render_pipeline_leakage_risk()
+    if hasattr(wm, 'render_volume_saturation'): wm.render_volume_saturation()
+    if hasattr(wm, 'render_cac_multiplier'): wm.render_cac_multiplier()
+    if hasattr(wm, 'render_inventory_optimization'): wm.render_inventory_optimization()
+    if hasattr(wm, 'render_route_dispatch'): wm.render_route_dispatch()
+    if hasattr(wm, 'render_downtime_cost'): wm.render_downtime_cost()
+
+with col2:
+    if hasattr(wm, 'render_memory_buffer_monitor'): wm.render_memory_buffer_monitor()
+    if hasattr(wm, 'render_remote_telematics_sync'): wm.render_remote_telematics_sync()
+    if hasattr(wm, 'render_api_request_audit'): wm.render_api_request_audit()
+    if hasattr(wm, 'render_credential_rotation'): wm.render_credential_rotation()
+    if hasattr(wm, 'render_sandbox_isolation'): wm.render_sandbox_isolation()
