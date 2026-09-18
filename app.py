@@ -13,8 +13,6 @@ st.set_page_config(page_title="Computer Systems and AI Management Cockpit", layo
 # 🏆 MASTER TITLE BLOCK DESIGN WITH YOUR DUAL SIDE-SPACED LOGOS
 st.title("🛡️ Computer Systems and AI Management Cockpit")
 
-st.title("🚨 TESTING LIVE GIT SYNC 🚨")
-
 # FIXED LOGO GRID: Allocates a precise 3-column framework to avoid TypeError crashes
 col_logo_left, col_title_spacer, col_logo_right = st.columns(3)
 
@@ -218,15 +216,17 @@ if 'wm' in locals() and hasattr(wm, 'fetch_active_stream_registers') and active_
             st.dataframe(customer_store_df, use_container_width=True)
         else:
             st.warning("📡 Standby: Scanning for live client transactions... Active storage block is empty.")
-        if hasattr(wm, 'render_kpi_pulse_grid') and active_panel == "📊 Analytics (Tab 1)": wm.render_kpi_pulse_grid()
-        if hasattr(wm, 'render_funnel_attribution') and active_panel == "📊 Analytics (Tab 1)": wm.render_funnel_attribution()
-        if hasattr(wm, 'render_pipeline_forecaster') and active_panel == "📊 Analytics (Tab 1)": wm.render_pipeline_forecaster()
-        if hasattr(wm, 'render_conversion_velocity_v5') and active_panel == "📊 Analytics (Tab 1)": wm.render_conversion_velocity_v5()
-        if hasattr(wm, 'render_lead_velocity_v6') and active_panel == "📊 Analytics (Tab 1)": wm.render_lead_velocity_v6()
-        if hasattr(wm, 'render_volume_saturation') and active_panel == "📊 Analytics (Tab 1)": wm.render_volume_saturation()
-        if hasattr(wm, 'render_cac_multiplier') and active_panel == "📊 Analytics (Tab 1)": wm.render_cac_multiplier()
-        if hasattr(wm, 'render_pipeline_leakage') and active_panel == "📊 Analytics (Tab 1)": wm.render_pipeline_leakage()
-        if hasattr(wm, 'render_funnel_diagnostic_v10') and active_panel == "📊 Analytics (Tab 1)": wm.render_funnel_diagnostic_v10()
+    # 📊 TAB 1: PRODUCTION COCKPIT ANALYTICS ENGINE (10 TOTAL TOOLS)
+    if hasattr(wm, 'render_kpi_pulse_grid') and active_panel == "📊 Analytics (Tab 1)": wm.render_kpi_pulse_grid()
+    if hasattr(wm, 'render_funnel_attribution') and active_panel == "📊 Analytics (Tab 1)": wm.render_funnel_attribution()
+    if hasattr(wm, 'render_pipeline_forecaster') and active_panel == "📊 Analytics (Tab 1)": wm.render_pipeline_forecaster()
+    if hasattr(wm, 'render_conversion_velocity_v5') and active_panel == "📊 Analytics (Tab 1)": wm.render_conversion_velocity_v5()
+    if hasattr(wm, 'render_lead_velocity_v6') and active_panel == "📊 Analytics (Tab 1)": wm.render_lead_velocity_v6()
+    if hasattr(wm, 'render_pipeline_leakage') and active_panel == "📊 Analytics (Tab 1)": wm.render_pipeline_leakage()
+    if hasattr(wm, 'render_funnel_diagnostic_v10') and active_panel == "📊 Analytics (Tab 1)": wm.render_funnel_diagnostic_v10()
+    if hasattr(wm, 'render_pipeline_leakage_risk') and active_panel == "📊 Analytics (Tab 1)": wm.render_pipeline_leakage_risk()
+    if hasattr(wm, 'render_volume_saturation') and active_panel == "📊 Analytics (Tab 1)": wm.render_volume_saturation()
+    if hasattr(wm, 'render_cac_multiplier') and active_panel == "📊 Analytics (Tab 1)": wm.render_cac_multiplier()
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 if active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
