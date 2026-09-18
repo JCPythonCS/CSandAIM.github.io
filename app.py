@@ -226,6 +226,9 @@ if 'wm' in locals() and hasattr(wm, 'fetch_active_stream_registers') and active_
         if hasattr(wm, 'render_pipeline_leakage_risk') and active_panel == "📊 Analytics (Tab 1)": wm.render_pipeline_leakage_risk()
         if hasattr(wm, 'render_volume_saturation') and active_panel == "📊 Analytics (Tab 1)": wm.render_volume_saturation()
         if hasattr(wm, 'render_cac_multiplier') and active_panel == "📊 Analytics (Tab 1)": wm.render_cac_multiplier()
+        if hasattr(wm, 'render_pipeline_leakage_risk'): wm.render_pipeline_leakage_risk()
+        if hasattr(wm, 'render_volume_saturation'): wm.render_volume_saturation()
+        if hasattr(wm, 'render_cac_multiplier'): wm.render_cac_multiplier()
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 if active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -274,7 +277,9 @@ elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' W
         if hasattr(wm, 'render_inventory_optimization') and active_panel == "🚀 Fleet & Ops (Tab 4)": wm.render_inventory_optimization()
         if hasattr(wm, 'render_route_dispatch') and active_panel == "🚀 Fleet & Ops (Tab 4)": wm.render_route_dispatch()
         if hasattr(wm, 'render_downtime_cost') and active_panel == "🚀 Fleet & Ops (Tab 4)": wm.render_downtime_cost()
-
+        if hasattr(wm, 'render_inventory_optimization'): wm.render_inventory_optimization()
+        if hasattr(wm, 'render_route_dispatch'): wm.render_route_dispatch()
+        if hasattr(wm, 'render_downtime_cost'): wm.render_downtime_cost()
 
 # ---- PANEL 5: LIBRARY (Tab 5) ----
 elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
@@ -292,7 +297,7 @@ elif active_panel == "💰 Commercial Control (Tab 6)":
     if hasattr(wm, 'render_ltv_calculator'): wm.render_ltv_calculator()
     if hasattr(wm, 'render_tax_estimator_v6'): wm.render_tax_estimator_v6()
     if hasattr(wm, 'render_memory_buffer_monitor') and active_panel == "🔧 Core Engineering (Tab 6)": wm.render_memory_buffer_monitor()
-
+    if hasattr(wm, 'render_memory_buffer_monitor'): wm.render_memory_buffer_monitor()
 
 # ---- PANEL 7: PROJECT MANAGEMENT (Tab 7) ----
 elif active_panel == "📋 Project Management (Tab 7)":
@@ -342,7 +347,7 @@ elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
         if hasattr(wm, 'render_tire_pressure_monitor_v8'): wm.render_tire_pressure_monitor_v8()
         if hasattr(wm, 'render_obd_hex_decoder_v10'): wm.render_obd_hex_decoder_v10()
         if hasattr(wm, 'render_remote_telematics_sync') and active_panel == "🚗 Telematics & OBD (Tab 9)": wm.render_remote_telematics_sync()
-
+        if hasattr(wm, 'render_remote_telematics_sync'): wm.render_remote_telematics_sync()
 
 # ---- PANEL 10: AI-OPS TEXT PARSING (Tab 10) ----
 elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
@@ -376,6 +381,9 @@ if active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)":
     if hasattr(wm, 'render_api_request_audit') and active_panel == "🔒 Cybersecurity Arena (Tab 11)": wm.render_api_request_audit()
     if hasattr(wm, 'render_credential_rotation') and active_panel == "🔒 Cybersecurity Arena (Tab 11)": wm.render_credential_rotation()
     if hasattr(wm, 'render_sandbox_isolation') and active_panel == "🔒 Cybersecurity Arena (Tab 11)": wm.render_sandbox_isolation()
+    if hasattr(wm, 'render_credential_rotation'): wm.render_credential_rotation()
+    if hasattr(wm, 'render_sandbox_isolation'): wm.render_sandbox_isolation()
+    if hasattr(wm, 'render_api_request_audit'): wm.render_api_request_audit()
 
     else:
         st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
