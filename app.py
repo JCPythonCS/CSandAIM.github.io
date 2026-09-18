@@ -77,7 +77,7 @@ with st.sidebar:
         * ⚙️ Standard Engine Compute Performance
         * 📊 Basic File Operations Log & Workspace Ingestion
         """)
-        st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
+        st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/RQ5S9FDVX8RY2", use_container_width=True, type="secondary")
 
     # 💳 LEVEL 2: GOLD TIER BUTTON
     with st.expander("🥇 Gold Command Access", expanded=False):
@@ -87,17 +87,17 @@ with st.sidebar:
         * 📈 Multi-Region Forecasting Models & Funnel Attribution Analytics
         * 🏎️ Fleet OBD Freeze Frame Telematics Diagnostics Generators
         """)
-        st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
+        st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/S38BCHZZRUWSE", use_container_width=True, type="secondary")
 
     # 💳 LEVEL 3: PLATINUM TIER BUTTON
     with st.expander("👑 Platinum Executive Suite", expanded=True):
         st.markdown("**Cost:** $499 / month")
         st.markdown("""
-        * 👑 Complete Unrestricted Access Across All 105+ System Diagnostics
+        * 👑 Complete Unrestricted Access Across All 115 Operational Diagnostics
         * 🔒 Full Integration of the 10-Tool Cybersecurity & Threat Arena (Tab 11)
         * 🤖 High-Performance AI-Ops Text Parsing & Sandbox Automation
         """)
-        st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
+        st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/FVYSK226TLYKA", use_container_width=True, type="secondary")
 
     # 💳 LEVEL 4: DIAMOND ENTERPRISE TIER BUTTON
     with st.expander("💎 Diamond Enterprise Node", expanded=False):
@@ -107,7 +107,7 @@ with st.sidebar:
         * 🏢 Injection of Dedicated Company Branding, Names, & Asset Logos
         * ⚡ Priority Email Support & Custom Database Filter Configuration
         """)
-        st.link_button("Subscribe with PayPal", "https://paypal.com", use_container_width=True, type="secondary")
+        st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/GFQ2Y5KZMRM9E", use_container_width=True, type="secondary")
 
     st.markdown("---")
     
