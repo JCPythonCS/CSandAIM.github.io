@@ -4,6 +4,58 @@ import os
 import time
 import datetime
 
+# =========================================================================
+# 🔒 CENTRAL AUTHENTICATION CONTROL PERIMETER GATE
+# =========================================================================
+st.sidebar.markdown("### 🔑 Terminal Access Authentication")
+auth_token = st.sidebar.text_input("Enter Active Subscription License Key:", type="password", help="Paste your unique enterprise alphanumeric credential key here.")
+
+# Initialize the authorization validation parameters natively
+is_authorized = False
+session_license = "Locked"
+
+# Hardcoded corporate encryption lookup key strings
+if auth_token == "CSAM-SILVER-992":
+    is_authorized = True
+    session_license = "Silver"
+elif auth_token == "CSAM-GOLD-774":
+    is_authorized = True
+    session_license = "Gold"
+elif auth_token == "CSAM-PLATINUM-120":
+    is_authorized = True
+    session_license = "Platinum"
+elif auth_token == "CSAM-DIAMOND-799":
+    is_authorized = True
+    session_license = "Diamond"
+
+# Render the active security status badge inside the sidebar container
+if not auth_token:
+    st.sidebar.info("⏳ Core Ingestion Node Locked. Awaiting access token entry.")
+elif is_authorized:
+    st.sidebar.success(f"🟢 {session_license} Node Connection Fully Verified.")
+else:
+    st.sidebar.error("❌ Access Denied: Invalid Alphanumeric Credential Block.")
+
+# 🚫 STEP 2: THE ABSOLUTE ENFORCEMENT FILTER SHUTOFF
+if not is_authorized:
+    st.title("🔒 C-SAM AI Management Cockpit Terminal V4.0")
+    st.warning("🔬 **Secure Encryption Firewall Active:** This computing node is running in centralized protected mode. To access your specialized diagnostic suite layout panels, please enter your authorized license key inside the sidebar portal field.")
+    st.info("💡 **Subscription Verification:** If you do not have a license, open the pricing cards in the sidebar section to initialize a secure transaction via PayPal.")
+    st.stop() # 🛑 This single instruction completely freezes the app right here, blocking your 120 tools from downloading!
+
+# 🚫 STEP 3: TIERED LEVEL BOUNDARY LOCKOUT FILTERS
+if session_license == "Silver":
+    allowed_silver_panels = ["🌐 Utilities (Tab 2)", "📋 Project Management (Tab 7)", "🤖 AI-Ops Parsing (Tab 10)"]
+    if 'active_panel' in locals() and active_panel not in allowed_silver_panels:
+        st.error("🔒 Security Boundary Alert: Your Silver Node Access tier does not cover this tactical engine block. Please adjust your tab choice or upgrade your license.")
+        st.stop()
+
+elif session_license == "Gold":
+    allowed_gold_panels = ["📊 Analytics (Tab 1)", "✈️ Simulation (Tab 4)", "📦 Supply Chain (Tab 8)", "🏎️ Fleet & Automotive (Tab 9)"]
+    if 'active_panel' in locals() and active_panel not in allowed_gold_panels:
+        st.error("🔒 Security Boundary Alert: Your Gold Command Access tier does not cover this cybersecurity arena node. Upgrade to Platinum to unlock.")
+        st.stop()
+
 # Import all of your specific tool handlers from your workspace_modules.py file
 import workspace_modules as wm
 
