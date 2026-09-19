@@ -484,17 +484,17 @@ elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' W
 # =========================================================================
 # ✈️ TAB 4: SIMULATION DATA COMPLIANCE EXPANSION (3 LIVE ACTIVE TOOLS)
 # =========================================================================
-    if 'active_panel' in locals() and active_panel == "✈️ Simulation (Tab 4)":
-    st.markdown("---")
-    st.markdown("### ⚡ Live Operational Simulation Engine Core")
+        if 'active_panel' in locals() and active_panel == "✈️ Simulation (Tab 4)":
+        st.markdown("---")
+        st.markdown("### ⚡ Live Operational Simulation Engine Core")
     
-         # Tool 8: Multi-Hub Inventory Optimization Matrix
-         with st.expander("📦 Multi-Hub Inventory Optimization Matrix", expanded=False):
-            st.write("### 📦 Stock Volumetric Distribution Model")
-            target_reserve = st.number_input("Enter Target Hub Safety Stock Level:", min_value=10, value=500, step=50, key="live_inv_stock")
-            current_variance = st.slider("Simulate Supply Variance Disruption Rate (%):", 0, 100, 15, key="live_inv_sl")
-            optimal_buffer = int(target_reserve * (1 + (current_variance / 100)))
-            st.success(f"🟢 Allocation Strategy Active: Minimum Required Hub Buffer Threshold: {optimal_buffer} Units")
+             # Tool 8: Multi-Hub Inventory Optimization Matrix
+             with st.expander("📦 Multi-Hub Inventory Optimization Matrix", expanded=False):
+                st.write("### 📦 Stock Volumetric Distribution Model")
+                target_reserve = st.number_input("Enter Target Hub Safety Stock Level:", min_value=10, value=500, step=50, key="live_inv_stock")
+                current_variance = st.slider("Simulate Supply Variance Disruption Rate (%):", 0, 100, 15, key="live_inv_sl")
+                optimal_buffer = int(target_reserve * (1 + (current_variance / 100)))
+                st.success(f"🟢 Allocation Strategy Active: Minimum Required Hub Buffer Threshold: {optimal_buffer} Units")
 
     # Tool 9: Operational Route Dispatch Efficiency Engine
     with st.expander("🚚 Operational Route Dispatch Efficiency Engine", expanded=False):
