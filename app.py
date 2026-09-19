@@ -93,12 +93,20 @@ st.markdown(
             min-width: 320px !important;
             max-width: 320px !important;
         }
+        /* Forces sidebar metric labels and values to drop down into a compact, high-end profile */
+        div[data-testid="stSidebar"] div[data-testid="stMetricValue"] {
+            font-size: 1.4rem !important;
+            font-weight: bold !important;
+        }
+        div[data-testid="stSidebar"] div[data-testid="stMetricLabel"] {
+            font-size: 0.8rem !important;
+        }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# ⏱️ ROW 1: LIVE REGIONAL TIMELINE & EASTERN CLOCK NODE BOUND TO SIDEBAR
+# ⏱️ ROW 1: COMPACT REGIONAL TIMELINE & EASTERN CLOCK
 st.sidebar.markdown("### 📋 Operations Timeline & Clock")
 
 import datetime
@@ -110,7 +118,7 @@ st.sidebar.metric(label="⏱️ Eastern Time (EST/EDT)", value=est_now.strftime(
 st.sidebar.metric(label="📅 Current System Date", value=est_now.strftime("%A, %b %d, %Y"))
 st.sidebar.info("📍 Operational Target: Business Cycle Running Stable")
 
-# 🗓️ ROW 2: MONDAY-FIRST STATIC CORPORATE CALENDAR MATRIX BOUND TO SIDEBAR
+# 🗓️ ROW 2: MONDAY-FIRST STATIC CORPORATE CALENDAR MATRIX
 st.sidebar.markdown("#### 🗓️ Master Operations Calendar")
 st.sidebar.markdown("""
 <div style="background-color: #0f172a; padding: 10px; border-radius: 6px; border: 1px solid #334155; font-family: monospace;">
@@ -138,7 +146,7 @@ st.sidebar.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# 💎 ROW 3: CORPORATE ACCESS HEADER BRIDGE BOUND TO SIDEBAR
+# 💎 ROW 3: CORPORATE ACCESS HEADER BRIDGE
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 💎 Premium SaaS Access")
 st.sidebar.caption("Select your operational tier to unlock full cockpit capabilities.")
