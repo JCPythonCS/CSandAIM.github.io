@@ -615,8 +615,7 @@ elif active_panel == "📚 Library (Tab 6)":    # <--- MAKE SURE THIS IS 'elif' 
 
      # ---- PANEL 6: COMMERCIAL CONTRL (Tab 6) ----
 elif active_panel == "💰 Commercial Control (Tab 6)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
-    
-    # 🛠️ UNIFORM STRUCTURAL WRAPPERS FOR CORE ENGINEERING SUITES WITH STANDBY NODES
+
     # Tool 1: Commercial Control Grid System
     with st.expander("🎛️ Core Commercial Operational Control Grid System", expanded=False):
         if hasattr(wm, 'render_commercial_control'): wm.render_commercial_control()
