@@ -180,9 +180,6 @@ st.sidebar.markdown(f"""
 
 # 💎 ROW 3: CORPORATE ACCESS HEADER BRIDGE
 # 💎 PREMIUM ACCESS SIDEBAR LAYER POSITIONED ABOVE PAYPAL BUTTONS
-st.sidebar.markdown("---")
-st.sidebar.markdown("### 💎 Premium SaaS Access")
-st.sidebar.caption("Select your operational tier below to unlock full cockpit capabilities.")
 
 # 🏢 CORPORATE INFORMATION FOOTPRINT BOUND TO SIDEBAR
 st.sidebar.markdown("---")
