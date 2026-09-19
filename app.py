@@ -126,9 +126,9 @@ st.sidebar.markdown("""
 </div>
 """, unsafe_allow_html=True)
     
-    st.markdown("---")
-    st.header("💎 Premium SaaS Access")
-    st.caption("Select your operational tier to unlock full cockpit capabilities.")
+st.markdown("---")
+st.header("💎 Premium SaaS Access")
+st.caption("Select your operational tier to unlock full cockpit capabilities.")
 
 # 💳 LEVEL 1: SILVER TIER BUTTON
 with st.expander("🥈 Silver Node Access", expanded=False):
