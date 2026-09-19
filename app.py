@@ -142,7 +142,7 @@ with st.sidebar:
         st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/S38BCHZZRUWSE", use_container_width=True, type="secondary")
 
     # 💳 LEVEL 3: PLATINUM TIER BUTTON
-    with st.expander("👑 Platinum Executive Suite", expanded=True):
+    with st.expander("👑 Platinum Executive Suite", expanded=False):
         st.markdown("**Cost:** $499 / month")
         st.markdown("""
         * 👑 Complete Unrestricted Access Across All 115 Operational Diagnostics
