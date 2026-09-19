@@ -120,30 +120,60 @@ st.sidebar.metric(label="⏱️ Eastern Time (EST/EDT)", value=est_now.strftime(
 st.sidebar.metric(label="📅 Current System Date", value=est_now.strftime("%a, %b %d, %Y"))
 st.sidebar.info("📍 Operational Target: Business Cycle Running Stable")
 
-# 🗓️ ROW 2: MONDAY-FIRST STATIC CORPORATE CALENDAR MATRIX NATIVELY SEALED
+# 🗓️ ROW 2: AUTOMATED SCROLLABLE MONDAY-FIRST CORPORATE CALENDAR ENGINE
+import calendar
 st.sidebar.markdown("#### 🗓️ Master Operations Calendar")
-st.sidebar.markdown("""
+
+# Initialize session state trackers natively so the scroll memory persists
+if 'cal_year' not in st.session_state or 'cal_month' not in st.session_state:
+    st.session_state.cal_year = est_now.year
+    st.session_state.cal_month = est_now.month
+
+# Render small horizontal layout scroll arrow buttons inside the sidebar
+c_prev, c_next = st.sidebar.columns(2)
+with c_prev:
+    if st.button("◀ Last Month", key="cal_scroll_prev", use_container_width=True):
+        st.session_state.cal_month -= 1
+        if st.session_state.cal_month == 0:
+            st.session_state.cal_month = 12
+            st.session_state.cal_year -= 1
+with c_next:
+    if st.button("Next Month ▶", key="cal_scroll_next", use_container_width=True):
+        st.session_state.cal_month += 1
+        if st.session_state.cal_month == 13:
+            st.session_state.cal_month = 1
+            st.session_state.cal_year += 1
+
+# Calculate calendar dimensions using strict Monday-first formatting parameters (0 = Monday)
+cal_obj = calendar.Calendar(firstweekday=0)
+month_weeks = cal_obj.monthdayscalendar(st.session_state.cal_year, st.session_state.cal_month)
+month_name = calendar.month_name[st.session_state.cal_month].upper()
+
+# Generate the high-end custom visual grid table matrix on the fly
+html_days_rows = ""
+for week in month_weeks:
+    html_days_rows += "<tr>"
+    for day in week:
+        if day == 0:
+            html_days_rows += "<td style='padding: 4px; color: #334155;'>&nbsp;</td>"
+        else:
+            # Dynamically verify if this calendar box matches today's exact date
+            is_today = (day == est_now.day and st.session_state.cal_month == est_now.month and st.session_state.cal_year == est_now.year)
+            if is_today:
+                html_days_rows += f"<td style='background-color: #22c55e; color: white; border-radius: 4px; font-weight: bold; padding: 4px;'>{day}</td>"
+            else:
+                html_days_rows += f"<td style='padding: 4px;'>{day}</td>"
+    html_days_rows += "</tr>"
+
+# Render the dynamic interface container directly inside the sidebar layout view
+st.sidebar.markdown(f"""
 <div style="background-color: #0f172a; padding: 10px; border-radius: 6px; border: 1px solid #334155; font-family: monospace;">
-    <p style="color: #38bdf8; font-weight: bold; margin: 0 0 5px 0; text-align: center;">📅 SEPTEMBER 2026</p>
+    <p style="color: #38bdf8; font-weight: bold; margin: 0 0 5px 0; text-align: center;">📅 {month_name} {st.session_state.cal_year}</p>
     <table style="width: 100%; text-align: center; color: #94a3b8; font-size: 0.8rem; border-collapse: collapse;">
         <tr style="color: #f1f5f9; font-weight: bold;">
             <td style="padding: 3px;">M</td><td style="padding: 3px;">T</td><td style="padding: 3px;">W</td><td style="padding: 3px;">T</td><td style="padding: 3px;">F</td><td style="color: #ef4444; padding: 3px;">S</td><td style="color: #ef4444; padding: 3px;">S</td>
         </tr>
-        <tr>
-            <td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td>
-        </tr>
-        <tr>
-            <td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td>
-        </tr>
-        <tr>
-            <td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td style="background-color: #22c55e; color: white; border-radius: 4px; font-weight: bold; padding: 2px;">19</td><td>20</td>
-        </tr>
-        <tr>
-            <td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td>
-        </tr>
-        <tr>
-            <td>28</td><td>29</td><td>30</td><td></td><td></td><td></td><td></td>
-        </tr>
+        {html_days_rows}
     </table>
 </div>
 """, unsafe_allow_html=True)
