@@ -103,61 +103,61 @@ st.markdown("---")
 st.header("💎 Premium SaaS Access")
 st.caption("Select your operational tier to unlock full cockpit capabilities.")
 
-    # 💳 LEVEL 1: SILVER TIER BUTTON
-    with st.expander("🥈 Silver Node Access", expanded=False):
-        st.markdown("**Cost:** $249 / month")
-        st.markdown("""
-        * 🔓 Access to Core System Utilities (Tabs 2, 7, 10)
-        * ⚙️ Standard Engine Compute Performance
-        * 📊 Basic File Operations Log & Workspace Ingestion
-        """)
-        st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/RQ5S9FDVX8RY2", use_container_width=True, type="secondary")
+# 💳 LEVEL 1: SILVER TIER BUTTON
+with st.expander("🥈 Silver Node Access", expanded=False):
+    st.markdown("**Cost:** $249 / month")
+    st.markdown("""
+    * 🔓 Access to Core System Utilities (Tabs 2, 7, 10)
+    * ⚙️ Standard Engine Compute Performance
+    * 📊 Basic File Operations Log & Workspace Ingestion
+    """)
+    st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/RQ5S9FDVX8RY2", use_container_width=True, type="secondary")
 
-    # 💳 LEVEL 2: GOLD TIER BUTTON
-    with st.expander("🥇 Gold Command Access", expanded=False):
-        st.markdown("**Cost:** $359 / month")
-        st.markdown("""
-        * 🚀 Unlocks Advanced Predictive Suites (Tabs 1, 4, 8, 9)
-        * 📈 Multi-Region Forecasting Models & Funnel Attribution Analytics
-        * 🏎️ Fleet OBD Freeze Frame Telematics Diagnostics Generators
-        """)
-        st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/S38BCHZZRUWSE", use_container_width=True, type="secondary")
+# 💳 LEVEL 2: GOLD TIER BUTTON
+with st.expander("🥇 Gold Command Access", expanded=False):
+    st.markdown("**Cost:** $359 / month")
+    st.markdown("""
+    * 🚀 Unlocks Advanced Predictive Suites (Tabs 1, 4, 8, 9)
+    * 📈 Multi-Region Forecasting Models & Funnel Attribution Analytics
+    * 🏎️ Fleet OBD Freeze Frame Telematics Diagnostics Generators
+    """)
+    st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/S38BCHZZRUWSE", use_container_width=True, type="secondary")
 
-    # 💳 LEVEL 3: PLATINUM TIER BUTTON
-    with st.expander("👑 Platinum Executive Suite", expanded=False):
-        st.markdown("**Cost:** $499 / month")
-        st.markdown("""
-        * 👑 Complete Unrestricted Access Across All 115 Operational Diagnostics
-        * 🔒 Full Integration of the 10-Tool Cybersecurity & Threat Arena (Tab 11)
-        * 🤖 High-Performance AI-Ops Text Parsing & Sandbox Automation
-        """)
-        st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/FVYSK226TLYKA", use_container_width=True, type="secondary")
+# 💳 LEVEL 3: PLATINUM TIER BUTTON
+with st.expander("👑 Platinum Executive Suite", expanded=False):
+    st.markdown("**Cost:** $499 / month")
+    st.markdown("""
+    * 👑 Complete Unrestricted Access Across All 115 Operational Diagnostics
+    * 🔒 Full Integration of the 10-Tool Cybersecurity & Threat Arena (Tab 11)
+    * 🤖 High-Performance AI-Ops Text Parsing & Sandbox Automation
+    """)
+    st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/FVYSK226TLYKA", use_container_width=True, type="secondary")
 
-    # 💳 LEVEL 4: DIAMOND ENTERPRISE TIER BUTTON
-    with st.expander("💎 Diamond Enterprise Node", expanded=False):
-        st.markdown("**Cost:** $799 / month")
-        st.markdown("""
-        * 💎 Tailored Corporate White-Label Deployment Package
-        * 🏢 Injection of Dedicated Company Branding, Names, & Asset Logos
-        * ⚡ Priority Email Support & Custom Database Filter Configuration
-        """)
-        st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/GFQ2Y5KZMRM9E", use_container_width=True, type="secondary")
+# 💳 LEVEL 4: DIAMOND ENTERPRISE TIER BUTTON
+with st.expander("💎 Diamond Enterprise Node", expanded=False):
+    st.markdown("**Cost:** $799 / month")
+    st.markdown("""
+    * 💎 Tailored Corporate White-Label Deployment Package
+    * 🏢 Injection of Dedicated Company Branding, Names, & Asset Logos
+    * ⚡ Priority Email Support & Custom Database Filter Configuration
+    """)
+    st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/GFQ2Y5KZMRM9E", use_container_width=True, type="secondary")
 
-    st.markdown("---")
+st.markdown("---")
     
-    # 💡 FEEDBACK & SUGGESTION BOX AREA
-    st.header("💡 Systems Suggestion Box")
-    with st.form(key="sidebar_suggestion_form", clear_on_submit=True):
-        user_email = st.text_input("Subscriber Email Address:", placeholder="name@domain.com")
-        suggestion_topic = st.selectbox("Target Node/Tool Component:", ["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"])
-        suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=500, placeholder="Describe your requested feature or adjustment here...")
+# 💡 FEEDBACK & SUGGESTION BOX AREA
+st.header("💡 Systems Suggestion Box")
+with st.form(key="sidebar_suggestion_form", clear_on_submit=True):
+    user_email = st.text_input("Subscriber Email Address:", placeholder="name@domain.com")
+    suggestion_topic = st.selectbox("Target Node/Tool Component:", ["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"])
+    suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=500, placeholder="Describe your requested feature or adjustment here...")
 
-        # Define the form button first so Python recognizes the variable block!
-        submit_suggestion = st.form_submit_button("Compile Feedback Logs")
+    # Define the form button first so Python recognizes the variable block!
+    submit_suggestion = st.form_submit_button("Compile Feedback Logs")
 
-        if submit_suggestion:
-            if suggestion_text.strip():
-                import urllib.parse
+    if submit_suggestion:
+        if suggestion_text.strip():
+            import urllib.parse
                 
                 # 📡 Encode the text strings safely for browser link transit
                 subject_encoded = urllib.parse.quote(f"🚀 Cockpit Feedback: {suggestion_topic}")
