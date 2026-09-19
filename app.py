@@ -14,25 +14,25 @@ auth_token = st.sidebar.text_input("Enter Active Subscription License Key:", typ
 is_authorized = False
 session_license = "Locked"
 
-# Hardcoded corporate encryption lookup key strings
-if auth_token == "CSAM-SILVER-992":
+# Hardcoded administrative encryption lookup key strings
+if auth_token == "C7JW7AXC6B!pD7y":
     is_authorized = True
-    session_license = "Silver"
+    session_license = "Administrative Root / Diamond Enterprise"
+elif auth_token == "CSAM-SILVER-992":
+    is_authorized = True
+    session_license = "Silver Node"
 elif auth_token == "CSAM-GOLD-774":
     is_authorized = True
-    session_license = "Gold"
+    session_license = "Gold Command"
 elif auth_token == "CSAM-PLATINUM-120":
     is_authorized = True
-    session_license = "Platinum"
-elif auth_token == "CSAM-DIAMOND-799":
-    is_authorized = True
-    session_license = "Diamond"
+    session_license = "Platinum Executive"
 
 # Render the active security status badge inside the sidebar container
 if not auth_token:
     st.sidebar.info("⏳ Core Ingestion Node Locked. Awaiting access token entry.")
 elif is_authorized:
-    st.sidebar.success(f"🟢 {session_license} Node Connection Fully Verified.")
+    st.sidebar.success(f"🟢 {session_license} Connection Fully Verified.")
 else:
     st.sidebar.error("❌ Access Denied: Invalid Alphanumeric Credential Block.")
 
@@ -44,13 +44,13 @@ if not is_authorized:
     st.stop() # 🛑 This single instruction completely freezes the app right here, blocking your 120 tools from downloading!
 
 # 🚫 STEP 3: TIERED LEVEL BOUNDARY LOCKOUT FILTERS
-if session_license == "Silver":
+if session_license == "Silver Node":
     allowed_silver_panels = ["🌐 Utilities (Tab 2)", "📋 Project Management (Tab 7)", "🤖 AI-Ops Parsing (Tab 10)"]
     if 'active_panel' in locals() and active_panel not in allowed_silver_panels:
         st.error("🔒 Security Boundary Alert: Your Silver Node Access tier does not cover this tactical engine block. Please adjust your tab choice or upgrade your license.")
         st.stop()
 
-elif session_license == "Gold":
+elif session_license == "Gold Command":
     allowed_gold_panels = ["📊 Analytics (Tab 1)", "✈️ Simulation (Tab 4)", "📦 Supply Chain (Tab 8)", "🏎️ Fleet & Automotive (Tab 9)"]
     if 'active_panel' in locals() and active_panel not in allowed_gold_panels:
         st.error("🔒 Security Boundary Alert: Your Gold Command Access tier does not cover this cybersecurity arena node. Upgrade to Platinum to unlock.")
