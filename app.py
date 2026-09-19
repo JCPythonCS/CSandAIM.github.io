@@ -153,6 +153,22 @@ st.sidebar.markdown("---")
 st.sidebar.markdown("### 💎 Premium SaaS Access")
 st.sidebar.caption("Select your operational tier to unlock full cockpit capabilities.")
 
+# 🏢 CORPORATE INFORMATION FOOTPRINT BOUND TO SIDEBAR
+st.sidebar.markdown("---")
+st.sidebar.markdown(
+    """
+    <div style="background-color: #0f172a; padding: 12px; border-radius: 6px; border: 1px solid #334155; color: #94a3b8; font-size: 0.8rem; line-height: 1.4;">
+        <div style="font-weight: bold; color: #f1f5f9; font-size: 0.85rem; margin-bottom: 2px;">🖥️ Computer Systems & AI Management</div>
+        <div style="color: #38bdf8; font-family: monospace; font-size: 0.75rem; margin-bottom: 1px;">📧 jcpython@outlook.com</div>
+        <div style="color: #38bdf8; font-family: monospace; font-size: 0.75rem; margin-bottom: 6px;">📞 (864) 864-9954</div>
+        <div style="margin-bottom: 2px;"><b>Version:</b> 4.2.0-SaaS (Production)</div>
+        <div style="margin-bottom: 2px;"><b>Global Network Operations Center</b></div>
+        <div style="margin-bottom: 2px; font-size: 0.7rem; color: #64748b;">All Rights Reserved © 2026</div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 # 💳 LEVEL 1: SILVER TIER BUTTON
 with st.expander("🥈 Silver Node Access", expanded=False):
     st.markdown("**Cost:** $249 / month")
