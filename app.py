@@ -331,44 +331,51 @@ if 'wm' in locals() and hasattr(wm, 'fetch_active_stream_registers') and active_
         if hasattr(wm, 'render_volume_saturation') and active_panel == "📊 Analytics (Tab 1)": wm.render_volume_saturation()
         if hasattr(wm, 'render_cac_multiplier') and active_panel == "📊 Analytics (Tab 1)": wm.render_cac_multiplier()
 # =========================================================================
-# 📊 TAB 1: EXECUTIVE ANALYTICS COMPLIANCE EXPANSION (5 LIVE TOOLS)
+# 📊 TAB 1: EXECUTIVE ANALYTICS COMPLIANCE EXPANSION (5 LIVE ACTIVE TOOLS)
 # =========================================================================
-if active_panel == "📊 Analytics (Tab 1)":
+if 'active_panel' in locals() and active_panel == "📊 Analytics (Tab 1)":
     st.markdown("---")
+    st.markdown("### ⚡ Live Asset Optimization Core")
     
     # Tool 6: Pipeline Leakage Tracker
     with st.expander("📊 B2B Sales Funnel Pipeline Leakage Tracker", expanded=False):
-        st.subheader("Pipeline Leakage Risk Analysis Node")
-        if hasattr(wm, 'render_pipeline_leakage_risk'):
-            wm.render_pipeline_leakage_risk()
+        st.write("### 🔍 Live Funnel Analytics Data Flow")
+        leakage_rate = st.slider("Simulate Pipeline Funnel Leakage Risk Rate (%):", 0, 100, 24, key="live_leakage_sl")
+        if leakage_rate > 40:
+            st.error(f"🚨 Critical Alert: Funnel leakage risk is elevated at {leakage_rate}%. Optimization required.")
         else:
-            st.info("System Tracking Status: Active node online. Funnel trajectory monitored stable.")
+            st.success(f"🟢 Optimal Operations: Pipeline leakage risk is highly stable at {leakage_rate}%.")
 
     # Tool 7: Conversion Funnel Drop-off Diagnostic Tool
     with st.expander("📈 B2B Operational Conversion Funnel Drop-off Diagnostic Tool", expanded=False):
-        st.subheader("Conversion Velocity & Saturation Metrics")
-        if hasattr(wm, 'render_volume_saturation'):
-            wm.render_volume_saturation()
-        else:
-            st.info("System Tracking Status: Active node online. Drop-off vector compression active.")
+        st.write("### 📈 Live Drop-off Volumetric Ingestion Vectors")
+        drop_off = st.number_input("Enter Baseline Operational Drop-off Count:", min_value=0, value=150, key="live_drop_v")
+        st.metric(label="📊 Computed Traffic Retention Index", value=f"{1000 - drop_off} Units")
 
-    # Tool 8: Cross-Channel CAC Multiplier Calculator
+    # Tool 8: Cross-Channel CAC Multiplier Calculator Matrix
     with st.expander("📉 Cross-Channel CAC Multiplier Calculator Matrix", expanded=False):
-        st.subheader("SaaS Cost Acquisition Scaling Ledger")
-        if hasattr(wm, 'render_cac_multiplier'):
-            wm.render_cac_multiplier()
-        else:
-            st.info("System Tracking Status: Active node online. Multiplier metrics running optimized.")
+        st.write("### 📉 Live CAC Multiplier Asset Analysis Matrices")
+        base_cac = st.number_input("Baseline Multi-Channel Acquisition Cost ($):", min_value=1.0, value=45.0, step=5.0, key="live_cac_mult")
+        multiplier = st.slider("Cross-Channel Conversion Scale Factor:", 1.0, 5.0, 1.8, step=0.1, key="live_cac_sl")
+        st.info(f"💰 True Enterprise Customer Acquisition Value: ${base_cac * multiplier:.2f}")
 
     # Tool 9: Regional Customer Acquisition Velocity Engine
     with st.expander("📊 Regional Customer Acquisition Velocity Engine", expanded=False):
-        st.subheader("Territorial Lead Acquisition Velocity")
-        st.info("System Tracking Status: Active node online. Ingestion pipeline fully balanced.")
+        st.write("### 📊 Live Territorial Lead Velocity Tracking")
+        lead_count = st.number_input("Enter New Ingested Monthly Leads:", min_value=0, value=250, key="live_lead_vel")
+        days = st.slider("Select Horizon Observation Window (Days):", 1, 30, 7, key="live_days_vel")
+        st.metric(label="🏎️ Computed Acquisition Rate", value=f"{lead_count / days:.1f} Leads / Day")
 
     # Tool 10: Multi-Channel Attribution Analytics Hub
     with st.expander("🎛️ Multi-Channel Attribution Analytics Hub", expanded=False):
-        st.subheader("Funnel Attribution Fractional Model Array")
-        st.info("System Tracking Status: Active node online. Analytical parity established.")
+        st.write("### 🎛️ Fractional Funnel Attribution Framework")
+        paid_ads = st.slider("Paid Advertising Attribution Weight (%):", 0, 100, 40, key="live_attr_paid")
+        organic = st.slider("Organic Search Traffic Weight (%):", 0, 100, 35, key="live_attr_org")
+        referral = 100 - (paid_ads + organic)
+        if paid_ads + organic > 100:
+            st.error("⚠️ System calculation mismatch: Combined allocation weight cannot exceed 100%.")
+        else:
+            st.info(f"🔹 Remainder Channel Attribution Weight (Referrals/Direct): {referral}%")
 
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 if active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
