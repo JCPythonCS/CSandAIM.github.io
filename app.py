@@ -99,9 +99,9 @@ st.sidebar.metric(label="⏱️ Eastern Time (EST/EDT)", value=est_now.strftime(
 st.sidebar.metric(label="📅 Current System Date", value=est_now.strftime("%A, %b %d, %Y"))
 st.sidebar.info(f"📍 Operational Target: Business Cycle Running Stable")
     
-    st.markdown("---")
-    st.header("💎 Premium SaaS Access")
-    st.caption("Select your operational tier to unlock full cockpit capabilities.")
+st.markdown("---")
+st.header("💎 Premium SaaS Access")
+st.caption("Select your operational tier to unlock full cockpit capabilities.")
 
     # 💳 LEVEL 1: SILVER TIER BUTTON
     with st.expander("🥈 Silver Node Access", expanded=False):
