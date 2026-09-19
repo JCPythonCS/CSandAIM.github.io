@@ -480,14 +480,7 @@ elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' W
             downtime_hours = st.slider("Simulate Cumulative Fleet Incident Downtime (Hours):", 0, 120, 18, key="t4_down_hr")
             loss_rate_per_hour = st.number_input("Target Commercial Fleet Operational Loss Cost ($/Hr):", min_value=50.0, value=125.0, step=25.0, key="t4_down_cost")
             st.info(f"💰 Total Enterprise Operational Overhead Risk Exposure: ${downtime_hours * loss_rate_per_hour:.2f}")
-
-# =========================================================================
-# ✈️ TAB 4: SIMULATION DATA COMPLIANCE EXPANSION (3 LIVE ACTIVE TOOLS)
-# =========================================================================
-        if 'active_panel' in locals() and active_panel == "✈️ Simulation (Tab 4)":
-        st.markdown("---")
-        st.markdown("### ⚡ Live Operational Simulation Engine Core")
-        
+ 
         # Tool 8: Multi-Hub Inventory Optimization Matrix
         with st.expander("📦 Multi-Hub Inventory Optimization Matrix", expanded=False):
             st.write("### 📦 Stock Volumetric Distribution Model")
@@ -496,19 +489,19 @@ elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' W
             optimal_buffer = int(target_reserve * (1 + (current_variance / 100)))
             st.success(f"🟢 Allocation Strategy Active: Minimum Required Hub Buffer Threshold: {optimal_buffer} Units")
 
-    # Tool 9: Operational Route Dispatch Efficiency Engine
-    with st.expander("🚚 Operational Route Dispatch Efficiency Engine", expanded=False):
-        st.write("### 🚚 Telematics Routing Dispatch Saturation Matrix")
-        fleet_units = st.number_input("Total Active Regional Dispatch Fleet Count:", min_value=1, value=45, key="live_route_fl")
-        stop_density = st.slider("Average Node Stop Density Multiplier Factor:", 1.0, 10.0, 3.4, step=0.2, key="live_route_sl")
-        st.metric(label="📊 Computed Daily Routing Horizon Throughput Capacity", value=f"{int(fleet_units * stop_density * 8)} Commits")
+        # Tool 9: Operational Route Dispatch Efficiency Engine
+        with st.expander("🚚 Operational Route Dispatch Efficiency Engine", expanded=False):
+            st.write("### 🚚 Telematics Routing Dispatch Saturation Matrix")
+            fleet_units = st.number_input("Total Active Regional Dispatch Fleet Count:", min_value=1, value=45, key="live_route_fl")
+            stop_density = st.slider("Average Node Stop Density Multiplier Factor:", 1.0, 10.0, 3.4, step=0.2, key="live_route_sl")
+            st.metric(label="📊 Computed Daily Routing Horizon Throughput Capacity", value=f"{int(fleet_units * stop_density * 8)} Commits")
 
-    # Tool 10: Fleet Downtime Cost Ingestion Scanner
-    with st.expander("⏱️ Fleet Downtime Cost Ingestion Scanner Matrix", expanded=False):
-        st.write("### ⏱️ Loss-Mitigation Financial Variance Analysis Ledger")
-        downtime_hours = st.slider("Simulate Cumulative Fleet Incident Downtime (Hours):", 0, 120, 18, key="live_down_hr")
-        loss_rate_per_hour = st.number_input("Target Commercial Fleet Operational Loss Cost ($/Hr):", min_value=50.0, value=125.0, step=25.0, key="live_down_cost")
-        st.info(f"💰 Total Enterprise Operational Overhead Risk Exposure: ${downtime_hours * loss_rate_per_hour:.2f}")
+        # Tool 10: Fleet Downtime Cost Ingestion Scanner
+        with st.expander("⏱️ Fleet Downtime Cost Ingestion Scanner Matrix", expanded=False):
+            st.write("### ⏱️ Loss-Mitigation Financial Variance Analysis Ledger")
+            downtime_hours = st.slider("Simulate Cumulative Fleet Incident Downtime (Hours):", 0, 120, 18, key="live_down_hr")
+            loss_rate_per_hour = st.number_input("Target Commercial Fleet Operational Loss Cost ($/Hr):", min_value=50.0, value=125.0, step=25.0, key="live_down_cost")
+            st.info(f"💰 Total Enterprise Operational Overhead Risk Exposure: ${downtime_hours * loss_rate_per_hour:.2f}")
 
      # ---- PANEL 5: LIBRARY (Tab 5) ----
 elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
