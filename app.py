@@ -83,39 +83,52 @@ with col_logo_right:
 st.markdown("---")
 
 
-# ⏱️ FIXED: REAL-TIME ISOLATED COUNTDOWN ENGINE
-# Using st.fragment ensures ONLY this block reloads, stopping the entire page from breaking
-@st.fragment(run_every=1.0)
-def render_live_countdown():
-    st.sidebar.markdown("### ⏳ Target Countdown")
-    
-    # Force the engine to establish the exact target: Saturday, Sept 19, 2026 at 11:00 AM EST
-    # Streamlit Cloud runs on UTC, which is exactly 4 hours ahead of Eastern Daylight Time (EDT)
-    # Therefore, 11:00 AM EST is exactly 15:00 (3:00 PM) UTC server-time!
-    
-    now_utc = datetime.datetime.utcnow()
-    target_saturday_utc = datetime.datetime(2026, 9, 19, 15, 0, 0)
-    
-    time_remaining = target_saturday_utc - now_utc
-    
-    if time_remaining.total_seconds() > 0:
-        days = time_remaining.days
-        hours, remainder = divmod(time_remaining.seconds, 3600)
-        minutes, seconds = divmod(remainder, 60)
-        
-        st.markdown(
-            f"""
-            <div style="background-color: #1e293b; padding: 12px; border-radius: 6px; border-left: 5px solid #ef4444; color: #f8fafc; font-family: monospace; text-align: center;">
-                <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 5px;">Time remaining to SaaS Briefing</div>
-                <div style="font-size: 1.2rem; font-weight: bold;">{days}d : {hours:02d}h : {minutes:02d}m : {seconds:02d}s</div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+# =========================================================================
+# 📅 SIDEBAR REGIONAL CALENDAR & LIVE EST CLOCK SYSTEM
+# =========================================================================
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 📋 Operations Timeline & Clock")
 
-with st.sidebar:
-    # ⏱️ The Live Countdown Fragment remains safely at the top
-    render_live_countdown()
+# Localized Eastern Time calculations (EST/EDT)
+import datetime
+utc_now = datetime.datetime.utcnow()
+est_offset = datetime.timedelta(hours=-4) 
+est_now = utc_now + est_offset
+
+# Live Time and Date Metric display blocks inside the sidebar
+st.sidebar.metric(label="⏱️ Eastern Time (EST/EDT)", value=est_now.strftime("%I:%M:%S %p"))
+st.sidebar.metric(label="📅 Current System Date", value=est_now.strftime("%A, %b %d"))
+
+# Interactive scrollable date slider bound inside the sidebar tray width
+base_date = est_now.date()
+future_horizon_days = st.sidebar.slider(
+    "Scroll Operational Horizon:", 
+    min_value=0, 
+    max_value=90, 
+    value=0, 
+    step=1,
+    key="sidebar_calendar_date_scroll"
+)
+selected_scroll_date = base_date + datetime.timedelta(days=future_horizon_days)
+
+st.sidebar.markdown(f"**Target Frame:** `{selected_scroll_date.strftime('%b %d, %Y')}`")
+
+# Monday-First logic visual grid alignment for the sidebar column layout
+current_iso_day = selected_scroll_date.isoweekday()
+monday_of_week = selected_scroll_date - datetime.timedelta(days=current_iso_day - 1)
+
+week_days_labels = ["M", "T", "W", "T", "F", "S", "S"]
+sidebar_columns = st.sidebar.columns(7)
+
+for idx, col in enumerate(sidebar_columns):
+    day_date = monday_of_week + datetime.timedelta(days=idx)
+    is_target_focus = (day_date == selected_scroll_date)
+    with col:
+        st.markdown(f"<p style='text-align: center; margin: 0; font-size: 0.75rem; font-weight: bold;'>{week_days_labels[idx]}</p>", unsafe_allow_html=True)
+        if is_target_focus:
+            st.button(f"{day_date.day}", key=f"sb_cal_day_{idx}", use_container_width=True, type="primary")
+        else:
+            st.button(f"{day_date.day}", key=f"sb_cal_day_{idx}", use_container_width=True, type="secondary")
     
     st.markdown("---")
     st.header("💎 Premium SaaS Access")
