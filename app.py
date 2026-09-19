@@ -246,10 +246,10 @@ st.markdown("---")
 st.header("📥 Systems Suggestion Box")
 st.write("Submit software enhancement requests, telemetry bug logs, or platform feedback directly to our secure business dashboard.")
 
-# Direct native redirect button - perfectly flush left to prevent parser crashes
+# Make sure this has your exact full link inside the quotes!
 st.link_button(
     "🔓 Initialize Secure Feedback Terminal", 
-    "https://wixsite.com",
+    "https://jcpython2.wixsite.com/computer-systems-and",
     use_container_width=True
 )
 st.markdown("---")
