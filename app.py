@@ -504,11 +504,14 @@ elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' W
             st.info(f"💰 Total Enterprise Operational Overhead Risk Exposure: ${downtime_hours * loss_rate_per_hour:.2f}")
 
      # ---- PANEL 5: LIBRARY (Tab 5) ----
-elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
+elif active_panel == "📚 Library (Tab 6)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     st.markdown("### 🎬 Studio Asset Management Engine")
     # ... [Keep all your existing Panel 5 code text areas and video dropdown blocks exactly the same] ...
     wm.render_library_catalog()
 
+     # ---- PANEL 6: COMMERCIAL CONTRL (Tab 6) ----
+elif active_panel == "💰 Commercial Control (Tab 6)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
+    
     # 🛠️ UNIFORM STRUCTURAL WRAPPERS FOR CORE ENGINEERING SUITES WITH STANDBY NODES
     # Tool 1: Commercial Control Grid System
     with st.expander("🎛️ Core Commercial Operational Control Grid System", expanded=False):
