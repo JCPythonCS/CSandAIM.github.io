@@ -197,6 +197,11 @@ st.sidebar.markdown(
     unsafe_allow_html=True
 )
 
+# 💎 PREMIUM SAAS ACCESS INTERFACE HEADER
+st.markdown("---")
+st.markdown("### 💎 Premium SaaS Access")
+st.caption("Select your operational tier below to unlock full cockpit capabilities.")
+
 # 💳 LEVEL 1: SILVER TIER BUTTON
 with st.expander("🥈 Silver Node Access", expanded=False):
     st.markdown("**Cost:** $249 / month")
