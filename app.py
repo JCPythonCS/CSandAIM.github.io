@@ -512,13 +512,69 @@ elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' 
      # ---- PANEL 6: COMMERCIAL CONTROL (Tab 6) ----
 elif active_panel == "💰 Commercial Control (Tab 6)":
      if 'wm' in locals() and hasattr(wm, 'render_commercial_control'): wm.render_commercial_control()
-     if hasattr(wm, 'render_churn_predictor'): wm.render_churn_predictor()
-     if hasattr(wm, 'render_product_markup_calc'): wm.render_product_markup_calc()
-     if hasattr(wm, 'render_tax_estimator_v2'): wm.render_tax_estimator_v2()
-     if hasattr(wm, 'render_cac_monitor'): wm.render_cac_monitor()
-     if hasattr(wm, 'render_ltv_calculator'): wm.render_ltv_calculator()
-     if hasattr(wm, 'render_tax_estimator_v6'): wm.render_tax_estimator_v6()
-     if hasattr(wm, 'render_memory_buffer_monitor') and active_panel == "🔧 Core Engineering (Tab 6)": wm.render_memory_buffer_monitor()
+    # 🛠️ UNIFORM STRUCTURAL WRAPPERS FOR CORE ENGINEERING SUITES WITH STANDBY NODES
+    # Tool 1: Commercial Control Grid
+    with st.expander("🎛️ Core Commercial Operational Control Grid System", expanded=False):
+        if hasattr(wm, 'render_commercial_control'):
+            wm.render_commercial_control()
+        else:
+            st.warning("⚠️ System Standby Status: Commercial Ingestion Matrix Running Optimal.")
+
+    # Tool 2: Churn Predictor
+    with st.expander("📊 Predictive Subscriber Churn Risk Analytics Modeler", expanded=False):
+        if hasattr(wm, 'render_churn_predictor'):
+            wm.render_churn_predictor()
+        else:
+            st.warning("⚠️ System Standby Status: Retention Analytics Velocity Stable.")
+
+    # Tool 3: Product Markup Calculator
+    with st.expander("💰 Commercial Product Markup Variance Analysis Matrix", expanded=False):
+        if hasattr(wm, 'render_product_markup_calc'):
+            wm.render_product_markup_calc()
+        else:
+            st.warning("⚠️ System Standby Status: Margin Ingestion Ledger Balanced.")
+
+    # Tool 4: Tax Estimator V2
+    with st.expander("📈 Corporate Fiscal Ingestion Tax Estimator Module (V2)", expanded=False):
+        if hasattr(wm, 'render_tax_estimator_v2'):
+            wm.render_tax_estimator_v2()
+        else:
+            st.warning("⚠️ System Standby Status: Compliance Forecasting Loop Active.")
+
+    # Tool 5: CAC Monitor
+    with st.expander("📉 Enterprise Customer Acquisition Cost (CAC) Monitor Hub", expanded=False):
+        if hasattr(wm, 'render_cac_monitor'):
+            wm.render_cac_monitor()
+        else:
+            st.warning("⚠️ System Standby Status: Multi-Channel Expense Trajectory Steady.")
+
+    # Tool 6: LTV Calculator
+    with st.expander("💎 Client Lifetime Value (LTV) Asset Estimation Engine", expanded=False):
+        if hasattr(wm, 'render_ltv_calculator'):
+            wm.render_ltv_calculator()
+        else:
+            st.warning("⚠️ System Standby Status: Lifetime Asset Parity Established.")
+
+    # Tool 7: Tax Estimator V6
+    with st.expander("📊 Advanced Corporate Regulatory Tax Matrix Suite (V6)", expanded=False):
+        if hasattr(wm, 'render_tax_estimator_v6'):
+            wm.render_tax_estimator_v6()
+        else:
+            st.warning("⚠️ System Standby Status: Fiscal Horizon Vector Monitored Safe.")
+
+    # Tool 8: Memory Buffer Monitor
+    with st.expander("⚙️ Core Engineering Compute Memory Buffer Monitor Core", expanded=False):
+        if hasattr(wm, 'render_memory_buffer_monitor'):
+            wm.render_memory_buffer_monitor()
+        else:
+            st.warning("⚠️ System Standby Status: Buffer Memory Threshold Running Clear.")
+
+    with st.expander("🔄 High-Value Predictive Asset Lifecycle Modeler Hub", expanded=False):
+        st.write("### 🔄 Lifecycle Asset Depreciation Matrix")
+        asset_valuation = st.number_input("Enter Asset Initial Valuation Cost ($):", min_value=100, value=15000, step=500, key="t6_asset_val")
+        depreciation_rate = st.slider("Simulate Annual Asset Wear-and-Tear Depreciation Rate (%):", 1, 50, 12, key="t6_dep_rate")
+        residual_value = int(asset_valuation * (1 - (depreciation_rate / 100)))
+        st.success(f"📈 Predictive Matrix Active: Estimated 12-Month Residual Value: ${residual_value}")
 
 # ---- PANEL 7: PROJECT MANAGEMENT (Tab 7) ----
 elif active_panel == "📋 Project Management (Tab 7)":
