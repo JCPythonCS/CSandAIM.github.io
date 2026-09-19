@@ -316,20 +316,27 @@ else:
     st.markdown("---")
     st.markdown("### Real-Time Customer Purchase Logs & Delivery Staging Node")
 
-if 'wm' in locals() and hasattr(wm, 'fetch_active_stream_registers') and active_panel == "📊 Analytics (Tab 1)":
-        with st.spinner("🛰️ Pinging autonomous database container registries..."):
-            customer_store_df = wm.fetch_active_stream_registers()
-        if not customer_store_df.empty:
-            st.dataframe(customer_store_df, use_container_width=True)
-        else:
-            st.warning("📡 Standby: Scanning for live client transactions... Active storage block is empty.")
-        if hasattr(wm, 'render_kpi_pulse_grid') and active_panel == "📊 Analytics (Tab 1)": wm.render_kpi_pulse_grid()
-        if hasattr(wm, 'render_funnel_attribution') and active_panel == "📊 Analytics (Tab 1)": wm.render_funnel_attribution()
-        if hasattr(wm, 'render_pipeline_forecaster') and active_panel == "📊 Analytics (Tab 1)": wm.render_pipeline_forecaster()
-        if hasattr(wm, 'render_conversion_velocity_v5') and active_panel == "📊 Analytics (Tab 1)": wm.render_conversion_velocity_v5()
-        if hasattr(wm, 'render_lead_velocity_v6') and active_panel == "📊 Analytics (Tab 1)": wm.render_lead_velocity_v6()
-        if hasattr(wm, 'render_volume_saturation') and active_panel == "📊 Analytics (Tab 1)": wm.render_volume_saturation()
-        if hasattr(wm, 'render_cac_multiplier') and active_panel == "📊 Analytics (Tab 1)": wm.render_cac_multiplier()
+# 📊 UNIFORM STRUCTURAL WRAPPERS FOR CORE TIMELINE ANALYTICS SUITES
+if 'wm' in locals() and active_panel == "📊 Analytics (Tab 1)":
+    # Tool 1: KPI Pulse Grid
+    with st.expander("📊 Core Corporate KPI Pulse Grid System", expanded=False):
+        if hasattr(wm, 'render_kpi_pulse_grid'): wm.render_kpi_pulse_grid()
+
+    # Tool 2: Funnel Attribution
+    with st.expander("📈 Multi-Region Funnel Attribution Modeler", expanded=False):
+        if hasattr(wm, 'render_funnel_attribution'): wm.render_funnel_attribution()
+
+    # Tool 3: Pipeline Forecaster
+    with st.expander("📉 Automated Predictive Sales Pipeline Forecaster", expanded=False):
+        if hasattr(wm, 'render_pipeline_forecaster'): wm.render_pipeline_forecaster()
+
+    # Tool 4: Conversion Velocity
+    with st.expander("🔄 High-Velocity Conversion Drop-off Optimizer (V5)", expanded=False):
+        if hasattr(wm, 'render_conversion_velocity_v5'): wm.render_conversion_velocity_v5()
+
+    # Tool 5: Lead Velocity
+    with st.expander("🏎️ Territorial Lead Generation Velocity Engine (V6)", expanded=False):
+        if hasattr(wm, 'render_lead_velocity_v6'): wm.render_lead_velocity_v6()
 # =========================================================================
 # 📊 TAB 1: EXECUTIVE ANALYTICS COMPLIANCE EXPANSION (5 LIVE ACTIVE TOOLS)
 # =========================================================================
