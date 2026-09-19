@@ -403,20 +403,70 @@ if 'active_panel' in locals() and active_panel == "📊 Analytics (Tab 1)":
 # ---- PANEL 2: UTILITIES (Tab 2) ----
 if active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     if 'wm' in locals():
-        if hasattr(wm, 'render_translator'): wm.render_translator()
-        st.markdown("---")
-        if hasattr(wm, 'render_renamer'): wm.render_renamer()
-        if hasattr(wm, 'render_threat_analyzer'): wm.render_threat_analyzer()
-        if hasattr(wm, 'render_ip_throttle_monitor'): wm.render_ip_throttle_monitor()
-        if hasattr(wm, 'render_token_radar'): wm.render_token_radar()
-        if hasattr(wm, 'render_agent_fingerprinter'): wm.render_agent_fingerprinter()
-        if hasattr(wm, 'render_gateway_limiter'): wm.render_gateway_limiter()
-        if hasattr(wm, 'render_password_generator'): wm.render_password_generator()
-        if hasattr(wm, 'render_ip_throttle_monitor_v5'): wm.render_ip_throttle_monitor_v5()
-        if hasattr(wm, 'render_path_sanitizer_v6'): wm.render_path_sanitizer_v6()
-        if hasattr(wm, 'render_cors_auditor_v8'): wm.render_cors_auditor_v8()
-        if hasattr(wm, 'render_ping_matrix_v9'): wm.render_ping_matrix_v9()
-        if hasattr(wm, 'render_port_scanner_v10'): wm.render_port_scanner_v10()
+        # Tool 1: Translator
+        with st.expander("🌐 Universal Multi-Language Translation Node", expanded=False):
+            if hasattr(wm, 'render_translator'): wm.render_translator()
+            else: st.warning("⚠️ System Standby Status: Translation Buffer Running Optimal.")
+
+        # Tool 2: Renamer
+        with st.expander("📝 Bulk Asset Batch File Renaming Controller", expanded=False):
+            if hasattr(wm, 'render_renamer'): wm.render_renamer()
+            else: st.warning("⚠️ System Standby Status: Ingestion Renaming Engine Ready.")
+
+        # Tool 3: Threat Analyzer
+        with st.expander("🛡️ Real-Time Network Packet Threat Analysis Modeler", expanded=False):
+            if hasattr(wm, 'render_threat_analyzer'): wm.render_threat_analyzer()
+            else: st.warning("⚠️ System Standby Status: Threat Perimeter Vector Secure.")
+
+        # Tool 4: IP Throttle Monitor
+        with st.expander("🛑 High-Traffic IP Rate Limit Ingestion Throttle Monitor", expanded=False):
+            if hasattr(wm, 'render_ip_throttle_monitor'): wm.render_ip_throttle_monitor()
+            else: st.warning("⚠️ System Standby Status: Gatekeeper Thresholds Balanced.")
+
+        # Tool 5: Token Radar
+        with st.expander("📡 Decentralized Session Token Radar Audit Scanner", expanded=False):
+            if hasattr(wm, 'render_token_radar'): wm.render_token_radar()
+            else: st.warning("⚠️ System Standby Status: Security Key Parity Established.")
+
+        # Tool 6: Agent Fingerprinter
+        with st.expander("👤 Client Browser User-Agent Telemetry Fingerprinter", expanded=False):
+            if hasattr(wm, 'render_agent_fingerprinter'): wm.render_agent_fingerprinter()
+            else: st.warning("⚠️ System Standby Status: Identity Profile Ingestion Active.")
+
+        # Tool 7: Gateway Limiter
+        with st.expander("🎛️ Distributed API Gateway Traffic Volumetric Limiter", expanded=False):
+            if hasattr(wm, 'render_gateway_limiter'): wm.render_gateway_limiter()
+            else: st.warning("⚠️ System Standby Status: API Connection Quotas Running Safe.")
+
+        # Tool 8: Password Generator
+        with st.expander("🔑 High-Entropy Administrative Password Cryptography Generator", expanded=False):
+            if hasattr(wm, 'render_password_generator'): wm.render_password_generator()
+            else: st.warning("⚠️ System Standby Status: Entropy Token Engine Online.")
+
+        # Tool 9: IP Throttle Monitor V5
+        with st.expander("🚦 Network Interface IP Rate Throttle Ingestion Matrix (V5)", expanded=False):
+            if hasattr(wm, 'render_ip_throttle_monitor_v5'): wm.render_ip_throttle_monitor_v5()
+            else: st.warning("⚠️ System Standby Status: Volumetric Traffic Vector Stable.")
+
+        # Tool 10: Path Sanitizer V6
+        with st.expander("🧹 Directory File-Path Ingestion Input Sanitizer Engine (V6)", expanded=False):
+            if hasattr(wm, 'render_path_sanitizer_v6'): wm.render_path_sanitizer_v6()
+            else: st.warning("⚠️ System Standby Status: Injection Exploit Trajectory Shielded.")
+
+        # Tool 11: CORS Auditor V8
+        with st.expander("🌐 Cross-Origin Resource Sharing (CORS) Security Auditor (V8)", expanded=False):
+            if hasattr(wm, 'render_cors_auditor_v8'): wm.render_cors_auditor_v8()
+            else: st.warning("⚠️ System Standby Status: Cross-Domain Policy Arrays Verified.")
+
+        # Tool 12: Ping Matrix V9
+        with st.expander("⚡ Low-Latency Global Server ICMP Network Ping Matrix (V9)", expanded=False):
+            if hasattr(wm, 'render_ping_matrix_v9'): wm.render_ping_matrix_v9()
+            else: st.warning("⚠️ System Standby Status: Telemetry Ping Ingestion Running Clear.")
+
+        # Tool 13: Port Scanner V10
+        with st.expander("⚙️ Automated Infrastructure TCP/UDP Port Scanner Terminal (V10)", expanded=False):
+            if hasattr(wm, 'render_port_scanner_v10'): wm.render_port_scanner_v10()
+            else: st.warning("⚠️ System Standby Status: Socket Connectivity Auditing Ready.")
 
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
 elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
