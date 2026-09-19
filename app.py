@@ -157,19 +157,21 @@ with st.form(key="sidebar_suggestion_form", clear_on_submit=True):
 
     if submit_suggestion:
         if suggestion_text.strip():
-            import urllib.parse
-                
-    # 📡 Encode the text strings safely for browser link transit
-    subject_encoded = urllib.parse.quote(f"🚀 Cockpit Feedback: {suggestion_topic}")
-    body_encoded = urllib.parse.quote(f"Sender: {user_email}\n\nFeedback:\n{suggestion_text}")
-                
-    # Construct the native direct mail gateway link
-     mailto_url = f"mailto:jcpps1@://outlook.com{subject_encoded}&body={body_encoded}"
-                
-    st.success("✅ Telemetry logs compiled! Click the routing link below to authorize final delivery:")
-        st.markdown(f'<a href="{mailto_url}" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; text-align: center; width: 100%;">📬 Launch Outlook & Send Mail</a>', unsafe_allow_html=True)
-     else:
-    st.error("⚠ System transmission error: Feedback message body content cannot be empty.")
+            # 📝 Encode the text strings safely for browser link transit
+            subject_encoded = urllib.parse.quote(f"🚀 Cockpit Feedback: {suggestion_topic}")
+            body_encoded = urllib.parse.quote(f"Sender: {user_email}\n\nFeedback:\n{suggestion_text}")
+            
+            # Construct the native direct mail gateway link
+            mailto_url = f"mailto:jcpps1@://outlook.com{subject_encoded}&body={body_encoded}"
+            
+            st.success("✅ Telemetry logs compiled! Click the routing link below to authorize final delivery:")
+            st.markdown(f'<a href="{mailto_url}" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #22c55e; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">📧 Launch Mail Client Gateway</a>', unsafe_allow_html=True)
+            
+            # Ingestion logger settings
+            target_corporate_node = "jcpps1@outlook.com"
+        else:
+            st.error("⚠️ System transmission error: Feedback message body content cannot be empty.")
+
         
     if submit_suggestion:
         if suggestion_text.strip():
