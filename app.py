@@ -82,26 +82,53 @@ with col_logo_right:
 
 st.markdown("---")
 
-# =========================================================================
-# 📅 FIXED SIDEBAR CORPORATE TIMELINE & EASTERN CLOCK
-# =========================================================================
-st.sidebar.markdown("---")
-st.sidebar.markdown("### 📋 Operations Timeline & Clock")
+# 🔓 SECURE CSS FIREWALL: FORCES SIDEBAR TO LOCK OPEN AND PREVENTS COLLAPSE
+st.markdown(
+    """
+    <style>
+        [data-testid="stSidebarCollapseButton"] {
+            display: none !important;
+        }
+        [data-testid="stSidebar"] {
+            min-width: 320px !important;
+            max-width: 320px !important;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-# Localized Eastern Time calculations (EST)
-import datetime
-utc_now = datetime.datetime.utcnow()
-est_offset = datetime.timedelta(hours=-4) 
-est_now = utc_now + est_offset
-
-# Clean, high-impact display cards with zero messy sliders or columns
-st.sidebar.metric(label="⏱️ Eastern Time (EST/EDT)", value=est_now.strftime("%I:%M:%S %p"))
-st.sidebar.metric(label="📅 Current System Date", value=est_now.strftime("%A, %b %d, %Y"))
-st.sidebar.info(f"📍 Operational Target: Business Cycle Running Stable")
+# 🗓️ MONDAY-FIRST STATIC CORPORATE CALENDAR MATRIX
+st.sidebar.markdown("#### 🗓️ Master Operations Calendar")
+st.sidebar.markdown("""
+<div style="background-color: #0f172a; padding: 10px; border-radius: 6px; border: 1px solid #334155; font-family: monospace;">
+    <p style="color: #38bdf8; font-weight: bold; margin: 0 0 5px 0; text-align: center;">📅 SEPTEMBER 2026</p>
+    <table style="width: 100%; text-align: center; color: #94a3b8; font-size: 0.8rem; border-collapse: collapse;">
+        <tr style="color: #f1f5f9; font-weight: bold;">
+            <td style="padding: 3px;">M</td><td style="padding: 3px;">T</td><td style="padding: 3px;">W</td><td style="padding: 3px;">T</td><td style="padding: 3px;">F</td><td style="color: #ef4444; padding: 3px;">S</td><td style="color: #ef4444; padding: 3px;">S</td>
+        </tr>
+        <tr>
+            <td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td>
+        </tr>
+        <tr>
+            <td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td>
+        </tr>
+        <tr>
+            <td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td style="background-color: #22c55e; color: white; border-radius: 4px; font-weight: bold; padding: 2px;">19</td><td>20</td>
+        </tr>
+        <tr>
+            <td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td>
+        </tr>
+        <tr>
+            <td>28</td><td>29</td><td>30</td><td></td><td></td><td></td><td></td>
+        </tr>
+    </table>
+</div>
+""", unsafe_allow_html=True)
     
-st.markdown("---")
-st.header("💎 Premium SaaS Access")
-st.caption("Select your operational tier to unlock full cockpit capabilities.")
+    st.markdown("---")
+    st.header("💎 Premium SaaS Access")
+    st.caption("Select your operational tier to unlock full cockpit capabilities.")
 
 # 💳 LEVEL 1: SILVER TIER BUTTON
 with st.expander("🥈 Silver Node Access", expanded=False):
