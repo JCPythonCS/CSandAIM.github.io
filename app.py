@@ -82,6 +82,10 @@ with col_logo_right:
 
 st.markdown("---")
 
+st.markdown("---")
+st.markdown("### 💎 Premium SaaS Access")
+st.caption("Select your operational tier below to unlock full cockpit capabilities.")
+
 # 🔓 SECURE CSS CONFIGURATION FIREWALL
 st.markdown(
     """
@@ -196,11 +200,6 @@ st.sidebar.markdown(
     """,
     unsafe_allow_html=True
 )
-
-# 💎 PREMIUM SAAS ACCESS INTERFACE HEADER
-st.markdown("---")
-st.markdown("### 💎 Premium SaaS Access")
-st.caption("Select your operational tier below to unlock full cockpit capabilities.")
 
 # 💳 LEVEL 1: SILVER TIER BUTTON
 with st.expander("🥈 Silver Node Access", expanded=False):
