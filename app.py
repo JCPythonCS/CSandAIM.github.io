@@ -177,14 +177,6 @@ with st.form(key="sidebar_suggestion_form", clear_on_submit=True):
         if suggestion_text.strip():
             # 📡 STAGING DATA PAYLOAD ROUTING LOGS
             target_corporate_node = "jcpps1@outlook.com"
-                
-    # Render secure transmission feedback parameters straight to the user canvas
-    st.success(f"✅ Telemetry logs successfully compiled and transmitted to system terminal {target_corporate_node}!")
-    st.toast("🛸 Processing queue clear: Data stream cleared from localized RAM buffers.")
-    else:
-        st.error("⚠ System transmission error: Feedback message body content cannot be empty.")
-
-    st.markdown("---")
     
     # 🏢 CORPORATE INFORMATION FOOTPRINT
     st.markdown(
