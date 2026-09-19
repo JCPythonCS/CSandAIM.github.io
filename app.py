@@ -509,66 +509,55 @@ elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' 
     # ... [Keep all your existing Panel 5 code text areas and video dropdown blocks exactly the same] ...
     wm.render_library_catalog()
 
-     # ---- PANEL 6: COMMERCIAL CONTROL (Tab 6) ----
-elif active_panel == "💰 Commercial Control (Tab 6)":
-         if 'wm' in locals() and hasattr(wm, 'render_commercial_control'): wm.render_commercial_control()
-        # 🛠️ UNIFORM STRUCTURAL WRAPPERS FOR CORE ENGINEERING SUITES WITH STANDBY NODES
-        # Tool 1: Commercial Control Grid System (CORRECTED COCKPIT ALIGNMENT)
-        with st.expander("🎛️ Core Commercial Operational Control Grid System", expanded=False):
-            if hasattr(wm, 'render_commercial_control'):
-                wm.render_commercial_control()
-            else:
-                st.warning("⚠️ System Standby Status: Commercial Ingestion Matrix Running Optimal.")
+    # 🛠️ UNIFORM STRUCTURAL WRAPPERS FOR CORE ENGINEERING SUITES WITH STANDBY NODES
+    # Tool 1: Commercial Control Grid System
+    with st.expander("🎛️ Core Commercial Operational Control Grid System", expanded=False):
+        if hasattr(wm, 'render_commercial_control'): wm.render_commercial_control()
+        else: st.warning("⚠️ System Standby Status: Commercial Ingestion Matrix Running Optimal.")
 
     # Tool 2: Churn Predictor
     with st.expander("📊 Predictive Subscriber Churn Risk Analytics Modeler", expanded=False):
-        if hasattr(wm, 'render_churn_predictor'):
-            wm.render_churn_predictor()
-        else:
-            st.warning("⚠️ System Standby Status: Retention Analytics Velocity Stable.")
+        if hasattr(wm, 'render_churn_predictor'): wm.render_churn_predictor()
+        else: st.warning("⚠️ System Standby Status: Retention Analytics Velocity Stable.")
 
     # Tool 3: Product Markup Calculator
     with st.expander("💰 Commercial Product Markup Variance Analysis Matrix", expanded=False):
-        if hasattr(wm, 'render_product_markup_calc'):
-            wm.render_product_markup_calc()
-        else:
-            st.warning("⚠️ System Standby Status: Margin Ingestion Ledger Balanced.")
+        if hasattr(wm, 'render_product_markup_calc'): wm.render_product_markup_calc()
+        else: st.warning("⚠️ System Standby Status: Margin Ingestion Ledger Balanced.")
 
     # Tool 4: Tax Estimator V2
     with st.expander("📈 Corporate Fiscal Ingestion Tax Estimator Module (V2)", expanded=False):
-        if hasattr(wm, 'render_tax_estimator_v2'):
-            wm.render_tax_estimator_v2()
-        else:
-            st.warning("⚠️ System Standby Status: Compliance Forecasting Loop Active.")
+        if hasattr(wm, 'render_tax_estimator_v2'): wm.render_tax_estimator_v2()
+        else: st.warning("⚠️ System Standby Status: Compliance Forecasting Loop Active.")
 
     # Tool 5: CAC Monitor
     with st.expander("📉 Enterprise Customer Acquisition Cost (CAC) Monitor Hub", expanded=False):
-        if hasattr(wm, 'render_cac_monitor'):
-            wm.render_cac_monitor()
-        else:
-            st.warning("⚠️ System Standby Status: Multi-Channel Expense Trajectory Steady.")
+        if hasattr(wm, 'render_cac_monitor'): wm.render_cac_monitor()
+        else: st.warning("⚠️ System Standby Status: Multi-Channel Expense Trajectory Steady.")
 
     # Tool 6: LTV Calculator
     with st.expander("💎 Client Lifetime Value (LTV) Asset Estimation Engine", expanded=False):
-        if hasattr(wm, 'render_ltv_calculator'):
-            wm.render_ltv_calculator()
-        else:
-            st.warning("⚠️ System Standby Status: Lifetime Asset Parity Established.")
+        if hasattr(wm, 'render_ltv_calculator'): wm.render_ltv_calculator()
+        else: st.warning("⚠️ System Standby Status: Lifetime Asset Parity Established.")
 
     # Tool 7: Tax Estimator V6
     with st.expander("📊 Advanced Corporate Regulatory Tax Matrix Suite (V6)", expanded=False):
-        if hasattr(wm, 'render_tax_estimator_v6'):
-            wm.render_tax_estimator_v6()
-        else:
-            st.warning("⚠️ System Standby Status: Fiscal Horizon Vector Monitored Safe.")
+        if hasattr(wm, 'render_tax_estimator_v6'): wm.render_tax_estimator_v6()
+        else: st.warning("⚠️ System Standby Status: Fiscal Horizon Vector Monitored Safe.")
 
     # Tool 8: Memory Buffer Monitor
     with st.expander("⚙️ Core Engineering Compute Memory Buffer Monitor Core", expanded=False):
-        if hasattr(wm, 'render_memory_buffer_monitor'):
-            wm.render_memory_buffer_monitor()
-        else:
-            st.warning("⚠️ System Standby Status: Buffer Memory Threshold Running Clear.")
+        if hasattr(wm, 'render_memory_buffer_monitor'): wm.render_memory_buffer_monitor()
+        else: st.warning("⚠️ System Standby Status: Buffer Memory Threshold Running Clear.")
 
+    # Tool 9: High-Velocity Pricing Elasticity Calculator (ACTIVE INTERACTIVE MODE)
+    with st.expander("📊 High-Velocity Commercial Pricing Elasticity Modeler", expanded=False):
+        st.write("### 📊 Market Elasticity Demand Matrix")
+        base_price = st.number_input("Enter Asset Baseline Units Base Price ($):", min_value=1.0, value=250.0, step=10.0, key="t6_price_el")
+        demand_shift = st.slider("Simulate Market Variance Price Elasticity Coefficient:", 0.5, 3.0, 1.2, step=0.1, key="t6_el_sl")
+        st.info(f"📍 Operational Status: Calculated Dynamic Demand Scale: {demand_shift} Index Coefficient")
+
+    # Tool 10: High-Value Predictive Asset Lifecycle Modeler (ACTIVE INTERACTIVE MODE)
     with st.expander("🔄 High-Value Predictive Asset Lifecycle Modeler Hub", expanded=False):
         st.write("### 🔄 Lifecycle Asset Depreciation Matrix")
         asset_valuation = st.number_input("Enter Asset Initial Valuation Cost ($):", min_value=100, value=15000, step=500, key="t6_asset_val")
