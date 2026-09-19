@@ -961,5 +961,5 @@ if active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)":
             if hasattr(wm, 'render_sandbox_isolation'): wm.render_sandbox_isolation()
             else: st.warning("⚠️ System Standby Status: Secure Environment Parity Verified.")
 
-    else:
-        st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
+else:
+    st.info("💡 Node initialized. Staging AI-Ops text parsing tools for deployment.")
