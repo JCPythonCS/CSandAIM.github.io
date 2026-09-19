@@ -118,33 +118,21 @@ st.sidebar.metric(label="⏱️ Eastern Time (EST/EDT)", value=est_now.strftime(
 st.sidebar.metric(label="📅 Current System Date", value=est_now.strftime("%A, %b %d, %Y"))
 st.sidebar.info("📍 Operational Target: Business Cycle Running Stable")
 
-# 🗓️ ROW 2: MONDAY-FIRST STATIC CORPORATE CALENDAR MATRIX
-st.sidebar.markdown("#### 🗓️ Master Operations Calendar")
-st.sidebar.markdown("""
-<div style="background-color: #0f172a; padding: 10px; border-radius: 6px; border: 1px solid #334155; font-family: monospace;">
-    <p style="color: #38bdf8; font-weight: bold; margin: 0 0 5px 0; text-align: center;">📅 SEPTEMBER 2026</p>
-    <table style="width: 100%; text-align: center; color: #94a3b8; font-size: 0.8rem; border-collapse: collapse;">
-        <tr style="color: #f1f5f9; font-weight: bold;">
-            <td style="padding: 3px;">M</td><td style="padding: 3px;">T</td><td style="padding: 3px;">W</td><td style="padding: 3px;">T</td><td style="padding: 3px;">F</td><td style="color: #ef4444; padding: 3px;">S</td><td style="color: #ef4444; padding: 3px;">S</td>
-        </tr>
-        <tr>
-            <td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td>
-        </tr>
-        <tr>
-            <td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td>
-        </tr>
-        <tr>
-            <td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td style="background-color: #22c55e; color: white; border-radius: 4px; font-weight: bold; padding: 2px;">19</td><td>20</td>
-        </tr>
-        <tr>
-            <td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td>
-        </tr>
-        <tr>
-            <td>28</td><td>29</td><td>30</td><td></td><td></td><td></td><td></td>
-        </tr>
-    </table>
-</div>
-""", unsafe_allow_html=True)
+# 🏢 CORPORATE INFORMATION FOOTPRINT BOUND TO SIDEBAR
+st.sidebar.markdown("---")
+st.sidebar.markdown(
+    """
+    <div style="background-color: #0f172a; padding: 12px; border-radius: 6px; border: 1px solid #334155; color: #94a3b8; font-size: 0.8rem; line-height: 1.4;">
+        <div style="font-weight: bold; color: #f1f5f9; font-size: 0.85rem; margin-bottom: 2px;">🖥️ Computer Systems & AI Management</div>
+        <div style="color: #38bdf8; font-family: monospace; font-size: 0.75rem; margin-bottom: 1px;">📧 jcpython@outlook.com</div>
+        <div style="color: #38bdf8; font-family: monospace; font-size: 0.75rem; margin-bottom: 6px;">📞 (864) 864-9954</div>
+        <div style="margin-bottom: 2px;"><b>Version:</b> 4.2.0-SaaS (Production)</div>
+        <div style="margin-bottom: 2px;"><b>Global Network Operations Center</b></div>
+        <div style="margin-bottom: 2px; font-size: 0.7rem; color: #64748b;">All Rights Reserved © 2026</div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # 💎 ROW 3: CORPORATE ACCESS HEADER BRIDGE
 st.sidebar.markdown("---")
