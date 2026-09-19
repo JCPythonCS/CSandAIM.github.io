@@ -243,38 +243,16 @@ with st.expander("💎 Diamond Enterprise Node", expanded=False):
 
 st.markdown("---")
     
-# 💡 FEEDBACK & SUGGESTION BOX AREA
-st.header("💡 Systems Suggestion Box")
-with st.form(key="sidebar_suggestion_form", clear_on_submit=True):
-    user_email = st.text_input("Subscriber Email Address:", placeholder="name@domain.com")
-    suggestion_topic = st.selectbox("Target Node/Tool Component:", ["General Cockpit", "Analytics Streams", "Simulation Engine", "Audio Profiles", "Request New Tool"])
-    suggestion_text = st.text_area("Provide System Feedback or Feature Requests:", max_chars=500, placeholder="Describe your requested feature or adjustment here...")
+st.header("📥 Systems Suggestion Box")
+st.write("Submit software enhancement requests, telemetry bug logs, or platform feedback directly to our secure business dashboard.")
 
-    # Define the form button first so Python recognizes the variable block!
-    submit_suggestion = st.form_submit_button("Compile Feedback Logs")
-
-    if submit_suggestion:
-        if suggestion_text.strip():
-            # 📝 Encode the text strings safely for browser link transit
-            subject_encoded = urllib.parse.quote(f"🚀 Cockpit Feedback: {suggestion_topic}")
-            body_encoded = urllib.parse.quote(f"Sender: {user_email}\n\nFeedback:\n{suggestion_text}")
-            
-            # Construct the native direct mail gateway link
-            mailto_url = f"mailto:jcpps1@://outlook.com{subject_encoded}&body={body_encoded}"
-            
-            st.success("✅ Telemetry logs compiled! Click the routing link below to authorize final delivery:")
-            st.markdown(f'<a href="{mailto_url}" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #22c55e; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">📧 Launch Mail Client Gateway</a>', unsafe_allow_html=True)
-            
-            # Ingestion logger settings
-            target_corporate_node = "jcpps1@outlook.com"
-        else:
-            st.error("⚠️ System transmission error: Feedback message body content cannot be empty.")
-
-        
-    if submit_suggestion:
-        if suggestion_text.strip():
-            # 📡 STAGING DATA PAYLOAD ROUTING LOGS
-            target_corporate_node = "jcpps1@outlook.com"
+# Direct native redirect button - perfectly flush left to prevent parser crashes
+st.link_button(
+    "🔓 Initialize Secure Feedback Terminal", 
+    "https://wixsite.com",
+    use_container_width=True
+)
+st.markdown("---")
 
 # 🎛️ COCKPIT MASTER NAVIGATION (Ungrouped Selection Panels)
 active_panel = st.selectbox(
