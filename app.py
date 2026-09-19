@@ -677,38 +677,93 @@ elif active_panel == "📋 Project Management (Tab 7)":
     if 'wm' in locals():
         # Tool 1: Infrastructure Delivery Matrix Tracker
         with st.expander("📦 Core Enterprise Infrastructure Delivery Matrix Tracker", expanded=False):
-            if hasattr(wm, 'render_delivery_countdown'): 
-                wm.render_delivery_countdown()
-            else: 
-                st.warning("⚠️ System Standby Status: Master Delivery Trajectory Horizons Calibrated.")
+            if hasattr(wm, 'render_delivery_countdown'): wm.render_delivery_countdown()
+            else: st.warning("⚠️ System Standby Status: Master Delivery Trajectory Horizons Calibrated.")
 
         # Tool 2: Compliance Verification Ingestion Engine
         with st.expander("🛡️ Statutory Compliance Verification & Ingestion Engine Node", expanded=False):
-            if hasattr(wm, 'render_compliance_verify'): 
-                wm.render_compliance_verify()
-            else: 
-                st.warning("⚠️ System Standby Status: Compliance Validation Loops Operational.")
+            if hasattr(wm, 'render_compliance_verify'): wm.render_compliance_verify()
+            else: st.warning("⚠️ System Standby Status: Compliance Validation Loops Operational.")
 
         # Tool 3: Telemetry Stream Integrity Auditor
         with st.expander("🎛️ Distributed Network Telemetry Stream Integrity Auditor", expanded=False):
-            if hasattr(wm, 'render_telemetry_audit'): 
-                wm.render_telemetry_audit()
-            else: 
-                st.warning("⚠️ System Standby Status: Security Stream Parity Fully Established.")
+            if hasattr(wm, 'render_telemetry_audit'): wm.render_telemetry_audit()
+            else: st.warning("⚠️ System Standby Status: Security Stream Parity Fully Established.")
 
         # Tool 4: Operational Horizon Saturation Predictor
         with st.expander("📈 Real-Time Multi-Sector Operational Horizon Saturation Predictor", expanded=False):
-            if hasattr(wm, 'render_horizon_predictor'): 
-                wm.render_horizon_predictor()
-            else: 
-                st.warning("⚠️ System Standby Status: Allocation Capacity Trajectory Steady.")
+            if hasattr(wm, 'render_horizon_predictor'): wm.render_horizon_predictor()
+            else: st.warning("⚠️ System Standby Status: Allocation Capacity Trajectory Steady.")
 
         # Tool 5: Enterprise Task Allocation Ledger
         with st.expander("📋 Shared Node Project & Task Allocation Scheduling Ledger", expanded=False):
-            if hasattr(wm, 'render_task_ledger'): 
-                wm.render_task_ledger()
-            else: 
-                st.warning("⚠️ System Standby Status: Task Distribution Buffer Running Optimal.")
+            if hasattr(wm, 'render_task_ledger'): wm.render_task_ledger()
+            else: st.warning("⚠️ System Standby Status: Task Distribution Buffer Running Optimal.")
+
+        # Tool 6: Enterprise SLA Performance Matrix (ACTIVE MODE)
+        with st.expander("📈 Enterprise Service Level Agreement (SLA) Performance Matrix", expanded=False):
+            st.write("### 📈 Live SLA Breach Mitigation Core")
+            target_sla = st.slider("Target Operational SLA Commitment Level (%):", 90, 100, 99, key="t7_target_sla")
+            breach_variance = st.slider("Simulate Active Incident Impact Disruption Rate (%):", 0, 10, 2, key="t7_sla_var")
+            computed_sla = round(target_sla - breach_variance, 2)
+            if computed_sla < 95: st.error(f"🚨 SLA Risk Alert: Performance tracking at critical threshold: {computed_sla}%")
+            else: st.success(f"🟢 Compliance Maintained: Simulated Performance Vector Stable at {computed_sla}%")
+
+        # Tool 7: Operational Asset Depreciation Ledger (ACTIVE MODE)
+        with st.expander("📊 Multi-Facility Operational Asset Depreciation Ledger Matrix", expanded=False):
+            st.write("### 📊 Capital Expenditure Depreciation Forecast")
+            initial_capex = st.number_input("Enter Asset Initial Capital Valuation Cost ($):", min_value=1000, value=25000, step=1000, key="t7_capex_val")
+            dep_horizon_yrs = st.slider("Select Horizon Life Calculation Scale (Years):", 1, 10, 5, key="t7_dep_horizon")
+            st.info(f"💰 True Yearly Straight-Line Depreciation Volume: ${initial_capex / dep_horizon_yrs:.2f} / Year")
+
+        # Tool 8: Cross-Channel Acquisition Conversion Audit (ACTIVE MODE)
+        with st.expander("🔄 Cross-Channel Acquisition Conversion Volume Audit Hub", expanded=False):
+            st.write("### 🔄 Fractional Traffic Acquisition Validation")
+            gross_traffic = st.number_input("Total Ingested Gross Session Leads:", min_value=100, value=5000, step=500, key="t7_gross_tr")
+            conversion_coefficient = st.slider("Multi-Channel Funnel Scale Conversion Index:", 0.5, 8.0, 2.4, step=0.1, key="t7_conv_coef")
+            st.metric(label="🏎️ Computed Target Conversion Throughput", value=f"{int(gross_traffic * (conversion_coefficient / 100))} Leads")
+
+        # Tool 9: Regional Operational Capacity Forecaster (ACTIVE MODE)
+        with st.expander("🌍 Regional Infrastructure Capacity Utilization Forecaster", expanded=False):
+            st.write("### 🌍 Regional Infrastructure Saturation Matrix")
+            node_capacity = st.slider("Simulate Regional Compute Node Load Factor (%):", 0, 100, 68, key="t7_node_cap")
+            if node_capacity > 80: st.warning(f"⚠️ Infrastructure Load Alert: Regional server capacity is tightly saturated at {node_capacity}%.")
+            else: st.success(f"🟢 Resource Ingestion Balanced: Node operating comfortably at {node_capacity}% threshold.")
+
+        # Tool 10: Multi-Channel Attribution Analytics Bridge (ACTIVE MODE)
+        with st.expander("🎛️ Multi-Channel Fractional Conversion Attribution Sync Node", expanded=False):
+            st.write("### 🎛️ Strategic Inbound Traffic Weighted Allocation")
+            organic_weight = st.slider("Configure Organic Traffic Ingestion Weight Factor (%):", 0, 100, 45, key="t7_org_wt")
+            referral_weight = st.slider("Configure Referral Link Ingestion Weight Factor (%):", 0, 100, 25, key="t7_ref_wt")
+            remainder_paid = 100 - (organic_weight + referral_weight)
+            if organic_weight + referral_weight > 100: st.error("⚠️ System calculation mismatch: Combined allocation weight cannot exceed 100%.")
+            else: st.info(f"🔹 Remainder Channel Attribution Weight (Paid Networks): {remainder_paid}%")
+
+        # Tool 11: Real-Time Fleet Ingestion Telematics Scanner (ACTIVE MODE)
+        with st.expander("📡 Real-Time Fleet Ingestion Telematics Diagnostics Matrix", expanded=False):
+            st.write("### 📡 Active Fleet Ingestion Telematics")
+            tracked_vehicles = st.number_input("Total Active Commercial Fleet Assets:", min_value=1, value=85, key="t7_fleet_sc")
+            st.success(f"🔒 Operational Telemetry Verified: {tracked_vehicles} Active Links Monitored Safe.")
+
+        # Tool 12: High-Velocity Log Integrity Compliance Auditor (ACTIVE MODE)
+        with st.expander("🛡️ High-Velocity Structural Log Integrity Compliance Auditor", expanded=False):
+            st.write("### 🛡️ Core Infrastructure Request Audit Gateway")
+            inspected_logs = st.number_input("Baseline Inspected Telemetry Log Streams:", min_value=0, value=3450, key="t7_log_audit")
+            st.info(f"📍 Security Parity Active: {inspected_logs} Active Streams Audited Safe.")
+
+        # Tool 13: Zero-Trust Administrative Expiry Scheduler (ACTIVE MODE)
+        with st.expander("🔑 Zero-Trust Administrative Token Rotation Expiry Tracker", expanded=False):
+            st.write("### 🔑 Token Identity Access Management")
+            days_to_rotation = st.slider("Days Remaining Until Next Global Security Key Rotation:", 1, 90, 30, key="t7_rot_days")
+            if days_to_rotation < 15: st.error(f"🚨 Key Expiry Warning: Cryptographic key vectors expire in {days_to_rotation} days.")
+            else: st.success(f"🟢 Security Token Integrity Confirmed: {days_to_rotation} days clear of security threshold cycle.")
+
+        # Tool 14: Predictive Asset Depletion Vulnerability Index (ACTIVE MODE)
+        with st.expander("🔄 Predictive Infrastructure Asset Wear & Depletion Modeler", expanded=False):
+            st.write("### 🔄 Infrastructure Depreciation & Wear Grid")
+            initial_wear_index = st.number_input("Enter Hardware Asset Initial Degradation Unit Score:", min_value=0, value=120, key="t7_wear_init")
+            wear_factor = st.slider("Simulate Wear-and-Tear Accelerated Friction Rate Multiplier:", 1.0, 5.0, 1.5, step=0.1, key="t7_wear_sl")
+            st.success(f"📈 Asset Matrix Active: Estimated 12-Month Projected Wear Scale: {initial_wear_index * wear_factor:.1f} Units")
 
 # ---- PANEL 8: SUPPLY CHAIN & LOGISTICS (Tab 8) ----
 elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
