@@ -484,17 +484,17 @@ elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' W
 # =========================================================================
 # ✈️ TAB 4: SIMULATION DATA COMPLIANCE EXPANSION (3 LIVE ACTIVE TOOLS)
 # =========================================================================
-if 'active_panel' in locals() and active_panel == "✈️ Simulation (Tab 4)":
+    if 'active_panel' in locals() and active_panel == "✈️ Simulation (Tab 4)":
     st.markdown("---")
     st.markdown("### ⚡ Live Operational Simulation Engine Core")
     
-    # Tool 8: Multi-Hub Inventory Optimization Matrix
-    with st.expander("📦 Multi-Hub Inventory Optimization Matrix", expanded=False):
-        st.write("### 📦 Stock Volumetric Distribution Model")
-        target_reserve = st.number_input("Enter Target Hub Safety Stock Level:", min_value=10, value=500, step=50, key="live_inv_stock")
-        current_variance = st.slider("Simulate Supply Variance Disruption Rate (%):", 0, 100, 15, key="live_inv_sl")
-        optimal_buffer = int(target_reserve * (1 + (current_variance / 100)))
-        st.success(f"🟢 Allocation Strategy Active: Minimum Required Hub Buffer Threshold: {optimal_buffer} Units")
+         # Tool 8: Multi-Hub Inventory Optimization Matrix
+         with st.expander("📦 Multi-Hub Inventory Optimization Matrix", expanded=False):
+            st.write("### 📦 Stock Volumetric Distribution Model")
+            target_reserve = st.number_input("Enter Target Hub Safety Stock Level:", min_value=10, value=500, step=50, key="live_inv_stock")
+            current_variance = st.slider("Simulate Supply Variance Disruption Rate (%):", 0, 100, 15, key="live_inv_sl")
+            optimal_buffer = int(target_reserve * (1 + (current_variance / 100)))
+            st.success(f"🟢 Allocation Strategy Active: Minimum Required Hub Buffer Threshold: {optimal_buffer} Units")
 
     # Tool 9: Operational Route Dispatch Efficiency Engine
     with st.expander("🚚 Operational Route Dispatch Efficiency Engine", expanded=False):
@@ -510,22 +510,22 @@ if 'active_panel' in locals() and active_panel == "✈️ Simulation (Tab 4)":
         loss_rate_per_hour = st.number_input("Target Commercial Fleet Operational Loss Cost ($/Hr):", min_value=50.0, value=125.0, step=25.0, key="live_down_cost")
         st.info(f"💰 Total Enterprise Operational Overhead Risk Exposure: ${downtime_hours * loss_rate_per_hour:.2f}")
 
-# ---- PANEL 5: LIBRARY (Tab 5) ----
+     # ---- PANEL 5: LIBRARY (Tab 5) ----
 elif active_panel == "📚 Library (Tab 5)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     st.markdown("### 🎬 Studio Asset Management Engine")
     # ... [Keep all your existing Panel 5 code text areas and video dropdown blocks exactly the same] ...
     wm.render_library_catalog()
 
-# ---- PANEL 6: COMMERCIAL CONTROL (Tab 6) ----
+     # ---- PANEL 6: COMMERCIAL CONTROL (Tab 6) ----
 elif active_panel == "💰 Commercial Control (Tab 6)":
-    if 'wm' in locals() and hasattr(wm, 'render_commercial_control'): wm.render_commercial_control()
-    if hasattr(wm, 'render_churn_predictor'): wm.render_churn_predictor()
-    if hasattr(wm, 'render_product_markup_calc'): wm.render_product_markup_calc()
-    if hasattr(wm, 'render_tax_estimator_v2'): wm.render_tax_estimator_v2()
-    if hasattr(wm, 'render_cac_monitor'): wm.render_cac_monitor()
-    if hasattr(wm, 'render_ltv_calculator'): wm.render_ltv_calculator()
-    if hasattr(wm, 'render_tax_estimator_v6'): wm.render_tax_estimator_v6()
-    if hasattr(wm, 'render_memory_buffer_monitor') and active_panel == "🔧 Core Engineering (Tab 6)": wm.render_memory_buffer_monitor()
+     if 'wm' in locals() and hasattr(wm, 'render_commercial_control'): wm.render_commercial_control()
+     if hasattr(wm, 'render_churn_predictor'): wm.render_churn_predictor()
+     if hasattr(wm, 'render_product_markup_calc'): wm.render_product_markup_calc()
+     if hasattr(wm, 'render_tax_estimator_v2'): wm.render_tax_estimator_v2()
+     if hasattr(wm, 'render_cac_monitor'): wm.render_cac_monitor()
+     if hasattr(wm, 'render_ltv_calculator'): wm.render_ltv_calculator()
+     if hasattr(wm, 'render_tax_estimator_v6'): wm.render_tax_estimator_v6()
+     if hasattr(wm, 'render_memory_buffer_monitor') and active_panel == "🔧 Core Engineering (Tab 6)": wm.render_memory_buffer_monitor()
 
 # ---- PANEL 7: PROJECT MANAGEMENT (Tab 7) ----
 elif active_panel == "📋 Project Management (Tab 7)":
