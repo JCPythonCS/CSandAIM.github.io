@@ -82,53 +82,22 @@ with col_logo_right:
 
 st.markdown("---")
 
-
 # =========================================================================
-# 📅 SIDEBAR REGIONAL CALENDAR & LIVE EST CLOCK SYSTEM
+# 📅 FIXED SIDEBAR CORPORATE TIMELINE & EASTERN CLOCK
 # =========================================================================
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 📋 Operations Timeline & Clock")
 
-# Localized Eastern Time calculations (EST/EDT)
+# Localized Eastern Time calculations (EST)
 import datetime
 utc_now = datetime.datetime.utcnow()
 est_offset = datetime.timedelta(hours=-4) 
 est_now = utc_now + est_offset
 
-# Live Time and Date Metric display blocks inside the sidebar
+# Clean, high-impact display cards with zero messy sliders or columns
 st.sidebar.metric(label="⏱️ Eastern Time (EST/EDT)", value=est_now.strftime("%I:%M:%S %p"))
-st.sidebar.metric(label="📅 Current System Date", value=est_now.strftime("%A, %b %d"))
-
-# Interactive scrollable date slider bound inside the sidebar tray width
-base_date = est_now.date()
-future_horizon_days = st.sidebar.slider(
-    "Scroll Operational Horizon:", 
-    min_value=0, 
-    max_value=90, 
-    value=0, 
-    step=1,
-    key="sidebar_calendar_date_scroll"
-)
-selected_scroll_date = base_date + datetime.timedelta(days=future_horizon_days)
-
-st.sidebar.markdown(f"**Target Frame:** `{selected_scroll_date.strftime('%b %d, %Y')}`")
-
-# Monday-First logic visual grid alignment for the sidebar column layout
-current_iso_day = selected_scroll_date.isoweekday()
-monday_of_week = selected_scroll_date - datetime.timedelta(days=current_iso_day - 1)
-
-week_days_labels = ["M", "T", "W", "T", "F", "S", "S"]
-sidebar_columns = st.sidebar.columns(7)
-
-for idx, col in enumerate(sidebar_columns):
-    day_date = monday_of_week + datetime.timedelta(days=idx)
-    is_target_focus = (day_date == selected_scroll_date)
-    with col:
-        st.markdown(f"<p style='text-align: center; margin: 0; font-size: 0.75rem; font-weight: bold;'>{week_days_labels[idx]}</p>", unsafe_allow_html=True)
-        if is_target_focus:
-            st.button(f"{day_date.day}", key=f"sb_cal_day_{idx}", use_container_width=True, type="primary")
-        else:
-            st.button(f"{day_date.day}", key=f"sb_cal_day_{idx}", use_container_width=True, type="secondary")
+st.sidebar.metric(label="📅 Current System Date", value=est_now.strftime("%A, %b %d, %Y"))
+st.sidebar.info(f"📍 Operational Target: Business Cycle Running Stable")
     
     st.markdown("---")
     st.header("💎 Premium SaaS Access")
