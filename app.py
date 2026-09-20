@@ -621,6 +621,33 @@ elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' W
         avg_rows_per_shard = int(total_records / shard_count)
         st.info(f"💰 Optimized Ingestion Architecture: Distributed Allocation Density: {avg_rows_per_shard:,} Records / Shard Node")
 
+    # Tool 11: Multi-Cloud Infrastructure Cost Optimization Matrix (RESTORED & ACTIVE)
+    with st.expander("💰 Multi-Cloud Infrastructure Cost Optimization Matrix", expanded=False):
+        st.write("### 💰 Cross-Cloud Financial Resource Scaling Ledger")
+        aws_spend = st.number_input("Enter Active Monthly AWS Infrastructure Burn ($):", min_value=100, value=3500, step=500, key="t4_mc_aws")
+        azure_spend = st.number_input("Enter Active Monthly Azure Infrastructure Burn ($):", min_value=100, value=2800, step=500, key="t4_mc_azure")
+        waste_factor = st.slider("Simulate Estimated Idle Cloud Resource Waste Rate (%):", 0, 100, 24, key="t4_mc_waste")
+        total_monthly_burn = aws_spend + azure_spend
+        potential_savings = int(total_monthly_burn * (waste_factor / 100))
+        st.success(f"🟢 Optimization Matrix Active: Projected Monthly Reclamation Run-Rate Value: ${potential_savings:,} / Month")
+
+    # Tool 12: Multi-Cloud Workload Spend Matrix (RESTORED & ACTIVE)
+    with st.expander("📈 Multi-Cloud Workload Spend Matrix & Forecasting Core", expanded=False):
+        st.write("### 📈 Volumetric Cross-Platform Compute Allocation")
+        container_pods = st.number_input("Total Operational Monitored Kubernetes Pod Cluster Nodes:", min_value=10, value=250, key="t4_spend_pods")
+        compute_weight = st.slider("Simulate Peak Resource Load Utilization Scale Multiplier:", 1.0, 5.0, 1.6, step=0.1, key="t4_spend_weight")
+        st.info(f"📍 Operational Balance Score: Current Aggregate Workload Processing Index: {container_pods * compute_weight:.1f} Units")
+
+    # Tool 13: Autonomous Cloud Service Availability Ping Monitor (RESTORED & ACTIVE)
+    with st.expander("📡 Autonomous Cloud Service Availability Ping Monitor Hub", expanded=False):
+        st.write("### 📡 Live Infrastructure Endpoint Heartbeat Scanner")
+        endpoint_count = st.number_input("Total Registered Global API Gateway Target Endpoints:", min_value=1, value=45, key="t4_ping_cnt")
+        simulated_latency_ms = st.slider("Simulate Network Pipe Relay Latency Deviation Factor (ms):", 5, 250, 42, key="t4_ping_ms")
+        if simulated_latency_ms > 150:
+            st.error(f"🚨 Network Degradation Alert: Endpoint response latency elevated at {simulated_latency_ms}ms. Regional throttling imminent.")
+        else:
+            st.success(f"🔒 Heartbeat Parity Confirmed: All {endpoint_count} distributed target endpoints reporting clean operational health.")
+
      # ---- PANEL 5: LIBRARY (Tab 5) ----
 elif active_panel == "📚 Library (Tab 6)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     st.markdown("### 🎬 Studio Asset Management Engine")
