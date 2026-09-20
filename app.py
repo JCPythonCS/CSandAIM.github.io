@@ -796,6 +796,111 @@ elif active_panel == "📋 Project Management (Tab 7)":
             wear_factor = st.slider("Simulate Wear-and-Tear Accelerated Friction Rate Multiplier:", 1.0, 5.0, 1.5, step=0.1, key="t7_wear_sl")
             st.success(f"📈 Asset Matrix Active: Estimated 12-Month Projected Wear Scale: {initial_wear_index * wear_factor:.1f} Units")
 
+        # Tool 15: Enterprise Project Timeline & Gantt Roadmap Matrix (RESTORED & ACTIVE)
+        with st.expander("📅 Enterprise Project Timeline & Gantt Roadmap Matrix Hub", expanded=False):
+            st.write("### 📅 Gantt Roadmap Milestone Engine")
+            total_milestones = st.number_input("Enter Total Critical Path Milestones:", min_value=1, value=12, key="t7_gantt_ms")
+            avg_duration_days = st.slider("Simulate Average Milestone Duration (Days):", 1, 60, 14, key="t7_gantt_days")
+            st.success(f"🟢 Roadmap Operational: Projected Critical Path Horizon: {total_milestones * avg_duration_days} Days Clear.")
+
+        # Tool 16: Revenue-Weighted Task Priority Matrix Sorter (RESTORED & ACTIVE)
+        with st.expander("📊 Revenue-Weighted Task Priority Matrix Sorter Engine", expanded=False):
+            st.write("### 📊 Financial Value Task Prioritization")
+            task_impact = st.selectbox("Select Target Operational Priority Focus:", ["High Margin Ingestion", "Perimeter Security Hardening", "Infrastructure Latency Tuning"], key="t7_task_impact")
+            gross_value_impact = st.number_input("Estimated Revenue Generation Value ($):", min_value=1000, value=75000, step=5000, key="t7_task_val")
+            st.info(f"💰 Prioritization Context Active: Allocating resources to {task_impact} tracking at ${gross_value_impact:,} valuation.")
+
+        # Tool 17: Client Revision Cycle & Change-Order Logger (RESTORED & ACTIVE)
+        with st.expander("📝 Client Revision Cycle & Change-Order Operational Logger", expanded=False):
+            st.write("### 📝 Scope Change Management Telemetry Ledger")
+            base_scope_hours = st.number_input("Baseline Committed Project Scope Hours:", min_value=10, value=120, key="t7_rev_base")
+            revision_count = st.slider("Simulate Active Client Change-Order Requests:", 0, 10, 2, key="t7_rev_sl")
+            overrun_multiplier = 1.15
+            total_projected_hours = int(base_scope_hours * (overrun_multiplier ** revision_count))
+            st.warning(f"⚠️ Scope Creep Index: Dynamic Horizon expanded to {total_projected_hours} hours (+{total_projected_hours - base_scope_hours} hrs overhead).")
+
+        # Tool 18: Sprint Velocity Calculator & Delivery Forecaster (RESTORED & ACTIVE)
+        with st.expander("🔄 Sprint Velocity Calculator & Production Delivery Forecaster", expanded=False):
+            st.write("### 🔄 Velocity Capacity Ingestion Matrix")
+            backlog_story_points = st.number_input("Total Remaining Backlog Story Points:", min_value=1, value=180, key="t7_sprint_points")
+            team_velocity = st.slider("Average Team Sprint Velocity Allocation Score:", 10, 50, 30, key="t7_sprint_vel")
+            sprints_required = round(backlog_story_points / team_velocity, 1)
+            st.metric(label="📊 Computed Sprints Required Until Release Validation", value=f"{sprints_required} Iterations", delta=f"{team_velocity} pts/sprint")
+
+        # Tool 19: Cross-Team Resource Dependency Grid Validator (RESTORED & ACTIVE)
+        with st.expander("🎛️ Cross-Team Resource Dependency Grid Operational Validator", expanded=False):
+            st.write("### 🎛️ Node Interdependency Conflict Scanner")
+            active_teams = st.slider("Total Integrated Cross-Functional Development Teams:", 2, 8, 4, key="t7_dep_teams")
+            scanned_dependencies = st.number_input("Total Tracked Inter-Team Asset Hooks:", min_value=1, value=24, key="t7_dep_hooks")
+            conflict_risk = int((scanned_dependencies * active_teams) / 2)
+            if conflict_risk > 30:
+                st.error(f"🚨 Dependency Alert: Interdependency bottleneck risk elevated at index {conflict_risk}. Optimization mandatory.")
+            else:
+                st.success(f"🟢 Telemetry Clear: Structural dependency matrix aligned safely at conflict index {conflict_risk}.")
+
+        # Tool 20: Team Resource Capacity Allocation Tracker (RESTORED & ACTIVE)
+        with st.expander("📋 Team Resource Capacity Allocation & Saturation Tracker", expanded=False):
+            st.write("### 📋 Human Capital Allocation Saturation Index")
+            total_headcount = st.number_input("Total Active Monitored Technical Personnel Nodes:", min_value=1, value=15, key="t7_cap_hc")
+            allocation_factor = st.slider("Simulate Active Project Utilization Burn Rate (%):", 0, 100, 85, key="t7_cap_sl")
+            if allocation_factor > 90:
+                st.error(f"🚨 Personnel Saturation Warning: Engineering resources are burning above safe parameters at {allocation_factor}%.")
+            else:
+                st.success(f"🟢 Resource Velocity Balanced: Team load factoring stable at {allocation_factor}% capacity threshold.")
+        # Tool 21: Milestone Sprint Burndown Simulator (RESTORED & ACTIVE)
+        with st.expander("📉 Milestone Sprint Burndown Volumetric Simulator", expanded=False):
+            st.write("### 📉 Live Velocity Allocation & Burndown Modeler")
+            starting_points = st.number_input("Enter Initial Sprint Velocity Scope Points:", min_value=10, value=150, step=10, key="t7_burn_start")
+            days_elapsed = st.slider("Select Current Sprint Days Elapsed Horizon:", 1, 14, 6, key="t7_burn_days")
+            projected_burn = max(0, starting_points - (days_elapsed * 12))
+            st.success(f"🟢 Burndown Trajectory Active: Projected Remaining Sprint Points: {projected_burn} Units")
+
+        # Tool 22: Engineering Story Point Velocity Analyst (RESTORED & ACTIVE)
+        with st.expander("📊 Engineering Story Point Velocity Analyst Hub", expanded=False):
+            st.write("### 📊 Engineering Productivity Metric Analyzer")
+            completed_points = st.number_input("Total Completed Story Point Volume:", min_value=1, value=45, key="t7_vel_pts")
+            dev_nodes = st.slider("Active Monitored Developer Resource Nodes:", 1, 10, 5, key="t7_vel_dev")
+            st.info(f"💰 True Individual Engineering Throughput Rate: {completed_points / dev_nodes:.1f} Points / Node")
+
+        # Tool 23: Milestone Cycle Time Efficiency Analyst (RESTORED & ACTIVE)
+        with st.expander("🔄 Milestone Cycle Time Efficiency Analyst Matrix", expanded=False):
+            st.write("### 🔄 Cycle Processing Velocity Evaluation")
+            lead_time = st.number_input("Gross Feature Ingestion Lead Time (Days):", min_value=1.0, value=18.5, step=0.5, key="t7_cycle_lead")
+            active_dev_time = st.slider("Net Active Mechanical Development Time (Days):", 1.0, 15.0, 7.0, step=0.5, key="t7_cycle_dev")
+            efficiency_ratio = round((active_dev_time / lead_time) * 100, 1)
+            st.metric(label="🏎️ Computed Process Efficiency Index", value=f"{efficiency_ratio}%", delta=f"{efficiency_ratio - 50.0}% vs Baseline")
+
+        # Tool 24: Cross-Team Agile Sprint Burndown & Metric Tracker (RESTORED & ACTIVE)
+        with st.expander("🎛️ Cross-Team Agile Sprint Burndown & Metric Tracker", expanded=False):
+            st.write("### 🎛️ Multi-Team Burndown Analytics Sync")
+            active_sprints = st.slider("Total Concurrent Active Sprint Tracking Channels:", 1, 5, 3, key="t7_cross_sprints")
+            st.success(f"🔒 Multi-Channel Aggregator Active: {active_sprints} Agile teams reporting clean operational telemetry sync.")
+
+        # Tool 25: Cross-Team Milestone Release Buffer Risk Evaluator (RESTORED & ACTIVE)
+        with st.expander("🛡️ Cross-Team Milestone Release Buffer Risk Evaluator", expanded=False):
+            st.write("### 🛡️ Release Timeline Slip Risk Assessment")
+            buffer_days = st.slider("Allocated Operational Horizon Release Buffer (Days):", 0, 30, 10, key="t7_risk_buffer")
+            dependency_blocks = st.number_input("Tracked Inter-Team Structural Roadblocks:", min_value=0, value=3, key="t7_risk_blocks")
+            risk_index = dependency_blocks * 4 - buffer_days
+            if risk_index > 5:
+                st.error(f"🚨 Milestone Slippage Risk: Release buffer heavily compromised (Index: {risk_index}). Policy remediation mandatory.")
+            else:
+                st.success(f"🟢 Deployment Horizon Protected: Simulated Buffer Capacity Stable (Index: {risk_index}).")
+
+        # Tool 26: Cross-Team Agile Sprint Backlog Velocity Stabilizer Analyst (RESTORED & ACTIVE)
+        with st.expander("📈 Cross-Team Agile Sprint Backlog Velocity Stabilizer Analyst", expanded=False):
+            st.write("### 📈 Backlog Ingestion Stability Modeler")
+            added_scope = st.number_input("Mid-Sprint Ingested Scope Growth Points:", min_value=0, value=25, key="t7_stab_scope")
+            velocity_drift = st.slider("Simulate Sprint Execution Volatility Variance Factor:", 1.0, 3.0, 1.4, step=0.1, key="t7_stab_sl")
+            st.info(f"📍 Operational Balance Index: Dynamic Backlog Stability Tracker at {added_scope * velocity_drift:.1f} Volatility Units.")
+
+        # Tool 27: Cross-Team Milestone Release Burn-Up Speed Analyst (RESTORED & ACTIVE)
+        with st.expander("🏎️ Cross-Team Milestone Release Burn-Up Speed Analyst", expanded=False):
+            st.write("### 🏎️ Release Burn-Up Target Trajectory Index")
+            current_burn_speed = st.slider("Simulate Daily Story Point Feature Delivery Velocity:", 5, 50, 22, key="t7_up_speed")
+            total_target_scope = st.number_input("Target Commercial Release Total Scope Points:", min_value=50, value=300, step=25, key="t7_up_target")
+            st.success(f"📈 Velocity Vector Active: Estimated Delivery Cycle Window: {round(total_target_scope / current_burn_speed, 1)} Operational Days.")
+
 # ---- PANEL 8: SUPPLY CHAIN & LOGISTICS (Tab 8) ----
 elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
     if 'wm' in locals():
