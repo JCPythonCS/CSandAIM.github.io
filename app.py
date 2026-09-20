@@ -597,28 +597,29 @@ elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' W
             downtime_hours = st.slider("Simulate Cumulative Fleet Incident Downtime (Hours):", 0, 120, 18, key="t4_down_hr")
             loss_rate_per_hour = st.number_input("Target Commercial Fleet Operational Loss Cost ($/Hr):", min_value=50.0, value=125.0, step=25.0, key="t4_down_cost")
             st.info(f"💰 Total Enterprise Operational Overhead Risk Exposure: ${downtime_hours * loss_rate_per_hour:.2f}")
- 
-        # Tool 8: Multi-Hub Inventory Optimization Matrix
-        with st.expander("📦 Multi-Hub Inventory Optimization Matrix", expanded=False):
-            st.write("### 📦 Stock Volumetric Distribution Model")
-            target_reserve = st.number_input("Enter Target Hub Safety Stock Level:", min_value=10, value=500, step=50, key="live_inv_stock")
-            current_variance = st.slider("Simulate Supply Variance Disruption Rate (%):", 0, 100, 15, key="live_inv_sl")
-            optimal_buffer = int(target_reserve * (1 + (current_variance / 100)))
-            st.success(f"🟢 Allocation Strategy Active: Minimum Required Hub Buffer Threshold: {optimal_buffer} Units")
+     # Tool 8: High-Fidelity Cloud Compute Resource Auto-Scaling Simulator (NEW)
+    with st.expander("☁️ High-Fidelity Cloud Compute Resource Auto-Scaling Simulator", expanded=False):
+        st.write("### ☁️ Infrastructure Capacity Elasticity Model")
+        baseline_nodes = st.number_input("Enter Baseline Running Cluster Compute Nodes:", min_value=2, value=16, step=2, key="t4_scale_base")
+        traffic_spike = st.slider("Simulate Incoming Traffic Load Multiplier Factor:", 1.0, 10.0, 3.5, step=0.1, key="t4_scale_spike")
+        required_nodes = int(baseline_nodes * traffic_spike)
+        st.success(f"🟢 Elasticity Strategy Active: Target Dynamic Scaling Infrastructure Capacity: {required_nodes} Active Nodes")
 
-        # Tool 9: Operational Route Dispatch Efficiency Engine
-        with st.expander("🚚 Operational Route Dispatch Efficiency Engine", expanded=False):
-            st.write("### 🚚 Telematics Routing Dispatch Saturation Matrix")
-            fleet_units = st.number_input("Total Active Regional Dispatch Fleet Count:", min_value=1, value=45, key="live_route_fl")
-            stop_density = st.slider("Average Node Stop Density Multiplier Factor:", 1.0, 10.0, 3.4, step=0.2, key="live_route_sl")
-            st.metric(label="📊 Computed Daily Routing Horizon Throughput Capacity", value=f"{int(fleet_units * stop_density * 8)} Commits")
+    # Tool 9: Regional Data Pipe Latency & Packet Jitter Modeler (NEW)
+    with st.expander("📡 Regional Data Pipe Latency & Packet Jitter Simulation Modeler", expanded=False):
+        st.write("### 📡 Telemetry Pipe Network Congestion Matrix")
+        distance_km = st.number_input("Target Sub-Station Relay Fiber Distance (km):", min_value=10, value=750, step=50, key="t4_lat_dist")
+        congest_pct = st.slider("Simulate Network Pipe Channel Congestion Level (%):", 0, 100, 28, key="t4_lat_congest")
+        calculated_latency = round((distance_km * 0.005) + (congest_pct * 0.4) + 5, 1)
+        st.metric(label="📊 Computed One-Way Packet Ingestion Propagation Delay", value=f"{calculated_latency} ms")
 
-        # Tool 10: Fleet Downtime Cost Ingestion Scanner
-        with st.expander("⏱️ Fleet Downtime Cost Ingestion Scanner Matrix", expanded=False):
-            st.write("### ⏱️ Loss-Mitigation Financial Variance Analysis Ledger")
-            downtime_hours = st.slider("Simulate Cumulative Fleet Incident Downtime (Hours):", 0, 120, 18, key="live_down_hr")
-            loss_rate_per_hour = st.number_input("Target Commercial Fleet Operational Loss Cost ($/Hr):", min_value=50.0, value=125.0, step=25.0, key="live_down_cost")
-            st.info(f"💰 Total Enterprise Operational Overhead Risk Exposure: ${downtime_hours * loss_rate_per_hour:.2f}")
+    # Tool 10: Multi-Tenant Database Query Sharding Optimizer (NEW)
+    with st.expander("🗄️ Multi-Tenant Database Query Sharding Performance Optimizer", expanded=False):
+        st.write("### 🗄️ Data Partitioning Volumetric Ingestion Ledger")
+        total_records = st.number_input("Total Unsharded Database Row Ledger Log Count:", min_value=10000, value=500000, step=50000, key="t4_shard_rec")
+        shard_count = st.slider("Configure Active Distributed Storage Sharding Pools:", 2, 16, 4, key="t4_shard_pool")
+        avg_rows_per_shard = int(total_records / shard_count)
+        st.info(f"💰 Optimized Ingestion Architecture: Distributed Allocation Density: {avg_rows_per_shard:,} Records / Shard Node")
 
      # ---- PANEL 5: LIBRARY (Tab 5) ----
 elif active_panel == "📚 Library (Tab 6)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
