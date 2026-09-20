@@ -684,6 +684,25 @@ elif active_panel == "💰 Commercial Control (Tab 6)":    # <--- MAKE SURE THIS
         residual_value = int(asset_valuation * (1 - (depreciation_rate / 100)))
         st.success(f"📈 Predictive Matrix Active: Estimated 12-Month Residual Value: ${residual_value}")
 
+    # Tool 11: Corporate Cash Runway Simulator (RESTORED & ACTIVE)
+    with st.expander("📉 Corporate Cash Runway Volumetric Runway Simulator", expanded=False):
+        st.write("### 🔍 Live Cash Reserve & Burn-Rate Analytics")
+        current_cash = st.number_input("Enter Active Capital Reserves ($):", min_value=10000, value=250000, step=25000, key="t6_run_cash")
+        monthly_burn = st.number_input("Enter Monthly Operational Overhead Burn ($):", min_value=5000, value=35000, step=5000, key="t6_run_burn")
+        runway_months = round(current_cash / monthly_burn, 1)
+        if runway_months < 6:
+            st.error(f"🚨 Runway Warning: Operational runway is heavily compressed at {runway_months} months. Funding injection required.")
+        else:
+            st.success(f"🟢 Optimal Horizon: Strategic runway is highly stable at {runway_months} months.")
+
+    # Tool 12: Multi-Tier Service Pricing & Break-Even Modeler (RESTORED & ACTIVE)
+    with st.expander("📈 Multi-Tier Service Pricing & Break-Even Modeler Matrix", expanded=False):
+        st.write("### 📈 Customer Acquisition Break-Even Metrics")
+        fixed_overhead = st.number_input("Total Monthly Fixed Infrastructure Costs ($):", min_value=100, value=4500, step=500, key="t6_be_fixed")
+        avg_tier_price = st.slider("Average Simulated Customer Tier Price ($):", 49, 799, 499, step=50, key="t6_be_price")
+        break_even_units = int(fixed_overhead / avg_tier_price) + 1
+        st.metric(label="📊 Required Subscriber Break-Even Threshold", value=f"{break_even_units} Active Nodes", delta=f"${avg_tier_price}/mo Avg")
+
 # ---- PANEL 7: PROJECT MANAGEMENT (Tab 7) ----
 elif active_panel == "📋 Project Management (Tab 7)":
     if 'wm' in locals():
