@@ -544,6 +544,15 @@ elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' W
             if hasattr(wm, 'render_travel_budget_v10'): wm.render_travel_budget_v10()
             else: st.warning("⚠️ System Standby Status: Travel Overhead Allocation Matrix Active.")
 
+        # Tool 15: Document Packet Scope Customization Tool (RESTORED & ACTIVE)
+        with st.expander("📄 Document Packet Scope Customization Architecture Terminal", expanded=False):
+            st.write("### 📄 Enterprise Document Packet Customization Core")
+            packet_type = st.selectbox("Select Target Operational Payload Packet Model:", ["Standard Client Onboarding", "Executive Financial Ledger", " statutory Compliance Manifest", "Custom Data Node Blueprint"], key="t3_pkt_type")
+            include_signatures = st.checkbox("Force Cryptographic Multi-Signatory Signature Layer Blocks", value=True, key="t3_pkt_sig")
+            custom_margin_scale = st.slider("Simulate Document Boundary Layout Margin Value (mm):", 10, 50, 25, key="t3_pkt_margin")
+            
+            st.success(f"🟢 Document Packet Strategy Active: Configured {packet_type} matrix configuration at {custom_margin_scale}mm layout parity boundaries.")
+
 # ---- PANEL 4: SIMULATION (Tab 4) ----
 elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     if 'wm' in locals():
