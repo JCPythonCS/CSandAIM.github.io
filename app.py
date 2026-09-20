@@ -18,7 +18,7 @@ with st.expander("🥈 Silver Node Access", expanded=False):
 with st.expander("🥇 Gold Command Access", expanded=False):
     st.markdown("**Cost:** $359 / month")
     st.markdown("""
-    * 🚀 Unlocks Advanced Predictive Suites (Tabs 1, 4, 8, 9)
+    * 🚀 Unlocks Advanced Predictive Suites (Silver Tabs + Tabs 1, 4, 8, 9)
     * 📈 Multi-Region Forecasting Models & Funnel Attribution Analytics
     * 🏎️ Fleet OBD Freeze Frame Telematics Diagnostics Generators
     """)
