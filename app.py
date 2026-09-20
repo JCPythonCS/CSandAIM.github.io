@@ -446,6 +446,32 @@ if active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WIT
             if hasattr(wm, 'render_port_scanner_v10'): wm.render_port_scanner_v10()
             else: st.warning("⚠️ System Standby Status: Socket Connectivity Auditing Ready.")
 
+        # Tool 14: Enterprise SaaS Pricing & ROI Calculator (RESTORED & ACTIVE)
+        with st.expander("💰 Enterprise SaaS Pricing & ROI Calculator Engine", expanded=False):
+            st.write("### 💰 Value Realization & ROI Evaluation")
+            contract_value = st.number_input("Enter Target Monthly Subscription Price ($):", min_value=10, value=499, step=50, key="t2_roi_contract")
+            efficiency_gain = st.slider("Simulate Estimated Team Productivity Lift (%):", 1, 100, 22, key="t2_roi_lift")
+            projected_annual_savings = int((contract_value * 12) * (efficiency_gain / 10))
+            st.success(f"🟢 ROI Projection Active: Estimated 12-Month Operational Value Delivered: ${projected_annual_savings:,}")
+
+        # Tool 15: Universal Digital Compliance Scaffolding Node (RESTORED & ACTIVE)
+        with st.expander("🛡️ Universal Digital Compliance & Privacy Scaffolding Node", expanded=False):
+            st.write("### 🛡️ Global Regulatory Privacy Sentinel")
+            privacy_framework = st.selectbox("Select Target Operational Compliance Framework:", ["GDPR (Europe)", "CCPA (California)", "HIPAA (Healthcare)", "SOC2 (Enterprise)"], key="t2_comp_frame")
+            compliance_score = st.slider(f"Simulate Active {privacy_framework} Audit Readiness Score (%):", 0, 100, 88, key="t2_comp_score")
+            if compliance_score < 85:
+                st.error(f"🚨 Compliance Drift: Risk vector detected under {privacy_framework}. Policy remediation required.")
+            else:
+                st.success(f"🔒 Governance Established: System perimeter fully aligned with {privacy_framework} guidelines.")
+
+        # Tool 16: Multi-Channel Growth Marketing Spend & ROAS Tracker (RESTORED & ACTIVE)
+        with st.expander("📈 Multi-Channel Growth Marketing Spend & ROAS Tracker Matrix", expanded=False):
+            st.write("### 📈 Campaign Return On Ad Spend Metric Hub")
+            ad_spend = st.number_input("Enter Monthly Cross-Channel Media Budget ($):", min_value=500, value=7500, step=500, key="t2_mkt_spend")
+            roas_multiplier = st.slider("Simulate Projected Conversion ROAS Scale Multiple:", 0.5, 10.0, 3.2, step=0.1, key="t2_mkt_roas")
+            computed_revenue = ad_spend * roas_multiplier
+            st.metric(label="📊 Computed Top-Line Channel Revenue Generation", value=f"${computed_revenue:,.2f}", delta=f"{roas_multiplier}x Multiplier")
+
 # ---- PANEL 3: WORKSPACE (Tab 3) ----
 elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
         # Tool 1: Calculator
