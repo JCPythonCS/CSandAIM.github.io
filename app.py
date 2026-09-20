@@ -4,6 +4,48 @@ import os
 import time
 import datetime
 
+# 💳 LEVEL 1: SILVER TIER BUTTON
+with st.expander("🥈 Silver Node Access", expanded=False):
+    st.markdown("**Cost:** $249 / month")
+    st.markdown("""
+    * 🔓 Access to Core System Utilities (Tabs 2, 7, 10)
+    * ⚙️ Standard Engine Compute Performance
+    * 📊 Basic File Operations Log & Workspace Ingestion
+    """)
+    st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/RQ5S9FDVX8RY2", use_container_width=True, type="secondary")
+
+# 💳 LEVEL 2: GOLD TIER BUTTON
+with st.expander("🥇 Gold Command Access", expanded=False):
+    st.markdown("**Cost:** $359 / month")
+    st.markdown("""
+    * 🚀 Unlocks Advanced Predictive Suites (Tabs 1, 4, 8, 9)
+    * 📈 Multi-Region Forecasting Models & Funnel Attribution Analytics
+    * 🏎️ Fleet OBD Freeze Frame Telematics Diagnostics Generators
+    """)
+    st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/S38BCHZZRUWSE", use_container_width=True, type="secondary")
+
+# 💳 LEVEL 3: PLATINUM TIER BUTTON
+with st.expander("👑 Platinum Executive Suite", expanded=False):
+    st.markdown("**Cost:** $499 / month")
+    st.markdown("""
+    * 👑 Complete Unrestricted Access Across All 115 Operational Diagnostics
+    * 🔒 Full Integration of the 10-Tool Cybersecurity & Threat Arena (Tab 11)
+    * 🤖 High-Performance AI-Ops Text Parsing & Sandbox Automation
+    """)
+    st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/FVYSK226TLYKA", use_container_width=True, type="secondary")
+
+# 💳 LEVEL 4: DIAMOND ENTERPRISE TIER BUTTON
+with st.expander("💎 Diamond Enterprise Node", expanded=False):
+    st.markdown("**Cost:** $799 / month")
+    st.markdown("""
+    * 💎 Tailored Corporate White-Label Deployment Package
+    * 🏢 Injection of Dedicated Company Branding, Names, & Asset Logos
+    * ⚡ Priority Email Support & Custom Database Filter Configuration
+    """)
+    st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/GFQ2Y5KZMRM9E", use_container_width=True, type="secondary")
+
+st.markdown("---")
+
 # =========================================================================
 # 🔒 CENTRAL AUTHENTICATION CONTROL PERIMETER GATE
 # =========================================================================
@@ -200,48 +242,6 @@ st.sidebar.markdown(
     """,
     unsafe_allow_html=True
 )
-
-# 💳 LEVEL 1: SILVER TIER BUTTON
-with st.expander("🥈 Silver Node Access", expanded=False):
-    st.markdown("**Cost:** $249 / month")
-    st.markdown("""
-    * 🔓 Access to Core System Utilities (Tabs 2, 7, 10)
-    * ⚙️ Standard Engine Compute Performance
-    * 📊 Basic File Operations Log & Workspace Ingestion
-    """)
-    st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/RQ5S9FDVX8RY2", use_container_width=True, type="secondary")
-
-# 💳 LEVEL 2: GOLD TIER BUTTON
-with st.expander("🥇 Gold Command Access", expanded=False):
-    st.markdown("**Cost:** $359 / month")
-    st.markdown("""
-    * 🚀 Unlocks Advanced Predictive Suites (Tabs 1, 4, 8, 9)
-    * 📈 Multi-Region Forecasting Models & Funnel Attribution Analytics
-    * 🏎️ Fleet OBD Freeze Frame Telematics Diagnostics Generators
-    """)
-    st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/S38BCHZZRUWSE", use_container_width=True, type="secondary")
-
-# 💳 LEVEL 3: PLATINUM TIER BUTTON
-with st.expander("👑 Platinum Executive Suite", expanded=False):
-    st.markdown("**Cost:** $499 / month")
-    st.markdown("""
-    * 👑 Complete Unrestricted Access Across All 115 Operational Diagnostics
-    * 🔒 Full Integration of the 10-Tool Cybersecurity & Threat Arena (Tab 11)
-    * 🤖 High-Performance AI-Ops Text Parsing & Sandbox Automation
-    """)
-    st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/FVYSK226TLYKA", use_container_width=True, type="secondary")
-
-# 💳 LEVEL 4: DIAMOND ENTERPRISE TIER BUTTON
-with st.expander("💎 Diamond Enterprise Node", expanded=False):
-    st.markdown("**Cost:** $799 / month")
-    st.markdown("""
-    * 💎 Tailored Corporate White-Label Deployment Package
-    * 🏢 Injection of Dedicated Company Branding, Names, & Asset Logos
-    * ⚡ Priority Email Support & Custom Database Filter Configuration
-    """)
-    st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/GFQ2Y5KZMRM9E", use_container_width=True, type="secondary")
-
-st.markdown("---")
     
 st.header("📥 Systems Suggestion Box")
 st.write("Submit software enhancement requests, telemetry bug logs, or platform feedback directly to our secure business dashboard.")
