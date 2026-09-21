@@ -258,17 +258,17 @@ st.markdown("---")
 active_panel = st.selectbox(
     "Select Workspace System Node To Deploy:",
     [
-        "📊 Analytics (Tab 1)",
-        "🛠 Utilities (Tab 2)",
-        "💼 Workspace (Tab 3)",
-        "✈ Simulation (Tab 4)",
-        "📚 Library (Tab 5)",
-        "💰 Commercial Control (Tab 6)",
-        "📋 Project Management (Tab 7)",
-        "📦 Supply Chain & Logistics (Tab 8)",
-        "🏎️ Fleet & Automotive (Tab 9)",
-        "🤖 AI-Ops Text Parsing (Tab 10)",
-        "🔒 Cybersecurity & Intrusion (Tab 11)"
+        "📊 Analytics (Tab 1)™",
+        "🛠 Utilities (Tab 2)™",
+        "💼 Workspace (Tab 3)™",
+        "✈ Simulation (Tab 4)™",
+        "📚 Library (Tab 5)™",
+        "💰 Commercial Control (Tab 6)™",
+        "📋 Project Management (Tab 7)™",
+        "📦 Supply Chain & Logistics (Tab 8)™",
+        "🏎️ Fleet & Automotive (Tab 9)™",
+        "🤖 AI-Ops Text Parsing (Tab 10)™",
+        "🔒 Cybersecurity & Intrusion (Tab 11)™"
     ],
     key="cockpit_panel_navigation"
 )
@@ -929,7 +929,7 @@ elif active_panel == "📋 Project Management (Tab 7)":
             st.success(f"📈 Velocity Vector Active: Estimated Delivery Cycle Window: {round(total_target_scope / current_burn_speed, 1)} Operational Days.")
 
 # ---- PANEL 8: SUPPLY CHAIN & LOGISTICS (Tab 8)™ ----
-elif active_panel == "📦 Supply Chain & Logistics (Tab 8)™":
+elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
     if 'wm' in locals():
         # Tool 1: Tracking Aggregator
         with st.expander("📡 Multi-Carrier Logistics Logistics Tracking Aggregator Hub", expanded=False):
