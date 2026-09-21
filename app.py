@@ -102,7 +102,7 @@ elif session_license == "Gold Command":
 import workspace_modules as wm
 
 # 🖥️ Exact Page Config from your Repository
-st.set_page_config(page_title="Computer Systems and AI Management Cockpit™", layout="wide")
+st.set_page_config(page_title="Computer Systems and AI Management Cockpit™", layout="centered")
 
 # 🏆 MASTER TITLE BLOCK DESIGN WITH YOUR DUAL SIDE-SPACED LOGOS
 st.title("🛡️ Computer Systems and AI Management Cockpit™")
