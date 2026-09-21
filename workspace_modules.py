@@ -470,7 +470,7 @@ def render_library_catalog():
     st.write("Review, access, and audit all 33 synchronized voiceover video tracks hosted securely inside the JCPSS cloud storage vault.")
     
     parent_folder_id = "1BUnCmw4e4OTSBgyjjbJJsS12Yvg_lvrL"
-    folder_url = f"https://google.com{parent_folder_id}"
+    folder_url = f"https://drive.google.com/drive/folders/1BUnCmw4e4OTSBgyjjbJJsS12Yvg_lvrL"
     
     st.markdown("---")
     
