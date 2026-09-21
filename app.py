@@ -5,7 +5,7 @@ import time
 import datetime
 
 # 💳 LEVEL 1: SILVER TIER BUTTON
-with st.expander("🥈 Silver Node Access", expanded=False):
+with st.expander("🥈 Silver Node Access™", expanded=False):
     st.markdown("**Cost:** $249 / month")
     st.markdown("""
     * 🔓 Access to Core System Utilities (Tabs 2, 7, 10)
@@ -15,7 +15,7 @@ with st.expander("🥈 Silver Node Access", expanded=False):
     st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/RQ5S9FDVX8RY2", use_container_width=True, type="secondary")
 
 # 💳 LEVEL 2: GOLD TIER BUTTON
-with st.expander("🥇 Gold Command Access", expanded=False):
+with st.expander("🥇 Gold Command Access™", expanded=False):
     st.markdown("**Cost:** $359 / month")
     st.markdown("""
     * 🚀 Unlocks Advanced Predictive Suites (Silver Tabs + Tabs 1, 4, 8, 9)
@@ -25,7 +25,7 @@ with st.expander("🥇 Gold Command Access", expanded=False):
     st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/S38BCHZZRUWSE", use_container_width=True, type="secondary")
 
 # 💳 LEVEL 3: PLATINUM TIER BUTTON
-with st.expander("👑 Platinum Executive Suite", expanded=False):
+with st.expander("👑 Platinum Executive Suite™", expanded=False):
     st.markdown("**Cost:** $499 / month")
     st.markdown("""
     * 👑 Complete Unrestricted Access Across All 115 Operational Diagnostics
@@ -35,7 +35,7 @@ with st.expander("👑 Platinum Executive Suite", expanded=False):
     st.link_button("Subscribe with PayPal", "https://www.paypal.com/ncp/payment/FVYSK226TLYKA", use_container_width=True, type="secondary")
 
 # 💳 LEVEL 4: DIAMOND ENTERPRISE TIER BUTTON
-with st.expander("💎 Diamond Enterprise Node", expanded=False):
+with st.expander("💎 Diamond Enterprise Node™", expanded=False):
     st.markdown("**Cost:** $799 / month")
     st.markdown("""
     * 💎 Tailored Corporate White-Label Deployment Package
@@ -297,7 +297,7 @@ else:
 # 📊 UNIFORM STRUCTURAL WRAPPERS FOR CORE TIMELINE ANALYTICS SUITES WITH STANDBY NOIDES
 if 'wm' in locals() and active_panel == "📊 Analytics (Tab 1)":
     # Tool 1: KPI Pulse Grid
-    with st.expander("📊 Core Corporate KPI Pulse Grid System", expanded=False):
+    with st.expander("📊 Core Corporate KPI Pulse Grid System™", expanded=False):
         if hasattr(wm, 'render_kpi_pulse_grid'):
             wm.render_kpi_pulse_grid()
         else:
