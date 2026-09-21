@@ -276,7 +276,7 @@ active_panel = st.selectbox(
 male_profile = "Male_Adam (Deep/Calm)"
 female_profile = "Female_Emily (Smooth)"
 
-if active_panel == "📚 Library (Tab 5)":
+if active_panel == "📚 Library (Tab 5)™":
     st.sidebar.markdown("---")
     st.sidebar.header("🗣 Audio Profiles Configuration")
     male_profile = st.sidebar.selectbox("Male Actor Voice", ["Male_Adam (Deep/Calm)", "Male_Michael (Professional)", "Male_David"])
@@ -295,7 +295,7 @@ else:
     st.markdown("### Real-Time Customer Purchase Logs & Delivery Staging Node")
 
 # 📊 UNIFORM STRUCTURAL WRAPPERS FOR CORE TIMELINE ANALYTICS SUITES WITH STANDBY NOIDES™
-if 'wm' in locals() and active_panel == "📊 Analytics (Tab 1)":
+if 'wm' in locals() and active_panel == "📊 Analytics (Tab 1)™":
     # Tool 1: KPI Pulse Grid
     with st.expander("📊 Core Corporate KPI Pulse Grid System™", expanded=False):
         if hasattr(wm, 'render_kpi_pulse_grid'):
@@ -334,7 +334,7 @@ if 'wm' in locals() and active_panel == "📊 Analytics (Tab 1)":
 # =========================================================================
 # 📊 TAB 1: EXECUTIVE ANALYTICS COMPLIANCE EXPANSION (5 LIVE ACTIVE TOOLS)™
 # =========================================================================
-if 'active_panel' in locals() and active_panel == "📊 Analytics (Tab 1)":
+if 'active_panel' in locals() and active_panel == "📊 Analytics (Tab 1)™":
     st.markdown("---")
     st.markdown("### ⚡ Live Asset Optimization Core")
     
@@ -379,7 +379,7 @@ if 'active_panel' in locals() and active_panel == "📊 Analytics (Tab 1)":
             st.info(f"🔹 Remainder Channel Attribution Weight (Referrals/Direct): {referral}%")
 
 # ---- PANEL 2: UTILITIES (Tab 2)™ ----
-if active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
+if active_panel == "🛠 Utilities (Tab 2)™": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     if 'wm' in locals():
         # Tool 1: Translator
         with st.expander("🌐 Universal Multi-Language Translation Node™", expanded=False):
@@ -473,7 +473,7 @@ if active_panel == "🛠 Utilities (Tab 2)": # <--- MAKE SURE THIS IS 'elif' WIT
             st.metric(label="📊 Computed Top-Line Channel Revenue Generation", value=f"${computed_revenue:,.2f}", delta=f"{roas_multiplier}x Multiplier")
 
 # ---- PANEL 3: WORKSPACE (Tab 3)™ ----
-elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
+elif active_panel == "💼 Workspace (Tab 3)™": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
         # Tool 1: Calculator
         with st.expander("🎛️ Advanced Operations Metric & Mathematical Calculator Node™", expanded=False):
             if hasattr(wm, 'render_calculator'): wm.render_calculator()
@@ -553,7 +553,7 @@ elif active_panel == "💼 Workspace (Tab 3)": # <--- MAKE SURE THIS IS 'elif' W
             st.success(f"🟢 Document Packet Strategy Active: Configured {packet_type} matrix configuration at {custom_margin_scale}mm layout parity boundaries.")
 
 # ---- PANEL 4: SIMULATION (Tab 4)™ ----
-elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
+elif active_panel == "✈ Simulation (Tab 4)™": # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     if 'wm' in locals():
         # Tool 1: Runway Diagnostic Matrix
         with st.expander("🛫 Core Infrastructure Runway Diagnostic Engine™", expanded=False):
@@ -647,13 +647,13 @@ elif active_panel == "✈ Simulation (Tab 4)": # <--- MAKE SURE THIS IS 'elif' W
         else:
             st.success(f"🔒 Heartbeat Parity Confirmed: All {endpoint_count} distributed target endpoints reporting clean operational health.")
 
-     # ---- PANEL 5: LIBRARY (Tab 5)™ ----
+     # ---- PANEL 5: LIBRARY (Tab 5)™™ ----
 elif active_panel == "📚 Library (Tab 5)™":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
     st.markdown("### 🎬 Studio Asset Management Engine")
     # ... [Keep all your existing Panel 5 code text areas and video dropdown blocks exactly the same] ...
     wm.render_library_catalog()
 
-     # ---- PANEL 6: COMMERCIAL CONTRL (Tab 6)™ ----
+     # ---- PANEL 6: COMMERCIAL CONTRL (Tab 6)™™ ----
 elif active_panel == "💰 Commercial Control (Tab 6)":    # <--- MAKE SURE THIS IS 'elif' WITH NO INDENTATION SPACES
 
     # Tool 1: Commercial Control Grid System
@@ -730,7 +730,7 @@ elif active_panel == "💰 Commercial Control (Tab 6)":    # <--- MAKE SURE THIS
         break_even_units = int(fixed_overhead / avg_tier_price) + 1
         st.metric(label="📊 Required Subscriber Break-Even Threshold", value=f"{break_even_units} Active Nodes", delta=f"${avg_tier_price}/mo Avg")
 
-# ---- PANEL 7: PROJECT MANAGEMENT (Tab 7)™ ----
+# ---- PANEL 7: PROJECT MANAGEMENT (Tab 7)™™ ----
 elif active_panel == "📋 Project Management (Tab 7)":
     if 'wm' in locals():
         # Tool 1: Infrastructure Delivery Matrix Tracker
@@ -928,7 +928,7 @@ elif active_panel == "📋 Project Management (Tab 7)":
             total_target_scope = st.number_input("Target Commercial Release Total Scope Points:", min_value=50, value=300, step=25, key="t7_up_target")
             st.success(f"📈 Velocity Vector Active: Estimated Delivery Cycle Window: {round(total_target_scope / current_burn_speed, 1)} Operational Days.")
 
-# ---- PANEL 8: SUPPLY CHAIN & LOGISTICS (Tab 8)™ ----
+# ---- PANEL 8: SUPPLY CHAIN & LOGISTICS (Tab 8)™™ ----
 elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
     if 'wm' in locals():
         # Tool 1: Tracking Aggregator
@@ -996,7 +996,7 @@ elif active_panel == "📦 Supply Chain & Logistics (Tab 8)":
             if hasattr(wm, 'render_stack_clearance_v10'): wm.render_stack_clearance_v10()
             else: st.warning("⚠️ System Standby Status: Overstack Buffer Capacity Clear.")
 
-# ---- PANEL 9: FLEET & AUTOMOTIVE (Tab 9)™ ----
+# ---- PANEL 9: FLEET & AUTOMOTIVE (Tab 9)™™ ----
 elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
     if 'wm' in locals():
         # Tool 1: VIN Parser
@@ -1052,7 +1052,7 @@ elif active_panel == "🏎️ Fleet & Automotive (Tab 9)":
             estimated_sync_window = round((fleet_sync_count * 15) / sync_bandwidth, 1)
             st.success(f"🟢 Synchronizer Matrix Active: Projected OTA Optimization Cycle Window: {estimated_sync_window} Minutes.")
 
-# ---- PANEL 10: AI-OPS TEXT PARSING (Tab 10)™ ----
+# ---- PANEL 10: AI-OPS TEXT PARSING (Tab 10)™™ ----
 elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
     if 'wm' in locals():
         # Tool 1: Text Parser
@@ -1110,7 +1110,7 @@ elif active_panel == "🤖 AI-Ops Text Parsing (Tab 10)":
             if hasattr(wm, 'render_link_validator_v9'): wm.render_link_validator_v9()
             else: st.warning("⚠️ System Standby Status: Link Connectivity Ledger Online.")
 
-# ---- PANEL 11: CYBERSECURITY & INTRUSION (Tab 11)™ ----
+# ---- PANEL 11: CYBERSECURITY & INTRUSION (Tab 11)™™ ----
 if active_panel == "🔒 Cybersecurity & Intrusion (Tab 11)":
     
     # 🛰️ Dynamic execution tracks mapping all 10 premium security utilities live
