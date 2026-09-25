@@ -268,7 +268,7 @@ active_panel = st.selectbox(
         "📦 Supply Chain & Logistics (Tab 8)",
         "🏎️ Fleet & Automotive (Tab 9)",
         "🤖 AI-Ops Text Parsing (Tab 10)",
-        "🔒 Cybersecurity & Intrusion (Tab 11)"
+        "🔒 Cybersecurity & Intrusion (Tab 11)",
         "👑 eXtOOLS (Tab 12)"
     ],
     key="cockpit_panel_navigation"
