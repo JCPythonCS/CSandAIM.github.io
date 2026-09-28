@@ -321,10 +321,50 @@ if active_panel == "👑 ExTools (Tab 12)":
         "Model Context Protocol (MCP) Schema Validator",
         "Distributed Cluster Heartbeat Pulse Monitor",
         "High-Flux Data Ingestion Queue Throttle Guard",
-        "Cryptographic SaaS Audit Trail Signer Core"
+        "Cryptographic SaaS Audit Trail Signer Core",
+        "GitPulse: Private Repository Pull Request Tracker",
+        "SchemaForge: JSON-LD Structural Data Matrix",
+        "UA-Parser: Advanced User-Agent String Fingerprinter",
+        "CORS-Bypass: Secure Multi-Tenant Staging Proxy",
+        "SQLSanitize: Inbound Query Anti-Injection Shield",
+        "DNSMonitor: MX/TX Record Propagation Radar",
+        "DiffMaster: Code and Text Discrepancy Matrix",
+        "GraphQLSpy: Columnar Endpoint Query Optimizer",
+        "SSLWatch: Security Cipher and Expiry Tracker",
+        "Internal Network Port Status Scanner Core",
+        "CSV-to-JSON: High-Speed Log Stream Transformer",
+        "SQL2Charts: Dynamic Query Volumetric Mapper",
+        "DataScrub: Dataset Anomaly Cleansing Matrix",
+        "JSONMinify: High-Compression Payload Engine",
+        "RegexExtractor: Alphanumeric Token Isolation Parser",
+        "AnonymizeMe: PII Data Masking Privacy Shield",
+        "CurrencySync: Historical Exchange Coefficient Gateway",
+        "Base64Media: Binary Asset Codec Translator",
+        "XMLExplode: Deeply Nested Path Unroller",
+        "Webhook2Sheets: Spreadsheet Ingestion Transponders",
+        "ParquetViewer: Columnar Data Registry Engine",
+        "ExcelSplit: Volumetric Row Partition Splitter",
+        "UUIDGen: Bulk Alphanumeric Unique Identifier",
+        "GeoDistance: Geospatial Proximity Matrix Tracking",
+        "HTMLStrip: Unstructured String Content Sanitizer",
+        "DataValidator: Multi-Format Pipeline Entry Checker",
+        "MarkdownTables: Grid Layout Documentation Editor",
+        "TimestampConverter: Temporal Epoch Timecode Sync",
+        "Automated AI-Ops System Log Regex Data Masker",
+        "Customer Support Sentiment Classifier Engine",
+        "BigData Parquet Columnar Stream Aggregator",
+        "Relational Schema DDL Compiler Core",
+        "High-Flux Data Pipeline Queue Throttle Controller",
+        "Cryptographic Audit Log Integrity Shield Guard",
+        "Columnar Index Performance Defragmentation Optimizer",
+        "Cross-Tenant Data Leak Prevention Memory Shield",
+        "Asynchronous Telemetry Log Stream Validator Core",
+        "Model Context Protocol MCP State Sync Bridge",
+        "Distributed Cluster Uptime Heartbeat Pulse Monitor",
+        "Autonomous Agentic Workspace Memory Heap Auditor"
     ]
     
-    # Iteratively mount all 10 tools natively inside clean interactive containers
+    # Iteratively mount all 60 tools natively inside clean interactive containers
     for idx, tool_name in enumerate(tab_12_tools):
         with st.expander(f"⚡ ExTools Module 12-{idx+1:02d}: {tool_name}™", expanded=False):
             st.markdown(
