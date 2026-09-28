@@ -82,7 +82,7 @@ else:
 if not is_authorized:
     st.title("🔒 C-SAM AI Management Cockpit Terminal V4.0")
     st.warning("🔬 **Secure Encryption Firewall Active:** This computing node is running in centralized protected mode. To access your specialized diagnostic suite layout panels, please enter your authorized license key inside the sidebar portal field.")
-    st.info("💡 **Subscription Verification:** If you do not have a license, open the pricing cards in the sidebar section to initialize a secure transaction via PayPal.")
+    st.info("💡 **Subscription Verification:** If you do not have a license, open the pricing cards at the top of this section to initialize a secure transaction via PayPal.")
     st.stop() # 🛑 This single instruction completely freezes the app right here, blocking your 120 tools from downloading!
 
 # 🚫 STEP 3: TIERED LEVEL BOUNDARY LOCKOUT FILTERS
