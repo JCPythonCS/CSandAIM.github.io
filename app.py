@@ -474,7 +474,7 @@ else:
         "RoIC_Matrix: Departmental Regional Business Unit Return on Invested Capital Analyzer",
         "SaaS_LTV_CAC: Executive Economics LTV-CAC Ratio Payback Period Calculator",
         "TaxShieldSim: Asset Depreciation Corporate Tax Shield Forecasting Grid",
-        "DebtLadderVisualizer: Corporate Debt Maturity Schedule Interest Coverage Timeline"
+        "DebtLadderVisualizer: Corporate Debt Maturity Schedule Interest Coverage Timeline",
     ]
     
     # Iteratively mount all 60 tools natively inside clean interactive containers
