@@ -301,18 +301,8 @@ else:
     male_profile = "Male_Adam (Deep/Calm)"
     female_profile = "Female_Emily (Smooth)"
 
-# ==========================================================================
-# 📋 TAB 12: EXTOOLS MASTER SAAS ENGINE VAULT (10 NEW INTERACTIVE TOOLS)
-# ==========================================================================
-if active_panel == "👑 ExTools (Tab 12)":
-    st.markdown("---")
-    st.markdown("### 👑 Tab 12: ExTools Advanced SaaS Sandbox Panel")
-    st.write("Secure administrative testing suite executing under absolute zero-dependency local compute parity over Port 1433.")
-    st.success("🔒 Secure Administrative Perimeter Verified. Core Ingestion Nodes Fully Armed.")
-    
-    # Clean programmatic array tracking your 10 newly minted SaaS modules
     tab_12_tools = [
-        # 👑 SECTION A: YOUR ORIGINAL 10 IMMUTABLE SAAS COCKPIT TOOLS (01 - 10)
+        # 👑 SECTION A: YOUR ORIGINAL 10 IMMUTABLE CORE TOOLS (01 - 10)
         "High-Velocity SaaS Tenant Traffic Load Balancer",
         "Zero-Leakage Local Compute Memory Fence Tracer",
         "Multi-Tenant API Intrusion Isolation Shield",
@@ -324,7 +314,7 @@ if active_panel == "👑 ExTools (Tab 12)":
         "High-Flux Data Ingestion Queue Throttle Guard",
         "Cryptographic SaaS Audit Trail Signer Core",
         
-        # 🛠️ SECTION B: NEW DEVELOPER UTILITIES & MICRO-APIs (11 - 30)
+        # 🛠️ SECTION B: DEVELOPER UTILITIES & MICRO-APIs (11 - 30)
         "MockDataGen: Instant mock JSON/XML API generation for frontend testing.",
         "CronWatch: Light-weight cron job monitoring with instant webhook alerts.",
         "WebhookDump: Temporary URLs to capture, inspect, and debug incoming webhooks.",
@@ -346,7 +336,7 @@ if active_panel == "👑 ExTools (Tab 12)":
         "SSLWatch: Expiration tracker and security cipher analyzer for SSL certificates.",
         "Internal Network Port Status Scanner Core",
 
-        # 📊 SECTION C: NEW DATA AUTOMATION & TRANSFORMATION (31 - 50)
+        # 📊 SECTION C: DATA AUTOMATION & TRANSFORMATION (31 - 50)
         "CSV-to-JSON: High-speed browser-based parser for massive multi-gigabyte data files.",
         "SQL2Charts: Input a raw SQL query string and automatically output an interactive chart.",
         "DataScrub: Automated deduplication, formatting, and cleaning tool for customer lists.",
@@ -368,7 +358,7 @@ if active_panel == "👑 ExTools (Tab 12)":
         "Automated AI-Ops System Log Regex Data Masker",
         "Customer Support Sentiment Classifier Engine",
 
-        # 🔒 SECTION D: NEW SECURITY, PRIVACY & DEVOPS OPERATIONS (51 - 60)
+        # 🔒 SECTION D: SECURITY, PRIVACY & DEVOPS OPERATIONS (51 - 70)
         "SecretShare: Self-destructing, password-protected link generator for sensitive keys.",
         "PassForge: High-entropy password and cryptographic salt generator.",
         "BreachCheck: API linking to dark web databases to check if an email is compromised.",
@@ -378,7 +368,61 @@ if active_panel == "👑 ExTools (Tab 12)":
         "HashedMe: Bulk cryptographic hashing engine supporting SHA-256, SHA-512, and MD5.",
         "API-RateLimiter: Plug-and-play middleware config generator for protecting microservices.",
         "FingerprintID: Browser fingerprinting analysis tool to track fraud footprints.",
-        "CookieAudit: Scans tracking cookies to output compliant GDPR cookie consent lists."
+        "CookieAudit: Scans tracking cookies to output compliant GDPR cookie consent lists.",
+        "SecurityHeaders: Checks live HTTP headers against OWASP security benchmarks.",
+        "SubdomainFinder: Discovers hidden subdomains of a target domain using OSINT.",
+        "DMARCBuilder: Generates error-free DMARC, DKIM, and SPF DNS email records.",
+        "WhoisPulse: Automated monitoring system alerting on WHOIS registry updates.",
+        "TokenRevoker: Instantly invalidates active test tokens across popular cloud platforms.",
+        "JWTGen: Mock JWT signer for developer sandbox testing environments.",
+        "SnykView: Aggregated minimalist dashboard for tracking open-source dependency vulnerabilities.",
+        "CORSConfig: Visual generator for error-free Apache, Nginx, or AWS CORS rules.",
+        "XSSShield: Live tester to check if input parameters escape cross-site scripting strings.",
+        "DevOpsCost: Micro-calculator mapping idle AWS/GCP resources to eliminate waste.",
+
+        # 📈 SECTION E: GROWTH HACKING, MARKETING & SEO UTILITIES (71 - 90)
+        "LinkShortener: Whitelabel short link builder with custom domain and metadata routing.",
+        "OGPreview: Visual generator displaying how a URL looks on Slack, X, and LinkedIn.",
+        "RankTracker: Lightweight, keyword positions tracking monitor for top search engine results.",
+        "FaviconFetch: Micro-API to pull high-res favicons from any URL globally.",
+        "SERP_Simulator: Preview title and meta description pixel lengths live for SEO optimization.",
+        "KeywordMultiplier: Combines lists of phrases into broad, phrase, and exact search terms.",
+        "BacklinkPulse: Monitors high-authority domains to ensure active backlink placements stay live.",
+        "BrokenLinkBot: Dead-simple crawler tracking down 404 errors across a specific website map.",
+        "SocialCounter: Aggregates visible share, like, and comment counts for any public URL.",
+        "DomainScout: Suggests alternative, available TLDs based on brand keywords.",
+        "PageSpeedWatch: Tracks Core Web Vitals scores over time with continuous webhook alerts.",
+        "HeaderExtract: Grabs and lists all H1-H6 semantic hierarchies on a page to check SEO health.",
+        "EmailWarmup: Automation template generator to structure cold email delivery cadences.",
+        "AdWordsCost: Estimates average CPC rates for specialized keyword clusters instantly.",
+        "ReviewAggregator: Embeddable micro-widget pulling recent public reviews into a clean JSON array.",
+        "TrendPulse: Scans active social patterns to highlight fast-rising topical search phrases.",
+        "SchemaScanner: Validates existing JSON-LD objects on a live URL for errors.",
+        "BigData Columnar Stream Ingest Aggregator Matrix",
+        "Sovereign Database Metric Compression Kernel",
+        "Data Integration Stream Load Vector Shield",
+
+        # 🎬 SECTION F: MEDIA OPTIMIZATION & ASSETS OPERATIONS (91 - 110)
+        "WebPConvert: Instantly switches bulky PNG/JPG files to fast WebP structures.",
+        "SVGMinify: Code-level optimization of raw SVG vectors to slash file payload weights.",
+        "ImgResize: Bulk responsive image dimension scaling with preset aspect ratios.",
+        "ColorPalette: Grabs prominent color hexadecimal profiles from uploaded asset files.",
+        "FontSubset: Strips unused characters out of web fonts to speed up download performance.",
+        "AudioTrimmer: Browser-side, zero-upload tool for clipping audio assets.",
+        "GIFCompress: Optimizes complex frame layouts inside heavy GIF animations.",
+        "VideoThumb: Grabs timestamps on video links to generate clean preview frames.",
+        "PDFSplitter: Isolates individual page views out of massive multi-page documents.",
+        "CSSPurge: Automatically strips unused styling blocks out of static CSS files.",
+        "SpriteGen: Merges individual icon files into single performance-optimized CSS sprite maps.",
+        "EXIFStripper: Removes private location coordinates and hardware meta-data from photos.",
+        "WatermarkBot: Automatically overlays brand logo transparencies across asset batches.",
+        "FaviconFactory: Turns a single PNG file into a comprehensive multi-device favicon package.",
+        "LottieOpt: Strips unnecessary code paths from animation JSON vector structures.",
+        "QRGenerator: High-resolution dynamic QR code builder with logo embed options.",
+        "OCRReader: Extracts editable text sequences directly out of uploaded image files.",
+        "VTTGenerator: Simplifies creation of video subtitle files through a basic timeline sync UI.",
+        "IconFontForge: Packs customized sets of SVG vectors into unified web icon fonts.",
+        "BlurHashGen: Produces tiny placeholder strings to display beautiful image loading blurs."
     ]
     
     # Iteratively mount all 60 tools natively inside clean interactive containers
