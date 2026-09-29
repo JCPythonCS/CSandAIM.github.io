@@ -477,8 +477,6 @@ else:
         "DebtLadderVisualizer: Corporate Debt Maturity Schedule Interest Coverage Timeline",
         "SaaS_Enterprise_Gateway_Sentinel: Real-time traffic perimeter shield monitoring telemetry loops over secure compute frames",
     ]
-
-    ]
     
     # Iteratively mount all 60 tools natively inside clean interactive containers
     for idx, tool_name in enumerate(tab_12_tools):
